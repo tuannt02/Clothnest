@@ -2,21 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="25dp"
     android:layout_marginRight="25dp"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="55sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="Welcome Back" />
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="45sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:text="Hello" />
+
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="45sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:text="Let's sign up" />
+
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,16 +53,62 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginLeft="4dp"
-            android:text="Username or Email address" />
+            android:text="Username" />
 
-        <EditText
-            android:id="@+id/input_username"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Enter your username"
-            android:text="" />
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textSize="20sp"
+                android:text=""
+                android:inputType="text"
+                android:hint="Enter your username" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/title_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="4dp"
+            android:text="Email address" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textSize="20sp"
+                android:text=""
+                android:inputType="textEmailAddress"
+                android:hint="Enter your email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
@@ -50,11 +116,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="10dp"
         >
 
         <TextView
-            android:id="@+id/title_password"
+            android:id="@+id/title_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -63,19 +129,25 @@
             android:layout_marginLeft="4dp"
             android:text="Password" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="Enter your password"
-            android:drawableRight="@drawable/ic_baseline_remove_red_eye_24"
-            android:text="" />
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true"
+            >
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textSize="20sp"
+                android:text=""
+                android:inputType="textPassword"
+                android:hint="Enter your password" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,7 +158,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign in"
+            android:text="Sign up"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -100,7 +172,7 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:background="@drawable/circle_button"
-            android:layout_marginLeft="215dp"
+            android:layout_marginLeft="210dp"
             android:src="@drawable/ic_angle_right"
             android:contentDescription="Next"
             />
@@ -108,44 +180,14 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        >
-
-
-        <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/google"
-            />
-
-        <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/apple"
-            android:layout_marginLeft="80dp"
-            />
-
-        <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_marginLeft="80dp"
-            android:src="@drawable/facebook"
-            />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/sign_in"
         android:layout_marginTop="30dp"
         />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

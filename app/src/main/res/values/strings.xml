@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Clothnest</string>
+    <string name="sign_up"><u>Sign up</u></string>
+    <string name="sign_in"><u>Sign in</u></string>
+    <string name="forget_pw"><u>Forget password?</u></string>
 </resources>
