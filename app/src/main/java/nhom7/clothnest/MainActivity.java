@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("setupBnv", "Setup Bottom Navigation View");
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ProfileFragment.class, null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, HomeFragment.class, null).commit();
         setupBottomNavigationView();
     }
 
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.nav_home:
+                        selectedFragment = new HomeFragment();
                         break;
                     case R.id.nav_search:
                         break;
