@@ -9,4 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primaryColor">#DF7861</color>
+    <color name="background">#F3F3F3</color>
+    <color name="price">#E45353</color>
+    <color name="dividerColor">#B3B3B3</color>
 </resources>

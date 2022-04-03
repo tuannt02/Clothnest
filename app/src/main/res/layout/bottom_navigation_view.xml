@@ -4,14 +4,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="82dp"
         android:layout_alignParentBottom="true">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="7dp"
+            android:layout_above="@id/bottom_navigation_view"
+            android:background="@drawable/bottom_navigation_background"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
             android:paddingHorizontal="30dp"
             app:menu="@menu/bottom_navigation_menu"
+            android:elevation="4dp"
+            android:layout_alignParentBottom="true"
             app:itemBackground="@drawable/bottom_navigation_selector"
             app:labelVisibilityMode="unlabeled"/>
 
