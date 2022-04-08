@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".EditProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="35dp"
-        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -32,11 +32,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="14dp"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_bold"
                 android:text="EDIT PROFILE"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -44,10 +44,10 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="40dp">
 
-            <androidx.constraintlayout.utils.widget.ImageFilterButton
+            <ImageView
                 android:id="@+id/imageview_avatar_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="22dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -70,40 +70,64 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="NAME"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/edittext_fullname_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-4dp"
-                android:layout_marginTop="6dp"
+
                 android:fontFamily="@font/lato"
                 android:hint="Full name"
+                android:paddingBottom="20dp"
                 android:text="Hoang Dinh Anh Tuan"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="@font/lato_bold"
-                android:text="DATE OF BIRTH"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/edittext_dateOfBirth_editProfile"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
-                android:layout_marginTop="6dp"
-                android:fontFamily="@font/lato"
-                android:hint="Date of birth"
-                android:text="18 / 04 / 2002"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textview_container1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="DATE OF BIRTH"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/edittext_dateOfBirth_editProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textview_container1"
+                    android:layout_marginLeft="-4dp"
+                    android:enabled="false"
+                    android:fontFamily="@font/lato"
+                    android:hint="Date of birth"
+                    android:inputType="date"
+                    android:paddingBottom="20dp"
+                    android:text="18 / 04 / 2002"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/datepicker_editProfile"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_calendar" />
+
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,19 +136,20 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="USERNAME"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/edittext_username_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-4dp"
-                android:layout_marginTop="6dp"
+                android:enabled="false"
                 android:fontFamily="@font/lato"
                 android:hint="Username"
+                android:paddingBottom="20dp"
                 android:text="username"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,24 +158,24 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="EMAIL"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/edittext_email_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-4dp"
-                android:layout_marginTop="6dp"
+                android:enabled="false"
                 android:fontFamily="@font/lato"
                 android:hint="Email"
+                android:paddingBottom="20dp"
                 android:text="hoangdinh@gmail.com"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="6dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/editProfile_container1"
@@ -160,20 +185,22 @@
                     android:fontFamily="@font/lato_bold"
                     android:text="PASSWORD"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
 
                 <EditText
                     android:id="@+id/edittext_password_editProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/editProfile_container1"
                     android:layout_marginLeft="-4dp"
+                    android:enabled="false"
                     android:fontFamily="@font/lato"
                     android:inputType="textPassword"
+                    android:paddingBottom="20dp"
                     android:text="........"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:layout_below="@+id/editProfile_container1"/>
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/button_changePassword_editProfile"
@@ -181,10 +208,10 @@
                     android:layout_height="24dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_edit">
-
-                </ImageView>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_edit" />
             </RelativeLayout>
 
             <TextView
@@ -194,19 +221,20 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="PHONE NUMBER"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/edittext_phoneNumber_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-4dp"
-                android:layout_marginTop="6dp"
                 android:fontFamily="@font/lato"
                 android:hint="Phone number"
+                android:inputType="phone"
+                android:paddingBottom="20dp"
                 android:text="0123 456 789"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -215,11 +243,12 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="GENDER"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <RadioGroup
+                android:id="@+id/rdog_gender_editProfile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginLeft="-4dp"
                 android:orientation="horizontal">
 
@@ -227,28 +256,47 @@
                     android:id="@+id/rdo_male_editProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:fontFamily="@font/lato"
                     android:paddingLeft="10dp"
-                    android:text="Male" />
+                    android:text="Male"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <RadioButton
                     android:id="@+id/rdo_female_editProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:fontFamily="@font/lato"
+                    android:gravity="center"
                     android:paddingLeft="10dp"
-                    android:text="Female" />
+                    android:text="Female"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <RadioButton
                     android:id="@+id/rdo_other_editProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:fontFamily="@font/lato"
                     android:paddingLeft="10dp"
-                    android:text="Other" />
+                    android:text="Other"
+                    android:textSize="12sp" />
             </RadioGroup>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save_editProfile"
@@ -256,9 +304,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="22dp"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato_bold"
             android:text="SAVE"
             app:cornerRadius="10dp" />
-
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

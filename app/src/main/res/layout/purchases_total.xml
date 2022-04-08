@@ -7,11 +7,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-3dp"
+        android:layout_marginTop="-1dp"
         android:layout_marginBottom="6dp"
         android:layout_toLeftOf="@id/textview_totalPurchases"
         android:fontFamily="@font/lato_bold"
         android:text="Total:"
+        android:textSize="12sp"
         android:textColor="@color/black" />
 
     <TextView
@@ -19,11 +20,12 @@
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-3dp"
+        android:layout_marginTop="-1dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/lato_bold"
         android:gravity="right"
         android:text="$245"
+        android:textSize="12sp"
         android:textColor="@color/price" />
 
 </RelativeLayout>

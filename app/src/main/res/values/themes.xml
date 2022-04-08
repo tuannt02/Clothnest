@@ -16,7 +16,7 @@
     </style>
 
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
