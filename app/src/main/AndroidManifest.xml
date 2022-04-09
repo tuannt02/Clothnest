@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".TestActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
         <activity
