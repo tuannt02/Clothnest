@@ -53,7 +53,6 @@ public class EditProfileActivity extends AppCompatActivity {
         avatar = findViewById(R.id.imageview_avatar_editProfile);
         fullName = findViewById(R.id.edittext_fullname_editProfile);
         dob = findViewById(R.id.edittext_dateOfBirth_editProfile);
-        username = findViewById(R.id.edittext_username_editProfile);
         email = findViewById(R.id.edittext_email_editProfile);
         password = findViewById(R.id.edittext_phoneNumber_editProfile);
 //        male = findViewById(R.id.rdo_male_editProfile);
