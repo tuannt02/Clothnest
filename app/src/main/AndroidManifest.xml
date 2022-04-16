@@ -23,7 +23,6 @@
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
             android:name=".SplashScreen"
             android:theme="@style/SplashScreen"
             android:noHistory="true"
@@ -57,12 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".AddAddressActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddressBookActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
