@@ -134,28 +134,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/lato_bold"
-                android:text="USERNAME"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-            <EditText
-                android:id="@+id/edittext_username_editProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
-                android:enabled="false"
-                android:fontFamily="@font/lato"
-                android:hint="Username"
-                android:paddingBottom="20dp"
-                android:text="username"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="@font/lato_bold"
                 android:text="EMAIL"
                 android:textColor="@color/black"
                 android:textSize="12sp" />

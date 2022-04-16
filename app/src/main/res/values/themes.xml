@@ -20,4 +20,9 @@
         <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
+    <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
 </resources>
