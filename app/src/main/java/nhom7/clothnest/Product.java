@@ -12,4 +12,20 @@ public class Product {
         this.regularCost = regularCost;
         this.discount = discount;
     }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getProductImage() {
+        return productImage;
+    }
+
+    public String getRegularCost() {
+        return regularCost;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
 }

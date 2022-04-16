@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "934053417737",
+    "project_id": "clothnest-da508",
+    "storage_bucket": "clothnest-da508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934053417737:android:74771983aa3234dab039d8",
+        "android_client_info": {
+          "package_name": "nhom7.clothnest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934053417737-5l9lqub2jvhf94n0fms2clbjg1kbgbh9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHxbOhY91N4YValw7kwMtCLXj-_h2-gfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934053417737-5l9lqub2jvhf94n0fms2clbjg1kbgbh9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

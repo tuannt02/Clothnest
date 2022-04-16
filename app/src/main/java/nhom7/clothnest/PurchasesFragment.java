@@ -44,7 +44,7 @@ public class PurchasesFragment extends Fragment {
 
         // purchase 1
         ArrayList<PurchaseItem> purchaseItems = new ArrayList<>();
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 345d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 2, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 345d));
         purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 342d));
         purchases.add(new Purchase(purchaseItems));
 

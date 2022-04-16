@@ -1,6 +1,8 @@
 package nhom7.clothnest;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String fullName, province, district, ward, detail, phoneNumber;
 
     public Address(String fullName, String province, String district, String ward, String detail, String phoneNumber) {

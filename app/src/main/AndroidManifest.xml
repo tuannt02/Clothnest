@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nhom7.clothnest">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +24,9 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:name=".SplashScreen"
+            android:theme="@style/SplashScreen"
+            android:noHistory="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +34,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GovernmentApprovalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ImprintActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TermsAndConditionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddressBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"

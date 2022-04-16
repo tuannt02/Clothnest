@@ -17,12 +17,12 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:paddingHorizontal="30dp"
-            app:menu="@menu/bottom_navigation_menu"
-            android:elevation="4dp"
             android:layout_alignParentBottom="true"
+            android:elevation="4dp"
+            android:paddingHorizontal="30dp"
             app:itemBackground="@drawable/bottom_navigation_selector"
-            app:labelVisibilityMode="unlabeled"/>
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_navigation_menu" />
 
     </RelativeLayout>
 

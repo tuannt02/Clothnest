@@ -13,8 +13,8 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
             app:cardCornerRadius="14dp">
 
             <ImageView
@@ -22,9 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
+                android:contentDescription="product image"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sample"
-                android:contentDescription="product image"/>
+                android:src="@drawable/sample" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
@@ -39,7 +39,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_black"
                 android:text="Áo Polo Vải Pique Co Giãn Ngắn Tay"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/purchases_item_date"
@@ -57,53 +63,63 @@
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/purchases_item_color"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="Color: COL31 WHITE"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/purchases_item_size"
+                    <TextView
+                        android:id="@+id/purchases_item_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="Color: WHITE"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/purchases_item_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="$245"
+                        android:textColor="@color/price"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/lato"
-                    android:text="Size: WOMEN M"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/purchases_item_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="Size: L"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/purchases_item_qty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="Qty: 1"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/purchases_item_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="$245"
-                    android:textColor="@color/price"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/purchases_item_qty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="97dp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="Qty: 1"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/purchases_item_review"
@@ -115,11 +131,11 @@
                 android:paddingVertical="6dp"
                 android:text="WRITE A REVIEW"
                 android:textColor="@color/black"
-                android:textSize="12dp" />
-
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>
 
-
 </RelativeLayout>
+
+

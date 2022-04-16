@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new SearchFragment();
                         break;
                     case R.id.nav_wishlist:
+                        selectedFragment = new WishlistFragment();
                         break;
                     case R.id.nav_profile:
                         selectedFragment = new ProfileFragment();

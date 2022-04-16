@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fillViewport="true"
     tools:context=".SettingsFragment">
 
     <LinearLayout
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
                 android:gravity="center_vertical"
                 android:text="PERSONAL INFORMATION"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
                 android:gravity="center_vertical"
                 android:text="ADDRESS BOOK"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -93,7 +94,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,7 +104,7 @@
                 android:gravity="center_vertical"
                 android:text="NOTIFICATIONS"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -133,7 +134,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,7 +144,7 @@
                 android:gravity="center_vertical"
                 android:text="TERMS AND CONDITIONS"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -169,7 +170,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -179,7 +180,7 @@
                 android:gravity="center_vertical"
                 android:text="PRIVACY POLICY"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -205,7 +206,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -215,7 +216,7 @@
                 android:gravity="center_vertical"
                 android:text="IMPRINT"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -241,7 +242,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -251,7 +252,44 @@
                 android:gravity="center_vertical"
                 android:text="GOVERNMENT APPROVAL"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_right_arrow" />
+
+        </LinearLayout>
+
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            app:dividerColor="@color/dividerColor" />
+
+        // about
+
+        <LinearLayout
+            android:id="@+id/settings_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center_vertical"
+                android:text="ABOUT"
+                android:textColor="@color/black"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -275,6 +313,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/lato"
+            android:textSize="12sp"
             android:text="Ver 1.0"
             android:textColor="#ABABAB" />
 
@@ -292,8 +331,10 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/lato_bold"
             app:cornerRadius="10dp"
+            android:textSize="12sp"
+            android:layout_marginBottom="10dp"
             android:text="LOG OUT" />
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
