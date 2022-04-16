@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".ProductDetail_Activity"
+            android:exported="false" >
+
+        </activity>
+        <activity
             android:name=".AddressBookActivity"
             android:exported="false" />
         <activity

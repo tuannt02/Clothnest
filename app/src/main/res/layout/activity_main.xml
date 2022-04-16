@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:clipChildren="false">
+    android:clipChildren="false"
+    tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="75dp"/>
+        android:layout_marginBottom="75dp"
+        android:background="#F9F9F9" />
 
     <include
         android:id="@+id/bottom_navigation_view_main"
