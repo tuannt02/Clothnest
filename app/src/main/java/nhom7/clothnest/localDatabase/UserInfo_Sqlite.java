@@ -18,8 +18,8 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
 
-    public static final String EMAIL = "";
-    public static final String PASSWORD = "";
+    public static String EMAIL = "";
+    public static String PASSWORD = "";
 
 
     public UserInfo_Sqlite(@Nullable Context context) {
@@ -43,7 +43,7 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void initAccount(String email, String password) {
+    public void initAccount(String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -52,7 +52,7 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, cv);
     }
 
-    Cursor readAllData() {
+    public void setInfoUser() {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -60,10 +60,13 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
         if(db!=null)    {
             cusor = db.rawQuery(query, null);
         }
-        return cusor;
+
+        cusor.moveToFirst();
+        EMAIL = cusor.getString(0);
+        PASSWORD = cusor.getString(1);
     }
 
-    void deleteTableAcc()   {
+    public void deleteTableAcc()   {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TABLE_NAME;
         db.execSQL(query);

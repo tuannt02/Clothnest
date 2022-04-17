@@ -13,6 +13,8 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+
 public class SplashScreen extends AppCompatActivity {
 
     @Override
@@ -40,11 +42,17 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void reAuthentication(FirebaseUser user) {
+
+        // Get infouser past
+        UserInfo_Sqlite userInfo_sqlite = new UserInfo_Sqlite(SplashScreen.this);
+        userInfo_sqlite.setInfoUser();
+
+
         // Get auth credentials from the user for re-authentication. The example below shows
         // email and password credentials but there are multiple possible providers,
         // such as GoogleAuthProvider or FacebookAuthProvider.
         AuthCredential credential = EmailAuthProvider
-                .getCredential(user.getEmail(), "aloha");
+                .getCredential(UserInfo_Sqlite.EMAIL, UserInfo_Sqlite.PASSWORD);
 
         // Prompt the user to re-provide their sign-in credentials
         user.reauthenticate(credential)
@@ -52,6 +60,8 @@ public class SplashScreen extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
+
+
                             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                             startActivity(intent);
                         }

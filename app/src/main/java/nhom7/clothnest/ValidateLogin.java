@@ -12,6 +12,7 @@ public class ValidateLogin {
     public static final String ERROR_CODE2 = "Invalid email. Please re-enter";
     public static final String ERROR_CODE3 = "Min 8 characters, 1 lowercase character," +
             " 1 upppercase character and 1 number";
+    public static final String ERROR_CODE4 = "Email or Password is incorrect. Please re-enter";
 
     public static boolean isEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
