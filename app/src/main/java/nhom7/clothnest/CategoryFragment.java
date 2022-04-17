@@ -46,7 +46,7 @@ public class CategoryFragment extends Fragment {
         listView.setAdapter(categoryAdapter);
     }
     private void ReplaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.search_frame, fragment);
         transaction.commit();
     }

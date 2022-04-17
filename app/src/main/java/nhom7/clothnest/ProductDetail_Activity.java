@@ -1,6 +1,7 @@
 package nhom7.clothnest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
@@ -29,10 +30,16 @@ public class ProductDetail_Activity extends AppCompatActivity {
 
     Button btnDescription, btnMaterial, btnReviews;
 
+    // Bo sung
+    NestedScrollView nestedScrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+        nestedScrollView.setNestedScrollingEnabled(true);
 
         viewPager = findViewById(R.id.viewPage);
         circleIndicator = findViewById(R.id.circleIndicator);
