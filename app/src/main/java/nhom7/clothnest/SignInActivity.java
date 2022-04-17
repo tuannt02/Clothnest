@@ -120,6 +120,8 @@ public class SignInActivity extends AppCompatActivity {
                             userInfo_sqlite.deleteTableAcc();
                             userInfo_sqlite.initAccount(txtEmail, txtPw);
 
+                            userInfo_sqlite.setInfoUser();
+
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);
                             finishAffinity();

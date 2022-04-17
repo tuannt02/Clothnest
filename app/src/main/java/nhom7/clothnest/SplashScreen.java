@@ -31,46 +31,16 @@ public class SplashScreen extends AppCompatActivity {
             // User is not logged in
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
+            finish();
         }
         else    {
             // User logged in
             // Some security-sensitive actions—such as deleting an account,
             // setting a primary email address, and changing a password -> reAuthen
-            reAuthentication(user);
+            ValidateLogin.reAuthentication(user, SplashScreen.this);
             finish();
         }
     }
 
-    private void reAuthentication(FirebaseUser user) {
 
-        // Get infouser past
-        UserInfo_Sqlite userInfo_sqlite = new UserInfo_Sqlite(SplashScreen.this);
-        userInfo_sqlite.setInfoUser();
-
-
-        // Get auth credentials from the user for re-authentication. The example below shows
-        // email and password credentials but there are multiple possible providers,
-        // such as GoogleAuthProvider or FacebookAuthProvider.
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(UserInfo_Sqlite.EMAIL, UserInfo_Sqlite.PASSWORD);
-
-        // Prompt the user to re-provide their sign-in credentials
-        user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
-
-
-                            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                        else    {
-                            Intent intent = new Intent(SplashScreen.this, SignInActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-
-                });
-    }
 }

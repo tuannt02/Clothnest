@@ -71,4 +71,13 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
         String query = "DELETE FROM " + TABLE_NAME;
         db.execSQL(query);
     }
+
+    public void updateTableAcc(String newPassword)    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_PASSWORD + " = " + newPassword +
+                " WHERE " + COLUMN_EMAIL + " = " + EMAIL;
+        db.execSQL(query);
+
+
+    }
 }
