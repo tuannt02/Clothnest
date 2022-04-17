@@ -20,7 +20,7 @@ import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 
 public class SignInActivity extends AppCompatActivity {
 
-    TextView btnNavSignUp, btnForgetPw;
+    TextView btnNavSignUp, btnNavForgetPw;
     TextInputLayout input_email, input_pw;
     ImageButton btnNext;
     UserInfo_Sqlite userInfo_sqlite;
@@ -37,7 +37,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void initUi()   {
         btnNavSignUp = findViewById(R.id.sign_in_btn_nav_sign_up);
-        btnForgetPw = findViewById(R.id.sign_in_btn_forget_pw);
+        btnNavForgetPw = findViewById(R.id.sign_in_btn_nav_forget_pw);
         input_email = findViewById(R.id.sign_in_input_email);
         input_pw = findViewById(R.id.sign_in_input_password);
         btnNext = findViewById(R.id.sign_in_btn_next);
@@ -48,6 +48,14 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnNavForgetPw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignInActivity.this, ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         });
