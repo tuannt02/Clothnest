@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,9 +16,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.concurrent.TimeUnit;
-
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.util.ValidateLogin;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     TextInputLayout currentPassword, newPassword, confirmPassword;
@@ -149,6 +144,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             // Update local db
                             UserInfo_Sqlite userInfo_sqlite = new UserInfo_Sqlite(ChangePasswordActivity.this);
                             userInfo_sqlite.updateTableAcc(newPassword);
+                            userInfo_sqlite.setInfoUser();
 
                             confirmPassword.setError(null);
 

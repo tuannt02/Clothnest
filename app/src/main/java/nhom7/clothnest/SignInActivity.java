@@ -14,9 +14,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.util.ValidateLogin;
 
 public class SignInActivity extends AppCompatActivity {
 

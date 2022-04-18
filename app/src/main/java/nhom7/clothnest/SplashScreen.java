@@ -1,19 +1,14 @@
 package nhom7.clothnest;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.util.ValidateLogin;
 
 public class SplashScreen extends AppCompatActivity {
 

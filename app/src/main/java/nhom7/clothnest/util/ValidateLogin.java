@@ -1,4 +1,4 @@
-package nhom7.clothnest;
+package nhom7.clothnest.util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nhom7.clothnest.MainActivity;
+import nhom7.clothnest.SignInActivity;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 
 public class ValidateLogin {

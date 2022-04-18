@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import nhom7.clothnest.util.ValidateLogin;
+
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     TextInputLayout input_email;

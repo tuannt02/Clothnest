@@ -74,9 +74,11 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
 
     public void updateTableAcc(String newPassword)    {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_PASSWORD + " = " + newPassword +
-                " WHERE " + COLUMN_EMAIL + " = " + EMAIL;
-        db.execSQL(query);
+
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_PASSWORD, newPassword);
+
+        db.update(TABLE_NAME, cv, "email = ?", new String[]{EMAIL});
 
 
     }
