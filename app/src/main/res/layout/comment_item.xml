@@ -60,7 +60,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
@@ -101,7 +101,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="40dp"
             android:orientation="horizontal">
 
             <TextView
@@ -116,7 +116,7 @@
             android:id="@+id/comment_ProductComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/lato"
             android:text="Good product, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful" />

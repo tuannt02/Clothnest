@@ -7,98 +7,71 @@
     android:orientation="vertical"
     tools:context=".SearchFragment">
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawerLayoutSearch"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:backgroundTint="#F3F3F3"
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp">
+                <ImageView
+                    android:id="@+id/btnSearch"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_search" />
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="300dp"
-                        android:layout_height="40dp"
-                        android:backgroundTint="#F3F3F3"
-                        app:cardCornerRadius="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/btnSearch"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
-                                android:adjustViewBounds="true"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/ic_search" />
-
-                            <EditText
-                                android:id="@+id/etSearch"
-                                android:layout_width="200dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dp" />
-
-                            <ImageView
-                                android:id="@+id/btnFilter"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@drawable/filter" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="30dp"
-                        android:backgroundTint="#F3F3F3"
-                        app:cardCornerRadius="10dp">
-
-                        <ImageView
-                            android:id="@+id/btnCart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@drawable/cart" />
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-                <FrameLayout
-                    android:id="@+id/search_frame"
-                    android:layout_width="match_parent"
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="20dp"/>
-            </LinearLayout>
+                    android:layout_marginLeft="10dp" />
 
-            <com.google.android.material.navigation.NavigationView
-                android:id="@+id/filter_navigation_menu"
+                <ImageView
+                    android:id="@+id/btnFilter"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/filter" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#F3F3F3"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:id="@+id/btnCart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:menu="@menu/filter_navigation_menu" />
+                android:layout_gravity="center"
+                android:src="@drawable/cart" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-        </LinearLayout>
-    </androidx.drawerlayout.widget.DrawerLayout>
-
+    <FrameLayout
+        android:id="@+id/search_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"/>
 
 </LinearLayout>

@@ -68,6 +68,6 @@
         android:id="@+id/groupThumbnail"
         layout="@layout/group_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

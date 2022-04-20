@@ -41,6 +41,17 @@ public class SearchProductsFragment extends Fragment {
                 startActivity(new Intent(getContext(), ProductDetail_Activity.class));
             }
         });
+        gridView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         return mView;
     }

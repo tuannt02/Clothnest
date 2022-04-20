@@ -60,10 +60,10 @@ public class CommentFragment extends Fragment {
     private void GetComment() {
         commentArrayList = new ArrayList<>();
         commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
+        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 3, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
+        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 2, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
+        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 1, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
+        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 2, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
         commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
 
         commentAdapter = new CommentAdapter(getContext(), R.layout.comment_item, commentArrayList);
