@@ -12,6 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".ProductDetail_Activity"
+            android:exported="false" >
+
+        </activity>
+        <activity
+            android:name=".AddressBookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashScreen"
             android:noHistory="true"
@@ -45,12 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".AddAddressActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddressBookActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

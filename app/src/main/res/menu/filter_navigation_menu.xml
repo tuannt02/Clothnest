@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Brand">
+        <menu>
+            <item
+                android:id="@+id/itemBrand1"
+                android:checkable="true"
+                android:title="STATE" />
+
+            <item
+                android:id="@+id/itemBrand2"
+                android:checkable="true"
+                android:title="BARDOT" />
+
+            <item
+                android:id="@+id/itemBrand3"
+                android:checkable="true"
+                android:title="ALFANI" />
+
+            <item
+                android:id="@+id/itemBrand4"
+                android:checkable="true"
+                android:title="CECE" />
+
+            <item
+                android:id="@+id/itemBrand5"
+                android:checkable="true"
+                android:title="DONNA RICCO" />
+        </menu>
+    </item>
+</menu>

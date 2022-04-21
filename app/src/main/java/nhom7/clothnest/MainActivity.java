@@ -17,11 +17,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
-//    Load product lên GridView
-//    GridView gridView;
-//    ArrayList<Product> productArrayList;
-//    GridViewApdater gridViewApdater;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, HomeFragment.class, null).commit();
         setupBottomNavigationView();
-//        gridView = (GridView)findViewById(R.id.gridview);
-//        GetProduct();
     }
 
-    private void setupBottomNavigationView() {
+    private void setupBottomNavigationView(){
         Log.i("setupBnv", "Setup Bottom Navigation View");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
@@ -48,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new HomeFragment();
                         break;
                     case R.id.nav_search:
+                        selectedFragment = new SearchFragment();
                         break;
                     case R.id.nav_wishlist:
                         selectedFragment = new WishlistFragment();
@@ -56,27 +50,9 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new ProfileFragment();
                         break;
                 }
-
                 if (selectedFragment != null)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-
-                return true;
-            }
+                return true;            }
         });
     }
-//    Thêm sản phẩm vào GridView
-//    public void GetProduct(){
-//        productArrayList = new ArrayList<>();
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-//        gridViewApdater = new GridViewApdater(this, R.layout.thumbnail, productArrayList);
-//        gridView.setAdapter(gridViewApdater);
-//    }
 }
