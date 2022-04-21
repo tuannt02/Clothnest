@@ -40,22 +40,35 @@
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="40dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageview_avatar_editProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_avatar_default"
+                app:civ_border_color="@color/pri_col"
+                app:civ_border_width="2dp" />
 
             <ImageView
-                android:id="@+id/imageview_avatar_editProfile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/button_changeAvatar_editProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_toRightOf="@+id/imageview_avatar_editProfile"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sample_avatar" />
+                android:src="@drawable/ic_edit" />
 
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

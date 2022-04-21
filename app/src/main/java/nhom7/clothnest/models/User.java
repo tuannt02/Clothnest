@@ -1,5 +1,6 @@
 package nhom7.clothnest.models;
 
+import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -140,4 +142,49 @@ public class User {
 //
 //        return arrayList.get(0);
 //    }
+
+
+    public static void updateUserProfileAuthentication(String fullname, Uri uri)   {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) return;
+
+
+        UserProfileChangeRequest profileUpdates;
+
+        if(uri != null) {
+            profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(fullname)
+                    .setPhotoUri(uri)
+                    .build();
+        }
+        else    {
+            profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(fullname)
+                    .build();
+        }
+
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            System.out.println("Thanh cong");
+                        }
+                        else    {
+                            System.out.println("That bai");
+                        }
+                    }
+                });
+    }
+
+    public static void updateUserProfileRealtimeDB(User user)   {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dbReference = database.getReference(TABLE_NAME);
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+
+        String key = userInfo.getUid();
+        user.USER_ID = key;
+        dbReference.child(key).setValue(user);
+    }
 }
