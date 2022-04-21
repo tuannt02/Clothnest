@@ -40,22 +40,35 @@
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="40dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageview_avatar_editProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_avatar_default"
+                app:civ_border_color="@color/pri_col"
+                app:civ_border_width="2dp" />
 
             <ImageView
-                android:id="@+id/imageview_avatar_editProfile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/button_changeAvatar_editProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_toRightOf="@+id/imageview_avatar_editProfile"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sample_avatar" />
+                android:src="@drawable/ic_edit" />
 
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,18 +85,31 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edittext_fullname_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
+                app:hintEnabled="false"
+                app:errorEnabled="true"
+                >
 
-                android:fontFamily="@font/lato"
-                android:hint="Full name"
-                android:paddingBottom="20dp"
-                android:text="Hoang Dinh Anh Tuan"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-15dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/lato"
+                    android:inputType="textPersonName"
+                    android:text="Hoang Dinh Anh Tuan"
+                    android:textSize="12sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:hint="Full name"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -100,20 +126,33 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/edittext_dateOfBirth_editProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textview_container1"
-                    android:layout_marginLeft="-4dp"
-                    android:enabled="false"
-                    android:fontFamily="@font/lato"
-                    android:hint="Date of birth"
-                    android:inputType="date"
-                    android:paddingBottom="20dp"
-                    android:text="18 / 04 / 2002"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    app:hintEnabled="false"
+                    app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    android:layout_below="@+id/textview_container1"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/lato"
+                        android:inputType="text|date"
+                        android:layout_marginLeft="-15dp"
+                        android:text="18/ 04 / 2002"
+                        android:textSize="12sp"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:hint="Date of birth"
+                        android:enabled="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <ImageView
                     android:id="@+id/datepicker_editProfile"
@@ -201,18 +240,30 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edittext_phoneNumber_editProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
-                android:fontFamily="@font/lato"
-                android:hint="Phone number"
-                android:inputType="phone"
-                android:paddingBottom="20dp"
-                android:text="0123 456 789"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                app:hintEnabled="false"
+                app:errorEnabled="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-15dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/lato"
+                    android:inputType="phone"
+                    android:text="0123 456 789"
+                    android:textSize="12sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:hint="Phone number"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"

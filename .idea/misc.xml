@@ -79,6 +79,8 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/circle_button.xml" value="0.1785" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/circle_button_white.xml" value="0.1375" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_calendar.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_edit.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_search_fill.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_wishlist.xml" value="0.1375" />
@@ -88,10 +90,14 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/font/lato_bold.xml" value="0.20989583333333334" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/font/lato_font.xml" value="0.20989583333333334" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_address_book.xml" value="0.1796875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_change_password.xml" value="0.1796875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_edit_profile.xml" value="0.1796875" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_change_password.xml" value="0.22" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_forget_password.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_sign_in.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_test.xml" value="0.1796875" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_test_add_append.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/bottom_navigation_view.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_profile.xml" value="0.1796875" />
@@ -127,7 +133,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.4466666666666667" />
+        <option name="scale" value="0.22" />
       </ProjectState>
     </option>
   </component>

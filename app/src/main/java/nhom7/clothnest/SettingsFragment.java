@@ -11,10 +11,16 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SettingsFragment extends Fragment {
     LinearLayout personalInformation, termsAndConditions, privacyPolicy, imprint, governmentApproval, about;
+    Button btnLogout;
+
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -24,7 +30,9 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        return view;
     }
 
     @Override
@@ -32,6 +40,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupClickListener(view);
     }
+
 
     private void setupClickListener(View view) {
         // Set up click event cho cac danh muc
@@ -42,6 +51,8 @@ public class SettingsFragment extends Fragment {
         setupImprint(view);
         setupGovernmentApproval(view);
         setupAbout(view);
+        setupBtnLogout(view);
+
     }
 
     // Thiet lap About button
@@ -125,6 +136,20 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), GovernmentApprovalActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    // Thiet lap su kien onclick cho btn Logout
+    private void setupBtnLogout(View view)  {
+        btnLogout = view.findViewById(R.id.btn_Logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), SignInActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
     }
