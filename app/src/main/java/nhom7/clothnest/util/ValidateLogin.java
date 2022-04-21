@@ -33,7 +33,8 @@ public class ValidateLogin {
     public static final String ERROR_CODE7 = "The new password does not match the old password";
     public static final String ERROR_CODE8 = "A few things have been changed recently. " +
             "Please check again";
-
+    public static final String ERROR_CODE9 = "You must pick a date";
+    public static final String ERROR_CODE10 = "Phone number at least 10 digits";
 
     public static final String SUCCESS_CODE1 = "Submitted successfully! Please check your email";
     public static final String SUCCESS_CODE2 = "Your password has been updated";

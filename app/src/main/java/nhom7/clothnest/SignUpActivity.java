@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.ValidateLogin;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -122,6 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void onClickSignUp() {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        String txtFullname = input_fullname.getEditText().getText().toString().trim();
         String txtEmail = input_email.getEditText().getText().toString().trim();
         String txtPw = input_pw.getEditText().getText().toString().trim();
 
@@ -130,6 +132,11 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            // Create user on realtime db
+                            User user = new User(txtFullname, txtEmail, "", "", "");
+                            User.addAppendUser(user);
+
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(intent);

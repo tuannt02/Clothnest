@@ -19,15 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".SignInActivity"
-            android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".SplashScreen"
             android:exported="true"
@@ -41,7 +33,8 @@
         </activity>
         <activity
             android:name=".TestActivity"
-            android:exported="true" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
