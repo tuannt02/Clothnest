@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="35dp"
-    tools:context=".GovernmentApprovalActivity">
+    tools:context=".activities.GovernmentApprovalActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

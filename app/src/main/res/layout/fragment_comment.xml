@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/nestedScrollView"
-    tools:context=".CommentFragment">
+    tools:context=".fragments.CommentFragment">
 
     <ListView
         android:id="@+id/list_Comment"
