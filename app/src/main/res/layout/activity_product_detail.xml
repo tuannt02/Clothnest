@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#F9F9F9"
     android:id="@+id/nestedScrollView"
-    tools:context=".ProductDetail_Activity">
+    tools:context=".activities.ProductDetail_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"

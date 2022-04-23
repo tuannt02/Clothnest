@@ -14,8 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import nhom7.clothnest.MainActivity;
-import nhom7.clothnest.SignInActivity;
+import nhom7.clothnest.activities.MainActivity;
+import nhom7.clothnest.activities.SignInActivity;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 
 public class ValidateLogin {

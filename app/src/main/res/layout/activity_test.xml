@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TestActivity"
+    tools:context=".activities.TestActivity"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     >
