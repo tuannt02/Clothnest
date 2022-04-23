@@ -3,6 +3,8 @@
     package="nhom7.clothnest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,6 @@
         <activity
             android:name=".ProductDetail_Activity"
             android:exported="false" >
-
         </activity>
         <activity
             android:name=".AddressBookActivity"
@@ -23,10 +24,19 @@
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".SplashScreen"
-            android:theme="@style/SplashScreen"
+            android:exported="true"
             android:noHistory="true"
-            android:exported="true">
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +45,8 @@
         </activity>
         <activity
             android:name=".TestActivity"
-            android:exported="true" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
@@ -59,7 +70,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

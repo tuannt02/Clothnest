@@ -12,4 +12,6 @@
     <color name="background">#F3F3F3</color>
     <color name="price">#E45353</color>
     <color name="dividerColor">#B3B3B3</color>
+    <color name="shadowColor">#323131</color>
+    <color name="txtSuccess">#28a745</color>
 </resources>

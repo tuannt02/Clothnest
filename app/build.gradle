@@ -39,14 +39,15 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.google.firebase:firebase-database:20.0.4'
+    implementation platform('com.google.firebase:firebase-bom:29.3.1') // ThaiTuan
+    implementation 'com.google.firebase:firebase-auth' // Service Authentication_ThaiTuan
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    //Slider
-    implementation 'me.relex:circleindicator:2.1.6'
-    implementation 'com.github.bumptech.glide:glide:4.13.0'
-//    RoundedImage_ThaiTuan
-    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'me.relex:circleindicator:2.1.6' // Slider_ThanhTu
+    implementation 'com.makeramen:roundedimageview:2.3.0' //    RoundedImage_ThaiTuan
+    implementation 'com.github.bumptech.glide:glide:4.13.0' //  Load img from url_ThaiTuan
+    implementation 'de.hdodenhof:circleimageview:3.1.0' // Circle imgView_ThaiTuan
 }
