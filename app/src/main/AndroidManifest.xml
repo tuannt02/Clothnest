@@ -18,6 +18,9 @@
             android:exported="false" >
         </activity>
         <activity
+            android:name=".activities.CartActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddressBookActivity"
             android:exported="false" />
         <activity

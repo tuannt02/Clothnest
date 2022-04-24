@@ -2,16 +2,15 @@ package nhom7.clothnest.models;
 
 import java.io.Serializable;
 
-public class PurchaseItem implements Serializable {
+public class CartItem implements Serializable {
     int image, qty;
-    String title, purchaseDate, color, size;
+    String title, color, size;
     Double price;
 
-    public PurchaseItem(int image, int qty, String title, String purchaseDate, String color, String size, Double price) {
+    public CartItem(int image, int qty, String title, String color, String size, Double price) {
         this.image = image;
         this.qty = qty;
         this.title = title;
-        this.purchaseDate = purchaseDate;
         this.color = color;
         this.size = size;
         this.price = price;
@@ -39,14 +38,6 @@ public class PurchaseItem implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(String purchaseDate) {
-        this.purchaseDate = purchaseDate;
     }
 
     public String getColor() {

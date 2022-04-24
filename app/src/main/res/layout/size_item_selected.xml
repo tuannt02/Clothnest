@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="20dp"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_rectangle2"
+    >
+
+
+    <TextView
+        android:id="@+id/sizeSeleted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/black"
+        android:text="S" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/sizeSeleted"
+        android:background="@color/black" />
+
+    <ImageView
+        android:id="@+id/img_drop_down_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:layout_toRightOf="@id/sizeSeleted"
+        android:src="@drawable/ic_drop_down" />
+
+
+</RelativeLayout>
