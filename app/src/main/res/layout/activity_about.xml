@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="14dp"
             android:fontFamily="@font/lato_bold"
-            android:text="ADD NEW ADDRESS"
+            android:text="ABOUT"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="14sp" />
