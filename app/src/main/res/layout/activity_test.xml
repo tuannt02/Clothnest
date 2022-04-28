@@ -7,9 +7,12 @@
     android:orientation="vertical"
     tools:context=".activities.TestActivity"
     android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    >
+    android:layout_marginEnd="16dp">
 
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/container_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

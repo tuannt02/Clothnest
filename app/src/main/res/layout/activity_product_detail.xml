@@ -56,7 +56,7 @@
 
 
             <ImageButton
-                android:id="@+id/productDetail_returnButton"
+                android:id="@+id/productDetail_returnBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="top"

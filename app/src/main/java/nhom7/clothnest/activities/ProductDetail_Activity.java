@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ProductDetail_Activity extends AppCompatActivity {
     GridViewApdater gridViewApdater;
 
     Button btnDescription, btnMaterial, btnReviews;
+    ImageButton btnReturn;
 
     // Bo sung
     NestedScrollView nestedScrollView;
@@ -43,34 +45,8 @@ public class ProductDetail_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
-        nestedScrollView = findViewById(R.id.nestedScrollView);
-        nestedScrollView.setNestedScrollingEnabled(true);
-
-        viewPager = findViewById(R.id.viewPage);
-        circleIndicator = findViewById(R.id.circleIndicator);
-        gridView = findViewById(R.id.gridview);
-        btnDescription = findViewById(R.id.productDetail_DescriptionBtn);
-        btnMaterial = findViewById(R.id.productDetail_MaterialBtn);
-        btnReviews = findViewById(R.id.productDetail_ReviewsBtn);
-
-        btnDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((TextView)findViewById(R.id.productDetail_Information)).setText("Description");
-            }
-        });        btnMaterial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((TextView)findViewById(R.id.productDetail_Information)).setText("Material");
-            }
-        });
-        btnReviews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ReplaceFragment(new CommentFragment());
-            }
-        });
-
+        Reference();
+        SetEventClick();
         GetProduct();
         ActiveSlider();
 
@@ -108,4 +84,41 @@ public class ProductDetail_Activity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.productDetail_frame, fragment);
         transaction.commit();    }
+    public void Reference(){
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+        nestedScrollView.setNestedScrollingEnabled(true);
+
+        viewPager = findViewById(R.id.viewPage);
+        circleIndicator = findViewById(R.id.circleIndicator);
+        gridView = findViewById(R.id.gridview);
+        btnDescription = findViewById(R.id.productDetail_DescriptionBtn);
+        btnMaterial = findViewById(R.id.productDetail_MaterialBtn);
+        btnReviews = findViewById(R.id.productDetail_ReviewsBtn);
+        btnReturn = findViewById(R.id.productDetail_returnBtn);
+    }
+    public void SetEventClick(){
+        btnDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((TextView)findViewById(R.id.productDetail_Information)).setText("Description");
+            }
+        });        btnMaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((TextView)findViewById(R.id.productDetail_Information)).setText("Material");
+            }
+        });
+        btnReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReplaceFragment(new CommentFragment());
+            }
+        });
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
 }
