@@ -8,13 +8,13 @@
     <LinearLayout
         android:id="@+id/purchases_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="136dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="115dp"
-            android:layout_height="115dp"
+            android:layout_width="132dp"
+            android:layout_height="132dp"
             app:cardCornerRadius="14dp">
 
             <ImageView
@@ -38,9 +38,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_black"
+                android:lines="2"
                 android:text="Áo Polo Vải Pique Co Giãn Ngắn Tay"
                 android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -51,11 +52,11 @@
                 android:id="@+id/purchases_item_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/lato"
                 android:text="Purchase date: 21/03/2022"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,7 +77,7 @@
                         android:fontFamily="@font/lato"
                         android:text="Color: WHITE"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/purchases_item_price"
@@ -86,7 +87,7 @@
                         android:fontFamily="@font/lato_bold"
                         android:text="$245"
                         android:textColor="@color/price"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -102,7 +103,7 @@
                         android:fontFamily="@font/lato"
                         android:text="Size: L"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/purchases_item_qty"
@@ -112,7 +113,7 @@
                         android:fontFamily="@font/lato_bold"
                         android:text="Qty: 1"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -125,7 +126,7 @@
                 android:id="@+id/purchases_item_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/purchases_item_review_background"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="6dp"
