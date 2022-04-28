@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.util.ValidateLogin;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     TextView txtSuccess;
     ImageButton btnNext;
     LinearLayout btnNavSignIn;
+    CustomProgressBar customProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         txtSuccess = findViewById(R.id.txt_success_forget_pw);
         btnNext = findViewById(R.id.forget_pw_btn_next);
         btnNavSignIn = findViewById(R.id.forget_pw_btn_nav_sign_in);
+        customProgressBar = new CustomProgressBar(ForgetPasswordActivity.this);
     }
 
     private void initListener() {
@@ -88,11 +91,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
+        customProgressBar.show();
         auth.sendPasswordResetEmail(txtEmail)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            customProgressBar.dismiss();
                             input_email.setError(null);
                             txtSuccess.setText(ValidateLogin.SUCCESS_CODE1);
                         }
