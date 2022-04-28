@@ -68,7 +68,7 @@ public class CartActivity extends AppCompatActivity {
     private void initUi()   {
         lv = (ListView) findViewById(R.id.listview_cart);
         btnBack = findViewById(R.id.btnBackCart);
-        gridView = findViewById(R.id.gridview);
+        gridView = findViewById(R.id.gridview_GroupThumbnail);
 
     }
 

@@ -33,9 +33,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_home, container, false);
-        gridView = v.findViewById(R.id.gridview);
+        gridView = v.findViewById(R.id.gridview_GroupThumbnail);
         includeView = v.findViewById(R.id.group_sales);
-        gridView1 = includeView.findViewById(R.id.gridview);
+        gridView1 = includeView.findViewById(R.id.gridview_GroupThumbnail);
         containersilder=v.findViewById(R.id.container_slider);
         GetProduct();
         productSlider = new ProductSlider(getContext(),containersilder,productArrayList);

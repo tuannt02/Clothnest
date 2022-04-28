@@ -80,17 +80,19 @@ public class ProductDetail_Activity extends AppCompatActivity {
         viewPager.setAdapter(sliderAdapter);
         circleIndicator.setViewPager(viewPager);
         sliderAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());    }
+
     public void ReplaceFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.productDetail_frame, fragment);
         transaction.commit();    }
+
     public void Reference(){
         nestedScrollView = findViewById(R.id.nestedScrollView);
         nestedScrollView.setNestedScrollingEnabled(true);
 
         viewPager = findViewById(R.id.viewPage);
         circleIndicator = findViewById(R.id.circleIndicator);
-        gridView = findViewById(R.id.gridview);
+        gridView = findViewById(R.id.gridview_GroupThumbnail);
         btnDescription = findViewById(R.id.productDetail_DescriptionBtn);
         btnMaterial = findViewById(R.id.productDetail_MaterialBtn);
         btnReviews = findViewById(R.id.productDetail_ReviewsBtn);
