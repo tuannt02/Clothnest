@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import nhom7.clothnest.R;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 import nhom7.clothnest.util.ValidateLogin;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     TextInputLayout currentPassword, newPassword, confirmPassword;
@@ -26,6 +27,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     ImageView btnBack;
     TextView txtSuccessChangePassword;
     MaterialButton btnSave;
+    CustomProgressBar customProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.imageview_back_changePassword);
         txtSuccessChangePassword = findViewById(R.id.txt_success_change_pw);
         btnSave = findViewById(R.id.button_save_changePassword);
+        customProgressBar = new CustomProgressBar(ChangePasswordActivity.this);
     }
 
     private void setupBtnBack() {
@@ -136,11 +139,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void onClickChangePassword(String newPassword) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        customProgressBar.show();
         user.updatePassword(newPassword)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            customProgressBar.dismiss();
 
                             // Update local db
                             UserInfo_Sqlite userInfo_sqlite = new UserInfo_Sqlite(ChangePasswordActivity.this);

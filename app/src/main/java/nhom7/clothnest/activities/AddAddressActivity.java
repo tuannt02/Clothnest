@@ -26,6 +26,7 @@ import nhom7.clothnest.models.Province;
 import nhom7.clothnest.R;
 import nhom7.clothnest.util.StringNormalizer;
 import nhom7.clothnest.models.Ward;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +44,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private int provinceCode = -1, districtCode = -1;
     Retrofit retrofit;
     OpenProvincesAPI openProvincesAPI;
+    CustomProgressBar customProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
     private void initDataForComboboxes() {
+        customProgressBar.show();
         initDataForProvinceCombobox();
     }
 
@@ -116,6 +119,7 @@ public class AddAddressActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Province>>() {
             @Override
             public void onResponse(Call<ArrayList<Province>> call, Response<ArrayList<Province>> response) {
+                customProgressBar.dismiss();
                 if (!response.isSuccessful()) {
                     Log.d("addAddressActivity", "Response <province> is unsuccessful: " + response.code());
                     return;
@@ -144,25 +148,30 @@ public class AddAddressActivity extends AppCompatActivity {
                 for (Province p: provinces) {
                     if (province.getText().toString().compareTo(p.getName()) == 0) {
                         provinceCode = p.getCode();
+                        customProgressBar.show();
                         initDataForDistrictCombobox();
                         break;
                     }
                 }
 
-                province.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        provinceCode = provinces.get(i).getCode();
-                        district.getText().clear();
-                        ward.getText().clear();
-                        initDataForDistrictCombobox();
-                    }
-                });
             }
 
             @Override
             public void onFailure(Call<ArrayList<Province>> call, Throwable t) {
+                customProgressBar.dismiss();
                 Log.d("addAddressActivity", "Call API <province> failed: " + t.toString());
+            }
+        });
+
+        // set on province selection
+        province.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                provinceCode = provinces.get(i).getCode();
+                district.getText().clear();
+                ward.getText().clear();
+                customProgressBar.show();
+                initDataForDistrictCombobox();
             }
         });
     }
@@ -177,6 +186,7 @@ public class AddAddressActivity extends AppCompatActivity {
         call.enqueue(new Callback<Province>() {
             @Override
             public void onResponse(Call<Province> call, Response<Province> response) {
+                customProgressBar.dismiss();
                 if (!response.isSuccessful()) {
                     Log.d("addAddressActivity", "Response <district> is unsuccessful: " + response.code());
                     return;
@@ -197,24 +207,29 @@ public class AddAddressActivity extends AppCompatActivity {
                 for (District d: districts) {
                     if (district.getText().toString().compareTo(d.getName()) == 0) {
                         districtCode = d.getCode();
+                        customProgressBar.show();
                         initDataForWardCombobox();
                         break;
                     }
                 }
 
-                district.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        districtCode = districts.get(i).getCode();
-                        ward.getText().clear();
-                        initDataForWardCombobox();
-                    }
-                });
             }
 
             @Override
             public void onFailure(Call<Province> call, Throwable t) {
+                customProgressBar.dismiss();
                 Log.d("addAddressActivity", "Call API <district> failed: " + t.toString());
+            }
+        });
+
+        // set on district selection
+        district.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                districtCode = districts.get(i).getCode();
+                ward.getText().clear();
+                customProgressBar.show();
+                initDataForWardCombobox();
             }
         });
     }
@@ -229,6 +244,7 @@ public class AddAddressActivity extends AppCompatActivity {
         call.enqueue(new Callback<District>() {
             @Override
             public void onResponse(Call<District> call, Response<District> response) {
+                customProgressBar.dismiss();
                 if (!response.isSuccessful()) {
                     Log.d("addAddressActivity", "Response <ward> is unsuccessful: " + response.code());
                     return;
@@ -248,6 +264,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<District> call, Throwable t) {
+                customProgressBar.dismiss();
                 Log.d("addAddressActivity", "Call API <ward> failed: " + t.toString());
             }
         });
@@ -263,6 +280,7 @@ public class AddAddressActivity extends AppCompatActivity {
         ward = findViewById(R.id.combobox_ward_addAddress);
         btnDelete = findViewById(R.id.button_delete_addAddress);
         btnSave = findViewById(R.id.button_save_addAddress);
+        customProgressBar = new CustomProgressBar(this);
     }
 
     private String getViewText(EditText view) {

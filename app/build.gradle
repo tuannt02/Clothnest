@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0' //    RoundedImage_ThaiTuan
     implementation 'com.github.bumptech.glide:glide:4.13.0' //  Load img from url_ThaiTuan
     implementation 'de.hdodenhof:circleimageview:3.1.0' // Circle imgView_ThaiTuan
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0' // Customize Progressbar _ThaiTuan
 }

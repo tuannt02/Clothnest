@@ -19,12 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.ValidateLogin;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class SignUpActivity extends AppCompatActivity {
 
     TextView btnNavSignIn;
     TextInputLayout input_fullname, input_email, input_pw;
     ImageButton btnNext;
+    CustomProgressBar customProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         input_pw = findViewById(R.id.sign_up_input_password);
         input_fullname = findViewById(R.id.sign_up_input_fullname);
         btnNext = findViewById(R.id.sign_up_btn_next);
-
+        customProgressBar = new CustomProgressBar(SignUpActivity.this);
     }
 
     private void initListener() {
@@ -128,12 +130,13 @@ public class SignUpActivity extends AppCompatActivity {
         String txtEmail = input_email.getEditText().getText().toString().trim();
         String txtPw = input_pw.getEditText().getText().toString().trim();
 
+        customProgressBar.show();
         auth.createUserWithEmailAndPassword(txtEmail, txtPw)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            customProgressBar.dismiss();
                             // Create user on realtime db
                             User user = new User(txtFullname, txtEmail, "", "", "");
                             User.addAppendUser(user);

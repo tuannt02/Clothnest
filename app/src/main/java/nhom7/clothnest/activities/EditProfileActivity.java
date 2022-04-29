@@ -45,6 +45,7 @@ import java.util.Calendar;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.ValidateLogin;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class EditProfileActivity extends AppCompatActivity {
     public static final int REQ_CODE_READ_EXTERNAL_STORAGE = 10;
@@ -74,6 +75,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private RadioButton male, female, other;
     private RadioGroup gender;
     private MaterialButton btnSave;
+    private CustomProgressBar customProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +106,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String emailUser = user.getEmail();
         Uri avaUrlUser = user.getPhotoUrl();
 
-
+        customProgressBar.show();
         myRef.child(user_ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -114,6 +116,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 dob.getEditText().setText(user.getDOB());
                 phoneNumber.getEditText().setText(user.getPHONE());
                 setFieldGender(user.getGENDER());
+                customProgressBar.dismiss();
             }
 
             @Override
@@ -153,6 +156,7 @@ public class EditProfileActivity extends AppCompatActivity {
         changePassword = findViewById(R.id.button_changePassword_editProfile);
         btnSave = findViewById(R.id.button_save_editProfile);
         btnDatePicker = findViewById(R.id.datepicker_editProfile);
+        customProgressBar = new CustomProgressBar(EditProfileActivity.this);
     }
 
     private void setupViewListener() {

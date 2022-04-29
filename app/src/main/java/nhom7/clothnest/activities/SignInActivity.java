@@ -3,12 +3,17 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.style.WanderingCubes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -18,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import nhom7.clothnest.R;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 import nhom7.clothnest.util.ValidateLogin;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -25,6 +31,7 @@ public class SignInActivity extends AppCompatActivity {
     TextInputLayout input_email, input_pw;
     ImageButton btnNext;
     UserInfo_Sqlite userInfo_sqlite;
+    CustomProgressBar customProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,7 @@ public class SignInActivity extends AppCompatActivity {
         input_email = findViewById(R.id.sign_in_input_email);
         input_pw = findViewById(R.id.sign_in_input_password);
         btnNext = findViewById(R.id.sign_in_btn_next);
+        customProgressBar = new CustomProgressBar(SignInActivity.this);
     }
 
     private void initListener() {
@@ -108,11 +116,12 @@ public class SignInActivity extends AppCompatActivity {
         String txtEmail = input_email.getEditText().getText().toString().trim();
         String txtPw = input_pw.getEditText().getText().toString().trim();
 
-
+        customProgressBar.show();
         auth.signInWithEmailAndPassword(txtEmail, txtPw)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        customProgressBar.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
 
