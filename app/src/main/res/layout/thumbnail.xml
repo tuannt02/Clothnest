@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -112,4 +113,120 @@
 
 
     </LinearLayout>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="175dp"
+        android:layout_height="263dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="175dp"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/product"></ImageView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="115dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/discount"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:background="@color/pri_col"
+                    android:fontFamily="@font/lato"
+                    android:gravity="center"
+                    android:text="-24%"
+                    android:textColor="@color/white"></TextView>
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            //Khung ten va gia
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="5dp">
+
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="133dp"
+                    android:layout_height="40dp"
+                    android:fontFamily="@font/lato"
+                    android:paddingTop="5dp"
+                    android:text="Oversized Hoodie Oversized Hoodie Oversized Hoodie"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:id="@+id/discountCost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="$234"
+                        android:textColor="@color/pri_col"
+                        android:textSize="15dp"></TextView>
+
+                    <TextView
+                        android:id="@+id/regularCost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/strikethrough_foreground"
+                        android:fontFamily="@font/lato"
+                        android:text="$307"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="10dp"></TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            //Nut yeu thich
+
+            <ImageView
+                android:id="@+id/favoriteButton"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/roundcorner"
+                android:scaleType="fitCenter"
+                android:src="@drawable/favorite"></ImageView>
+        </LinearLayout>
+
+
+    </LinearLayout>
+>>>>>>> Stashed changes
 </LinearLayout>

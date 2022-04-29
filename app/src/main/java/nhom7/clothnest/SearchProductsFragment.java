@@ -33,6 +33,7 @@ public class SearchProductsFragment extends Fragment {
         btnFilter = mView.findViewById(R.id.btnFilter);
 
         GetProduct();
+<<<<<<< Updated upstream:app/src/main/java/nhom7/clothnest/SearchProductsFragment.java
 
         Button button = mView.findViewById(R.id.searchProduct_WinterBtn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -46,15 +47,28 @@ public class SearchProductsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
             }
+=======
+        getEvents();
+>>>>>>> Stashed changes:app/src/main/java/nhom7/clothnest/fragments/SearchProductsFragment.java
 
             @Override
+<<<<<<< Updated upstream:app/src/main/java/nhom7/clothnest/SearchProductsFragment.java
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+=======
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(new Intent(getContext(), ProductDetail_Activity.class));
+>>>>>>> Stashed changes:app/src/main/java/nhom7/clothnest/fragments/SearchProductsFragment.java
             }
         });
 
         return mView;
     }
+
+    private void getEvents() {
+
+    }
+
     //    Thêm sản phẩm vào GridView
     public void GetProduct(){
         productArrayList = new ArrayList<>();
@@ -70,4 +84,5 @@ public class SearchProductsFragment extends Fragment {
         gridViewApdater = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
         gridView.setAdapter(gridViewApdater);
     }
+
 }
