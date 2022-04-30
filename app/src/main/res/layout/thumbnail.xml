@@ -98,7 +98,7 @@
 
             //Nut yeu thich
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/favoriteButton"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
@@ -107,7 +107,7 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/roundcorner"
                 android:scaleType="fitCenter"
-                android:src="@drawable/favorite"></ImageButton>
+                android:src="@drawable/favorite"></ImageView>
         </LinearLayout>
 
 
