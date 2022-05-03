@@ -1,5 +1,6 @@
 package nhom7.clothnest.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,11 +35,12 @@ public class SearchProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_search_products, container, false);
 
-        gridView = mView.findViewById(R.id.gridview);
+        View includedView = (View) mView.findViewById(R.id.groupThumbnail);
+        gridView = (GridView) includedView.findViewById(R.id.gridview_GroupThumbnail);
+
         btnFilter = mView.findViewById(R.id.btnFilter);
 
         GetProduct();
-
         Button button = mView.findViewById(R.id.searchProduct_WinterBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,20 +48,21 @@ public class SearchProductsFragment extends Fragment {
                 startActivity(new Intent(getContext(), ProductDetail_Activity.class));
             }
         });
-        gridView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(new Intent(getContext(), ProductDetail_Activity.class));
             }
         });
 
         return mView;
     }
+
+    private void getEvents() {
+
+    }
+
     //    Thêm sản phẩm vào GridView
     public void GetProduct(){
         productArrayList = new ArrayList<>();
@@ -74,4 +78,5 @@ public class SearchProductsFragment extends Fragment {
         gridViewApdater = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
         gridView.setAdapter(gridViewApdater);
     }
+
 }

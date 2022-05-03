@@ -32,7 +32,7 @@
                 android:gravity="center_vertical"
                 android:text="PERSONAL INFORMATION"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -68,7 +68,7 @@
                 android:gravity="center_vertical"
                 android:text="ADDRESS BOOK"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -104,7 +104,7 @@
                 android:gravity="center_vertical"
                 android:text="NOTIFICATIONS"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -144,7 +144,7 @@
                 android:gravity="center_vertical"
                 android:text="TERMS AND CONDITIONS"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -180,7 +180,7 @@
                 android:gravity="center_vertical"
                 android:text="PRIVACY POLICY"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -216,7 +216,7 @@
                 android:gravity="center_vertical"
                 android:text="IMPRINT"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -252,7 +252,7 @@
                 android:gravity="center_vertical"
                 android:text="GOVERNMENT APPROVAL"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -289,7 +289,7 @@
                 android:gravity="center_vertical"
                 android:text="ABOUT"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -313,7 +313,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/lato"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:text="Ver 1.0"
             android:textColor="#ABABAB" />
 
@@ -332,7 +332,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/lato_bold"
             app:cornerRadius="10dp"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_marginBottom="10dp"
             android:text="LOG OUT" />
 

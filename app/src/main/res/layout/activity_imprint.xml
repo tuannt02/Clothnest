@@ -17,13 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="18dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageview_back_imprint"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_gravity="center_vertical"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:padding="6dp"
                 android:adjustViewBounds="true"
                 android:rotation="180"
                 android:src="@drawable/ic_right_arrow" />
@@ -36,7 +37,8 @@
                 android:text="IMPRINT"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
+
         </LinearLayout>
 
         <WebView

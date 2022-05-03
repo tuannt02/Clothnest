@@ -72,6 +72,7 @@
             android:fontFamily="@font/lato_bold"
             android:text="NEW ARRIVALS"
             android:textSize="20dp" />
+        
         <include
             android:id="@+id/group_arrival"
             layout="@layout/group_thumbnail"

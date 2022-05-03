@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nhom7.clothnest.models.Product;
@@ -16,9 +17,9 @@ import nhom7.clothnest.R;
 public class GridViewApdater extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<Product> productList;
+    private ArrayList<Product> productList;
 
-    public GridViewApdater(Context context, int layout, List<Product> productList) {
+    public GridViewApdater(Context context, int layout, ArrayList<Product> productList) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
@@ -31,18 +32,18 @@ public class GridViewApdater extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return productList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = layoutInflater.inflate(R.layout.thumbnail,null);
+        view = layoutInflater.inflate(R.layout.thumbnail, viewGroup, false);
 
         TextView productName = (TextView) view.findViewById(R.id.productName);
         ImageView productImage = (ImageView) view.findViewById(R.id.productImage);

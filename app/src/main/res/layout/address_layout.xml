@@ -22,7 +22,7 @@
             android:fontFamily="@font/lato"
             android:text="Hoang Dinh Anh Tuan"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textview_detail_address"
@@ -32,7 +32,7 @@
             android:fontFamily="@font/lato"
             android:text="245 Le Duan F12"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textview_address_address"
@@ -43,7 +43,7 @@
             android:maxLines="3"
             android:text="Ho Chi Minh, Quan Thu Duc, Phuong Linh Trung"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
 
         <TextView
@@ -54,7 +54,7 @@
             android:fontFamily="@font/lato"
             android:text="0912 345 678"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

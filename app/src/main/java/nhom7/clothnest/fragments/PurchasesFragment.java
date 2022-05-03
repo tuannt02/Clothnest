@@ -48,20 +48,20 @@ public class PurchasesFragment extends Fragment {
 
         // purchase 1
         ArrayList<PurchaseItem> purchaseItems = new ArrayList<>();
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 2, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 345d));
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 342d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 2, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "WHITE", "M", 345d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "WHITE", "M", 342d));
         purchases.add(new Purchase(purchaseItems));
 
         // purchase 2
         purchaseItems = new ArrayList<>();
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 341d));//        purchases.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 311d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "WHITE", "M", 341d));//        purchases.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 311d));
         purchases.add(new Purchase(purchaseItems));
 
         // purchase 3
         purchaseItems = new ArrayList<>();
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 310d));
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 309d));
-        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "COL31WHITE", "WOMEN M", 109d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "WHITE", "M", 310d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "WHITE", "M", 309d));
+        purchaseItems.add(new PurchaseItem(R.drawable.sample, 1, "Áo Polo Vải Pique Co Giãn Ngắn Tay", "21/03/2022", "WHITE", "M", 109d));
         purchases.add(new Purchase(purchaseItems));
     }
 
