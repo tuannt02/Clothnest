@@ -118,14 +118,30 @@
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.25" />
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.67" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/address_background.xml" value="0.176" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/size_background.xml" value="0.176" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_about.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_add_address.xml" value="0.32916666666666666" />
+>>>>>>> Stashed changes
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_cart.xml" value="0.2740740740740741" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_edit_profile.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_government_approval.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_product_detail.xml" value="0.2740740740740741" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_filter.xml" value="0.2740740740740741" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.33" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search_products.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/purchases_total.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.32916666666666666" />
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/menu/filter_navigation_menu.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/menu/profile_navigation_menu.xml" value="0.32916666666666666" />
 >>>>>>> Stashed changes
       </map>
     </option>

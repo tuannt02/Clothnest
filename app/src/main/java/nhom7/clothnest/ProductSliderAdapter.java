@@ -35,14 +35,15 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
         Product product = products.get(position);
         holder.ivProduct.setImageResource(product.getProductImage());
         holder.tvProductName.setText(product.getProductName());
-        holder.tvPrice.setText(product.getRegularCost());
-        holder.tvDiscount.setText("-" + product.getDiscount() + "%");
 
-        Double price = Double.parseDouble(product.getRegularCost());
-        Integer discount = Integer.parseInt(product.getDiscount());
+        Double price = Double.parseDouble(String.valueOf(product.getRegularCost()));
+        holder.tvPrice.setText("$" + price.toString().replaceAll("\\.?[0-9]*$", ""));
+
+        Double discount = Double.parseDouble(String.valueOf(product.getDiscount()));
+        holder.tvDiscount.setText("-" + discount.toString().replaceAll("\\.?[0-9]*$", "") + "%");
+
         Double discountPrice = price * (1 - discount/100.0);
-
-        holder.tvDiscountPrice.setText(discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
+        holder.tvDiscountPrice.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
     }
 
     @Override

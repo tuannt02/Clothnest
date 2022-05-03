@@ -72,15 +72,15 @@ public class SearchProductsFragment extends Fragment {
     //    Thêm sản phẩm vào GridView
     public void GetProduct(){
         productArrayList = new ArrayList<>();
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
         gridViewApdater = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
         gridView.setAdapter(gridViewApdater);
     }

@@ -41,16 +41,24 @@ public class GridViewApdater extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(R.layout.thumbnail,null);
 
-        TextView productName = (TextView) view.findViewById(R.id.productName);
-        ImageView productImage = (ImageView) view.findViewById(R.id.productImage);
-        TextView regularCost = (TextView) view.findViewById(R.id.regularCost);
-        TextView discount = (TextView) view.findViewById(R.id.discount);
+        TextView tvProductName = (TextView) view.findViewById(R.id.productName);
+        ImageView tvProductImage = (ImageView) view.findViewById(R.id.productImage);
+        TextView tvRegularCost = (TextView) view.findViewById(R.id.regularCost);
+        TextView tvDiscount = (TextView) view.findViewById(R.id.discount);
+        TextView tvDiscountCost = (TextView) view.findViewById(R.id.discountCost);
 
 
-        productName.setText(productList.get(i).productName);
-        productImage.setImageResource(productList.get(i).productImage);
-        regularCost.setText(productList.get(i).regularCost);
-        discount.setText(productList.get(i).discount);
+        tvProductName.setText(productList.get(i).getProductName());
+        tvProductImage.setImageResource(productList.get(i).getProductImage());
+
+        Double discount = Double.parseDouble(String.valueOf(productList.get(i).getDiscount()));
+        tvDiscount.setText("-" + discount.toString().replaceAll("\\.?[0-9]*$", "") + "%");
+
+        Double price = Double.parseDouble(String.valueOf(productList.get(i).getRegularCost()));
+        tvRegularCost.setText("$" + price.toString().replaceAll("\\.?[0-9]*$", ""));
+
+        Double discountPrice = price * (1 - discount/100.0);
+        tvDiscountCost.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
 
         return view;
     }

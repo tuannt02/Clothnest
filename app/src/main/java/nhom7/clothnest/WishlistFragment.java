@@ -52,14 +52,14 @@ public class WishlistFragment extends Fragment {
                 "Áo Polo Vải Pique Co Giãn Ngắn Tay",
                 "Áo Polo Vải Pique Co Giãn Ngắn Tay",
                 "Áo Polo Vải Pique Co Giãn Ngắn Tay"};
-        String[] price = {"$500", "$600", "$600", "$600", "$600", "$600"};
-        String[] downPrice = {"$300", "$400", "$400", "$400", "$400", "$400"};
+        double[] price = {500, 600, 600, 600, 600, 600};
+        double[] downPrice = {300, 400, 400, 400, 400, 400};
 
 
         ArrayList<Product> productArrayList = new ArrayList<>();
 
         for(int i=0; i<imageId.length; i++) {
-            Product prod = new Product(name[i], imageId[i], price[i], downPrice[i]);
+            Product prod = new Product(String.valueOf(i), name[i], imageId[i], price[i], downPrice[i]);
             productArrayList.add(prod);
         }
 

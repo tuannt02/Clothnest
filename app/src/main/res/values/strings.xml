@@ -2,6 +2,10 @@
     <string name="app_name">Clothnest</string>
     <string name="sign_up"><u>Sign up</u></string>
     <string name="sign_in"><u>Sign in</u></string>
+<<<<<<< Updated upstream
+=======
+    <string name="back_to_login"><u>Back to login</u></string>
+>>>>>>> Stashed changes
     <string name="forget_pw"><u>Forget password?</u></string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
