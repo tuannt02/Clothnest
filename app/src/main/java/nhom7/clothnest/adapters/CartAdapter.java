@@ -23,18 +23,25 @@ import nhom7.clothnest.models.Product;
 import nhom7.clothnest.models.Purchase;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.models.SizeClass;
+import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 
 public class CartAdapter extends ArrayAdapter<CartItem> {
+    public interface ICLickListenerOnItemListview   {
+        void removeItem(int position);
+    }
+
     private Context context;
     private int resource;
     private ArrayList<CartItem> listCart;
+    private ICLickListenerOnItemListview mIClickListenerOnItemListview;
 
-    public CartAdapter(@NonNull Context context, int resource, @NonNull ArrayList<CartItem> objects) {
+    public CartAdapter(@NonNull Context context, int resource, @NonNull ArrayList<CartItem> objects, ICLickListenerOnItemListview listener) {
         super(context, resource, objects);
 
         this.context = context;
         this.resource = resource;
         this.listCart = objects;
+        this.mIClickListenerOnItemListview = listener;
     }
 
     @NonNull
@@ -51,7 +58,7 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         TextView price = (TextView) convertView.findViewById(R.id.cart_price);
         Spinner cbxColor = (Spinner) convertView.findViewById(R.id.spn_color);
         Spinner cbxSize = (Spinner) convertView.findViewById(R.id.spn_size);
-
+        ImageButton btnOption = (ImageButton) convertView.findViewById(R.id.cart_item_option_btn);
 
         setupOnClickListener(convertView, cartItem);
 
@@ -63,7 +70,27 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         imageView.setImageResource(cartItem.getImage());
         name.setText(cartItem.getTitle());
         price.setText('$' + Double.toString(cartItem.getPrice()));
+        btnOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<String> list = getListOptionMenu();
+                CustomOptionMenu customOptionMenu = new CustomOptionMenu(getContext(), new CustomOptionMenu.IClickListenerOnItemListview() {
+                    @Override
+                    public void onClickItem(int pos) {
+                        // 0: Add to wishlist, 1: Remove from cart
+                        if(pos == 0)    { // Add to cart
 
+                        }
+
+                        if(pos == 1)    { // Remove from wishlist
+                            RemoveFromCart(position);
+                        }
+                    }
+                }, list, "OPTION", getListImg());
+                customOptionMenu.show();
+
+            }
+        });
 
 
         return convertView;
@@ -91,6 +118,21 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         });
     }
 
+    private ArrayList<String> getListOptionMenu()   {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Add to wishlist");
+        list.add("Remove from cart");
+
+        return list;
+    }
+
+    private int[] getListImg()  {
+        int[] listImg = {R.drawable.cart4,
+                R.drawable.trash};
+
+        return listImg;
+    }
+
     private List<ColorClass> getListColor() {
         List<ColorClass> listColor = new ArrayList<>();
         listColor.add(new ColorClass("white", "#FFFFFF"));
@@ -107,5 +149,9 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         listSize.add(new SizeClass("NAM 29INCH", "29INCH"));
 
         return listSize;
+    }
+
+    private void RemoveFromCart(int position)   {
+        mIClickListenerOnItemListview.removeItem(position);
     }
 }

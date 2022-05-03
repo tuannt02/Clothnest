@@ -44,7 +44,49 @@
 
         </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/cart_view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="120dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:translationZ="90dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/box_empty"
+            />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No items have been added yet"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:fontFamily="@font/lato_black"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Click add to cart to add the item"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato"
+            />
+    </LinearLayout>
+
     <ScrollView
+        android:id="@+id/cart_main_scrview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/group_checkout_cart"
