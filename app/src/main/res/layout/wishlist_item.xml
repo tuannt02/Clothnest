@@ -101,14 +101,14 @@
 
 
         <ImageButton
+            android:id="@+id/wishlist_item_option_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:backgroundTint="@color/white"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_more"
+            android:backgroundTint="@color/white"
             android:contentDescription="btnOption"
-            />
+            android:src="@drawable/ic_more" />
 
     </RelativeLayout>
 
