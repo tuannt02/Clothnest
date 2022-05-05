@@ -98,12 +98,12 @@
             android:orientation="vertical">
 
             <ListView
-                android:nestedScrollingEnabled="true"
                 android:id="@+id/listview_cart"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_marginTop="10dp"
                 android:divider="@null"
+                android:nestedScrollingEnabled="true"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 tools:listitem="@layout/cart_item" />
@@ -152,24 +152,23 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You might like"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/lato_black"
+                android:text="You might like"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
 
-            <include
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:id="@+id/groupThumbnail2"
-                layout="@layout/group_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/cart_container_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingHorizontal="20dp"/>
 
         </LinearLayout>
     </ScrollView>

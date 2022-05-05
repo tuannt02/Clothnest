@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FilterFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        //Brand
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Brand"
+            android:textSize="24dp" />
+
+        //Brand titles
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <CheckBox
+                android:id="@+id/filter_CheckBox_Brand1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="CHANEL"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <CheckBox
+                android:id="@+id/filter_CheckBox_Brand2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="HERMES"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <CheckBox
+                android:id="@+id/filter_CheckBox_Brand3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="GUCCI"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <CheckBox
+                android:id="@+id/filter_CheckBox_Brand4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="LOUIS VUITTON"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <CheckBox
+                android:id="@+id/filter_CheckBox_Brand5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="PRADA"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            app:dividerColor="@color/dividerColor" />
+
+        //Size
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Size"
+            android:textSize="24dp" />
+
+        //Size item1
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/filter_Size_S"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="S"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_M"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="M"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_L"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="L"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_XL"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="XL"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_XXL"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="XXL"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        //inches
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Inches"
+            android:textSize="20dp" />
+
+        //Size item2
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/filter_Size_29inch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="29INCH"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_30inch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="30INCH"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_31inch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="31INCH"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/filter_Size_32inch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="32INCH"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_33inch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="33INCH"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_34inch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="34INCH"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        //centimeter
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Centimeter"
+            android:textSize="20dp" />
+
+        //Size item2
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/filter_Size_27cm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="27cm"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_28cm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="28cm"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_70cm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="70cm"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/filter_Size_76cm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="76cm"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_79cm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="79cm"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/filter_Size_80cm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/size_background"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="80cm"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            app:dividerColor="@color/dividerColor"/>
+
+        //Color
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Color"
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Color"
+            android:textSize="24dp" />
+
+
+    </LinearLayout>
+
+</ScrollView>

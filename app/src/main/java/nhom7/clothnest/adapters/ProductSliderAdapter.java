@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
+import nhom7.clothnest.models.Product1;
 
 public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<Product> products;
+    private ArrayList<Product1> products;
 
-    public ProductSliderAdapter(Context mContext, ArrayList<Product> products) {
+    public ProductSliderAdapter(Context mContext, ArrayList<Product1> products) {
         this.mContext = mContext;
         this.products = products;
     }
@@ -35,17 +35,18 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product product = products.get(position);
+        Product1 product = products.get(position);
         holder.ivProduct.setImageResource(product.getProductImage());
         holder.tvProductName.setText(product.getProductName());
-        holder.tvPrice.setText(product.getRegularCost());
-        holder.tvDiscount.setText("-" + product.getDiscount() + "%");
 
-        Double price = Double.parseDouble(product.getRegularCost());
-        Integer discount = Integer.parseInt(product.getDiscount());
+        Double price = Double.parseDouble(String.valueOf(product.getRegularCost()));
+        holder.tvPrice.setText("$" + price.toString().replaceAll("\\.?[0-9]*$", ""));
+
+        Double discount = Double.parseDouble(String.valueOf(product.getDiscount()));
+        holder.tvDiscount.setText("-" + discount.toString().replaceAll("\\.?[0-9]*$", "") + "%");
+
         Double discountPrice = price * (1 - discount/100.0);
-
-        holder.tvDiscountPrice.setText(discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
+        holder.tvDiscountPrice.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
     }
 
     @Override

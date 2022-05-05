@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +20,10 @@ import java.util.List;
 import me.relex.circleindicator.CircleIndicator;
 import nhom7.clothnest.fragments.CommentFragment;
 import nhom7.clothnest.adapters.GridViewApdater;
-import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.SliderAdapter;
+import nhom7.clothnest.models.Product1;
+import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.SliderItem;
 
 public class ProductDetail_Activity extends AppCompatActivity {
@@ -29,10 +31,11 @@ public class ProductDetail_Activity extends AppCompatActivity {
     ViewPager viewPager;
     CircleIndicator circleIndicator;
     SliderAdapter sliderAdapter;
+
     //Similar products
-    GridView gridView;
-    ArrayList<Product> productArrayList;
-    GridViewApdater gridViewApdater;
+    LinearLayout containersilder;
+    ArrayList<Product1> productArrayList;
+    ProductSlider productSlider;
 
     Button btnDescription, btnReviews;
     ImageButton btnReturn, btnFavorite;
@@ -51,6 +54,8 @@ public class ProductDetail_Activity extends AppCompatActivity {
         GetProduct();
         ActiveSlider();
 
+        productSlider = new ProductSlider(this, containersilder, productArrayList);
+        productSlider.createProductSlider();
     }
 
     private List<SliderItem> GetListSliderItem() {
@@ -64,19 +69,18 @@ public class ProductDetail_Activity extends AppCompatActivity {
         return list;
     }
 
+
     public void GetProduct() {
         productArrayList = new ArrayList<>();
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        gridViewApdater = new GridViewApdater(this, R.layout.thumbnail, productArrayList);
-        gridView.setAdapter(gridViewApdater);
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
     }
 
     private void ActiveSlider() {
@@ -93,16 +97,20 @@ public class ProductDetail_Activity extends AppCompatActivity {
     }
 
     public void Reference() {
+        productArrayList = new ArrayList<>();
+
         nestedScrollView = findViewById(R.id.nestedScrollView);
         nestedScrollView.setNestedScrollingEnabled(true);
 
         viewPager = findViewById(R.id.viewPage);
         circleIndicator = findViewById(R.id.circleIndicator);
-        gridView = findViewById(R.id.gridview_GroupThumbnail);
+
         btnDescription = findViewById(R.id.productDetail_DescriptionBtn);
         btnReviews = findViewById(R.id.productDetail_ReviewsBtn);
-        btnReturn = findViewById(R.id.productDetail_returnBtn);
+        btnReturn = findViewById(R.id.productDetail_returnButton);
         btnFavorite = findViewById(R.id.productDetail_favoriteButton);
+
+        containersilder = findViewById(R.id.productDetail_container_slider);
     }
 
     public void SetEventClick() {

@@ -14,4 +14,12 @@
     <color name="dividerColor">#B3B3B3</color>
     <color name="shadowColor">#323131</color>
     <color name="txtSuccess">#28a745</color>
+    <color name="pink">#F335A6</color>
+    <color name="blue">#0000FF</color>
+    <color name="red">#FF0000</color>
+    <color name="gray">#808080</color>
+    <color name="green">#00FF00</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="lime_green">#32CD32</color>
+    <color name="light_pink">#FFB6C1</color>
 </resources>
