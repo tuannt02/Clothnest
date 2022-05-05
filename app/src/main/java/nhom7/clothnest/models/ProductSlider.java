@@ -22,14 +22,14 @@ import nhom7.clothnest.models.Product;
 
 public class ProductSlider {
     private RecyclerView recyclerView;
-    private ArrayList<Product> products;
+    private ArrayList<Product1> products;
     private int dotsNum;
     private final String htmlDot = "&#8226";
     private LinearLayout container;
     private LinearLayout linearLayout;
     private Context mContext;
 
-    public ProductSlider(Context context, LinearLayout container, ArrayList<Product> products) {
+    public ProductSlider(Context context, LinearLayout container, ArrayList<Product1> products) {
         mContext = context;
         this.container = container;
         this.products = products;

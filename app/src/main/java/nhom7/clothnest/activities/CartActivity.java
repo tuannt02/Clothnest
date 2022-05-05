@@ -18,6 +18,8 @@ import nhom7.clothnest.adapters.GridViewApdater;
 import nhom7.clothnest.models.CartItem;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
+import nhom7.clothnest.models.Product1;
+import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.PurchaseItem;
 
 public class CartActivity extends AppCompatActivity {
@@ -25,12 +27,15 @@ public class CartActivity extends AppCompatActivity {
     public ListView lv;
     ImageView btnBack;
     LinearLayout emptyView;
-    GridView gridView;
-    GridViewApdater gridViewApdater;
+//    GridView gridView;
+//    GridViewApdater gridViewApdater;
     CartAdapter cartAdapter;
-    ArrayList<Product> productArrayList;
+    ArrayList<Product1> productArrayList;
     ArrayList<CartItem> cartItemArrayList;
     ScrollView scrollView;
+    //you might like
+    LinearLayout containersilder;
+    ProductSlider productSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +59,21 @@ public class CartActivity extends AppCompatActivity {
         });
         lv.setAdapter(cartAdapter);
 
+        getLikeProducts();
+    }
 
-
+    private void getLikeProducts() {
+        productSlider = new ProductSlider(this, containersilder, productArrayList);
+        productSlider.createProductSlider();
     }
 
     private void initUi()   {
         lv = (ListView) findViewById(R.id.listview_cart);
         btnBack = findViewById(R.id.btnBackCart);
-        gridView = findViewById(R.id.gridview_GroupThumbnail);
+//        gridView = findViewById(R.id.gridview_GroupThumbnail);
         emptyView = findViewById(R.id.cart_view_empty);
         scrollView = findViewById(R.id.cart_main_scrview);
+        containersilder = findViewById(R.id.cart_container_slider);
     }
 
     private void setupClickOnListener() {
@@ -116,20 +126,33 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    private void getProductPropose()    {
-        productArrayList = new ArrayList<>();
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
-        gridViewApdater = new GridViewApdater(CartActivity.this, R.layout.thumbnail, productArrayList);
-        gridView.setAdapter(gridViewApdater);
-    }
+//    private void getProductPropose()    {
+//        productArrayList = new ArrayList<>();
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "$307", "-24%"));
+//        gridViewApdater = new GridViewApdater(CartActivity.this, R.layout.thumbnail, productArrayList);
+//        gridView.setAdapter(gridViewApdater);
+//    }
+private void getProductPropose()    {
+    productArrayList = new ArrayList<>();
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+    productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+
+}
 
     private void updateViewEmpty()  {
         if(cartItemArrayList.size() == 0)    {

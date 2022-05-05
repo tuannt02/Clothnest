@@ -1,5 +1,6 @@
 package nhom7.clothnest.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,20 +8,23 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.adapters.GridViewApdater;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
+import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.ProductSlider;
 
 
 public class HomeFragment extends Fragment {
     GridView gridView;
-    ArrayList<Product> productArrayList;
+    ArrayList<Product1> productArrayList;
     GridViewApdater gridViewApdater;
     ProductSlider productSlider;
     LinearLayout containersilder;
@@ -45,18 +49,20 @@ public class HomeFragment extends Fragment {
 
     public void GetProduct(){
         productArrayList = new ArrayList<>();
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
-        productArrayList.add(new Product("Oversize Hoodie", R.drawable.productimage, "307", "24"));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+
         gridViewApdater = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
         gridView.setAdapter(gridViewApdater);
-        gridViewApdater1 = new GridViewApdater(getContext(), R.layout.thumbnail, (ArrayList<Product>) productArrayList.clone());
+        gridViewApdater1 = new GridViewApdater(getContext(), R.layout.thumbnail, (ArrayList<Product1>) productArrayList.clone());
         gridView1.setAdapter(gridViewApdater1);
     }
 }
