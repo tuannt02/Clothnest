@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation platform('com.google.firebase:firebase-bom:29.3.1') // ThaiTuan
     implementation 'com.google.firebase:firebase-auth' // Service Authentication_ThaiTuan
+    implementation 'com.google.firebase:firebase-firestore' // Service firestore_ThaiTuan
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
