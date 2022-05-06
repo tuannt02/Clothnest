@@ -1,11 +1,13 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.models.Product1;
 
 public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdapter.ViewHolder> {
@@ -47,6 +50,18 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
 
         Double discountPrice = price * (1 - discount/100.0);
         holder.tvDiscountPrice.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
+
+        getEvent(holder);
+    }
+
+    private void getEvent(@NonNull ViewHolder holder) {
+        holder.ivProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ProductDetail_Activity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
