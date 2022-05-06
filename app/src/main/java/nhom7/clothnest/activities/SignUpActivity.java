@@ -139,7 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
                             customProgressBar.dismiss();
                             // Create user on realtime db
                             User user = new User(txtFullname, txtEmail, "", "", "");
-                            User.addAppendUser(user);
+                            User.addUserToFirestore(user);
 
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);

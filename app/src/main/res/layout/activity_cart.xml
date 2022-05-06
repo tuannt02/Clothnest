@@ -100,7 +100,7 @@
             <ListView
                 android:id="@+id/listview_cart"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="360dp"
                 android:layout_marginTop="10dp"
                 android:divider="@null"
                 android:nestedScrollingEnabled="true"
@@ -116,47 +116,13 @@
                 android:layout_marginRight="20dp"
                 android:background="#E0E0E0" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
 
-                <EditText
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/border_input_voucher"
-                    android:fontFamily="@font/lato"
-                    android:hint="Insert your coupon code"
-                    android:padding="12dp" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:backgroundTint="#DF7861"
-                    android:fontFamily="@font/lato"
-                    android:padding="14dp"
-                    android:text="Apply"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#E0E0E0" />
-
-            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/lato_black"
                 android:text="You might like"
                 android:textColor="@color/black"

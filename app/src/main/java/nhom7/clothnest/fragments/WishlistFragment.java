@@ -29,6 +29,7 @@ import nhom7.clothnest.activities.CartActivity;
 import nhom7.clothnest.adapters.CustomWishlistAdapter;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
+import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 
 

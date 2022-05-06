@@ -28,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,12 +38,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.ValidateLogin;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
@@ -84,7 +89,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         initView();
         setupProfileFromFirebase();
-        setupViewListener();
         setupBackButton();
         setupSaveButton();
         setupDatePicker();
@@ -95,8 +99,7 @@ public class EditProfileActivity extends AppCompatActivity {
     // Thiet lap profile tu database
     private void setupProfileFromFirebase() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = db.getReference(User.TABLE_NAME);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if(user == null)    {
             return;
@@ -106,24 +109,21 @@ public class EditProfileActivity extends AppCompatActivity {
         String emailUser = user.getEmail();
         Uri avaUrlUser = user.getPhotoUrl();
 
+        // Set info from firestore
+        DocumentReference userRef = db.collection(User.COLLECTION_NAME).document(user_ID);
         customProgressBar.show();
-        myRef.child(user_ID).addValueEventListener(new ValueEventListener() {
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                // Set info from Realtime Database
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
                 fullName.getEditText().setText(user.getNAME());
                 dob.getEditText().setText(user.getDOB());
                 phoneNumber.getEditText().setText(user.getPHONE());
                 setFieldGender(user.getGENDER());
                 customProgressBar.dismiss();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
+
 
 
         // Set info from Service Authentication
@@ -159,19 +159,7 @@ public class EditProfileActivity extends AppCompatActivity {
         customProgressBar = new CustomProgressBar(EditProfileActivity.this);
     }
 
-    private void setupViewListener() {
-        setupChangePasswordListener();
-    }
 
-    private void setupChangePasswordListener() {
-        Log.d("changePassword", "Set up successfully ");
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
 
     private void setupChangeAvatar()    {
         avatar.setOnClickListener(new View.OnClickListener() {
@@ -261,7 +249,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     User user = new User(txtFullname, txtEmail, txtDob, txtPhoneNum, gender);
 
                     User.updateUserProfileAuthentication(txtFullname, mUri);
-                    User.updateUserProfileRealtimeDB(user);
+                    User.updateUserProfileFirestore(user);
                     finish();
                 }
 

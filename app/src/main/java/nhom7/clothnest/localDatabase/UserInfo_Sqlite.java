@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import nhom7.clothnest.models.User;
+
 public class UserInfo_Sqlite extends SQLiteOpenHelper {
     private Context context;
     public static final String DATABASE_NAME = "LocalDatabase.db";
@@ -20,7 +22,6 @@ public class UserInfo_Sqlite extends SQLiteOpenHelper {
 
     public static String EMAIL = "";
     public static String PASSWORD = "";
-
 
     public UserInfo_Sqlite(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -5,18 +5,24 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class User {
 
-    public static final String TABLE_NAME = "users";
+    public static final String COLLECTION_NAME = "users";
 
-    String USER_ID;
     String NAME;
     String EMAIL;
     String DOB;
@@ -35,10 +41,6 @@ public class User {
         this.PHONE = PHONE;
         this.GENDER = GENDER;
         this.TYPE = 1;
-    }
-
-    public void setUSER_ID(String USER_ID) {
-        this.USER_ID = USER_ID;
     }
 
     public void setNAME(String NAME) {
@@ -65,8 +67,6 @@ public class User {
         this.TYPE = TYPE;
     }
 
-    public String getUSER_ID() { return USER_ID; }
-
     public String getNAME() {
         return NAME;
     }
@@ -92,7 +92,6 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "USER_ID='" + USER_ID + '\'' +
                 ", NAME='" + NAME + '\'' +
                 ", EMAIL='" + EMAIL + '\'' +
                 ", DOB='" + DOB + '\'' +
@@ -102,37 +101,18 @@ public class User {
                 '}';
     }
 
-    public static void addAppendUser(User user) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbReference = database.getReference(TABLE_NAME);
+    public static void addUserToFirestore(User user) {
+        // Get info from Authentication
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-
-        String key = userInfo.getUid();
-        user.USER_ID = key;
-        dbReference.child(key).setValue(user);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(COLLECTION_NAME).document(userInfo.getUid()).set(user);
     }
 
-//    public static User getProfileFromRealtimeDB(String user_ID)   {
-//        FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = db.getReference(User.TABLE_NAME);
-//
-//        ArrayList<User> arrayList = new ArrayList<>();
-//
-//        myRef.child(user_ID).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                User user = snapshot.getValue(User.class);
-//                arrayList.add(user);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//        return arrayList.get(0);
-//    }
+    public static void updateUserProfileFirestore(User user)    {
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(COLLECTION_NAME).document(userInfo.getUid()).set(user);
+    }
 
 
     public static void updateUserProfileAuthentication(String fullname, Uri uri)   {
@@ -169,13 +149,4 @@ public class User {
                 });
     }
 
-    public static void updateUserProfileRealtimeDB(User user)   {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbReference = database.getReference(TABLE_NAME);
-        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-
-        String key = userInfo.getUid();
-        user.USER_ID = key;
-        dbReference.child(key).setValue(user);
-    }
 }
