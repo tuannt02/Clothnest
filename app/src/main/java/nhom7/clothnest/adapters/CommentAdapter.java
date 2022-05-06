@@ -31,12 +31,12 @@ public class CommentAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return commentList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override

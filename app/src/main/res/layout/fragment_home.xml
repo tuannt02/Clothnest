@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -23,9 +23,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14sp"
-                android:fontFamily="@font/lato_bold"
-                android:text="CLOTHEST"
-                android:textColor="#FF5722"
+                android:fontFamily="@font/lato"
+                android:text="CLOTHNEST"
+                android:textColor="#DF7861"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
@@ -57,14 +57,26 @@
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/imgPoster"
+        <ViewFlipper
+            android:paddingHorizontal="20dp"
+            android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25sp"
-            android:src="@drawable/banner" />
+            android:layout_height="200dp">
+            <ImageView
+                android:src="@drawable/hinh1"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:src="@drawable/hinh2"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </ViewFlipper>
 
         <TextView
+            android:id="@+id/txtArrivals"
+            android:layout_marginTop="20dp"
             android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,14 +84,13 @@
             android:fontFamily="@font/lato_bold"
             android:text="NEW ARRIVALS"
             android:textSize="20dp" />
-        
+
         <include
             android:id="@+id/group_arrival"
             layout="@layout/group_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="550dp"
             android:layout_margin="20dp" />
-
         <Button
             android:id="@+id/btnarrival"
             android:layout_width="match_parent"
@@ -91,7 +102,9 @@
             android:text="SEE ALL ITEMS"
             android:textColor="?attr/colorControlNormal"
             android:textSize="15dp" />
+
         <TextView
+            android:id="@+id/txtSales"
             android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,13 +117,11 @@
             android:id="@+id/group_sales"
             layout="@layout/group_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="550dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp" />
-
-
         <Button
             android:id="@+id/btnsale"
             android:layout_width="match_parent"
@@ -142,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <Button
+                    android:id="@+id/btnWinter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -151,6 +163,7 @@
                     android:textColor="#000"
                     />
                 <Button
+                    android:id="@+id/btnLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -160,6 +173,7 @@
                     android:textColor="#000"
                     />
                 <Button
+                    android:id="@+id/btnUt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -169,6 +183,7 @@
                     android:textColor="#000"
                     />
                 <Button
+                    android:id="@+id/btnUnisex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -178,6 +193,7 @@
                     android:textColor="#000"
                     />
                 <Button
+                    android:id="@+id/btnUvprotection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -190,6 +206,7 @@
         </HorizontalScrollView>
 
         <LinearLayout
+            android:paddingHorizontal="20dp"
             android:orientation="vertical"
             android:id="@+id/container_slider"
             android:layout_width="wrap_content"

@@ -1,22 +1,38 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.models.Product1;
 
 public class GridViewApdater extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Product1> productList;
+
+    //Change screen
+    private View mView;
+    private Animation alpha;
+
+    //reference
+    private TextView tvProductName;
+    private ImageView ivProductImage;
+    private TextView tvRegularCost;
+    private TextView tvDiscount;
+    private TextView tvDiscountCost;
 
     public GridViewApdater(Context context, int layout, List<Product1> productList) {
         this.context = context;
@@ -42,17 +58,18 @@ public class GridViewApdater extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = layoutInflater.inflate(R.layout.thumbnail,null);
+        mView = view = layoutInflater.inflate(R.layout.thumbnail, null);
 
-        TextView tvProductName = (TextView) view.findViewById(R.id.productName);
-        ImageView tvProductImage = (ImageView) view.findViewById(R.id.productImage);
-        TextView tvRegularCost = (TextView) view.findViewById(R.id.regularCost);
-        TextView tvDiscount = (TextView) view.findViewById(R.id.discount);
-        TextView tvDiscountCost = (TextView) view.findViewById(R.id.discountCost);
+        reference();
+        getData(i);
+        setEventsClick(i);
 
+        return view;
+    }
 
+    private void getData(int i) {
         tvProductName.setText(productList.get(i).getProductName());
-        tvProductImage.setImageResource(productList.get(i).getProductImage());
+        ivProductImage.setImageResource(productList.get(i).getProductImage());
 
         Double discount = Double.parseDouble(String.valueOf(productList.get(i).getDiscount()));
         tvDiscount.setText("-" + discount.toString().replaceAll("\\.?[0-9]*$", "") + "%");
@@ -60,9 +77,36 @@ public class GridViewApdater extends BaseAdapter {
         Double price = Double.parseDouble(String.valueOf(productList.get(i).getRegularCost()));
         tvRegularCost.setText("$" + price.toString().replaceAll("\\.?[0-9]*$", ""));
 
-        Double discountPrice = price * (1 - discount/100.0);
+        Double discountPrice = price * (1 - discount / 100.0);
         tvDiscountCost.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
-
-        return view;
     }
+
+    private void reference() {
+        tvProductName = (TextView) mView.findViewById(R.id.productName);
+        ivProductImage = (ImageView) mView.findViewById(R.id.productImage);
+        tvRegularCost = (TextView) mView.findViewById(R.id.regularCost);
+        tvDiscount = (TextView) mView.findViewById(R.id.discount);
+        tvDiscountCost = (TextView) mView.findViewById(R.id.discountCost);
+    }
+
+    private void setEventsClick(int i) {
+        //Click on product
+        LinearLayout product = mView.findViewById(R.id.view_product);
+        product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoDetail(i);
+            }
+        });
+
+    }
+
+    private void gotoDetail(int i) {
+        Intent intent_productDetail = new Intent(context, ProductDetail_Activity.class);
+        intent_productDetail.putExtra("key", productList.get(i).getId());
+        alpha = AnimationUtils.loadAnimation(context, R.anim.alpha_anim);
+        mView.startAnimation(alpha);
+        context.startActivity(intent_productDetail);
+    }
+
 }
