@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="NEW ARRIVALS"
+        android:id="@+id/textview2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="#000"
+        android:textSize="20dp"
+        />
+
+    <GridView
+        android:paddingHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/gridviewSeeAllItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:numColumns="2">
+    </GridView>
+</LinearLayout>
