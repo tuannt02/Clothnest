@@ -23,12 +23,12 @@ public class User {
 
     public static final String COLLECTION_NAME = "users";
 
-    String NAME;
-    String EMAIL;
-    String DOB;
-    String PHONE;
-    String GENDER;
-    int TYPE;
+    private String NAME;
+    private String EMAIL;
+    private String DOB;
+    private String PHONE;
+    private String GENDER;
+    private int TYPE;
 
     public User()   {
 

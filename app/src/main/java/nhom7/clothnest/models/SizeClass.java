@@ -1,27 +1,37 @@
 package nhom7.clothnest.models;
 
 public class SizeClass {
-    private String name;
-    private String size;
+    public static final String COLLECTION_NAME = "sizes";
 
-    public SizeClass(String name, String size) {
+    private String name;
+    private String short_name;
+
+    public SizeClass(String name, String short_name) {
         this.name = name;
-        this.size = size;
+        this.short_name = short_name;
     }
 
     public String getName() {
         return name;
     }
 
+    public String getShort_name() {
+        return short_name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getSize() {
-        return size;
+    public void setShort_name(String short_name) {
+        this.short_name = short_name;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    @Override
+    public String toString() {
+        return "SizeClass{" +
+                "name='" + name + '\'' +
+                ", short_name='" + short_name + '\'' +
+                '}';
     }
 }

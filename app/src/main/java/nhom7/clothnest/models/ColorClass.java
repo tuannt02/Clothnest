@@ -1,6 +1,9 @@
 package nhom7.clothnest.models;
 
 public class ColorClass {
+
+    public static final String COLLECTION_NAME = "colors";
+
     private String name;
     private String hex;
 
@@ -25,4 +28,14 @@ public class ColorClass {
         this.name = name;
         this.hex = hex;
     }
+
+    @Override
+    public String toString() {
+        return "ColorClass{" +
+                "name='" + name + '\'' +
+                ", hex='" + hex + '\'' +
+                '}';
+    }
+
+
 }

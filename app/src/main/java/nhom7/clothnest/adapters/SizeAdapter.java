@@ -29,7 +29,7 @@ public class SizeAdapter extends ArrayAdapter<SizeClass> {
 
         SizeClass size = this.getItem(position);
         if(size != null)   {
-            SizeSelected.setText(size.getSize());
+            SizeSelected.setText(size.getShort_name());
         }
         return convertView;
     }

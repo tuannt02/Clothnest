@@ -59,7 +59,7 @@
                android:id="@+id/wishlist_quantity_item"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="2 ITEMS"
+               android:text="0 ITEMS"
                android:fontFamily="@font/lato_black"
                android:layout_gravity="center"
                android:layout_weight="1"

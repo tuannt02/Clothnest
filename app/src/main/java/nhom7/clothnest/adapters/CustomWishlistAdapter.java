@@ -1,6 +1,8 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,35 +14,39 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
+import java.net.URL;
 import java.util.ArrayList;
 
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
+import nhom7.clothnest.models.Wishlist;
 import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 
-public class CustomWishlistAdapter extends ArrayAdapter<Product> {
+public class CustomWishlistAdapter extends ArrayAdapter<Wishlist> {
     public interface ICLickListenerOnItemListview   {
-        void removeItem(int position);
+        void removeItem(int position, String docID);
     }
 
     private Context context;
     private int resource;
-    private ArrayList<Product> arrProd;
+    private ArrayList<Wishlist> wishlistArrayList;
     private ICLickListenerOnItemListview mIClickListenerOnItemListview;
 
-    public CustomWishlistAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Product> objects, ICLickListenerOnItemListview listener) {
+    public CustomWishlistAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Wishlist> objects, ICLickListenerOnItemListview listener) {
         super(context, resource, objects);
 
         this.context = context;
         this.resource = resource;
-        this.arrProd = objects;
+        this.wishlistArrayList = objects;
         this.mIClickListenerOnItemListview = listener;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Product prod = arrProd.get(position);
+        Wishlist wishlistItem = wishlistArrayList.get(position);
 
         if (convertView == null)    {
             convertView = LayoutInflater.from(context).inflate(R.layout.wishlist_item,parent, false);
@@ -53,10 +59,10 @@ public class CustomWishlistAdapter extends ArrayAdapter<Product> {
         ImageButton btnOption = (ImageButton) convertView.findViewById(R.id.wishlist_item_option_btn);
 
 
-        imageView.setImageResource(prod.productImage);
-        name.setText(prod.productName);
-        price.setText(prod.regularCost);
-        downPrice.setText(prod.discount);
+        Glide.with(getContext()).load(wishlistItem.getProductImage()).into(imageView);
+        name.setText(wishlistItem.getProductName());
+        price.setText(wishlistItem.getRegularCost());
+        downPrice.setText(wishlistItem.getDiscount());
         btnOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +76,7 @@ public class CustomWishlistAdapter extends ArrayAdapter<Product> {
                         }
 
                         if(pos == 1)    { // Remove from wishlist
-                            RemoveFromWishlist(position);
+                            RemoveFromWishlist(position,wishlistItem.getKey());
                         }
                     }
                 }, list, "OPTION", getListImg());
@@ -98,7 +104,7 @@ public class CustomWishlistAdapter extends ArrayAdapter<Product> {
         return listImg;
     }
 
-    private void RemoveFromWishlist(int position)   {
-        mIClickListenerOnItemListview.removeItem(position);
+    private void RemoveFromWishlist(int position, String docID)   {
+        mIClickListenerOnItemListview.removeItem(position, docID);
     }
 }
