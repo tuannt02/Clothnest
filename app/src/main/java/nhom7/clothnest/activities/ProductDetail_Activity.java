@@ -7,6 +7,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -54,6 +55,18 @@ public class ProductDetail_Activity extends AppCompatActivity {
         GetProduct();
         ActiveSlider();
 
+        getSimilarProducts();
+        processDetail();
+
+    }
+
+    private void processDetail() {
+        String key = (String) getIntent().getSerializableExtra("key");
+        Toast.makeText(getApplicationContext(),"Key " + key, Toast.LENGTH_LONG).show();
+    }
+
+
+    private void getSimilarProducts() {
         productSlider = new ProductSlider(this, containersilder, productArrayList);
         productSlider.createProductSlider();
     }

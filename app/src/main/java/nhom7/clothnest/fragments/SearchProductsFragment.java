@@ -53,7 +53,10 @@ public class SearchProductsFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(getContext(), ProductDetail_Activity.class));
+                Intent productDetail =new Intent(getContext(), ProductDetail_Activity.class);
+                productDetail.putExtra("key", productArrayList.get(i).getId());
+                //Toast.makeText(getContext(), productArrayList.get(i).getId(), Toast.LENGTH_LONG).show();
+                startActivity(productDetail);
             }
         });
 
@@ -68,11 +71,11 @@ public class SearchProductsFragment extends Fragment {
     public void GetProduct(){
         productArrayList = new ArrayList<>();
         productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("2", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("3", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("4", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("5", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+        productArrayList.add(new Product1("6", "Oversize Hoodie", R.drawable.productimage, 307, 24));
         productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
         productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
         productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
