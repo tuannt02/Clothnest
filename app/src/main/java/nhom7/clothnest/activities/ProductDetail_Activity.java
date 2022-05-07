@@ -56,7 +56,7 @@ public class ProductDetail_Activity extends AppCompatActivity {
         ActiveSlider();
 
         getSimilarProducts();
-        processDetail();
+        //processDetail();
 
     }
 
