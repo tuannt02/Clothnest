@@ -14,6 +14,8 @@ import nhom7.clothnest.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,9 @@ import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 
 public class CartAdapter extends ArrayAdapter<CartItem> {
     public interface ICLickListenerOnItemListview   {
-        void removeItem(int position);
+        void addItemToWishlist(String keyProduct);
+        void removeItem(int position, String docID);
+        void updateTotalPrice();
     }
 
     private Context context;
@@ -57,6 +61,7 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         TextView name = (TextView) convertView.findViewById(R.id.cart_name);
         TextView price = (TextView) convertView.findViewById(R.id.cart_price);
         Spinner cbxColor = (Spinner) convertView.findViewById(R.id.spn_color);
+        TextView txtQuantity = (TextView) convertView.findViewById(R.id.txtQuantityCart);
         Spinner cbxSize = (Spinner) convertView.findViewById(R.id.spn_size);
         ImageButton btnOption = (ImageButton) convertView.findViewById(R.id.cart_item_option_btn);
 
@@ -67,9 +72,10 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         cbxColor.setAdapter(colorAdapter);
         cbxSize.setAdapter(sizeAdapter);
 
-        imageView.setImageResource(cartItem.getImage());
-        name.setText(cartItem.getTitle());
-        price.setText('$' + Double.toString(cartItem.getPrice()));
+        Glide.with(getContext()).load(cartItem.getImg()).into(imageView);
+        name.setText(cartItem.getName());
+        txtQuantity.setText(Integer.toString(cartItem.getQty()));
+        price.setText("$ " + Integer.toString(cartItem.getDiscountPrice()));
         btnOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,12 +84,13 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
                     @Override
                     public void onClickItem(int pos) {
                         // 0: Add to wishlist, 1: Remove from cart
-                        if(pos == 0)    { // Add to cart
-
+                        if(pos == 0)    { // Add to wishlist
+                            addItemToWishlist(cartItem.getKeyProduct());
                         }
 
-                        if(pos == 1)    { // Remove from wishlist
-                            RemoveFromCart(position);
+                        if(pos == 1)    { // Remove from cart
+                            RemoveFromCart(position, cartItem.getKey());
+                            UpdateTotalPrice();
                         }
                     }
                 }, list, "OPTION", getListImg());
@@ -100,11 +107,14 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         TextView txtQuantity = (TextView) convertView.findViewById(R.id.txtQuantityCart);
         ImageButton btnAdd = (ImageButton) convertView.findViewById(R.id.btnAddCart);
         ImageButton btnSub = (ImageButton) convertView.findViewById(R.id.btnSubCart);
+        TextView txtPrice = (TextView) convertView.findViewById(R.id.cart_price);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cartItem.incrementQuantity();
+                UpdatePrice(txtPrice, cartItem);
+                UpdateTotalPrice();
                 txtQuantity.setText(Integer.toString(cartItem.getQty()));
             }
         });
@@ -113,6 +123,8 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
             @Override
             public void onClick(View view) {
                 cartItem.decreaseQuantity();
+                UpdatePrice(txtPrice, cartItem);
+                UpdateTotalPrice();
                 txtQuantity.setText(Integer.toString(cartItem.getQty()));
             }
         });
@@ -151,7 +163,22 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
         return listSize;
     }
 
-    private void RemoveFromCart(int position)   {
-        mIClickListenerOnItemListview.removeItem(position);
+    private void addItemToWishlist(String keyProduct)    {
+        mIClickListenerOnItemListview.addItemToWishlist(keyProduct);
     }
+
+    private void RemoveFromCart(int position, String docID)   {
+        mIClickListenerOnItemListview.removeItem(position, docID);
+    }
+
+    private void UpdateTotalPrice() {
+        mIClickListenerOnItemListview.updateTotalPrice();
+    }
+
+    private void UpdatePrice(TextView txtPrice, CartItem cartItem)  {
+        int priceUpdate = cartItem.getDiscountPrice();
+        txtPrice.setText("$ " + Integer.toString(cartItem.getDiscountPrice()));
+    }
+
+
 }

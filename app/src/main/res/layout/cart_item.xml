@@ -5,9 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:background="#F9F9F9"
     android:paddingTop="4dp"
     android:paddingBottom="4dp">
 
@@ -47,11 +45,11 @@
                 <TextView
                     android:id="@+id/cart_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="40dp"
                     android:fontFamily="@font/lato"
                     android:text="Áo Polo  Vải Pique Co Giãn Ngắn Tay"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/cart_item_option_btn"
@@ -105,7 +103,7 @@
 
                     <TextView
                         android:id="@+id/txtQuantityCart"
-                        android:layout_width="32dp"
+                        android:layout_width="28dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="1"
@@ -130,7 +128,7 @@
                     android:layout_alignParentBottom="true"
                     android:fontFamily="@font/lato_black"
                     android:paddingTop="12dp"
-                    android:paddingRight="4dp"
+                    android:paddingRight="12dp"
                     android:paddingBottom="12dp"
                     android:text="$234"
                     android:textAlignment="textEnd"

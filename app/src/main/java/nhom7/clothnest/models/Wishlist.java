@@ -1,8 +1,18 @@
 package nhom7.clothnest.models;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Wishlist {
 
@@ -93,5 +103,31 @@ public class Wishlist {
                 ", discount=" + discount +
                 ", date_add=" + date_add +
                 '}';
+    }
+
+    public static void addProductToWishlist(String keyProduct)  {
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("products").document(keyProduct);
+
+        Map<String, Object> newWishlistItem = new HashMap<>();
+        newWishlistItem.put("date_add", new Timestamp(new Date()));
+        newWishlistItem.put("product_id", docRef);
+
+        db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
+                .add(newWishlistItem)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        System.out.println("Them vap wishlist thanh cong");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Them vap wishlist that bai");
+                    }
+                });
     }
 }

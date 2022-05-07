@@ -81,6 +81,9 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/bg_key.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_input_voucher.xml" value="0.1375" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear.xml" value="0.1365" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear_bg_hong.xml" value="0.1" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear_bg_xanh.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/circle_button.xml" value="0.1785" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/circle_button_white.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_back.xml" value="0.1375" />
@@ -91,9 +94,14 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_drop_down.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_edit.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_eye_crossed.xml" value="0.1275" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_fast_delivery.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_home.xml" value="0.1275" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_home_fill.xml" value="0.1275" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_map.xml" value="0.1365" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_payment.xml" value="0.1" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_right_arrow.xml" value="0.1365" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_search_fill.xml" value="0.1375" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_voucher.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_wishlist.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_wishlist_fill.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/roundcorner.xml" value="0.1375" />
@@ -102,9 +110,11 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/rounded_rectangle_item_wishlist.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/font/lato_bold.xml" value="0.20989583333333334" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/font/lato_font.xml" value="0.20989583333333334" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_add_address.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_address_book.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_cart.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_change_password.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_checkout.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_forget_password.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -117,10 +127,10 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/color_item.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/color_item_selected.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.1796875" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.18215417106652587" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_profile.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_purchases.xml" value="0.11666666666666667" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_search_products.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_settings.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_wishlist.xml" value="0.22" />
@@ -175,7 +185,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.22" />
+        <option name="scale" value="0.3333333333333333" />
       </ProjectState>
     </option>
   </component>
