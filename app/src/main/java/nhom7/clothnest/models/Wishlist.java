@@ -1,5 +1,7 @@
 package nhom7.clothnest.models;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -127,6 +129,27 @@ public class Wishlist {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         System.out.println("Them vap wishlist that bai");
+                    }
+                });
+    }
+
+    public static void removeWishlistItemFromFirestore(String wishlistID)    {
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
+                .document(wishlistID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+//                        Toast.makeText(getContext(), "Delete success", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(getContext(), "Delete fails", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
