@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment {
     ProductSlider productSlider;
     LinearLayout containersilder;
     View includeView;
-    ImageView buttoncart;
+    ImageButton buttoncart;
     Button btnSeeAllItem,btnSeeAllItemSales,btnWinter;
     ViewFlipper viewFlipper;
     Animation in,out,alpha;
