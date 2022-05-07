@@ -1,8 +1,10 @@
 package nhom7.clothnest.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,7 +50,7 @@ import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class CartActivity extends AppCompatActivity {
 
-    public ListView lv;
+    ListView lv;
     ImageView btnBack;
     LinearLayout emptyView;
     CartAdapter cartAdapter;
@@ -57,6 +59,7 @@ public class CartActivity extends AppCompatActivity {
     ScrollView scrollView;
     CustomProgressBar customProgressBar;
     TextView txtTotalPrice;
+    Button btnCheckout;
     //You might like
     LinearLayout containersilder;
     ProductSlider productSlider;
@@ -105,6 +108,7 @@ public class CartActivity extends AppCompatActivity {
         cartItemArrayList = new ArrayList<>();
         customProgressBar = new CustomProgressBar(CartActivity.this);
         txtTotalPrice = findViewById(R.id.cart_txt_total_price);
+        btnCheckout = findViewById(R.id.cart_btn_checkout);
     }
 
     private void getCartAndShowOnListview() {
@@ -185,6 +189,14 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        btnCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+                startActivity(intent);
             }
         });
     }

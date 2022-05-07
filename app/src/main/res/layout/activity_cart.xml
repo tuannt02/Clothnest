@@ -8,12 +8,11 @@
 
 
     <RelativeLayout
-            android:id="@+id/customActionBarCart"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            >
+        android:id="@+id/customActionBarCart"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <ImageView
             android:id="@+id/btnBackCart"
@@ -33,16 +32,15 @@
             android:text="MY CART"
             android:textColor="#DF7861"
             android:textSize="24sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignParentBottom="true"
-                android:background="#E0E0E0" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="#E0E0E0" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/cart_view_empty"
@@ -100,19 +98,17 @@
             <ListView
                 android:id="@+id/listview_cart"
                 android:layout_width="match_parent"
-                android:layout_height="360dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="380dp"
                 android:divider="@null"
                 android:nestedScrollingEnabled="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 tools:listitem="@layout/cart_item" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:background="#E0E0E0" />
 
@@ -186,18 +182,18 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_save_changePassword"
+                android:id="@+id/cart_btn_checkout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:fontFamily="@font/lato"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp"
                 android:text="Check out"
                 android:textSize="19sp"
-                android:fontFamily="@font/lato"
                 app:cornerRadius="10dp" />
 
 

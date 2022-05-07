@@ -13,11 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".activities.CheckoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SeeAllItemActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ProductDetail_Activity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".activities.CartActivity"
             android:exported="false" />
@@ -49,7 +52,7 @@
         </activity>
         <activity
             android:name=".activities.TestActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".activities.ChangePasswordActivity"
             android:exported="false" />
