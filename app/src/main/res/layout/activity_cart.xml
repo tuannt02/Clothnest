@@ -172,13 +172,14 @@
             android:layout_marginBottom="15dp">
 
             <TextView
+                android:id="@+id/cart_txt_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:padding="10dp"
-                android:text="$1,234"
                 android:fontFamily="@font/lato"
+                android:padding="10dp"
+                android:text="$ 1,234"
                 android:textColor="@color/black"
                 android:textSize="28sp"
                 android:textStyle="bold" />
