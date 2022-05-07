@@ -180,8 +180,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void getLikeProducts() {
-        productSlider = new ProductSlider(this, containersilder, productArrayList);
-        productSlider.createProductSlider();
+//        productSlider = new ProductSlider(this, containersilder, productArrayList);
+//        productSlider.createProductSlider();
     }
 
     private void setupClickOnListener() {

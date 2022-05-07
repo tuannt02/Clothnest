@@ -67,8 +67,8 @@ public class ProductDetail_Activity extends AppCompatActivity {
 
 
     private void getSimilarProducts() {
-        productSlider = new ProductSlider(this, containersilder, productArrayList);
-        productSlider.createProductSlider();
+//        productSlider = new ProductSlider(this, containersilder, productArrayList);
+//        productSlider.createProductSlider();
     }
 
     private List<SliderItem> GetListSliderItem() {

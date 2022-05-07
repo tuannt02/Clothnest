@@ -54,8 +54,6 @@ import nhom7.clothnest.util.customizeComponent.CustomDialog;
 public class HomeFragment extends Fragment {
     View mView;
     GridView gridViewArrival, gridViewSales;
-    ArrayList<Product1> productArrayList;
-    GridViewApdater gridViewApdaterArrival, gridViewApdaterSales;
     ProductSlider productSlider;
     LinearLayout containersilder;
     View includeView;
@@ -65,8 +63,8 @@ public class HomeFragment extends Fragment {
     Animation in, out, alpha;
 
     //Get product from FireStore
-    ArrayList<Product_Thumbnail> listProduct;
-    Product_ThumbnailAdapter thumbnailAdapter;
+    ArrayList<Product_Thumbnail> arrivalsList;
+    Product_ThumbnailAdapter arrivalsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,17 +75,16 @@ public class HomeFragment extends Fragment {
         reference();
         AnimatonViewFliper();
 
-        //GetProduct();
         getProductThumbnail();
 
         getEvent();
-        //createSlider();
+        createSlider();
 
         return mView;
     }
 
     private void createSlider() {
-        productSlider = new ProductSlider(getContext(), containersilder, productArrayList);
+        productSlider = new ProductSlider(getContext(), containersilder, arrivalsList);
         productSlider.createProductSlider();
     }
 
@@ -171,112 +168,12 @@ public class HomeFragment extends Fragment {
         viewFlipper.setAutoStart(true);
     }
 
-    private void GetProduct() {
-        productArrayList = new ArrayList<>();
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("2", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("3", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("4", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("5", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("6", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-
-        gridViewApdaterArrival = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
-        gridViewArrival.setAdapter(gridViewApdaterArrival);
-        gridViewApdaterSales = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
-        gridViewSales.setAdapter(gridViewApdaterSales);
-    }
-
     private void getProductThumbnail(){
-        listProduct = new ArrayList<>();
-        thumbnailAdapter = new Product_ThumbnailAdapter(getContext(), listProduct);
-        gridViewArrival.setAdapter(thumbnailAdapter);
+        //Thêm sản phẩm vào arrivals
+        arrivalsList = new ArrayList<>();
+        arrivalsAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
+        gridViewArrival.setAdapter(arrivalsAdapter);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        //get data
-        db.collection(Product_Thumbnail.COLLECTION_NAME)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            //Duyệt từng product
-                            for(QueryDocumentSnapshot document: task.getResult()){
-                                //product để thêm vào arrayList
-                                Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
-                                listProduct.add(thumbnail);
-
-                                //tempOject chứa product
-                                Map<String, Object> tempObject = document.getData();
-
-                                // Lặp qua từng field của một document
-                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
-                                while(myVeryOwnIterator.hasNext()){
-                                    String key = (String) myVeryOwnIterator.next();
-
-                                    //Set id
-                                    thumbnail.setId(document.getId());
-
-                                    //set category
-                                    if(key.equals("category")){
-                                        DocumentReference docRef = (DocumentReference) tempObject.get(key);
-                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                thumbnail.setCategory(documentSnapshot.getString("name"));
-                                                thumbnailAdapter.notifyDataSetChanged();
-                                            }
-                                        });
-                                    }
-
-                                    //Set name
-                                    if(key.equals("name")){
-                                        thumbnail.setName((String) tempObject.get(key));
-                                        thumbnailAdapter.notifyDataSetChanged();
-                                    }
-
-                                    //Set price
-                                    if(key.equals("price")){
-                                        Double price = document.getDouble(key);
-                                        thumbnail.setPrice(price);
-                                        thumbnailAdapter.notifyDataSetChanged();
-                                    }
-                                    //set discount
-                                    if(key.equals("discount")){
-                                        int discount = (int)Math.round(document.getDouble(key));
-                                        thumbnail.setDiscount(discount);
-                                        thumbnailAdapter.notifyDataSetChanged();
-                                    }
-                                    //set mainImage
-                                    if(key.equals("main_img")){
-                                        thumbnail.setMainImage((String) tempObject.get(key));
-                                        thumbnailAdapter.notifyDataSetChanged();
-                                    }
-                                    //set isFavorite
-                                    FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                    DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
-
-                                    CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                    Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                    query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if(task.isSuccessful()){
-                                                thumbnail.setFavorite(!task.getResult().isEmpty());
-                                                thumbnailAdapter.notifyDataSetChanged();
-                                            }
-                                        }
-                                    });
-                                }
-
-                            }
-                        }
-                    }
-                });
+        Product_ThumbnailAdapter.getProductAndPushToGridView(arrivalsList, arrivalsAdapter);
     }
 }

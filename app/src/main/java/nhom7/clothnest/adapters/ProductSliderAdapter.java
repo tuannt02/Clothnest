@@ -12,17 +12,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.models.Product1;
+import nhom7.clothnest.models.Product_Thumbnail;
 
 public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<Product1> products;
+    private ArrayList<Product_Thumbnail> products;
 
-    public ProductSliderAdapter(Context mContext, ArrayList<Product1> products) {
+    public ProductSliderAdapter(Context mContext, ArrayList<Product_Thumbnail> products) {
         this.mContext = mContext;
         this.products = products;
     }
@@ -38,11 +41,13 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product1 product = products.get(position);
-        holder.ivProduct.setImageResource(product.getProductImage());
-        holder.tvProductName.setText(product.getProductName());
+        Product_Thumbnail product = products.get(position);
 
-        Double price = Double.parseDouble(String.valueOf(product.getRegularCost()));
+        holder.tvProductName.setText(product.getName());
+
+        Glide.with(mContext).load(product.getMainImage()).into(holder.ivProduct);
+
+        Double price = Double.parseDouble(String.valueOf(product.getPrice()));
         holder.tvPrice.setText("$" + price.toString().replaceAll("\\.?[0-9]*$", ""));
 
         Double discount = Double.parseDouble(String.valueOf(product.getDiscount()));
@@ -50,6 +55,9 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
 
         Double discountPrice = price * (1 - discount/100.0);
         holder.tvDiscountPrice.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
+
+        if(product.isFavorite())
+            holder.ivFavorite.setImageResource(R.drawable.is_favorite);
 
         getEvent(holder);
     }
@@ -70,7 +78,7 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView ivProduct;
+        ImageView ivProduct, ivFavorite;
         TextView tvProductName, tvDiscountPrice, tvDiscount, tvPrice;
 
         public ViewHolder(@NonNull View itemView) {
@@ -80,6 +88,7 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
             tvDiscount = itemView.findViewById(R.id.discount);
             tvDiscountPrice = itemView.findViewById(R.id.discountCost);
             tvPrice = itemView.findViewById(R.id.regularCost);
+            ivFavorite = itemView.findViewById(R.id.favoriteButton);
         }
 
 
