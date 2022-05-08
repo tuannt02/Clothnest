@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".activities.Admin_VoucherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Admin_MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CheckoutActivity"
             android:exported="false" />
         <activity

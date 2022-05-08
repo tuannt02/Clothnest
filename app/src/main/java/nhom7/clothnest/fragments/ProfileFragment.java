@@ -21,6 +21,9 @@ import nhom7.clothnest.activities.EditProfileActivity;
 
 public class ProfileFragment extends Fragment {
     ImageButton ibEditProfile;
+    PurchasesFragment purchasesFragment;
+    SettingsFragment settingsFragment;
+    Fragment selectedFragment = null;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -31,6 +34,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        purchasesFragment = new PurchasesFragment();
+        settingsFragment = new SettingsFragment();
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -38,7 +43,10 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getChildFragmentManager().beginTransaction().replace(R.id.profile_fragment_container, new PurchasesFragment()).commit();
+        if (selectedFragment == null)
+            selectedFragment = purchasesFragment;
+
+        getChildFragmentManager().beginTransaction().replace(R.id.profile_fragment_container, selectedFragment).commit();
 
         BottomNavigationView profileNavigationView = view.findViewById(R.id.profile_navigation_view);
         profileNavigationView.setOnItemSelectedListener(navListener);
@@ -60,14 +68,12 @@ public class ProfileFragment extends Fragment {
     private NavigationBarView.OnItemSelectedListener navListener = new NavigationBarView.OnItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = null;
-
             switch (item.getItemId()) {
                 case R.id.nav_purchases:
-                    selectedFragment = new PurchasesFragment();
+                    selectedFragment = purchasesFragment;
                     break;
                 case R.id.nav_settings:
-                    selectedFragment = new SettingsFragment();
+                    selectedFragment = settingsFragment;
                     break;
             }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_product"
+        android:title="Product"
+        android:icon="@drawable/product_selector" />
+
+    <item
+        android:id="@+id/nav_chat"
+        android:title="Chat"
+        android:icon="@drawable/chat_selector" />
+
+    <item
+        android:id="@+id/nav_transaction"
+        android:title="Transaction"
+        android:icon="@drawable/transaction_selector" />
+
+    <item
+        android:id="@+id/nav_more"
+        android:title="More"
+        android:icon="@drawable/more_selector" />
+</menu>
