@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    >
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="36dp"
+        android:background="@drawable/border_radius_linear2"
+        >
+
+        <TextView
+            android:id="@+id/dig_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận xóa"
+            android:textAlignment="textStart"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_black"
+            android:layout_marginBottom="10dp"
+            />
+
+        <TextView
+            android:id="@+id/dig_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bạn có chắc chắn muốn xóa sản phẩm này?"
+            android:textAlignment="textStart"
+            android:textSize="20dp"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/lato"
+            android:layout_marginBottom="10dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="20dp"
+            >
+
+            <TextView
+                android:id="@+id/dig_btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="@font/lato"
+                android:text="Cancel"
+                android:textColor="@color/gray"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dig_btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:fontFamily="@font/lato"
+                android:text="OK"
+                android:textColor="@color/pri_col"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

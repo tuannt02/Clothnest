@@ -154,15 +154,6 @@ public class HomeFragment extends Fragment {
         collectionsList = new ArrayList<>();
     }
 
-    private void buttonOpenDialogClicked() {
-        CustomDialog.Listener listener = new CustomDialog.Listener() {
-            @Override
-            public void ListenerEntered() {
-            }
-        };
-        final CustomDialog dialog = new CustomDialog(getContext(), listener);
-        dialog.show();
-    }
 
     private void AnimatonViewFliper() {
         in = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_anim);

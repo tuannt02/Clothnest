@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    >
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="36dp"
+        android:background="@drawable/border_radius_linear2"
+        >
+
+        <TextView
+            android:id="@+id/dig_admin_add_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Voucher"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_black"
+            android:layout_marginBottom="10dp"
+            />
+
+        <EditText
+            android:id="@+id/dig_admin_add_input_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:fontFamily="@font/lato"
+            android:textSize="20sp"
+            android:text=""
+            android:hint="Code"
+            android:background="@drawable/border_input_voucher"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/dig_admin_add_validate_input_1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please enter this field"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/dig_admin_add_input_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:fontFamily="@font/lato"
+            android:textSize="20sp"
+            android:text=""
+            android:hint="Discount"
+            android:background="@drawable/border_input_voucher"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/dig_admin_add_validate_input_2"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please enter this field"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="40dp"
+            >
+
+            <TextView
+                android:id="@+id/dig_admin_add_btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="@font/lato_black"
+                android:text="Save"
+                android:textColor="#3484F0"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dig_admin_add_btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#FF0000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato_black"
+                android:layout_alignParentRight="true"
+                />
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
