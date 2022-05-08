@@ -1,12 +1,30 @@
 package nhom7.clothnest.models;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class Product_Detail {
     public static final String COLLECTION_NAME = "products";
 
     private String id;
-    private String category;
+    private String category;//để xét similar product
     private String name;
     private double price;
     private int discount;
@@ -15,6 +33,7 @@ public class Product_Detail {
     private String description;
 
     public Product_Detail() {
+        imageList = new ArrayList<>();
     }
 
     public Product_Detail(String id, String category, String name, double price, int discount, ArrayList<String> imageList, boolean isFavorite, String description) {
@@ -92,9 +111,79 @@ public class Product_Detail {
         this.description = description;
     }
 
-    public static Product_Detail getProductDetailFromFirestore(String id){
-        Product_Detail product = new Product_Detail();
+    public static ArrayList<ColorClass> getColorsOfProduct(String id){
+        ArrayList<ColorClass> colorList = new ArrayList<>();
 
-        return product;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //get data
+        db.collection(Product_Thumbnail.COLLECTION_NAME)
+                .document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                ArrayList<String> list = (ArrayList<String>) document.get("colors");
+
+                                for(String colorUrl: list){
+                                    ColorClass color = new ColorClass();
+
+                                    DocumentReference colorDoRef = db.document(colorUrl);
+                                    colorDoRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            color.setHex(documentSnapshot.getString("hex"));
+                                            color.setName(documentSnapshot.getString("name"));
+                                            colorList.add(color);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+
+        return colorList;
+    }
+
+    public static ArrayList<SizeClass> getSizesOfProduct(String id){
+        ArrayList<SizeClass> sizeList = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //get data
+        db.collection(Product_Thumbnail.COLLECTION_NAME)
+                .document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                ArrayList<String> list = (ArrayList<String>) document.get("sizes");
+
+                                for(String sizeUrl: list){
+                                    SizeClass size = new SizeClass();
+
+                                    DocumentReference sizeDoRef = db.document(sizeUrl);
+                                    sizeDoRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            size.setName(documentSnapshot.getString("name"));
+                                            size.setShort_name(documentSnapshot.getString("short_name"));
+                                            sizeList.add(size);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+
+        return sizeList;
     }
 }

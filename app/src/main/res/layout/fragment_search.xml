@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
+        android:gravity="center"
         android:paddingHorizontal="20dp">
 
         <androidx.cardview.widget.CardView
@@ -37,7 +38,7 @@
 
                 <EditText
                     android:id="@+id/etSearch"
-                    android:layout_width="192dp"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp" />
 
