@@ -13,13 +13,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.ProductDetail_Activity;
+import nhom7.clothnest.models.CategoryItem;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.Product_Thumbnail;
+import nhom7.clothnest.models.User;
+import nhom7.clothnest.models.Wishlist;
 
 public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdapter.ViewHolder> {
     private Context mContext;
@@ -90,7 +107,5 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
             tvPrice = itemView.findViewById(R.id.regularCost);
             ivFavorite = itemView.findViewById(R.id.favoriteButton);
         }
-
-
     }
 }

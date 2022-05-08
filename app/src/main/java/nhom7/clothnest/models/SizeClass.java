@@ -6,6 +6,9 @@ public class SizeClass {
     private String name;
     private String short_name;
 
+    public SizeClass() {
+    }
+
     public SizeClass(String name, String short_name) {
         this.name = name;
         this.short_name = short_name;

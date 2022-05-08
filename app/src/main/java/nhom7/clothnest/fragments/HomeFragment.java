@@ -42,7 +42,9 @@ import nhom7.clothnest.activities.CartActivity;
 import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.activities.SeeAllItemActivity;
 import nhom7.clothnest.adapters.GridViewApdater;
+import nhom7.clothnest.adapters.ProductSliderAdapter;
 import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
+import nhom7.clothnest.models.CategoryItem;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Thumbnail;
@@ -63,7 +65,7 @@ public class HomeFragment extends Fragment {
     Animation in, out, alpha;
 
     //Get product from FireStore
-    ArrayList<Product_Thumbnail> arrivalsList;
+    ArrayList<Product_Thumbnail> arrivalsList, collectionsList;
     Product_ThumbnailAdapter arrivalsAdapter;
 
     @Override
@@ -84,8 +86,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void createSlider() {
-        productSlider = new ProductSlider(getContext(), containersilder, arrivalsList);
+        productSlider = new ProductSlider(getContext(), containersilder, collectionsList);
         productSlider.createProductSlider();
+        productSlider.getSimilarProduct(collectionsList, "T-Shirts");
     }
 
     private void getEvent() {
@@ -147,6 +150,8 @@ public class HomeFragment extends Fragment {
         btnSeeAllItemSales = mView.findViewById(R.id.btnsale);
         btnWinter = mView.findViewById(R.id.btnWinter);
         viewFlipper = mView.findViewById(R.id.viewFlipper);
+
+        collectionsList = new ArrayList<>();
     }
 
 

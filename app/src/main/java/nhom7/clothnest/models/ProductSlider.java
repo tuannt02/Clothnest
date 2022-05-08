@@ -8,13 +8,29 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.ProductSliderAdapter;
@@ -28,6 +44,7 @@ public class ProductSlider {
     private LinearLayout container;
     private LinearLayout linearLayout;
     private Context mContext;
+    private ProductSliderAdapter adapter;
 
     public ProductSlider(Context context, LinearLayout container, ArrayList<Product_Thumbnail> products) {
         mContext = context;
@@ -54,7 +71,7 @@ public class ProductSlider {
         container.addView(recyclerView);
 
         // Initialize ProductSliderAdapter
-        ProductSliderAdapter adapter = new ProductSliderAdapter(mContext, products);
+        adapter = new ProductSliderAdapter(mContext, products);
         recyclerView.setAdapter(adapter);
     }
 
@@ -119,5 +136,110 @@ public class ProductSlider {
 
         if (currDot != null)
             currDot.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+    }
+
+    //Lấy 10 sản phẩm cùng danh mục
+    public void getSimilarProduct(ArrayList<Product_Thumbnail> listProduct, String category){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(CategoryItem.COLLECTION_NAME)
+                .whereEqualTo("name", category)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document: task.getResult()){
+                                DocumentReference doRef = db.document(CategoryItem.COLLECTION_NAME + '/' + document.getId());
+
+                                //get data
+                                db.collection(Product_Thumbnail.COLLECTION_NAME)
+                                        .whereEqualTo("category", doRef)
+                                        .limit(10)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    //Duyệt từng product
+                                                    for(QueryDocumentSnapshot document: task.getResult()){
+                                                        //product để thêm vào arrayList
+                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                        //Thêm thumbnail vào arraylist và notifyDataSetChanged
+                                                        listProduct.add(thumbnail);
+                                                        adapter.notifyDataSetChanged();
+
+                                                        //tempOject chứa product
+                                                        Map<String, Object> tempObject = document.getData();
+
+                                                        // Lặp qua từng field của một document
+                                                        Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+                                                        while(myVeryOwnIterator.hasNext()){
+                                                            String key = (String) myVeryOwnIterator.next();
+
+                                                            //Set id
+                                                            thumbnail.setId(document.getId());
+                                                            adapter.notifyDataSetChanged();
+
+                                                            //set category
+                                                            if(key.equals("category")){
+                                                                DocumentReference docRef = (DocumentReference) tempObject.get(key);
+                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                        adapter.notifyDataSetChanged();
+                                                                    }
+                                                                });
+                                                            }
+
+                                                            //Set name
+                                                            if(key.equals("name")){
+                                                                thumbnail.setName((String) tempObject.get(key));
+                                                                adapter.notifyDataSetChanged();
+                                                            }
+
+                                                            //Set price
+                                                            if(key.equals("price")){
+                                                                Double price = document.getDouble(key);
+                                                                thumbnail.setPrice(price);
+                                                                adapter.notifyDataSetChanged();
+                                                            }
+                                                            //set discount
+                                                            if(key.equals("discount")){
+                                                                int discount = (int)Math.round(document.getDouble(key));
+                                                                thumbnail.setDiscount(discount);
+                                                                adapter.notifyDataSetChanged();
+                                                            }
+                                                            //set mainImage
+                                                            if(key.equals("main_img")){
+                                                                thumbnail.setMainImage((String) tempObject.get(key));
+                                                                adapter.notifyDataSetChanged();
+                                                            }
+                                                            //set isFavorite
+                                                            FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                            DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
+
+                                                            CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                            Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                            query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                    if(task.isSuccessful()){
+                                                                        thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                        adapter.notifyDataSetChanged();
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
     }
 }

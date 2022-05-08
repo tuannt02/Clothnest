@@ -24,6 +24,9 @@ public class ColorClass {
         this.hex = hex;
     }
 
+    public ColorClass() {
+    }
+
     public ColorClass(String name, String hex) {
         this.name = name;
         this.hex = hex;

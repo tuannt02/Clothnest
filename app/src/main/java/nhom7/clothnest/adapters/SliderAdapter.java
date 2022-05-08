@@ -33,7 +33,7 @@ public class SliderAdapter extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.sliderImage);
         SliderItem photo = itemList.get(position);
         if(photo != null){
-            Glide.with(mContext).load(photo.getResourceID()).into(imageView);
+            Glide.with(mContext).load(photo.getImageUrl()).into(imageView);
         }
         //add view to viewgroup
         container.addView(view);

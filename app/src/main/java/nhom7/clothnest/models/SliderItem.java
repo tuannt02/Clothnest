@@ -1,17 +1,20 @@
 package nhom7.clothnest.models;
 
 public class SliderItem {
-    private int resourceID;
+    private String imageUrl;
 
-    public void setResourceID(int resourceID) {
-        this.resourceID = resourceID;
+    public SliderItem() {
     }
 
-    public int getResourceID() {
-        return resourceID;
+    public SliderItem(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public SliderItem(int resourceID) {
-        this.resourceID = resourceID;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
