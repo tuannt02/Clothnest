@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.util.customizeComponent.CustomDialogAdminAdd;
+import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class Admin_VoucherActivity extends AppCompatActivity {
 
@@ -24,19 +25,7 @@ public class Admin_VoucherActivity extends AppCompatActivity {
         btnOnpenDiag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialogAdminAdd customDialogAdminAdd = new CustomDialogAdminAdd(Admin_VoucherActivity.this,
-                        "Add voucher",
-                        2,
-                        "alo",
-                        "blo",
-                        new CustomDialogAdminAdd.IClickListenerOnSaveBtn() {
-                            @Override
-                            public void onSubmit(String txtInput1, String txtInput2) {
-                                System.out.println(txtInput1 + "__" + txtInput2);
-                                Toast.makeText(Admin_VoucherActivity.this, txtInput1 + "__" + txtInput2, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                customDialogAdminAdd.show();
+                CustomToast.DisplayToast(Admin_VoucherActivity.this, 3, "Them thanh cong Them thanh cong Them thanh cong Them thanh cong");
             }
         });
     }
