@@ -11,10 +11,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.fragments.MoreFragment;
 
 public class Admin_MainActivity extends AppCompatActivity {
     BottomNavigationView adminBnv;
+
     // Declare fragment objects here
+    MoreFragment moreFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class Admin_MainActivity extends AppCompatActivity {
         adminBnv = findViewById(R.id.bottom_navigation_view);
 
         // Init fragment objects here
+        moreFragment = new MoreFragment();
 
         // Replace fragment with Product Fragment on start up
 
@@ -48,7 +53,7 @@ public class Admin_MainActivity extends AppCompatActivity {
                         selectedFragment = null;
                         break;
                     case R.id.nav_more:
-                        selectedFragment = null;
+                        selectedFragment = moreFragment;
                         break;
                 }
 

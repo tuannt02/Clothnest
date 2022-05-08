@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp"
     tools:context=".fragments.MoreFragment">
 
     <TextView
-        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
+        android:paddingHorizontal="20dp"
         android:fontFamily="@font/lato_black"
         android:text="MORE"
         android:textColor="@color/black"
@@ -24,6 +23,8 @@
         app:dividerColor="@color/dividerColor" />
 
     <LinearLayout
+        android:id="@+id/more_ItemModify"
+        android:paddingHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
@@ -31,7 +32,6 @@
         android:paddingVertical="20dp">
 
         <TextView
-            android:id="@+id/more_ItemModify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -51,11 +51,14 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dividerColor="@color/dividerColor" />
 
     <LinearLayout
+        android:id="@+id/more_ItemStatistics"
+        android:paddingHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
@@ -63,7 +66,6 @@
         android:paddingVertical="20dp">
 
         <TextView
-            android:id="@+id/more_ItemStatistics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -83,19 +85,21 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dividerColor="@color/dividerColor" />
 
     <LinearLayout
+        android:id="@+id/more_ItemGrantPermisssion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
         android:backgroundTint="#FFFFFF"
         android:orientation="horizontal"
         android:paddingVertical="20dp">
 
         <TextView
-            android:id="@+id/more_ItemGrantPermisssion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -115,11 +119,14 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dividerColor="@color/dividerColor" />
 
     <Button
+        android:id="@+id/more_Btn_Logout"
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
