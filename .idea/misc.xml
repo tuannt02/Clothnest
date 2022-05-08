@@ -162,9 +162,23 @@
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/fragment_comment.xml" value="0.2824074074074074" />
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.25" />
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.67" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_back.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_baseline_remove_red_eye_24.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_btnadd.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_btnsub.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_calendar.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/ic_close.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_cart.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_product_detail.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/category_item.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_category.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_filter.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_modify.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_more.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search_products.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/slider_item.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.67" />
         <entry key="..\:/source/repos/NhapMonUDDD/Merge/Clothnest/app/src/main/res/drawable/size_background.xml" value="0.1655" />

@@ -221,4 +221,85 @@ public class Product_ThumbnailAdapter extends BaseAdapter {
                 });
     }
 
+    public static ArrayList<Product_Thumbnail> getProductFromFirestore(){
+        ArrayList<Product_Thumbnail> listProduct = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //get data
+        db.collection(Product_Thumbnail.COLLECTION_NAME)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            //Duyệt từng product
+                            for(QueryDocumentSnapshot document: task.getResult()){
+                                //product để thêm vào arrayList
+                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
+                                listProduct.add(thumbnail);
+
+                                //tempOject chứa product
+                                Map<String, Object> tempObject = document.getData();
+
+                                // Lặp qua từng field của một document
+                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+                                while(myVeryOwnIterator.hasNext()){
+                                    String key = (String) myVeryOwnIterator.next();
+
+                                    //Set id
+                                    thumbnail.setId(document.getId());
+
+                                    //set category
+                                    if(key.equals("category")){
+                                        DocumentReference docRef = (DocumentReference) tempObject.get(key);
+                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                            }
+                                        });
+                                    }
+
+                                    //Set name
+                                    if(key.equals("name")){
+                                        thumbnail.setName((String) tempObject.get(key));
+                                    }
+
+                                    //Set price
+                                    if(key.equals("price")){
+                                        Double price = document.getDouble(key);
+                                        thumbnail.setPrice(price);
+                                    }
+                                    //set discount
+                                    if(key.equals("discount")){
+                                        int discount = (int)Math.round(document.getDouble(key));
+                                        thumbnail.setDiscount(discount);
+                                    }
+                                    //set mainImage
+                                    if(key.equals("main_img")){
+                                        thumbnail.setMainImage((String) tempObject.get(key));
+                                    }
+                                    //set isFavorite
+                                    FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                    DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
+
+                                    CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                    Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                    query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                thumbnail.setFavorite(!task.getResult().isEmpty());
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+        return listProduct;
+    }
 }

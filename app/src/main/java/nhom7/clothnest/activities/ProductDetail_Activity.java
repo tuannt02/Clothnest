@@ -19,12 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
+import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
 import nhom7.clothnest.fragments.CommentFragment;
 import nhom7.clothnest.adapters.GridViewApdater;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.SliderAdapter;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.ProductSlider;
+import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.SliderItem;
 
 public class ProductDetail_Activity extends AppCompatActivity {
@@ -35,7 +37,7 @@ public class ProductDetail_Activity extends AppCompatActivity {
 
     //Similar products
     LinearLayout containersilder;
-    ArrayList<Product1> productArrayList;
+    ArrayList<Product_Thumbnail> productArrayList;
     ProductSlider productSlider;
 
     Button btnDescription, btnReviews;
@@ -52,23 +54,23 @@ public class ProductDetail_Activity extends AppCompatActivity {
 
         Reference();
         SetEventClick();
-        GetProduct();
         ActiveSlider();
 
         getSimilarProducts();
-        //processDetail();
+        processDetail();
 
     }
 
     private void processDetail() {
-        String key = (String) getIntent().getSerializableExtra("key");
-        Toast.makeText(getApplicationContext(),"Key " + key, Toast.LENGTH_LONG).show();
+        String key = (String) getIntent().getSerializableExtra("selected_Thumbnail");
+
     }
 
 
     private void getSimilarProducts() {
-//        productSlider = new ProductSlider(this, containersilder, productArrayList);
-//        productSlider.createProductSlider();
+        productArrayList = Product_ThumbnailAdapter.getProductFromFirestore();
+        productSlider = new ProductSlider(this, containersilder, productArrayList);
+        productSlider.createProductSlider();
     }
 
     private List<SliderItem> GetListSliderItem() {
@@ -80,20 +82,6 @@ public class ProductDetail_Activity extends AppCompatActivity {
         list.add(new SliderItem(R.drawable.product));
 
         return list;
-    }
-
-
-    public void GetProduct() {
-        productArrayList = new ArrayList<>();
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
     }
 
     private void ActiveSlider() {
