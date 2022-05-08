@@ -26,6 +26,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    //dinhvan
+    buildFeatures{
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -55,4 +60,12 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0' // Customize Progressbar _ThaiTuan
 
     implementation 'com.squareup.picasso:picasso:2.71828' // Animation_DinhVan
+
+    //support for screen sizes
+    implementation 'com.inuit.sdp:sdp-android:1.0.6'
+    implementation 'com.inuit.sdp:ssp-android:1.0.6'
+
+    //rounded image
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 }
