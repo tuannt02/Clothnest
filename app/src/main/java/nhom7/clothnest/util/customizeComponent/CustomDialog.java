@@ -4,49 +4,74 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import nhom7.clothnest.R;
 
-public class CustomDialog extends Dialog {
+public class CustomDialog extends Dialog implements android.view.View.OnClickListener{
 
-    //interface
-    public  interface Listener{
-         void ListenerEntered();
+    public interface IClickListenerOnOkBtn   {
+        void onResultOk();
     }
-    public Context context;
-    private Listener listener;
+    private IClickListenerOnOkBtn mIClickListenerOnOkBtn;
 
-    public CustomDialog(Context context, Listener listener) {
+    public CustomDialog(@NonNull Context context, String titleDialog, String contentDialog, IClickListenerOnOkBtn listener) {
         super(context);
-        this.context=context;
-        this.listener= listener;
+        this.mIClickListenerOnOkBtn = listener;
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_custom);
+        setCanceledOnTouchOutside(true);
+
+        Window window = getWindow();
+        if(window == null)  {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        // Init view
+        TextView title = findViewById(R.id.dig_title);
+        TextView btnClose = findViewById(R.id.dig_btn_cancel);
+        TextView btnOke = findViewById(R.id.dig_btn_ok);
+        TextView content = findViewById(R.id.dig_content);
+
+        // Assign
+        title.setText(titleDialog);
+        content.setText(contentDialog);
+
+        // Set on click
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        btnOke.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mIClickListenerOnOkBtn.onResultOk();
+            }
+        });
+
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        controlButton();
-    }
+    public void onClick(View view) {
 
-    private void controlButton() {
-        AlertDialog.Builder builder= new AlertDialog.Builder(getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth);
-        builder.setTitle("Notification")
-                .setIcon(R.mipmap.ic_launcher_foreground)
-                .setMessage("Do you want selected cart? ")
-                .setPositiveButton("YES", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getContext(), "You selected the product", Toast.LENGTH_SHORT).show();
-            }
-        })
-                .setNegativeButton("NO", new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .create().show();
     }
 }
