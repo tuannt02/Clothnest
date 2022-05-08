@@ -19,12 +19,22 @@ import nhom7.clothnest.fragments.WishlistFragment;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment;
+    SearchFragment searchFragment;
+    WishlistFragment wishlistFragment;
+    ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("setupBnv", "Setup Bottom Navigation View");
         setContentView(R.layout.activity_main);
+
+        // init fragments
+        homeFragment = new HomeFragment();
+        searchFragment = new SearchFragment();
+        wishlistFragment = new WishlistFragment();
+        profileFragment = new ProfileFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, HomeFragment.class, null).commit();
         setupBottomNavigationView();
@@ -41,16 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        selectedFragment = new HomeFragment();
+                        selectedFragment = homeFragment;
                         break;
                     case R.id.nav_search:
-                        selectedFragment = new SearchFragment();
+                        selectedFragment = searchFragment;
                         break;
                     case R.id.nav_wishlist:
-                        selectedFragment = new WishlistFragment();
+                        selectedFragment = wishlistFragment;
                         break;
                     case R.id.nav_profile:
-                        selectedFragment = new ProfileFragment();
+                        selectedFragment = profileFragment;
                         break;
                 }
                 if (selectedFragment != null)
