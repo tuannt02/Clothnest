@@ -246,7 +246,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                         validateFieldPhoneN;
 
                 if(validateUser)    {
-                    User user = new User(txtFullname, txtEmail, txtDob, txtPhoneNum, gender);
+                    User user = new User(txtFullname,"", txtEmail, txtDob, txtPhoneNum, gender);
 
                     User.updateUserProfileAuthentication(txtFullname, mUri);
                     User.updateUserProfileFirestore(user);

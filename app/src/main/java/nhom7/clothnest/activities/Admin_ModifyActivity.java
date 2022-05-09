@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Admin_ModifyActivity extends AppCompatActivity {
     ListView lvModify;
     ArrayList<CategoryItem> modifyList;
     CategoryAdapter adapter;
+    ImageView btnclose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,9 @@ public class Admin_ModifyActivity extends AppCompatActivity {
     }
 
     private void initUi()   {
+
         lvModify = findViewById(R.id.more_ModifyList);
+        btnclose = findViewById(R.id.modify_closeButton);
     }
 
     private void setOnClickListener()   {
@@ -70,6 +74,13 @@ public class Admin_ModifyActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        btnclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
