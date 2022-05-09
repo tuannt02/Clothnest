@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".activities.Admin_BannersActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Admin_ModifyActivity"
             android:exported="false" />
         <activity
