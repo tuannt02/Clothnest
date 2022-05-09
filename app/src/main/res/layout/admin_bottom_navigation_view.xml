@@ -22,7 +22,7 @@
             android:paddingHorizontal="30dp"
             app:itemBackground="@drawable/bottom_navigation_selector"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/bottom_navigation_menu" />
+            app:menu="@menu/admin_bottom_navigation_menu" />
 
     </RelativeLayout>
 
