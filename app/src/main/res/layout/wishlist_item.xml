@@ -41,8 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name"
@@ -50,50 +49,47 @@
                     android:layout_height="33dp"
                     android:fontFamily="@font/lato_black"
                     android:text="Áo Polo  Vải Pique Co Giãn Ngắn Tay"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="$300"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/strikethrough_foreground"
-                    android:textStyle="normal"
-                    />
+                    android:fontFamily="@font/lato_bold"
+                    android:text="$300"
+                    android:textColor="@color/black"
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/down_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$245"
-                    android:fontFamily="@font/lato_black"
-                    android:textColor="#E45353"
                     android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    />
+                    android:fontFamily="@font/lato_black"
+                    android:text="$245"
+                    android:textColor="#E45353"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:fontFamily="@font/lato"
-                    app:backgroundTint="@android:color/white"
                     android:layout_marginTop="8dp"
+                    android:drawableRight="@drawable/cart3"
+                    android:fontFamily="@font/lato"
                     android:padding="8dp"
+                    android:text="ADD TO CART"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    app:backgroundTint="@android:color/white"
                     app:cornerRadius="6dp"
                     app:strokeColor="#E0E0E0"
-                    app:strokeWidth="1dp"
-                    android:drawableRight="@drawable/cart3"
-                    android:text="ADD TO CART"
-                    android:textSize="10sp"
-                    android:textColor="@color/black" />
+                    app:strokeWidth="1dp" />
 
             </LinearLayout>
 
@@ -108,7 +104,7 @@
             android:layout_alignParentBottom="true"
             android:backgroundTint="@color/white"
             android:contentDescription="btnOption"
-            android:src="@drawable/ic_more" />
+            android:src="@drawable/ic_more2" />
 
     </RelativeLayout>
 

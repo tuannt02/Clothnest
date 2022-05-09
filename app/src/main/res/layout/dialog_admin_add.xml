@@ -62,6 +62,7 @@
             android:fontFamily="@font/lato"
             android:textSize="20sp"
             android:text=""
+            android:inputType="number"
             android:hint="Discount"
             android:background="@drawable/border_input_voucher"
             android:layout_marginTop="20dp"
