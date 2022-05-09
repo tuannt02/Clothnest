@@ -100,7 +100,15 @@ public class CustomDialogAdminAdd extends Dialog implements android.view.View.On
                         validate_input2.setVisibility(View.VISIBLE);
                     }
                     else    {
-                        validate_input2.setVisibility(View.GONE);
+                        int numb = Integer.valueOf(txtInput2);
+
+                        if(numb > 100 || numb <= 0) {
+                            validate_input2.setText("The value of this field ranges from 1 to 100");
+                            validate_input2.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        else
+                            validate_input2.setVisibility(View.GONE);
                     }
 
                     if(txtInput1.equals("") || txtInput2.equals(""))    return;
