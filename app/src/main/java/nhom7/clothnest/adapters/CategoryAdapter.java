@@ -47,7 +47,7 @@ public class CategoryAdapter extends BaseAdapter {
         TextView textView = view.findViewById(R.id.category_itemName);
         ImageView icon = view.findViewById(R.id.category_itemButton);
 
-        textView.setText(listCategory.get(i).categoryName);
+        textView.setText(listCategory.get(i).getCategoryName());
         icon.setImageResource(listCategory.get(i).icon);
 
         return view;

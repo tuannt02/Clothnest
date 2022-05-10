@@ -25,7 +25,7 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_search, container, false);
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.search_frame, new CategoryFragment());
         transaction.commit();
         reference();

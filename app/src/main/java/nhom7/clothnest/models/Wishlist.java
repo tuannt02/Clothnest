@@ -1,20 +1,23 @@
 package nhom7.clothnest.models;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import nhom7.clothnest.R;
 
 public class Wishlist {
 
@@ -28,7 +31,7 @@ public class Wishlist {
     private double discountCost;
     private Timestamp date_add;
 
-    public Wishlist()   {
+    public Wishlist() {
 
     }
 
@@ -45,7 +48,7 @@ public class Wishlist {
     }
 
     public double getDiscountCost() {
-        return regularCost*(100-discount)/100;
+        return regularCost * (100 - discount) / 100;
     }
 
     public String getProductName() {
@@ -61,7 +64,7 @@ public class Wishlist {
     }
 
     public String getDiscount() {
-        return "$  " + String.valueOf(regularCost*(100-discount)/100);
+        return "$  " + String.valueOf(regularCost * (100 - discount) / 100);
     }
 
     public Timestamp getDate_add() {
@@ -107,33 +110,45 @@ public class Wishlist {
                 '}';
     }
 
-    public static void addProductToWishlist(String keyProduct)  {
+    public static void addProductToWishlist(String keyProduct) {
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         DocumentReference docRef = db.collection("products").document(keyProduct);
 
-        Map<String, Object> newWishlistItem = new HashMap<>();
-        newWishlistItem.put("date_add", new Timestamp(new Date()));
-        newWishlistItem.put("product_id", docRef);
-
         db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
-                .add(newWishlistItem)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .whereEqualTo("product_id", docRef)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        System.out.println("Them vap wishlist thanh cong");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("Them vap wishlist that bai");
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if(task.getResult().isEmpty()){
+                                Map<String, Object> newWishlistItem = new HashMap<>();
+                                newWishlistItem.put("date_add", new Timestamp(new Date()));
+                                newWishlistItem.put("product_id", docRef);
+
+                                db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
+                                        .add(newWishlistItem)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                System.out.println("Them vap wishlist thanh cong");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                System.out.println("Them vap wishlist that bai");
+                                            }
+                                        });
+                            }
+                        }
                     }
                 });
     }
 
-    public static void removeWishlistItemFromFirestore(String wishlistID)    {
+    public static void removeWishlistItemFromFirestore(String wishlistID) {
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

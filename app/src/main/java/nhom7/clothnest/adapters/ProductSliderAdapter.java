@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import nhom7.clothnest.models.Wishlist;
 public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<Product_Thumbnail> products;
+    private View mView;
 
     public ProductSliderAdapter(Context mContext, ArrayList<Product_Thumbnail> products) {
         this.mContext = mContext;
@@ -51,9 +53,9 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.thumbnail, parent, false);
-        view.setPadding(0, 0, 24, 0);
-        return new ViewHolder(view);
+        mView = inflater.inflate(R.layout.thumbnail, parent, false);
+        mView.setPadding(0, 0, 24, 0);
+        return new ViewHolder(mView);
     }
 
     @Override
@@ -76,17 +78,25 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
         if(product.isFavorite())
             holder.ivFavorite.setImageResource(R.drawable.is_favorite);
 
-        getEvent(holder);
+        setEventsClick(position);
     }
 
-    private void getEvent(@NonNull ViewHolder holder) {
-        holder.ivProduct.setOnClickListener(new View.OnClickListener() {
+    private void setEventsClick(int i) {
+        //Click on product
+        LinearLayout product = mView.findViewById(R.id.view_product);
+        product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, ProductDetail_Activity.class);
-                mContext.startActivity(intent);
+                gotoDetail(i);
             }
         });
+
+    }
+
+    private void gotoDetail(int i) {
+        Intent intent_productDetail = new Intent(mContext, ProductDetail_Activity.class);
+        intent_productDetail.putExtra("selected_Thumbnail", products.get(i).getId());
+        mContext.startActivity(intent_productDetail);
     }
 
     @Override

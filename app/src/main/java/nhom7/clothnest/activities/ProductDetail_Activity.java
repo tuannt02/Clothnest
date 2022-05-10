@@ -24,16 +24,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import me.relex.circleindicator.CircleIndicator;
 import nhom7.clothnest.R;
-import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
+import nhom7.clothnest.adapters.CustomWishlistAdapter;
 import nhom7.clothnest.adapters.SliderAdapter;
 import nhom7.clothnest.fragments.CommentFragment;
+import nhom7.clothnest.fragments.HomeFragment;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
@@ -75,9 +78,6 @@ public class ProductDetail_Activity extends AppCompatActivity {
         processDetail();
 
         setEventsClick();
-
-        getSimilarProducts();
-
     }
 
     private void processDetail() {
@@ -85,7 +85,6 @@ public class ProductDetail_Activity extends AppCompatActivity {
 
         getProductDetailFromFirestore(productID);
     }
-
 
     private void getSimilarProducts() {
         productSlider = new ProductSlider(this, containersilder, productArrayList);
@@ -170,21 +169,48 @@ public class ProductDetail_Activity extends AppCompatActivity {
                 finish();
             }
         });
-//        btnFavorite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                btnFavorite.setBackgroundColor();
-//            }
-//        });
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setFavorite();
+            }
+        });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    private void setFavorite() {
+        if (productDetail.isFavorite()) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+            DocumentReference docRefProduct = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + productDetail.getId());
+
+            db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
+                    .whereEqualTo("product_id", docRefProduct)
+                    .limit(1)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                if(!task.getResult().isEmpty()){
+                                    for(QueryDocumentSnapshot document: task.getResult()){
+                                        Map<String, Object> object = document.getData();
+                                        Wishlist.removeWishlistItemFromFirestore(document.getId());
+                                        productDetail.setFavorite(false);
+                                        ibFavorite.setImageResource(R.drawable.favorite);
+                                    }
+                                }
+                            }
+                        }
+                    });
+        } else {
+            Wishlist.addProductToWishlist(productDetail.getId());
+            productDetail.setFavorite(true);
+            ibFavorite.setImageResource(R.drawable.is_favorite);
+        }
     }
 
     public void getProductDetailFromFirestore(String id) {
+        productDetail = new Product_Detail();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -209,6 +235,7 @@ public class ProductDetail_Activity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 productDetail.setCategory(documentSnapshot.getString("name"));
+                                                getSimilarProducts();
                                             }
                                         });
 
@@ -260,4 +287,9 @@ public class ProductDetail_Activity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

@@ -78,7 +78,7 @@
             android:fontFamily="@font/lato_bold"
             android:layout_marginTop="20dp"
             android:paddingVertical="10dp"
-            android:paddingLeft="30dp"
+            android:paddingHorizontal="30dp"
             android:text="Oversixe hoodie"
             android:textSize="35dp" />
 

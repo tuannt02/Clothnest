@@ -3,7 +3,8 @@ package nhom7.clothnest.models;
 public class CategoryItem {
     public static final String COLLECTION_NAME = "categories";
 
-    public String categoryName;
+    private String categoryName;
+    public int icon;
 
     public String getCategoryName() {
         return categoryName;
@@ -20,8 +21,6 @@ public class CategoryItem {
     public void setIcon(int icon) {
         this.icon = icon;
     }
-
-    public int icon;
 
     public CategoryItem(String categoryName, int icon) {
         this.categoryName = categoryName;
