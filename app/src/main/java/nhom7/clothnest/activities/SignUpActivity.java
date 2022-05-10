@@ -138,7 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             customProgressBar.dismiss();
                             // Create user on realtime db
-                            User user = new User(txtFullname, txtEmail, "", "", "");
+                            User user = new User(txtFullname,"", txtEmail, "", "", "");
                             User.addUserToFirestore(user);
 
                             // Sign in success, update UI with the signed-in user's information

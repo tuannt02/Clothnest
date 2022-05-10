@@ -24,6 +24,7 @@ public class User {
     public static final String COLLECTION_NAME = "users";
 
     private String NAME;
+    private String IMG;
     private String EMAIL;
     private String DOB;
     private String PHONE;
@@ -34,13 +35,28 @@ public class User {
 
     }
 
-    public User(String NAME, String EMAIL, String DOB, String PHONE, String GENDER) {
+    public User(String NAME, String IMG ,String EMAIL, String DOB, String PHONE, String GENDER) {
         this.NAME = NAME;
+        this.IMG = IMG;
         this.EMAIL = EMAIL;
         this.DOB = DOB;
         this.PHONE = PHONE;
         this.GENDER = GENDER;
         this.TYPE = 1;
+    }
+
+    public User(int TYPE, String NAME, String IMG ,String EMAIL, String DOB, String PHONE, String GENDER) {
+        this.NAME = NAME;
+        this.IMG = IMG;
+        this.EMAIL = EMAIL;
+        this.DOB = DOB;
+        this.PHONE = PHONE;
+        this.GENDER = GENDER;
+        this.TYPE = TYPE;
+    }
+
+    public void setIMG(String IMG) {
+        this.IMG = IMG;
     }
 
     public void setNAME(String NAME) {
@@ -85,6 +101,10 @@ public class User {
 
     public String getGENDER() {
         return GENDER;
+    }
+
+    public String getIMG() {
+        return IMG;
     }
 
     public int getTYPE() { return TYPE; }

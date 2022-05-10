@@ -20,6 +20,7 @@
     <color name="red">#FF0000</color>
     <color name="gray">#808080</color>
     <color name="green">#00FF00</color>
+    <color name="green_role">#20AF14</color>
     <color name="yellow">#FFFF00</color>
     <color name="lime_green">#32CD32</color>
     <color name="light_pink">#FFB6C1</color>

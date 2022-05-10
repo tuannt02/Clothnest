@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="16dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/grant_permissions_item_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/sample_avatar"
+            app:civ_border_color="@color/pri_col"
+            app:civ_border_width="1dp" />
+        
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@+id/grant_permissions_item_avatar"
+            android:layout_toLeftOf="@+id/grant_permissions_item_btn_more"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            >
+
+            <TextView
+                android:id="@+id/grant_permissions_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="Phan Thanh Tú Đội"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/grant_permissions_item_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/lato"
+                android:text="tudoi29@gmail.com"
+                android:textColor="@color/gray"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/grant_permissions_item_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="@font/lato_black"
+                android:text="Admin"
+                android:textColor="@color/pri_col"
+                android:textSize="17dp" />
+
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/grant_permissions_item_btn_more"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
+            android:contentDescription="btnOption"
+            android:src="@drawable/ic_more3" />
+
+    </RelativeLayout>
+
+</LinearLayout>
