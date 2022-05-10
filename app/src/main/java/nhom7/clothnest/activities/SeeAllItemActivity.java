@@ -15,13 +15,15 @@ import java.util.ArrayList;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.GridViewApdater;
+import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.models.Product1;
+import nhom7.clothnest.models.Product_Thumbnail;
 
 public class SeeAllItemActivity extends AppCompatActivity {
     GridView gridView;
-    ArrayList<Product1> productArrayList;
-    GridViewApdater gridViewApdater;
+    ArrayList<Product_Thumbnail> productArrayList;
+    Product_ThumbnailAdapter arrivalsAdapter;
     Animation scale;
 
     @Override
@@ -30,16 +32,9 @@ public class SeeAllItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_see_all_item);
         gridView = findViewById(R.id.gridviewSeeAllItem);
 
-
-        Intent intent = getIntent();
-        TextView textView = findViewById(R.id.textview2);
-        String namearrival= intent.getStringExtra("name");
-        textView.setText(""+namearrival);
+        intentData();
         GetProduct();
-
-        scale= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.scale_list_anim);
-        gridView.startAnimation(scale);
-
+        AnimationScale();
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -48,21 +43,24 @@ public class SeeAllItemActivity extends AppCompatActivity {
         });
     }
 
+    private void AnimationScale()
+    {
+        scale= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.scale_list_anim);
+        gridView.startAnimation(scale);
+    }
+
+    private void intentData()
+    {
+        Intent intent = getIntent();
+        TextView textView = findViewById(R.id.textview2);
+        String namearrival= intent.getStringExtra("name");
+        textView.setText(""+namearrival);
+    }
+
     private void GetProduct() {
         productArrayList = new ArrayList<>();
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-
-        gridViewApdater = new GridViewApdater(getApplication(), R.layout.thumbnail, productArrayList);
-        gridView.setAdapter(gridViewApdater);
-
+        arrivalsAdapter = new Product_ThumbnailAdapter(getApplicationContext(),productArrayList);
+        gridView.setAdapter(arrivalsAdapter);
+        Product_ThumbnailAdapter.getProductAndPushToGridView(productArrayList,arrivalsAdapter);
     }
 }

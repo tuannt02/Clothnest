@@ -23,8 +23,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
                 android:layout_centerVertical="true"
+                android:fontFamily="@font/lato"
                 android:text="CLOTHNEST"
                 android:textColor="#DF7861"
                 android:textSize="30dp"
@@ -34,13 +34,13 @@
                 android:id="@+id/btnchat"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/btncart"
                 android:adjustViewBounds="true"
                 android:background="@drawable/background_edit_button"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/btncart"
-                android:layout_marginRight="12dp"
                 android:src="@drawable/chat" />
 
             <ImageButton
@@ -86,7 +86,6 @@
             android:textSize="20dp" />
 
         <include
-            android:id="@+id/group_arrival"
             layout="@layout/group_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="550dp"

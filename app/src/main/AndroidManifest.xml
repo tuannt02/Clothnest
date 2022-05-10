@@ -26,6 +26,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.Admin_StatisticActivity"
+            android:name=".activities.TransactionDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.Admin_VoucherActivity"

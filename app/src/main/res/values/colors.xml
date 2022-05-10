@@ -24,4 +24,6 @@
     <color name="yellow">#FFFF00</color>
     <color name="lime_green">#32CD32</color>
     <color name="light_pink">#FFB6C1</color>
+    <color name="primary">#1C2E46</color>
+    <color name="icon_background">#20FFFFFF</color>
 </resources>
