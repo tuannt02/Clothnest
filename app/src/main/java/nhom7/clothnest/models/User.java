@@ -27,6 +27,7 @@ public class User {
 
     public static final String COLLECTION_NAME = "users";
 
+    private String UID;
     private String NAME;
     private String IMG;
     private String EMAIL;
@@ -57,6 +58,10 @@ public class User {
         this.PHONE = PHONE;
         this.GENDER = GENDER;
         this.TYPE = TYPE;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
     public void setIMG(String IMG) {
@@ -112,6 +117,10 @@ public class User {
     }
 
     public int getTYPE() { return TYPE; }
+
+    public String getUID() {
+        return UID;
+    }
 
     @Override
     public String toString() {

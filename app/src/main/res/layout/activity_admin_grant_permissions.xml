@@ -62,6 +62,7 @@
             android:src="@drawable/ic_search" />
 
         <EditText
+            android:id="@+id/admin_grant_permissions_input_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -81,9 +82,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:fontFamily="@font/lato_black"
             android:text="Clear"
-            android:layout_centerVertical="true"
             android:textColor="@color/black"
             android:textSize="18dp" />
 

@@ -65,6 +65,7 @@ public class CustomDialog extends Dialog implements android.view.View.OnClickLis
             @Override
             public void onClick(View view) {
                 mIClickListenerOnOkBtn.onResultOk();
+                dismiss();
             }
         });
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,19 +24,30 @@ import java.util.List;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Voucher;
+import nhom7.clothnest.util.customizeComponent.CustomDialog;
+import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 
 public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
+
+    public interface ICLickListenerOnOptionBtn   {
+        void grantCustomer(int position);
+        void grantStaff(int position);
+        void grantAdmin(int position);
+    }
+
+    private ICLickListenerOnOptionBtn mICLickListenerOnOptionBtn;
 
     private Context context;
     private int resource;
     private ArrayList<User> userArrayList;
 
-    public UserGrantPermissionsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<User> objects) {
+    public UserGrantPermissionsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<User> objects, ICLickListenerOnOptionBtn listener) {
         super(context, resource, objects);
 
         this.context = context;
         this.resource = resource;
         this.userArrayList = objects;
+        this.mICLickListenerOnOptionBtn = listener;
     }
 
 
@@ -52,8 +64,9 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
         // Get view
         ImageView avatar = convertView.findViewById(R.id.grant_permissions_item_avatar);
         TextView name = convertView.findViewById(R.id.grant_permissions_item_name);
-        TextView email = convertView.findViewById(R.id.grant_permissions_item_name);
+        TextView email = convertView.findViewById(R.id.grant_permissions_item_email);
         TextView role = convertView.findViewById(R.id.grant_permissions_item_role);
+        ImageButton btnOption = (ImageButton) convertView.findViewById(R.id.grant_permissions_item_btn_more);
 
         // Set view
         Glide.with(getContext()).load(userItem.getIMG()).into(avatar);
@@ -72,7 +85,42 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
             role.setTextColor(ContextCompat.getColor(context, R.color.pri_col));
         }
 
+        btnOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<String> list = getListOptionMenu();
+                CustomOptionMenu customOptionMenu = new CustomOptionMenu(getContext(), new CustomOptionMenu.IClickListenerOnItemListview() {
+                    @Override
+                    public void onClickItem(int pos) {
+                        // 0: Add to cart, 1: Remove from wishlist
+                        if(pos == 0)    { // Customer
+                            mICLickListenerOnOptionBtn.grantCustomer(position);
+                        }
+
+                        if(pos == 1)    { // Staff
+                            mICLickListenerOnOptionBtn.grantStaff(position);
+                        }
+
+                        if(pos == 2)    { // Admin
+                            mICLickListenerOnOptionBtn.grantAdmin(position);
+                        }
+                    }
+                }, list, "PERMISSIONS", null);
+                customOptionMenu.show();
+            }
+        });
+
+
 
         return convertView;
+    }
+
+    private ArrayList<String> getListOptionMenu()   {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Client");
+        list.add("Staff");
+        list.add("Admin");
+
+        return list;
     }
 }

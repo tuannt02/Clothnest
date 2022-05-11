@@ -19,9 +19,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.ValidateLogin;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
@@ -133,8 +138,17 @@ public class SignInActivity extends AppCompatActivity {
 
                             userInfo_sqlite.setInfoUser();
 
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            // Sau khi sign dựa vào field type của Collection User để quyết định chuyển qua màn hình nào
+                            int typeUser = defineUser();
+
+                            if(typeUser == 1)   {
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else    { // typeUser == 2 or 3
+                                Intent intent = new Intent(SignInActivity.this, Admin_MainActivity.class);
+                                startActivity(intent);
+                            }
                             finishAffinity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -143,5 +157,16 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private int defineUser()    {
+        int typeUser = 1;
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+
+
+        return typeUser;
     }
 }
