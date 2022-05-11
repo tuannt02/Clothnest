@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,60 +20,67 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import nhom7.clothnest.adapters.GridViewApdater;
+import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.models.Product1;
+import nhom7.clothnest.models.Product_Thumbnail;
 
 public class SearchProductsFragment extends Fragment {
     GridView gridView;
     ImageView btnFilter;
-    ArrayList<Product1> productArrayList;
-    GridViewApdater gridViewApdater;
-
+    ArrayList<Product_Thumbnail> productArrayList;
+    Product_ThumbnailAdapter thumbnailAdapter;
+    View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mView = inflater.inflate(R.layout.fragment_search_products, container, false);
+        mView = inflater.inflate(R.layout.fragment_search_products, container, false);
 
         View includedView = (View) mView.findViewById(R.id.groupThumbnail);
         gridView = (GridView) includedView.findViewById(R.id.gridview_GroupThumbnail);
 
         btnFilter = mView.findViewById(R.id.btnFilter);
 
-        GetProduct();
-        Button button = mView.findViewById(R.id.searchProduct_WinterBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), ProductDetail_Activity.class));
-            }
-        });
+        getProduct();
+
+        getEvents();
 
         return mView;
     }
 
     private void getEvents() {
-
+        mView.setFocusableInTouchMode(true);
+        mView.requestFocus();
+        mView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i  == KeyEvent.KEYCODE_BACK) {
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.search_frame, new CategoryFragment());
+                    transaction.commit();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     //    Thêm sản phẩm vào GridView
-    public void GetProduct(){
+    public void getProduct(){
         productArrayList = new ArrayList<>();
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("2", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("3", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("4", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("5", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("6", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        gridViewApdater = new GridViewApdater(getContext(), R.layout.thumbnail, productArrayList);
-        gridView.setAdapter(gridViewApdater);
+        thumbnailAdapter = new Product_ThumbnailAdapter(getContext(), productArrayList);
+        gridView.setAdapter(thumbnailAdapter);
+
+        Product_ThumbnailAdapter.getProductsWithSameCategory(productArrayList, thumbnailAdapter, CategoryFragment.selectedCategory);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProduct();
+    }
 }

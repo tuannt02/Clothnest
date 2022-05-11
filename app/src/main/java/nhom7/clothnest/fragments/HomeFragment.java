@@ -65,8 +65,8 @@ public class HomeFragment extends Fragment {
     Animation in, out, alpha;
 
     //Get product from FireStore
-    ArrayList<Product_Thumbnail> arrivalsList, collectionsList;
-    Product_ThumbnailAdapter arrivalsAdapter;
+    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList;
+    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +83,12 @@ public class HomeFragment extends Fragment {
         createSlider();
 
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProductThumbnail();
     }
 
     private void createSlider() {
@@ -164,12 +170,17 @@ public class HomeFragment extends Fragment {
         viewFlipper.setAutoStart(true);
     }
 
-    private void getProductThumbnail(){
+    public void getProductThumbnail(){
         //Thêm sản phẩm vào arrivals
         arrivalsList = new ArrayList<>();
         arrivalsAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
         gridViewArrival.setAdapter(arrivalsAdapter);
-
         Product_ThumbnailAdapter.getProductAndPushToGridView(arrivalsList, arrivalsAdapter);
+
+        //Thêm sản phẩm vào sales
+        salesList = new ArrayList<>();
+        salesAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
+        gridViewSales.setAdapter(salesAdapter);
+        Product_ThumbnailAdapter.getProductAndPushToGridView(salesList, salesAdapter);
     }
 }
