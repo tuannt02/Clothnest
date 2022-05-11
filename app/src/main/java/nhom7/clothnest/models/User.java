@@ -15,6 +15,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
@@ -131,7 +135,18 @@ public class User {
     public static void updateUserProfileFirestore(User user)    {
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(COLLECTION_NAME).document(userInfo.getUid()).set(user);
+
+        // Update one field, creating the document if it does not already exist.
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", user.getNAME());
+        data.put("gender", user.getGENDER());
+        data.put("phone", user.getPHONE());
+        data.put("dob", user.getDOB());
+
+        db.collection(COLLECTION_NAME).document(userInfo.getUid())
+                .set(data, SetOptions.merge());
+
+//        db.collection(COLLECTION_NAME).document(userInfo.getUid()).set(user);
     }
 
 

@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,9 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +32,12 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,20 +50,30 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 import nhom7.clothnest.models.User;
+import nhom7.clothnest.util.OpenGallery;
 import nhom7.clothnest.util.ValidateLogin;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
+import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class EditProfileActivity extends AppCompatActivity {
     public static final int REQ_CODE_READ_EXTERNAL_STORAGE = 10;
     private Uri mUri;
+    private Bitmap avatarUser;
     final private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -66,6 +85,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 mUri = intent.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mUri);
+
+                    // Set img frpm gallery to bitmap var
+                    avatarUser = bitmap;
                     setAvatar(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -107,7 +129,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         String user_ID = user.getUid();
         String emailUser = user.getEmail();
-        Uri avaUrlUser = user.getPhotoUrl();
 
         // Set info from firestore
         DocumentReference userRef = db.collection(User.COLLECTION_NAME).document(user_ID);
@@ -119,7 +140,24 @@ public class EditProfileActivity extends AppCompatActivity {
                 fullName.getEditText().setText(user.getNAME());
                 dob.getEditText().setText(user.getDOB());
                 phoneNumber.getEditText().setText(user.getPHONE());
+                Glide.with(EditProfileActivity.this).load(user.getIMG()).error(R.drawable.ic_avatar_default).into(avatar);
                 setFieldGender(user.getGENDER());
+
+                // Load img to bitmap
+//                Glide.with(EditProfileActivity.this)
+//                        .asBitmap()
+//                        .load(user.getIMG())
+//                        .into(new CustomTarget<Bitmap>() {
+//                            @Override
+//                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                                avatarUser = resource;
+//                            }
+//
+//                            @Override
+//                            public void onLoadCleared(@Nullable Drawable placeholder) {
+//                            }
+//                        });
+
                 customProgressBar.dismiss();
             }
         });
@@ -128,7 +166,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Set info from Service Authentication
         email.setText(emailUser);
-        Glide.with(this).load(avaUrlUser).error(R.drawable.ic_avatar_default).into(avatar);
+        System.out.println("setupProfileFromFirebase function");
     }
 
     // Thiet lap button change password
@@ -165,40 +203,16 @@ public class EditProfileActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickRequestPermission();
+                OpenGallery.onClickOpenGallery(EditProfileActivity.this, mActivityResultLauncher);
             }
         });
 
         changeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickRequestPermission();
+//                onClickRequestPermission();
             }
         });
-    }
-
-    private void onClickRequestPermission() {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)   {
-            openGallery();
-            return;
-        }
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED)  {
-            openGallery();
-        }
-        else    {
-            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this,permissions, REQ_CODE_READ_EXTERNAL_STORAGE);
-        }
-
-    }
-
-    public void openGallery()   {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        mActivityResultLauncher.launch(Intent.createChooser(intent, "Select Picture"));
     }
 
     @Override
@@ -207,7 +221,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if(requestCode == REQ_CODE_READ_EXTERNAL_STORAGE)   {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery();
+                OpenGallery.openGallery(mActivityResultLauncher);
+//                openGallery();
             }
             else    {
                 Toast.makeText(this, "You denied, please allow the app to access the gallery", Toast.LENGTH_SHORT).show();
@@ -248,8 +263,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(validateUser)    {
                     User user = new User(txtFullname,"", txtEmail, txtDob, txtPhoneNum, gender);
 
-                    User.updateUserProfileAuthentication(txtFullname, mUri);
+                    User.updateUserProfileAuthentication(txtFullname, null);
                     User.updateUserProfileFirestore(user);
+
+                    if(mUri != null) {
+                        updateImgToFirestoreAndStorage(avatarUser);
+                    }
                     finish();
                 }
 
@@ -348,5 +367,51 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void setAvatar(Bitmap bitmap)   {
         avatar.setImageBitmap(bitmap);
+    }
+
+    private void updateImgToFirestoreAndStorage(Bitmap bitmap)   {
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference userRef = storageRef.child("users/" + userInfo.getUid());
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = userRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println(exception.toString());
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
+                        new OnCompleteListener<Uri>() {
+
+                            // Mỗi Url là duy nhất cho một lần upload ảnh. Vậy nên mỗi khi đổi
+                            // ảnh mới phải đổi luôn cái token. Gán token mới này vào firestore
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                String fileLink = task.getResult().toString();
+                                //next work with URL
+                                System.out.println(fileLink);
+
+                                // Update one field, creating the document if it does not already exist.
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("img", fileLink);
+
+                                db.collection(User.COLLECTION_NAME).document(userInfo.getUid())
+                                        .set(data, SetOptions.merge());
+
+                            }
+                        });
+                CustomToast.DisplayToast(EditProfileActivity.this, 1, "Upload successfully");
+            }
+        });
     }
 }

@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth' // Service Authentication_ThaiTuan
     implementation 'com.google.firebase:firebase-firestore'// Service firestore_ThaiTuan
     implementation 'com.google.firebase:firebase-messaging:23.0.4'// Service cloudmessage-dinhvan
-
+    implementation 'com.google.firebase:firebase-storage' // Service storage_ThaiTuan
 
 
 
