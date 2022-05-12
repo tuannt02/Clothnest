@@ -25,8 +25,10 @@
             android:name=".activities.Admin_StatisticsDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Admin_StatisticActivity"
             android:name=".activities.TransactionDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Admin_StatisticActivity"
             android:exported="false" />
         <activity
             android:name=".activities.Admin_VoucherActivity"
@@ -104,13 +106,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service
-            android:name=".firebase.MessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
     </application>
 
 </manifest>
