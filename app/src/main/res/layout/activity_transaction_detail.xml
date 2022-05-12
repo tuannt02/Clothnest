@@ -18,14 +18,15 @@
             android:layout_marginVertical="30dp"
             android:paddingHorizontal="20dp"
             android:gravity="center_vertical">
+
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_bold"
                 android:text="Transaction Detail"
-                android:textColor="#000"
+                android:textColor="@color/black"
                 android:textSize="25dp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -38,7 +39,7 @@
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/lato_bold"
+              android:fontFamily="@font/lato"
               android:text="Transaction ID"
               android:textColor="#494949"
               android:textSize="20dp" />
@@ -48,9 +49,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginLeft="160dp"
-              android:fontFamily="@font/lato_bold"
+              android:fontFamily="@font/lato"
               android:text="12"
-              android:textColor="#000000"
+              android:textColor="#494949"
               android:textSize="20dp" />
       </RelativeLayout>
 
@@ -60,21 +61,21 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="#494949"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="Customer"
+                android:textColor="#494949"
                 android:textSize="20dp" />
 
             <TextView
-                android:textColor="#000000"
                 android:id="@+id/transactionCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="160dp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="vo dinh van"
+                android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
         <RelativeLayout
@@ -83,22 +84,22 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="#494949"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="Purchase Date"
+                android:textColor="#494949"
                 android:textSize="20dp" />
 
             <TextView
-                android:textColor="#000000"
-
                 android:id="@+id/transactionpurchasedate"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="160dp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="22/04/2002"
+                android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -107,7 +108,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginLeft="5dp"
             android:textSize="20dp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/lato"
             android:text="Address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -119,12 +120,12 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="#000000"
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
-                android:text="Hoang dinh anh tuan"
+                android:fontFamily="@font/lato"
+                android:text="Hoang Dinh Anh Tuan"
+                android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -133,13 +134,14 @@
             android:padding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
-                android:textColor="#000000"
                 android:id="@+id/addresss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="245 Le Duan F12 Ho Chi Minh, Quan Thu Duc, Phuong Linh Xuan"
+                android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -151,9 +153,9 @@
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="0912 345 678"
-                android:textColor="#000000"
+                android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -168,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 android:orientation="vertical">
+
                 <ListView
                     android:id="@+id/listview_item_transaction"
                     android:layout_width="match_parent"
@@ -187,9 +190,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="Qty: "
-                android:textColor="#494949"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <TextView
@@ -197,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="7"
                 android:textColor="#3484F0"
                 android:textSize="20dp" />
@@ -209,10 +212,10 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="#494949"
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="Subtotal: "
                 android:textSize="20dp" />
 
@@ -221,9 +224,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="$ 71.93333"
-
+                android:textColor="#000000"
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -235,11 +238,12 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="#494949"
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="Discount: "
+
                 android:textSize="20dp" />
 
             <TextView
@@ -247,9 +251,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="$ 5"
-
+                android:textColor="#000000"
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -262,9 +266,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="Delivery fee: "
-                android:textColor="#494949"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <TextView
@@ -272,8 +276,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/lato"
                 android:text="$ 3"
+                android:textColor="#000000"
+
                 android:textSize="20dp" />
         </RelativeLayout>
 

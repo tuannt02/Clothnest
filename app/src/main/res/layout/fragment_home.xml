@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
-            android:paddingHorizontal="20dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -47,42 +47,44 @@
                 android:id="@+id/btncart"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
                 android:background="@drawable/background_edit_button"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
                 android:src="@drawable/cart" />
         </RelativeLayout>
 
 
         <ViewFlipper
-            android:paddingHorizontal="20dp"
             android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="200dp"
+            android:paddingHorizontal="20dp">
+
             <ImageView
-                android:src="@drawable/hinh1"
-                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hinh1" />
+
             <ImageView
-                android:src="@drawable/hinh2"
-                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hinh2" />
         </ViewFlipper>
 
         <TextView
             android:id="@+id/txtArrivals"
-            android:layout_marginTop="20dp"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/lato_bold"
             android:text="NEW ARRIVALS"
+            android:textColor="#000"
             android:textSize="20dp" />
 
         <include
@@ -90,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="550dp"
             android:layout_margin="20dp" />
+
         <Button
             android:id="@+id/btnarrival"
             android:layout_width="match_parent"
@@ -104,12 +107,13 @@
 
         <TextView
             android:id="@+id/txtSales"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginVertical="20dp"
             android:fontFamily="@font/lato_bold"
             android:text="SALES"
+            android:textColor="#000"
             android:textSize="20dp" />
 
         <include
@@ -117,16 +121,15 @@
             layout="@layout/group_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="550dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginHorizontal="20dp" />
+
         <Button
             android:id="@+id/btnsale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/lato_bold"
             android:text="SEE ALL ITEMS"
@@ -134,123 +137,125 @@
             android:textSize="15dp" />
 
         <TextView
-            android:textColor="#000"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginVertical="20dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/lato_bold"
             android:text="COLLECTIONS"
+            android:textColor="#000"
             android:textSize="20dp" />
 
         <HorizontalScrollView
+            android:paddingHorizontal="20dp"
             android:layout_width="366dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/btnWinter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="WINTER"
-                    android:textColor="#000"
-                    />
+                    android:textColor="#000" />
+
                 <Button
                     android:id="@+id/btnLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="LINE"
-                    android:textColor="#000"
-                    />
+                    android:textColor="#000" />
+
                 <Button
                     android:id="@+id/btnUt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="UT"
-                    android:textColor="#000"
-                    />
+                    android:textColor="#000" />
+
                 <Button
                     android:id="@+id/btnUnisex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="UNISEX"
-                    android:textColor="#000"
-                    />
+                    android:textColor="#000" />
+
                 <Button
                     android:id="@+id/btnUvprotection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="UV PROTECTION"
-                    android:textColor="#000"
-                    />
+                    android:textColor="#000" />
             </LinearLayout>
         </HorizontalScrollView>
 
         <LinearLayout
-            android:paddingHorizontal="20dp"
-            android:orientation="vertical"
             android:id="@+id/container_slider"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"></LinearLayout>
 
         <TextView
-            android:textColor="#000"
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/lato"
-            android:textSize="20dp"
             android:text="IMPORTANT NOTICE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
         <TextView
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:fontFamily="@font/lato"
-            android:textSize="15dp"
             android:text=". Due to COVID-19 area is limited until further notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
         <TextView
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:textStyle="bold"
             android:layout_marginLeft="30dp"
             android:fontFamily="@font/lato"
-            android:textSize="15dp"
+            android:gravity="center"
             android:text=". All prices are subject to 10% VAT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
         <androidx.cardview.widget.CardView
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="20dp">
+
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/storelocator" />
         </androidx.cardview.widget.CardView>
+
         <include
             android:id="@+id/group_arrival"
             layout="@layout/group_thumbnail"
