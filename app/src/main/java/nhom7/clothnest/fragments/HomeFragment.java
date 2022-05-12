@@ -120,7 +120,6 @@ public class HomeFragment extends Fragment {
         btnWinter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ProductDetail_Activity.class));
 
             }
         });
