@@ -42,7 +42,6 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
     private Context context;
     private int resource;
     private ArrayList<User> userArrayList;
-    private ArrayList<User> listOriginal;
 
     public UserGrantPermissionsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<User> objects, ICLickListenerOnOptionBtn listener) {
         super(context, resource, objects);
@@ -51,8 +50,6 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
         this.resource = resource;
         this.userArrayList = objects;
         this.mICLickListenerOnOptionBtn = listener;
-
-        this.listOriginal = objects;
     }
 
     public void setRes(ArrayList<User> object) {

@@ -199,11 +199,6 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                                         String img = (String)tempObject.get(key);
                                         userItem.setIMG(img);
                                     }
-
-
-
-
-
                                 }
 
                                 userArrayList.add(userItem);

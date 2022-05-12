@@ -269,24 +269,4 @@ public class WishlistFragment extends Fragment {
         customWishlistAdapter.notifyDataSetChanged();
     }
 
-//    private void removeWishlistItemFromFirestore(String docID)    {
-//        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
-//                .document(docID)
-//                .delete()
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Toast.makeText(getContext(), "Delete success", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getContext(), "Delete fails", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
 }

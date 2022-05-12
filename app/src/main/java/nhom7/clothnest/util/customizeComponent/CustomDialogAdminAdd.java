@@ -23,7 +23,7 @@ public class CustomDialogAdminAdd extends Dialog implements android.view.View.On
     }
     private IClickListenerOnSaveBtn mIClickListenerOnSaveBtn;
 
-    public CustomDialogAdminAdd(@NonNull Context context, String titleDialog, int quantityInput, String hintInput1, String hintInput2, IClickListenerOnSaveBtn listener) {
+    public CustomDialogAdminAdd(@NonNull Context context, String titleDialog, int quantityInput, String hintInput1, String hintInput2, String text_input1, int text_input2, IClickListenerOnSaveBtn listener) {
         super(context);
         this.mIClickListenerOnSaveBtn = listener;
 
@@ -58,6 +58,13 @@ public class CustomDialogAdminAdd extends Dialog implements android.view.View.On
         title.setText(titleDialog);
         input1.setHint(hintInput1);
         input2.setHint(hintInput2);
+        input1.setText(text_input1);
+        if(text_input2 != -1) {
+            input2.setText(String.valueOf(text_input2));
+        }
+        else    {
+            input2.setText("");
+        }
         if(quantityInput == 1)  {
             input2.setVisibility(View.GONE);
             validate_input2.setVisibility(View.GONE);
@@ -115,6 +122,7 @@ public class CustomDialogAdminAdd extends Dialog implements android.view.View.On
                 }
 
                 mIClickListenerOnSaveBtn.onSubmit(txtInput1, txtInput2);
+                dismiss();
             }
         });
     }
