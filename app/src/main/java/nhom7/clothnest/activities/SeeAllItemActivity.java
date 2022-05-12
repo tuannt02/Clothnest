@@ -8,61 +8,63 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.GridViewApdater;
+import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.models.Product1;
+import nhom7.clothnest.models.Product_Thumbnail;
 
 public class SeeAllItemActivity extends AppCompatActivity {
     GridView gridView;
-    ArrayList<Product1> productArrayList;
-    GridViewApdater gridViewApdater;
+    ArrayList<Product_Thumbnail> productArrayList;
+    Product_ThumbnailAdapter adapter;
     Animation scale;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_all_item);
+        reference();
+        intentData();
+        GetProduct();
+        AnimationScale();
+
+    }
+
+
+    private void reference() {
         gridView = findViewById(R.id.gridviewSeeAllItem);
 
+    }
 
+    private void AnimationScale() {
+        scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_list_anim);
+        gridView.startAnimation(scale);
+    }
+
+    private void intentData() {
         Intent intent = getIntent();
         TextView textView = findViewById(R.id.textview2);
-        String namearrival= intent.getStringExtra("name");
-        textView.setText(""+namearrival);
-        GetProduct();
-
-        scale= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.scale_list_anim);
-        gridView.startAnimation(scale);
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(getApplicationContext(), ProductDetail_Activity.class));
-            }
-        });
+        name = intent.getStringExtra("name");
+        textView.setText("" + name);
     }
 
     private void GetProduct() {
         productArrayList = new ArrayList<>();
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-
-        gridViewApdater = new GridViewApdater(getApplication(), R.layout.thumbnail, productArrayList);
-        gridView.setAdapter(gridViewApdater);
-
+        adapter = new Product_ThumbnailAdapter(getApplicationContext(), productArrayList);
+        gridView.setAdapter(adapter);
+        if (name.compareTo("NEW ARRIVALS") == 0)
+            Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(productArrayList, adapter);
+        else
+            Product_ThumbnailAdapter.getProductSalesAndPushToGridView(productArrayList, adapter);
     }
 }

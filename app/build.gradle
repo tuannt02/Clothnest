@@ -63,5 +63,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828' // Animation_DinhVan
     implementation 'com.intuit.sdp:sdp-android:1.0.6'   // Scalable size unit (support for different screen sizes)-dinhvan
     implementation 'com.intuit.ssp:ssp-android:1.0.6' // Scalable size unit (support for different screen sizes)-dinhvan
-
+    implementation 'com.github.kal72:RackMonthPicker:1.6.1' // datetimepicker_ThaiTuan
 }

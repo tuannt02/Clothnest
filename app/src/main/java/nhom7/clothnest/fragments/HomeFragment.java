@@ -174,12 +174,12 @@ public class HomeFragment extends Fragment {
         arrivalsList = new ArrayList<>();
         arrivalsAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
         gridViewArrival.setAdapter(arrivalsAdapter);
-        Product_ThumbnailAdapter.getProductAndPushToGridView(arrivalsList, arrivalsAdapter);
+        Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(arrivalsList, arrivalsAdapter);
 
         //Thêm sản phẩm vào sales
         salesList = new ArrayList<>();
         salesAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
         gridViewSales.setAdapter(salesAdapter);
-        Product_ThumbnailAdapter.getProductAndPushToGridView(salesList, salesAdapter);
+        Product_ThumbnailAdapter.getProductSalesAndPushToGridView(salesList, salesAdapter);
     }
 }

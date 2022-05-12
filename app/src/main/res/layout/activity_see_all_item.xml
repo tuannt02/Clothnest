@@ -4,17 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <TextView
+        android:layout_marginVertical="20dp"
         android:text="NEW ARRIVALS"
         android:id="@+id/textview2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/lato_bold"
         android:textColor="#000"
-        android:textSize="20dp"
+        android:textSize="30dp"
         />
+
 
     <GridView
         android:paddingHorizontal="20dp"

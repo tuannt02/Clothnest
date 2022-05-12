@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp"
+    tools:context=".fragments.TransactionFragment"
+    >
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
+        android:paddingHorizontal="20dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/lato_bold"
+            android:text="TRANSACTION"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <LinearLayout
+        android:paddingHorizontal="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textquantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2000"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="#DF7861"
+            android:textSize="20dp" />
+
+        <TextView
+            android:fontFamily="@font/lato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" transactions."
+            android:textColor="#000"
+            android:textSize="20dp" />
+        <TextView
+            android:fontFamily="@font/lato_bold"
+            android:text=" $ 300"
+            android:id="@+id/textsumprice"
+            android:textColor="#DF7861"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:fontFamily="@font/lato"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" total."
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
