@@ -72,7 +72,7 @@
             android:layout_toRightOf="@+id/icSearch"
             android:background="@android:color/transparent"
             android:fontFamily="@font/lato"
-            android:hint="Search here ..."
+            android:hint="Search by email or name ..."
             android:text=""
             android:textColor="@color/black"
             android:textSize="16dp" />

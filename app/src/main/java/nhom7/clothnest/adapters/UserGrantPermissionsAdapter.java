@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,9 +32,9 @@ import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
 
     public interface ICLickListenerOnOptionBtn   {
-        void grantCustomer(int position);
-        void grantStaff(int position);
-        void grantAdmin(int position);
+        void grantCustomer(int position, String UID);
+        void grantStaff(int position, String UID);
+        void grantAdmin(int position, String UID);
     }
 
     private ICLickListenerOnOptionBtn mICLickListenerOnOptionBtn;
@@ -40,6 +42,7 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
     private Context context;
     private int resource;
     private ArrayList<User> userArrayList;
+    private ArrayList<User> listOriginal;
 
     public UserGrantPermissionsAdapter(@NonNull Context context, int resource, @NonNull ArrayList<User> objects, ICLickListenerOnOptionBtn listener) {
         super(context, resource, objects);
@@ -48,6 +51,12 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
         this.resource = resource;
         this.userArrayList = objects;
         this.mICLickListenerOnOptionBtn = listener;
+
+        this.listOriginal = objects;
+    }
+
+    public void setRes(ArrayList<User> object) {
+        userArrayList = object;
     }
 
 
@@ -55,11 +64,13 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        User userItem = userArrayList.get(position);
 
         if (convertView == null)    {
             convertView = LayoutInflater.from(context).inflate(R.layout.grant_permissions_item,parent, false);
         }
+
+        User userItem;
+        userItem = userArrayList.get(position);
 
         // Get view
         ImageView avatar = convertView.findViewById(R.id.grant_permissions_item_avatar);
@@ -94,15 +105,15 @@ public class UserGrantPermissionsAdapter extends ArrayAdapter<User> {
                     public void onClickItem(int pos) {
                         // 0: Add to cart, 1: Remove from wishlist
                         if(pos == 0)    { // Customer
-                            mICLickListenerOnOptionBtn.grantCustomer(position);
+                            mICLickListenerOnOptionBtn.grantCustomer(position, userItem.getUID());
                         }
 
                         if(pos == 1)    { // Staff
-                            mICLickListenerOnOptionBtn.grantStaff(position);
+                            mICLickListenerOnOptionBtn.grantStaff(position, userItem.getUID());
                         }
 
                         if(pos == 2)    { // Admin
-                            mICLickListenerOnOptionBtn.grantAdmin(position);
+                            mICLickListenerOnOptionBtn.grantAdmin(position, userItem.getUID());
                         }
                     }
                 }, list, "PERMISSIONS", null);

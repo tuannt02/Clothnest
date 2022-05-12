@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,14 +17,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import nhom7.clothnest.R;
@@ -38,6 +45,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
     EditText inputSearch;
     ListView lvPermissions;
     ArrayList<User> userArrayList;
+    ArrayList<User> listOriginal;
     UserGrantPermissionsAdapter userGrantPermissionsAdapter;
 
     @Override
@@ -51,10 +59,12 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
         //set on click
         setOnClickListener();
 
+        setOnTextChange();
+
         userArrayList = new ArrayList<>();
         userGrantPermissionsAdapter = new UserGrantPermissionsAdapter(Admin_GrantPermissionsActivity.this, R.layout.grant_permissions_item, userArrayList, new UserGrantPermissionsAdapter.ICLickListenerOnOptionBtn() {
             @Override
-            public void grantCustomer(int position) {
+            public void grantCustomer(int position, String UID) {
                 CustomDialog customDialog = new CustomDialog(Admin_GrantPermissionsActivity.this,
                         "Confirm",
                         "Are you sure you want to move this user as CLIENT?",
@@ -65,6 +75,8 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                                 user.setTYPE(1);
                                 userArrayList.set(position, user);
                                 userGrantPermissionsAdapter.notifyDataSetChanged();
+
+                                updateFieldTypeOfUser(UID, 1);
                             }
                         });
 
@@ -72,7 +84,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void grantStaff(int position) {
+            public void grantStaff(int position, String UID) {
                 CustomDialog customDialog = new CustomDialog(Admin_GrantPermissionsActivity.this,
                         "Confirm",
                         "Are you sure you want to move this user as STAFF?",
@@ -83,6 +95,8 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                                 user.setTYPE(2);
                                 userArrayList.set(position, user);
                                 userGrantPermissionsAdapter.notifyDataSetChanged();
+
+                                updateFieldTypeOfUser(UID, 2);
                             }
                         });
 
@@ -90,7 +104,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void grantAdmin(int position) {
+            public void grantAdmin(int position, String UID) {
                 CustomDialog customDialog = new CustomDialog(Admin_GrantPermissionsActivity.this,
                         "Confirm",
                         "Are you sure you want to move this user as ADMIN?",
@@ -101,6 +115,8 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                                 user.setTYPE(3);
                                 userArrayList.set(position, user);
                                 userGrantPermissionsAdapter.notifyDataSetChanged();
+
+                                updateFieldTypeOfUser(UID, 3);
                             }
                         });
 
@@ -108,6 +124,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
             }
         });
         lvPermissions.setAdapter(userGrantPermissionsAdapter);
+        lvPermissions.setTextFilterEnabled(true);
 
         getUserAndShowOnListview();
 
@@ -119,6 +136,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
         inputSearch = findViewById(R.id.admin_grant_permissions_input_search);
         lvPermissions = findViewById(R.id.admin_grant_permissions_lv);
         userArrayList = new ArrayList<>();
+        listOriginal = new ArrayList<>();
     }
 
     private void setOnClickListener()   {
@@ -137,86 +155,6 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<User> getUser()   {
-        ArrayList<User> userArrayList = new ArrayList<>();
-        userArrayList.add(new User(
-                1,
-                "Phan Thanh Tú Đội",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh1.jpg?alt=media&token=525cf826-05e2-4ff3-ac11-8f0c1f9e403b",
-                "tuphanga@gmail.com",
-                "",
-                "",
-                ""));
-
-        userArrayList.add(new User(
-                2,
-                "Võ Thị Vân",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh2.jpg?alt=media&token=d5c80216-afee-4910-8dc9-7104d250edb9",
-                "vangaga@gmail.com",
-                "",
-                "",
-                ""));
-        userArrayList.add(new User(
-                3,
-                "Hoàng Thị Anh Tuấn",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh3.jfif?alt=media&token=1df11e93-95f4-4c52-99b2-16c93f2f205c",
-                "vangaga@gmail.com",
-                "",
-                "",
-                ""));
-        userArrayList.add(new User(
-                1,
-                "Phan Thanh Tú Đội",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh1.jpg?alt=media&token=525cf826-05e2-4ff3-ac11-8f0c1f9e403b",
-                "tuphanga@gmail.com",
-                "",
-                "",
-                ""));
-
-        userArrayList.add(new User(
-                2,
-                "Võ Thị Vân",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh2.jpg?alt=media&token=d5c80216-afee-4910-8dc9-7104d250edb9",
-                "vangaga@gmail.com",
-                "",
-                "",
-                ""));
-        userArrayList.add(new User(
-                3,
-                "Hoàng Thị Anh Tuấn",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh3.jfif?alt=media&token=1df11e93-95f4-4c52-99b2-16c93f2f205c",
-                "vangaga@gmail.com",
-                "",
-                "",
-                ""));
-        userArrayList.add(new User(
-                1,
-                "Phan Thanh Tú Đội",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh1.jpg?alt=media&token=525cf826-05e2-4ff3-ac11-8f0c1f9e403b",
-                "tuphanga@gmail.com",
-                "",
-                "",
-                ""));
-
-        userArrayList.add(new User(
-                2,
-                "Võ Thị Vân",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh2.jpg?alt=media&token=d5c80216-afee-4910-8dc9-7104d250edb9",
-                "vangaga@gmail.com",
-                "",
-                "",
-                ""));
-        userArrayList.add(new User(
-                3,
-                "Hoàng Thị Anh Tuấn",
-                "https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/users%2Fanh3.jfif?alt=media&token=1df11e93-95f4-4c52-99b2-16c93f2f205c",
-                "vangaga@gmail.com",
-                "",
-                "",
-                ""));
-
-        return userArrayList;
-    }
 
     private void getUserAndShowOnListview() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -254,7 +192,6 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
 
                                     if(key.equals("type"))   {
                                         int type =Integer.valueOf(tempObject.get(key).toString());
-//                                        System.out.println(tempObject.get(key).toString());
                                         userItem.setTYPE(type);
                                     }
 
@@ -270,6 +207,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                                 }
 
                                 userArrayList.add(userItem);
+                                listOriginal.add(userItem);
                                 userGrantPermissionsAdapter.notifyDataSetChanged();
 
                             }
@@ -279,6 +217,58 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+    }
+
+    private void updateFieldTypeOfUser(String UID, int role)    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Update one field, creating the document if it does not already exist.
+        Map<String, Object> data = new HashMap<>();
+        data.put("type", role);
+
+        db.collection(User.COLLECTION_NAME).document(UID)
+                .set(data, SetOptions.merge());
+    }
+
+    private void setOnTextChange()  {
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                String inputSearch = charSequence.toString().toLowerCase();
+                if(inputSearch == null || inputSearch.length() == 0)    {
+                    userArrayList.clear();
+                    userArrayList.addAll(listOriginal);
+                    userGrantPermissionsAdapter.notifyDataSetChanged();
+                }
+                else    {
+                    ArrayList<User> listFilter = getFilterByEmailOrName(inputSearch);
+
+                    userArrayList.clear();
+                    userArrayList.addAll(listFilter);
+                    userGrantPermissionsAdapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
+
+    private ArrayList<User> getFilterByEmailOrName(String inputSearch) {
+
+        ArrayList<User> listAfterFiltered = new ArrayList<>();
+        for(int k=0; k < listOriginal.size(); k++) {
+            User newUser = listOriginal.get(k);
+            if(newUser.getEMAIL().contains(inputSearch) || newUser.getNAME().toLowerCase().contains(inputSearch))    {
+                listAfterFiltered.add(newUser);
+            }
+        }
+        return listAfterFiltered;
 
     }
 }

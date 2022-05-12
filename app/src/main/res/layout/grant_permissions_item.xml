@@ -36,15 +36,14 @@
                 android:id="@+id/grant_permissions_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:fontFamily="@font/lato"
+                android:inputType="none"
+                android:maxLines="1"
                 android:text="Phan Thanh Tú Đội"
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:ellipsize="end"
-                android:inputType="none"
-                android:maxLines="1"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/grant_permissions_item_email"
