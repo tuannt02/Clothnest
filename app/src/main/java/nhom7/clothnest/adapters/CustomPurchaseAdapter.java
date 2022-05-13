@@ -11,11 +11,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 
 import nhom7.clothnest.models.Purchase;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.R;
+import nhom7.clothnest.util.RemoveTrailingZero;
 
 public class CustomPurchaseAdapter extends BaseAdapter {
     private Context context;
@@ -46,30 +49,55 @@ public class CustomPurchaseAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LinearLayout list = (LinearLayout) layoutInflater.inflate(R.layout.purchases_list, viewGroup, false);
+
         purchases.get(i).calcTotal();
 
-        for (PurchaseItem purchaseItem : purchases.get(i).getItems()) {
+        if (purchases.get(i).getItems() != null ) {
+            for (PurchaseItem purchaseItem : purchases.get(i).getItems()) {
 
-            View item = layoutInflater.inflate(R.layout.purchases_item, null);
+                View item = layoutInflater.inflate(R.layout.purchases_item, null);
 
-            ((ImageView) item.findViewById(R.id.imageview_purchase)).setImageResource(R.drawable.sample);
-            ((TextView) item.findViewById(R.id.purchases_item_title)).setText(purchaseItem.getTitle());
-            ((TextView) item.findViewById(R.id.purchases_item_date)).setText("Purchase date: " + purchaseItem.getPurchaseDate());
-            ((TextView) item.findViewById(R.id.purchases_item_color)).setText("Color: " + purchaseItem.getColor());
-            ((TextView) item.findViewById(R.id.purchases_item_size)).setText("Size: " + purchaseItem.getSize());
-            ((TextView) item.findViewById(R.id.purchases_item_price)).setText("Price: $" + purchaseItem.getPrice().toString().replaceAll("\\.?0*$", ""));
-            ((TextView) item.findViewById(R.id.purchases_item_qty)).setText("Qty: " + purchaseItem.getQty());
-            (item.findViewById(R.id.purchases_item_review)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            });
+                ((ImageView) item.findViewById(R.id.imageview_purchase)).setImageResource(R.drawable.sample);
+                ((TextView) item.findViewById(R.id.purchases_item_title)).setText(purchaseItem.getName());
+                ((TextView) item.findViewById(R.id.purchases_item_color)).setText("Color: " + purchaseItem.getColor());
+                ((TextView) item.findViewById(R.id.purchases_item_size)).setText("Size: " + purchaseItem.getSize());
+                ((TextView) item.findViewById(R.id.purchases_item_price)).setText("Price: $" + purchaseItem.getPrice().toString().replaceAll("\\.?0*$", ""));
+                ((TextView) item.findViewById(R.id.purchases_item_qty)).setText("Qty: " + purchaseItem.getQuantity());
+                (item.findViewById(R.id.purchases_item_review)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    }
+                });
 
-            list.addView(item);
+                list.addView(item);
+            }
         }
 
-        RelativeLayout totalLayout = (RelativeLayout) layoutInflater.inflate(R.layout.purchases_total, null);
-        ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$" + purchases.get(i).getTotal().toString().replaceAll("\\.?0*$", ""));
+        // Total
+        Purchase currPurchase = purchases.get(i);
+        LinearLayout totalLayout = (LinearLayout) layoutInflater.inflate(R.layout.purchases_total, null);
+        ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getTotal()));
+        ((TextView) totalLayout.findViewById(R.id.textview_discount)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getDiscount()));
+        ((TextView) totalLayout.findViewById(R.id.textview_deliveryFee)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getDeliveryFee()));
+        ((TextView) totalLayout.findViewById(R.id.textview_orderDate)).setText(currPurchase.getOrderDate());
+
+        // Display status
+        TextView status = totalLayout.findViewById(R.id.textview_status);
+        String currStatus = currPurchase.getStatus();
+        status.setText(currStatus);
+        switch (currStatus) {
+            case "Finished":
+                status.setTextColor(ContextCompat.getColor(context, R.color.statusFinished));
+                break;
+            case "Canceled":
+                status.setTextColor(ContextCompat.getColor(context, R.color.statusCanceled));
+                break;
+            case "In Progress":
+                status.setTextColor(ContextCompat.getColor(context, R.color.statusInProgress));
+                break;
+            default:
+                break;
+        }
 
         list.addView(totalLayout);
 

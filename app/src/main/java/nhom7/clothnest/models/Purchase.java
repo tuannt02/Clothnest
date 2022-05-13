@@ -5,10 +5,23 @@ import java.util.ArrayList;
 
 public class Purchase implements Serializable {
     ArrayList<PurchaseItem> items;
-    Double total;
+    String transactionID;
+    Double total, discount, deliveryFee;
+    String orderDate, status;
+
+    public Purchase() {}
 
     public Purchase(ArrayList<PurchaseItem> items) {
         this.items = items;
+    }
+
+    public Purchase(ArrayList<PurchaseItem> items, Double total, Double discount, Double deliveryFee, String orderDate, String status) {
+        this.items = items;
+        this.total = total;
+        this.discount = discount;
+        this.deliveryFee = deliveryFee;
+        this.orderDate = orderDate;
+        this.status = status;
     }
 
     public Purchase(ArrayList<PurchaseItem> items, Double total) {
@@ -17,6 +30,9 @@ public class Purchase implements Serializable {
     }
 
     public void calcTotal() {
+        if (items == null) {
+            return;
+        }
         Double sum = 0d;
         for (int i = 0; i < items.size(); i++) {
             sum += items.get(i).getPrice();
@@ -38,5 +54,28 @@ public class Purchase implements Serializable {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public String getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(String transactionID) {
+        this.transactionID = transactionID;
+    }
+
+    public Double getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

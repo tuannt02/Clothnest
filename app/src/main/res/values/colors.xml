@@ -26,4 +26,8 @@
     <color name="light_pink">#FFB6C1</color>
     <color name="primary">#1C2E46</color>
     <color name="icon_background">#20FFFFFF</color>
+    <color name="primaryBlue">#3484F0</color>
+    <color name="statusFinished">#20AF14</color>
+    <color name="statusInProgress">#FBC02D</color>
+    <color name="statusCanceled">#FF0000</color>
 </resources>

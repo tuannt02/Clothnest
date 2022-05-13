@@ -3,15 +3,14 @@ package nhom7.clothnest.models;
 import java.io.Serializable;
 
 public class PurchaseItem implements Serializable {
-    int image, qty;
-    String title, purchaseDate, color, size;
+    int image, quantity;
+    String name, color, size;
     Double price;
 
-    public PurchaseItem(int image, int qty, String title, String purchaseDate, String color, String size, Double price) {
+    public PurchaseItem(int image, int quantity, String name, String color, String size, Double price) {
         this.image = image;
-        this.qty = qty;
-        this.title = title;
-        this.purchaseDate = purchaseDate;
+        this.quantity = quantity;
+        this.name = name;
         this.color = color;
         this.size = size;
         this.price = price;
@@ -25,28 +24,20 @@ public class PurchaseItem implements Serializable {
         this.image = image;
     }
 
-    public int getQty() {
-        return qty;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(String purchaseDate) {
-        this.purchaseDate = purchaseDate;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getColor() {
@@ -74,11 +65,11 @@ public class PurchaseItem implements Serializable {
     }
 
     public void incrementQuantity() {
-        this.qty++;
+        this.quantity++;
     }
 
     public void decreaseQuantity()  {
-        if(qty == 1) return;
-        this.qty--;
+        if(quantity == 1) return;
+        this.quantity--;
     }
 }
