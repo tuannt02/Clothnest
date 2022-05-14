@@ -136,7 +136,9 @@ public class Admin_ChatActivity extends AppCompatActivity {
                         chatRef = db.collection("chat").document(chatRoomID);
 
                         // create new listener
-                        messagesListener = messagesRef.addSnapshotListener(messagesEventListener);
+                        messagesListener = messagesRef
+                                .orderBy("time")
+                                .addSnapshotListener(messagesEventListener);
                         isRoomCreated = true;
 
                         // Send message
