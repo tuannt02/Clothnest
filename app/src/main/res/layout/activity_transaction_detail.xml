@@ -8,16 +8,17 @@
     tools:context=".activities.TransactionDetailActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
-            android:paddingHorizontal="20dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -31,34 +32,33 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-      <RelativeLayout
-          android:padding="5dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/lato"
-              android:text="Transaction ID"
-              android:textColor="#494949"
-              android:textSize="20dp" />
-
-          <TextView
-              android:id="@+id/transactionId"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="160dp"
-              android:fontFamily="@font/lato"
-              android:text="12"
-              android:textColor="#494949"
-              android:textSize="20dp" />
-      </RelativeLayout>
 
         <RelativeLayout
-            android:padding="5dp"
+            android:id="@+id/rlayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#FBC02D">
+
+            <TextView
+                android:gravity="center_vertical"
+                android:id="@+id/transactionstate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="In Progress"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,22 +78,22 @@
                 android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
-                android:text="Purchase Date"
+                android:text="Order Date"
                 android:textColor="#494949"
                 android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/transactionpurchasedate"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="160dp"
@@ -104,20 +104,20 @@
         </RelativeLayout>
 
         <TextView
-            android:textColor="#494949"
-            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:textSize="20dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/lato"
             android:text="Address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="#494949"
+            android:textSize="20dp" />
 
         <RelativeLayout
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/name"
@@ -131,9 +131,9 @@
 
 
         <RelativeLayout
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/addresss"
@@ -146,9 +146,10 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
             <TextView
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
@@ -160,12 +161,12 @@
         </RelativeLayout>
 
         <ScrollView
-            android:layout_marginTop="20dp"
             android:id="@+id/transaction_main_scrview"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:nestedScrollingEnabled="true"
-            >
+            android:layout_marginTop="20dp"
+            android:nestedScrollingEnabled="true">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
@@ -182,10 +183,10 @@
 
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -207,16 +208,16 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
             <TextView
-                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="Subtotal: "
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <TextView
@@ -231,18 +232,17 @@
         </RelativeLayout>
 
 
-
         <RelativeLayout
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
             <TextView
-                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="Discount: "
+                android:textColor="#000000"
 
                 android:textSize="20dp" />
 
@@ -259,9 +259,9 @@
 
 
         <RelativeLayout
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -284,12 +284,11 @@
         </RelativeLayout>
 
 
-
         <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -309,8 +308,6 @@
                 android:textColor="#FF0000"
                 android:textSize="20dp" />
         </RelativeLayout>
-
-
 
 
     </LinearLayout>

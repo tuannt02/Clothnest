@@ -36,7 +36,6 @@
             android:id="@+id/textquantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2000"
             android:fontFamily="@font/lato_bold"
             android:textColor="#DF7861"
             android:textSize="20dp" />
@@ -50,7 +49,6 @@
             android:textSize="20dp" />
         <TextView
             android:fontFamily="@font/lato_bold"
-            android:text=" $ 300"
             android:id="@+id/textsumprice"
             android:textColor="#DF7861"
             android:textSize="20dp"
@@ -61,7 +59,7 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" total."
+            android:text=" revenue."
             android:textColor="#000"
             android:textSize="20dp" />
 
