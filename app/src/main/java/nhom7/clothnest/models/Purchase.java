@@ -33,11 +33,13 @@ public class Purchase implements Serializable {
         if (items == null) {
             return;
         }
+
         Double sum = 0d;
         for (int i = 0; i < items.size(); i++) {
-            sum += items.get(i).getPrice();
+            PurchaseItem item = items.get(i);
+            sum += item.getPrice() * item.getQuantity();
         }
-        this.total = sum;
+        this.total = sum + deliveryFee - discount;
     }
 
     public ArrayList<PurchaseItem> getItems() {
@@ -77,5 +79,9 @@ public class Purchase implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

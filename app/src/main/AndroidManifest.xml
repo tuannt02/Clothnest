@@ -35,7 +35,8 @@
             android:exported="false" />
         <activity
             android:name=".activities.Admin_MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.CheckoutActivity"
             android:exported="false" />
@@ -75,6 +76,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.Admin_ChatActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+        <activity
             android:name=".activities.TestActivity"
             android:exported="false" />
         <activity
@@ -105,8 +110,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
     </application>
 
 </manifest>

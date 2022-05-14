@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class CustomPurchaseAdapter extends BaseAdapter {
 
                 View item = layoutInflater.inflate(R.layout.purchases_item, null);
 
-                ((ImageView) item.findViewById(R.id.imageview_purchase)).setImageResource(R.drawable.sample);
+                Picasso.get().load(purchaseItem.getImage()).into(((ImageView) item.findViewById(R.id.imageview_purchase)));
                 ((TextView) item.findViewById(R.id.purchases_item_title)).setText(purchaseItem.getName());
                 ((TextView) item.findViewById(R.id.purchases_item_color)).setText("Color: " + purchaseItem.getColor());
                 ((TextView) item.findViewById(R.id.purchases_item_size)).setText("Size: " + purchaseItem.getSize());

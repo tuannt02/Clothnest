@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/nav_purchases"
-        android:title="PURCHASES"
+        android:title="ORDERS"
         app:showAsAction="withText" />
 
     <item android:id="@+id/nav_settings"

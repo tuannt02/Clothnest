@@ -30,4 +30,5 @@
     <color name="statusFinished">#20AF14</color>
     <color name="statusInProgress">#FBC02D</color>
     <color name="statusCanceled">#FF0000</color>
+    <color name="grayChat">#E5E5E5</color>
 </resources>
