@@ -43,6 +43,15 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/chat" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_unreadMessage"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="-24dp"
+                android:layout_toRightOf="@id/btnchat"
+                android:backgroundTint="@color/primaryColor"
+                app:cardCornerRadius="9999dp" />
+
             <ImageButton
                 android:id="@+id/btncart"
                 android:layout_width="50dp"

@@ -123,6 +123,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
                 data.put("recent_msg", chatMessage.getText());
                 data.put("time", FieldValue.serverTimestamp());
                 data.put("is_admin_read", isAdminAccessed);
+                data.put("is_client_read", !isAdminAccessed);
                 data.put("is_admin_sent", isAdminAccessed);
 
                 db.collection("chat").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -148,6 +149,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
                 data.put("recent_msg", chatMessage.getText());
                 data.put("time", FieldValue.serverTimestamp());
                 data.put("is_admin_read", isAdminAccessed);
+                data.put("is_client_read", !isAdminAccessed);
                 data.put("is_admin_sent", isAdminAccessed);
                 chatRef.update(data);
                 etMessage.getText().clear();
@@ -195,6 +197,8 @@ public class Admin_ChatActivity extends AppCompatActivity {
             // Message read
             if (isAdminAccessed)
                 chatRef.update("is_admin_read", true);
+            if (!isAdminAccessed)
+                chatRef.update("is_client_read", true);
         }
     };
 

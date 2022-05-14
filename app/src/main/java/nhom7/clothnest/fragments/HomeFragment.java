@@ -2,6 +2,7 @@ package nhom7.clothnest.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,49 +11,35 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_ChatActivity;
 import nhom7.clothnest.activities.CartActivity;
-import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.activities.SeeAllItemActivity;
-import nhom7.clothnest.adapters.GridViewApdater;
-import nhom7.clothnest.adapters.ProductSliderAdapter;
 import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
-import nhom7.clothnest.models.CategoryItem;
-import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Thumbnail;
-import nhom7.clothnest.models.User;
-import nhom7.clothnest.models.Wishlist;
-import nhom7.clothnest.util.customizeComponent.CustomDialog;
 
 
 public class HomeFragment extends Fragment {
@@ -70,6 +57,16 @@ public class HomeFragment extends Fragment {
     ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList;
     Product_ThumbnailAdapter arrivalsAdapter, salesAdapter;
 
+    // Tuan be
+    FirebaseFirestore tuanDb = FirebaseFirestore.getInstance();
+    String currUserUid;
+    DocumentReference currUser;
+    DocumentSnapshot chatRoom;
+    CollectionReference chatListRef;
+    private ListenerRegistration chatRoomListener;
+    private static final String TAG = "HomeFragment";
+    private CardView cvUnreadMessage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,7 +81,46 @@ public class HomeFragment extends Fragment {
         getEvent();
         createSlider();
 
+        initTuanBeVars();
+
         return mView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        chatRoomListener = chatListRef.whereEqualTo("userRef", currUser)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.d(TAG, "Error: " + error.toString());
+                        }
+
+                        if (value.size() > 0) {
+                            chatRoom = value.getDocuments().get(0);
+                            if (!chatRoom.getBoolean("is_client_read")) {
+                                cvUnreadMessage.setVisibility(View.VISIBLE);
+                            } else {
+                                cvUnreadMessage.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        chatRoomListener.remove();
+    }
+
+    private void initTuanBeVars() {
+        currUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        currUser = tuanDb.collection("users").document(currUserUid);
+        chatListRef = tuanDb.collection("chat");
+        cvUnreadMessage = mView.findViewById(R.id.cardview_unreadMessage);
     }
 
     @Override
@@ -146,36 +182,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Open chat activity
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Admin_ChatActivity.class);
                 intent.putExtra("isAdminAccessed", false);
-
-                FirebaseFirestore tuanDb = FirebaseFirestore.getInstance();
-                String currUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DocumentReference currUser = tuanDb.collection("users").document(currUserUid);
-                CollectionReference chatRoomRef = tuanDb.collection("chat");
-
-                chatRoomRef.whereEqualTo("userRef", currUser)
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                if (queryDocumentSnapshots.size() != 0) {
-                                    DocumentSnapshot chatRoom = queryDocumentSnapshots.getDocuments().get(0);
-                                    intent.putExtra("chatRoomID", chatRoom.getId());
-                                }
-
-                                startActivity(intent);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), "Failed while loading chat", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                if (chatRoom != null)
+                    intent.putExtra("chatRoomID", chatRoom.getId());
+                startActivity(intent);
             }
         });
     }
