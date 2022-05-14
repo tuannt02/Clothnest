@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +39,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.Admin_ChatActivity;
 import nhom7.clothnest.activities.CartActivity;
 import nhom7.clothnest.activities.ProductDetail_Activity;
 import nhom7.clothnest.activities.SeeAllItemActivity;
@@ -59,7 +61,7 @@ public class HomeFragment extends Fragment {
     ProductSlider productSlider;
     LinearLayout containersilder;
     View includeView;
-    ImageView buttoncart;
+    ImageView buttoncart, btnChat;
     Button btnSeeAllItem, btnSeeAllItemSales, btnWinter;
     ViewFlipper viewFlipper;
     Animation in, out, alpha;
@@ -143,6 +145,39 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Admin_ChatActivity.class);
+                intent.putExtra("isAdminAccessed", false);
+
+                FirebaseFirestore tuanDb = FirebaseFirestore.getInstance();
+                String currUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DocumentReference currUser = tuanDb.collection("users").document(currUserUid);
+                CollectionReference chatRoomRef = tuanDb.collection("chat");
+
+                chatRoomRef.whereEqualTo("userRef", currUser)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (queryDocumentSnapshots.size() != 0) {
+                                    DocumentSnapshot chatRoom = queryDocumentSnapshots.getDocuments().get(0);
+                                    intent.putExtra("chatRoomID", chatRoom.getId());
+                                }
+
+                                startActivity(intent);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Failed while loading chat", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
     }
 
     private void reference() {
@@ -155,6 +190,7 @@ public class HomeFragment extends Fragment {
         btnSeeAllItemSales = mView.findViewById(R.id.btnsale);
         btnWinter = mView.findViewById(R.id.btnWinter);
         viewFlipper = mView.findViewById(R.id.viewFlipper);
+        btnChat = mView.findViewById(R.id.btnchat);
 
         collectionsList = new ArrayList<>();
     }
@@ -169,7 +205,7 @@ public class HomeFragment extends Fragment {
         viewFlipper.setAutoStart(true);
     }
 
-    public void getProductThumbnail(){
+    public void getProductThumbnail() {
         //Thêm sản phẩm vào arrivals
         arrivalsList = new ArrayList<>();
         arrivalsAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);

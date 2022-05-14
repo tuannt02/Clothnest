@@ -11,7 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,7 +38,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference messagesRef;
     private DocumentReference chatRef;
-    private ListenerRegistration messagesListener;
+    private ListenerRegistration messagesListener, messagesListener_newRoom;
     private static final String TAG = "ChatActivity";
     private CustomMessageAdapter adapter;
     private List<ChatMessage> chatMessages;
@@ -46,7 +48,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
     private TextInputEditText etMessage;
     private TextView tvName;
 
-    private Boolean isAdminAccessed;
+    private Boolean isAdminAccessed, isRoomCreated = true, isRoomJustCreated = false;
     private String chatRoomID, clientName, clientAvatar;
 
     @Override
@@ -58,8 +60,10 @@ public class Admin_ChatActivity extends AppCompatActivity {
         getChatRoomInfo();
 
         // init firestore references
-        messagesRef = db.collection("chat").document(chatRoomID).collection("messages");
-        chatRef = db.collection("chat").document(chatRoomID);
+        if (isRoomCreated) {
+            messagesRef = db.collection("chat").document(chatRoomID).collection("messages");
+            chatRef = db.collection("chat").document(chatRoomID);
+        }
 
         // init view
         lvMessages = findViewById(R.id.listview_messages);
@@ -69,13 +73,15 @@ public class Admin_ChatActivity extends AppCompatActivity {
         tvName = findViewById(R.id.textview_name);
         ivAvatar = findViewById(R.id.imageview_avatar);
 
-        // set data for view
-        tvName.setText(clientName);
-        Picasso.get().load(clientAvatar).into(ivAvatar);
+        // set data for view (admin side)
+        if (isAdminAccessed) {
+            tvName.setText(clientName);
+            Picasso.get().load(clientAvatar).into(ivAvatar);
+        }
 
         // setup listview
         chatMessages = new ArrayList<>();
-        adapter = new CustomMessageAdapter(getApplicationContext(), chatMessages, true);
+        adapter = new CustomMessageAdapter(getApplicationContext(), chatMessages, isAdminAccessed);
         lvMessages.setAdapter(adapter);
 
         // setup onclick listener
@@ -84,9 +90,17 @@ public class Admin_ChatActivity extends AppCompatActivity {
     }
 
     private void getChatRoomInfo() {
+        isAdminAccessed = getIntent().getBooleanExtra("isAdminAccessed", true);
         chatRoomID = getIntent().getStringExtra("chatRoomID");
-        clientAvatar = getIntent().getStringExtra("avatar");
-        clientName = getIntent().getStringExtra("name");
+
+        if (isAdminAccessed) {
+            clientAvatar = getIntent().getStringExtra("avatar");
+            clientName = getIntent().getStringExtra("name");
+        } else {
+            if (chatRoomID == null) {
+                isRoomCreated = false;
+            }
+        }
     }
 
     private View.OnClickListener sendListener = new View.OnClickListener() {
@@ -96,17 +110,49 @@ public class Admin_ChatActivity extends AppCompatActivity {
                 return;
             }
 
-            ChatMessage chatMessage = new ChatMessage(true, etMessage.getText().toString());
-            messagesRef.add(chatMessage);
+            ChatMessage chatMessage = new ChatMessage(isAdminAccessed, etMessage.getText().toString());
 
-            Map<String, Object> data = new HashMap<>();
-            data.put("recent_msg", chatMessage.getText());
-            data.put("time", FieldValue.serverTimestamp());
-            data.put("is_admin_read", true);
-            data.put("is_admin_sent", true);
-            chatRef.update(data);
+            // If client never chats, a new chat room will be created
+            if (!isRoomCreated) {
+                Map<String, Object> data = new HashMap<>();
+                String currUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DocumentReference currUserRef = db.collection("users").document(currUserUid);
 
-            etMessage.getText().clear();
+                // Create new chat room data
+                data.put("userRef", currUserRef);
+                data.put("recent_msg", chatMessage.getText());
+                data.put("time", FieldValue.serverTimestamp());
+                data.put("is_admin_read", isAdminAccessed);
+                data.put("is_admin_sent", isAdminAccessed);
+
+                db.collection("chat").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        chatRoomID = documentReference.getId();
+
+                        // init references
+                        messagesRef = db.collection("chat").document(chatRoomID).collection("messages");
+                        chatRef = db.collection("chat").document(chatRoomID);
+
+                        // create new listener
+                        messagesListener = messagesRef.addSnapshotListener(messagesEventListener);
+                        isRoomCreated = true;
+
+                        // Send message
+                        etMessage.getText().clear();
+                        messagesRef.add(chatMessage);
+                    }
+                });
+            } else {
+                Map<String, Object> data = new HashMap<>();
+                data.put("recent_msg", chatMessage.getText());
+                data.put("time", FieldValue.serverTimestamp());
+                data.put("is_admin_read", isAdminAccessed);
+                data.put("is_admin_sent", isAdminAccessed);
+                chatRef.update(data);
+                etMessage.getText().clear();
+                messagesRef.add(chatMessage);
+            }
         }
     };
 
@@ -120,35 +166,43 @@ public class Admin_ChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (!isRoomCreated) {
+            return;
+        }
         messagesListener = messagesRef
                 .orderBy("time")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Toast.makeText(Admin_ChatActivity.this, "Error while loading messages!", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, error.toString());
-                            return;
-                        }
-
-                        chatMessages.clear();
-
-                        for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
-                            ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
-                            chatMessages.add(message);
-                        }
-
-                        adapter.notifyDataSetChanged();
-
-                        // Message read
-                        chatRef.update("is_admin_read", true);
-                    }
-                });
+                .addSnapshotListener(messagesEventListener);
     }
+
+    private EventListener<QuerySnapshot> messagesEventListener = new EventListener<QuerySnapshot>() {
+        @Override
+        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+            if (error != null) {
+                Toast.makeText(Admin_ChatActivity.this, "Error while loading messages!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, error.toString());
+                return;
+            }
+
+            chatMessages.clear();
+
+            for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                ChatMessage message = documentSnapshot.toObject(ChatMessage.class);
+                chatMessages.add(message);
+            }
+
+            adapter.notifyDataSetChanged();
+
+            // Message read
+            if (isAdminAccessed)
+                chatRef.update("is_admin_read", true);
+        }
+    };
 
     @Override
     protected void onStop() {
         super.onStop();
-        messagesListener.remove();
+        if (isRoomCreated) {
+            messagesListener.remove();
+        }
     }
 }

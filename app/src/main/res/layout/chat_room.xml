@@ -14,19 +14,20 @@
             android:id="@+id/imageview_avatar"
             android:layout_width="68dp"
             android:layout_height="68dp"
-            android:src="@drawable/sample_avatar" />
+            android:src="@drawable/ic_user_large" />
     </androidx.cardview.widget.CardView>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_marginLeft="12dp"
-        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/imageview_readDot"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
             <TextView
@@ -44,24 +45,22 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="You: Abc"
+                android:maxLines="2"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <androidx.cardview.widget.CardView
+            android:id="@+id/imageview_readDot"
             android:layout_width="16dp"
             android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:backgroundTint="@color/primaryColor"
-            android:id="@+id/imageview_readDot"
             app:cardCornerRadius="9999dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

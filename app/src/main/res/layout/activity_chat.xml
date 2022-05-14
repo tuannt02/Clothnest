@@ -27,7 +27,7 @@
                 android:id="@+id/imageview_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/sample_avatar" />
+                android:src="@drawable/ic_user_large" />
         </androidx.cardview.widget.CardView>
 
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:fontFamily="@font/lato_bold"
-            android:text="Hoàng Đình Anh Tuấn"
+            android:text="Admin"
             android:textColor="@color/black"
             android:textSize="20dp" />
 

@@ -19,7 +19,7 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="12dp"
             android:text="Ê hôm qua t "
-            android:textAlignment="viewEnd"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="16dp" />
 
