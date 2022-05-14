@@ -21,9 +21,12 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/ic_profile_fill.xml" value="0.135" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/ic_search.xml" value="0.1145" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/ic_search_fill.xml" value="0.1145" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/ic_search_small.xml" value="0.1445" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/ic_wishlist.xml" value="0.1145" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/ic_wishlist_fill.xml" value="0.135" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/item_selected.xml" value="0.1145" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/message_received_background.xml" value="0.1355" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/message_sent_background.xml" value="0.1355" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/profile_item_selected.xml" value="0.121" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/profile_navigation_selector.xml" value="0.121" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/drawable/profile_selector.xml" value="0.121" />
@@ -41,6 +44,7 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_address_book.xml" value="0.2" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_admin_main.xml" value="0.20833333333333334" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_change_password.xml" value="0.23109243697478993" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_chat.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_government_approval.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_imprint.xml" value="0.25" />
@@ -54,9 +58,13 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/address_layout.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/admin_bottom_navigation_view.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/bottom_navigation_view.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/chat_room.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/combobox_item_address.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/divider.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_chat.xml" value="0.264" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_chat_list.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_comment.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_profile.xml" value="0.176" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_purchases.xml" value="0.16799999999999998" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.1" />
@@ -64,6 +72,8 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/horizontal_menu.xml" value="0.2" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/message_received.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/message_sent.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_item.xml" value="0.264" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_list.xml" value="0.10989583333333333" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_margin_bottom.xml" value="0.25" />
