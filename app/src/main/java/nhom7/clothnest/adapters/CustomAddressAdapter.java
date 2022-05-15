@@ -66,10 +66,10 @@ public class CustomAddressAdapter extends BaseAdapter {
 
         Address address = addresses.get(i);
 
-        viewHolder.fullName.setText(address.getFullName());
-        viewHolder.detail.setText(address.getDetail());
+        viewHolder.fullName.setText(address.fullName);
+        viewHolder.detail.setText(address.detail);
         viewHolder.address.setText(address.getProvince() + ", " + address.getDistrict() + ", " + address.getWard());
-        viewHolder.phoneNumber.setText(address.getPhoneNumber());
+        viewHolder.phoneNumber.setText(address.phoneNumber);
 
         // set btnEdit click listener
         viewHolder.edit.setOnClickListener(new View.OnClickListener() {

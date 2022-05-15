@@ -106,7 +106,7 @@ public class CustomChatListAdapter extends ArrayAdapter<ChatRoom> {
                 constraint = constraint.toString().toLowerCase();
                 for (int i = 0; i < originChatRoomList.size(); i++) {
                     String clientName = originChatRoomList.get(i).name;
-                    if (clientName.toLowerCase().startsWith(constraint.toString()))  {
+                    if (clientName.toLowerCase().contains(constraint.toString()))  {
                         filteredChatRooms.add(originChatRoomList.get(i));
                     }
                 }

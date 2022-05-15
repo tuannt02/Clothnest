@@ -12,7 +12,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
+        android:orientation="vertical"
         android:gravity="end">
 
         <TextView
@@ -21,12 +22,21 @@
             android:layout_height="wrap_content"
             android:background="@drawable/message_sent_background"
             android:fontFamily="@font/lato"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
             android:text="Ê hôm qua t gặp thằng kia"
             android:textAlignment="viewEnd"
             android:textColor="@color/white"
             android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textview_time"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:fontFamily="@font/lato"
+            android:text="Wednesday" />
 
     </LinearLayout>
 </LinearLayout>

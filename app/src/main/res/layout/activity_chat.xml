@@ -64,12 +64,12 @@
         android:background="#CFCFCF" />
 
     <ListView
-        android:id="@+id/listview_messages"
+        android:id="@+id/recycler_view_messages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/chat_footer"
         android:layout_below="@id/myDivider"
-        android:divider="@drawable/purchases_empty_divider"
+        android:divider="@drawable/messages_empty_divider"
         android:padding="12dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" />

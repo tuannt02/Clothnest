@@ -14,9 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirestoreRegistrar;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -40,6 +43,7 @@ import nhom7.clothnest.adapters.CustomPurchaseAdapter;
 import nhom7.clothnest.models.Purchase;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.R;
+import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 // This is a child fragment of Profile Fragment
@@ -50,6 +54,9 @@ public class PurchasesFragment extends Fragment {
     private ArrayList<ListenerRegistration> transactionItemListenerList;
     private CustomProgressBar progressBar;
     private Purchase currLongClickPurchase;
+
+    private LinearLayout emptyPlaceholder;
+    private CustomOptionMenu customOptionMenu;
 
     // Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -67,6 +74,8 @@ public class PurchasesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_purchases, container, false);
+
+        emptyPlaceholder = view.findViewById(R.id.empty_placeholder);
 
         initializePurchaseList();
         Log.d("initializeList", "Init model list");
@@ -90,6 +99,7 @@ public class PurchasesFragment extends Fragment {
         progressBar.show();
         transactionListener = transactionRef
                 .whereEqualTo("userRef", currUserRef)
+                .orderBy("orderDate", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -103,8 +113,11 @@ public class PurchasesFragment extends Fragment {
 
                 if (value.size() == 0) {
                     progressBar.dismiss();
+                    emptyPlaceholder.setVisibility(View.VISIBLE);
                     return;
                 }
+
+                emptyPlaceholder.setVisibility(View.GONE);
 
                 if (transactionItemListenerList.size() > 0) {
                     for (ListenerRegistration listenerRegistration : transactionItemListenerList) {
@@ -114,6 +127,7 @@ public class PurchasesFragment extends Fragment {
                 }
 
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+
                     Purchase purchase = documentSnapshot.toObject(Purchase.class);
                     purchase.setTransactionID(documentSnapshot.getId());
                     purchases.add(purchase);
@@ -210,8 +224,13 @@ public class PurchasesFragment extends Fragment {
 
             if (currPurchase.getStatus().equals("In Progress")) {
                 currLongClickPurchase = currPurchase;
-                MenuInflater inflater = getActivity().getMenuInflater();
-                inflater.inflate(R.menu.purchases_context_menu, menu);
+                if (customOptionMenu == null) {
+                    initDataForCustomOptionMenu();
+                }
+
+                customOptionMenu.show();
+//                MenuInflater inflater = getActivity().getMenuInflater();
+//                inflater.inflate(R.menu.purchases_context_menu, menu);
             } else {
                 currLongClickPurchase = null;
             }
@@ -241,5 +260,23 @@ public class PurchasesFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void initDataForCustomOptionMenu() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add("Cancel");
+
+        customOptionMenu = new CustomOptionMenu(getContext(), new CustomOptionMenu.IClickListenerOnItemListview() {
+            @Override
+            public void onClickItem(int pos) {
+                switch (pos) {
+                    case 0:
+                        cancelOrder();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }, data, "MODIFY", null);
     }
 }
