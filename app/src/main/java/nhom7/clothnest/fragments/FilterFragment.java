@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SeekBar;
 
@@ -20,6 +21,7 @@ public class FilterFragment extends Fragment {
     //view
     private GridView gvSize, gvSizeInches, gvSizeCentimeters, gvColor;
     private SeekBar seekBar;
+    private Button btnApply;
     //Brand
     private ArrayList<Filter_CheckItem> brandList;
 
@@ -31,8 +33,18 @@ public class FilterFragment extends Fragment {
 
         reference();
         getBrands();
+        getEvents();
 
         return mView;
+    }
+
+    private void getEvents() {
+        btnApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void getBrands() {
@@ -46,6 +58,7 @@ public class FilterFragment extends Fragment {
         gvSizeCentimeters = mView.findViewById(R.id.filter_sizeCentimeterGridView);
         gvColor = mView.findViewById(R.id.filter_ColorGridView);
         seekBar = mView.findViewById(R.id.filter_seekbar);
+        btnApply = mView.findViewById(R.id.filter_ApplyButton);
     }
 
 }
