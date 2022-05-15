@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
+
         <activity
             android:name=".activities.Admin_BannersActivity"
             android:exported="false" />
@@ -77,8 +78,8 @@
         </activity>
         <activity
             android:name=".activities.Admin_ChatActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.TestActivity"
             android:exported="false" />
