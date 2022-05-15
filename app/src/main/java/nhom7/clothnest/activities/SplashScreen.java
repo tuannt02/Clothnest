@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.util.ValidateLogin;
 
 public class SplashScreen extends AppCompatActivity {
@@ -16,9 +17,10 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nextActivity();
+//        nextActivity();
 //        startActivity(new Intent(this, Admin_MainActivity.class));
 //        startActivity(new Intent(this,Admin_GrantPermissionsActivity.class));
+        startSize();
     }
 
     private void nextActivity() {
@@ -38,5 +40,10 @@ public class SplashScreen extends AppCompatActivity {
         }
     }
 
-
+    // Temp method
+    private void startSize() {
+        Intent intent = new Intent(this, SizeActivity.class);
+        intent.putExtra("activity_type", ActivityConstants.VIEW_SIZE);
+        startActivity(intent);
+    }
 }

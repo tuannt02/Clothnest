@@ -1,5 +1,7 @@
 package nhom7.clothnest.util;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.HashMap;
 
 public class Constants {
@@ -22,6 +24,15 @@ public class Constants {
             );
         }
         return remoteMsgHeaders;
+    }
+
+    public static String userId;
+
+    public static String getUserId() {
+        if (userId == null) {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        return userId;
     }
 }
 

@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -16,8 +17,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -25,6 +36,8 @@ import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.Address;
 import nhom7.clothnest.adapters.CustomAddressAdapter;
 import nhom7.clothnest.R;
+import nhom7.clothnest.util.Constants;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class AddressBookActivity extends AppCompatActivity {
     private ImageView btnBack;
@@ -33,7 +46,13 @@ public class AddressBookActivity extends AppCompatActivity {
     private ArrayList<Address> addresses = null;
     private CustomAddressAdapter adapter;
 
+    private CustomProgressBar progressBar;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference addrRef = db.collection("users").document(Constants.getUserId()).collection("addr");
+
     private int currIndex = -1;
+    private static final String TAG = "AddressBookActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +71,43 @@ public class AddressBookActivity extends AppCompatActivity {
 
         // Thiet lap LocalBroadcastReceiver
         setupBroadcastReceiver();
+
+        progressBar = new CustomProgressBar(this);
+        progressBar.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        retrieveAddresses();
+    }
+
+    private void retrieveAddresses() {
+        addresses.clear();
+        addrRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()) {
+                            Address address = snapshot.toObject(Address.class);
+                            address.addressId = snapshot.getId();
+                            addresses.add(address);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e.toString());
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        progressBar.dismiss();
+                    }
+                });
     }
 
     @Override
@@ -69,12 +125,10 @@ public class AddressBookActivity extends AppCompatActivity {
         addresses = new ArrayList<>();
 
         lvAddressBook = findViewById(R.id.listview_addressBook);
-        addresses.add(new Address("Hoang Dinh Anh Tuan", "Ho Chi Minh", "Thu Duc", "Linh Trung", "KTX Khu A", "0849167234"));
-        Log.d("setupAddressBook", "Add address successfully");
+
         adapter = new CustomAddressAdapter(addresses, getApplicationContext());
-        Log.d("setupAddressBook", "Create custom adapter instance successfully");
         lvAddressBook.setAdapter(adapter);
-        Log.d("setupAddressBook", "Setup successfully");
+        ;
     }
 
     private View.OnClickListener btnAddNewAddressListener = new View.OnClickListener() {
@@ -101,8 +155,7 @@ public class AddressBookActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
                         Address address = (Address) result.getData().getExtras().getSerializable("data");
-                        addresses.add(address);
-                        adapter.notifyDataSetChanged();
+                        addNewAddress(address);
                     }
                 }
             }
@@ -148,11 +201,12 @@ public class AddressBookActivity extends AppCompatActivity {
 
                         switch (actionCode) {
                             case 0:
-                                addresses.remove(currIndex);
+                                String addressId = intent.getStringExtra("address-id");
+                                removeAddress(addressId);
                                 break;
                             case 1:
                                 Address address = (Address) intent.getExtras().getSerializable("new-address");
-                                addresses.set(currIndex, address);
+                                addNewAddress(address);
                                 break;
                             default:
                                 break;
@@ -163,4 +217,26 @@ public class AddressBookActivity extends AppCompatActivity {
                 }
             }
     );
+
+    private void addNewAddress(Address address) {
+        String addressId = address.addressId;
+        DocumentReference newAddress = addressId == null ? addrRef.document() : addrRef.document(addressId);
+        newAddress.set(address)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        retrieveAddresses();
+                    }
+                });
+    }
+
+    private void removeAddress(String addressId) {
+        addrRef.document(addressId).delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        retrieveAddresses();
+                    }
+                });
+    }
 }

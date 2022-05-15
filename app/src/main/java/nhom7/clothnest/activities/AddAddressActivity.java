@@ -1,5 +1,7 @@
 package nhom7.clothnest.activities;
 
+import static nhom7.clothnest.util.ValidateAddress.isValid;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,6 +28,7 @@ import nhom7.clothnest.models.Province;
 import nhom7.clothnest.R;
 import nhom7.clothnest.util.StringNormalizer;
 import nhom7.clothnest.models.Ward;
+import nhom7.clothnest.util.ValidateAddress;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +48,7 @@ public class AddAddressActivity extends AppCompatActivity {
     Retrofit retrofit;
     OpenProvincesAPI openProvincesAPI;
     CustomProgressBar customProgressBar;
+    String addressId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +105,13 @@ public class AddAddressActivity extends AppCompatActivity {
 
             // Khi bam nut edit address
             case ActivityConstants.EDIT_ADDRESS:
+
                 btnAdd.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.VISIBLE);
                 btnSave.setVisibility(View.VISIBLE);
-                setAddressData((Address) getIntent().getExtras().getSerializable("address"));
+                Address address = (Address) getIntent().getExtras().getSerializable("address");
+                setAddressData(address);
+                addressId = address.addressId;
 
                 // Setup delete and save button
                 setupBtnDelete();
@@ -194,6 +201,13 @@ public class AddAddressActivity extends AppCompatActivity {
 
                 districts = response.body().getDistricts();
 
+                Collections.sort(districts, new Comparator<District>() {
+                    @Override
+                    public int compare(District d1, District d2) {
+                        return d1.getName().compareTo(d2.getName());
+                    }
+                });
+
                 ArrayList<String> districtStrings = new ArrayList<>();
                 for (District d : districts) {
                     d.setName(StringNormalizer.removeAccent(d.getName()));
@@ -252,6 +266,14 @@ public class AddAddressActivity extends AppCompatActivity {
 
                 wards = response.body().getWards();
 
+                // Sort ward
+                Collections.sort(wards, new Comparator<Ward>() {
+                    @Override
+                    public int compare(Ward w1, Ward w2) {
+                        return w1.getName().compareTo(w2.getName());
+                    }
+                });
+
                 ArrayList<String> wardStrings = new ArrayList<>();
                 for (Ward w : wards) {
                     w.setName(StringNormalizer.removeAccent(w.getName()));
@@ -293,6 +315,7 @@ public class AddAddressActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("action-code", 0);
+                intent.putExtra("address-id", addressId);
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -303,6 +326,10 @@ public class AddAddressActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isValidAddress()) {
+                    return;
+                }
+
                 Intent intent = new Intent();
                 intent.putExtra("action-code", 1);
                 intent.putExtra("new-address", getNewAddress());
@@ -319,6 +346,10 @@ public class AddAddressActivity extends AppCompatActivity {
                 ward.getText().toString(),
                 getViewText(detail),
                 getViewText(phoneNumber));
+
+        if (addressId != null)
+            address.addressId = addressId;
+
         return address;
     }
 
@@ -326,6 +357,10 @@ public class AddAddressActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isValidAddress()) {
+                    return;
+                }
+
                 Address address = new Address(getViewText(fullName),
                         province.getText().toString(),
                         district.getText().toString(),
@@ -357,11 +392,15 @@ public class AddAddressActivity extends AppCompatActivity {
             return;
         }
 
-        fullName.setText(address.getFullName());
+        fullName.setText(address.fullName);
         province.setText(address.getProvince());
         district.setText(address.getDistrict());
         ward.setText(address.getWard());
-        detail.setText(address.getDetail());
-        detail.setText(address.getPhoneNumber());
+        detail.setText(address.detail);
+        phoneNumber.setText(address.phoneNumber);
+    }
+
+    private boolean isValidAddress() {
+        return isValid(fullName, province, district, ward, detail, phoneNumber);
     }
 }
