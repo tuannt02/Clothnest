@@ -2,6 +2,7 @@ package nhom7.clothnest.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,14 +33,16 @@ import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.CustomMessageAdapter;
+import nhom7.clothnest.adapters.CustomMessageRecyclerAdapter;
 import nhom7.clothnest.models.ChatMessage;
 
 public class Admin_ChatActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference messagesRef;
     private DocumentReference chatRef;
-    private ListenerRegistration messagesListener, messagesListener_newRoom;
+    private ListenerRegistration messagesListener;
     private static final String TAG = "ChatActivity";
+    //private CustomMessageRecyclerAdapter adapter;
     private CustomMessageAdapter adapter;
     private List<ChatMessage> chatMessages;
 
@@ -48,7 +51,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
     private TextInputEditText etMessage;
     private TextView tvName;
 
-    private Boolean isAdminAccessed, isRoomCreated = true, isRoomJustCreated = false;
+    private Boolean isAdminAccessed, isRoomCreated = true;
     private String chatRoomID, clientName, clientAvatar;
 
     @Override
@@ -66,7 +69,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
         }
 
         // init view
-        lvMessages = findViewById(R.id.listview_messages);
+        lvMessages = findViewById(R.id.recycler_view_messages);
         btnSend = findViewById(R.id.imageview_send);
         etMessage = findViewById(R.id.edittext_message);
         btnClose = findViewById(R.id.imageview_close);
@@ -81,7 +84,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
 
         // setup listview
         chatMessages = new ArrayList<>();
-        adapter = new CustomMessageAdapter(getApplicationContext(), chatMessages, isAdminAccessed);
+        adapter = new CustomMessageAdapter(getApplicationContext(), chatMessages, isAdminAccessed, clientAvatar);
         lvMessages.setAdapter(adapter);
 
         // setup onclick listener
@@ -112,9 +115,11 @@ public class Admin_ChatActivity extends AppCompatActivity {
 
             ChatMessage chatMessage = new ChatMessage(isAdminAccessed, etMessage.getText().toString());
 
+            String title = clientName == null ? "Admin" : clientName;
+
             // If client never chats, a new chat room will be created
+            Map<String, Object> data = new HashMap<>();
             if (!isRoomCreated) {
-                Map<String, Object> data = new HashMap<>();
                 String currUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 DocumentReference currUserRef = db.collection("users").document(currUserUid);
 
@@ -147,7 +152,6 @@ public class Admin_ChatActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Map<String, Object> data = new HashMap<>();
                 data.put("recent_msg", chatMessage.getText());
                 data.put("time", FieldValue.serverTimestamp());
                 data.put("is_admin_read", isAdminAccessed);
@@ -176,6 +180,7 @@ public class Admin_ChatActivity extends AppCompatActivity {
         messagesListener = messagesRef
                 .orderBy("time")
                 .addSnapshotListener(messagesEventListener);
+
     }
 
     private EventListener<QuerySnapshot> messagesEventListener = new EventListener<QuerySnapshot>() {
@@ -204,11 +209,13 @@ public class Admin_ChatActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onStop() {
         super.onStop();
-        if (isRoomCreated) {
+        if (isRoomCreated && messagesListener != null) {
             messagesListener.remove();
         }
     }
+
 }
