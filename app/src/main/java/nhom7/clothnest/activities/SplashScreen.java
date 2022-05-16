@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,9 +40,9 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     // Temp method
-    private void startSize() {
-        Intent intent = new Intent(this, SizeActivity.class);
-        intent.putExtra("activity_type", ActivityConstants.VIEW_SIZE);
+    private void startColor() {
+        Intent intent = new Intent(this, Admin_ColorActivity.class);
+        intent.putExtra("activity_type", ActivityConstants.VIEW_COLOR);
         startActivity(intent);
     }
 }

@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
-            android:name=".activities.SizeActivity"
+            android:name=".activities.Admin_ColorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Admin_SizeActivity"
             android:exported="false" />
         <activity
             android:name=".activities.Admin_BannersActivity"

@@ -11,22 +11,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,39 +32,42 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import nhom7.clothnest.R;
-import nhom7.clothnest.adapters.CustomSizeAdapter;
+import nhom7.clothnest.adapters.CustomColorAdapter;
 import nhom7.clothnest.interfaces.ActivityConstants;
-import nhom7.clothnest.models.Size;
+import nhom7.clothnest.models.ClothColor;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
-public class SizeActivity extends AppCompatActivity {
-    private ArrayList<Size> sizes;
-    private CustomSizeAdapter adapter;
-    private ListView lvSize;
+public class Admin_ColorActivity extends AppCompatActivity {
+    private ArrayList<ClothColor> colors;
+    private CustomColorAdapter adapter;
+    private ListView lvColor;
     private CustomProgressBar customProgressBar;
     private TextView btnCancel;
     private TextView tvTitle;
     private TextView btnAdd;
+    private static final String TAG = "Admin_ColorActivity";
+
     private Dialog dialog;
+    private static final Pattern HEXADECIMAL_PATTERN = Pattern.compile("\\p{XDigit}+");
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference sizeRef = db.collection("sizes");
+    private CollectionReference colorRef = db.collection("colors");
     private ListenerRegistration listenerRegistration;
 
     // search
     private EditText etSearch;
     private TextView btnClear;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_size);
+        setContentView(R.layout.activity_color);
 
         // init views
         etSearch = findViewById(R.id.edittext_search);
@@ -78,14 +79,14 @@ public class SizeActivity extends AppCompatActivity {
         // set initial data
         etSearch.setText("");
 
-        // Setup list view size
-        lvSize = findViewById(R.id.listview_size);
-        sizes = new ArrayList<>();
-        adapter = new CustomSizeAdapter(this, R.layout.item_size, sizes);
-        lvSize.setAdapter(adapter);
-
         // custom progress bar
         customProgressBar = new CustomProgressBar(this);
+
+        // Setup list view color
+        lvColor = findViewById(R.id.listview_color);
+        colors = new ArrayList<>();
+        adapter = new CustomColorAdapter(this, R.layout.item_size, colors);
+        lvColor.setAdapter(adapter);
 
         // setup search on change event
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -104,6 +105,7 @@ public class SizeActivity extends AppCompatActivity {
 
             }
         });
+
 
         // Clear button event
         btnClear.setOnClickListener(new View.OnClickListener() {
@@ -133,51 +135,27 @@ public class SizeActivity extends AppCompatActivity {
     private void retrieveSizeData() {
         customProgressBar.show();
 
-        listenerRegistration = sizeRef
+        listenerRegistration = colorRef
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
-                            Toast.makeText(SizeActivity.this, "Error while loading", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Admin_ColorActivity.this, "Error while loading", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
-                        sizes.clear();
+                        colors.clear();
 
                         for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
-                            Size size = documentSnapshot.toObject(Size.class);
-                            size.sizeId = documentSnapshot.getId();
-                            sizes.add(size);
+                            ClothColor color = documentSnapshot.toObject(ClothColor.class);
+                            color.colorId = documentSnapshot.getId();
+                            colors.add(color);
                         }
 
                         adapter.notifyDataSetChanged();
                         customProgressBar.dismiss();
                     }
                 });
-
-//        sizeRef.get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        sizes.clear();
-//
-//                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-//                            Size size = documentSnapshot.toObject(Size.class);
-//                            size.sizeId = documentSnapshot.getId();
-//                            sizes.add(size);
-//                        }
-//
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                })
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        customProgressBar.dismiss();
-//                        if (dialog != null)
-//                            dialog.dismiss();
-//                    }
-//                });
     }
 
     @Override
@@ -192,11 +170,11 @@ public class SizeActivity extends AppCompatActivity {
         int activityType = intent.getIntExtra("activity_type", -1);
 
         switch (activityType) {
-            case ActivityConstants.VIEW_SIZE:
-                handleViewSize();
+            case ActivityConstants.VIEW_COLOR:
+                handleViewColor();
                 break;
-            case ActivityConstants.CHOOSE_SIZE:
-                handleChooseSize();
+            case ActivityConstants.CHOOSE_COLOR:
+                handleChooseColor();
                 break;
             default:
                 break;
@@ -205,47 +183,79 @@ public class SizeActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createNewDialog(1);
+                createNewDialog(1, null);
             }
         });
     }
 
-    private void handleViewSize() {
+    private void handleViewColor() {
+        tvTitle.setText("Color");
+
+        lvColor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ClothColor size = colors.get(i);
+                createNewDialog(2, size);
+            }
+        });
     }
 
-    private void handleChooseSize() {
-        btnAdd.setVisibility(View.VISIBLE);
+    private void handleChooseColor() {
+        tvTitle.setText("Choose Color");
 
-        lvSize.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvColor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("selected_size", sizes.get(i).sizeId);
+                intent.putExtra("selected_color", colors.get(i).colorId);
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
     }
 
-    private void createNewDialog(int dialogType) {
-        dialog = new Dialog(SizeActivity.this);
+    private void createNewDialog(int dialogType, @Nullable ClothColor color) {
+        dialog = new Dialog(Admin_ColorActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.add_size_dialog);
+        dialog.setContentView(R.layout.add_color_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView tvTitle = dialog.findViewById(R.id.textview_title);
         TextInputEditText etName = dialog.findViewById(R.id.edittext_name);
-        TextInputEditText etShortName = dialog.findViewById(R.id.edittext_shortName);
-        TextInputEditText etType = dialog.findViewById(R.id.edittext_type);
+        TextInputEditText etColor = dialog.findViewById(R.id.edittext_color);
+        LinearLayout llColor = dialog.findViewById(R.id.linearLayout_color);
         TextView btnSave = dialog.findViewById(R.id.textview_save);
+
+        etColor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 7 && charSequence.charAt(0) == '#') {
+                    if (isHexadecimal(charSequence.toString().substring(1))) {
+                        llColor.setBackgroundColor(Color.parseColor(charSequence.toString()));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         switch (dialogType) {
             case 1:
-                tvTitle.setText("Add Size");
+                tvTitle.setText("Add Color");
                 break;
             case 2:
-                tvTitle.setText("Edit Size");
+                tvTitle.setText("Edit Color");
+                etName.setText(color.name);
+                etColor.setText(color.hex);
                 break;
             default:
                 break;
@@ -254,11 +264,10 @@ public class SizeActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etName.length() != 0 && etShortName.length() != 0 && etType.length() != 0) {
+                if (etName.length() != 0 && etColor.length() != 0) {
                     String name = etName.getText().toString();
-                    String shortName = etShortName.getText().toString();
-                    String type = etType.getText().toString();
-                    handleSizeDialogResult(name, shortName, type, dialogType);
+                    String hex = etColor.getText().toString();
+                    handleSizeDialogResult(name, hex, dialogType, color == null ? null : color.colorId);
 
                     dialog.dismiss();
                 }
@@ -269,30 +278,48 @@ public class SizeActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
-    private void handleSizeDialogResult(String name, String shortName, String type, int dialogType) {
-        Size size = new Size();
-        size.name = name;
-        size.shortName = shortName;
-        size.type = type;
+    private void handleSizeDialogResult(String name, String hex, int dialogType, @Nullable String colorId) {
+        ClothColor color = new ClothColor();
+        color.hex = hex;
+        color.name = name;
 
         switch (dialogType) {
-            case 1:
-                sizeRef.document().set(size)
+            case 1: // add
+                colorRef.document().set(color)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 //retrieveSizeData();
-                                Toast.makeText(SizeActivity.this, "Added successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Admin_ColorActivity.this, "Added successfully", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(SizeActivity.this, "Added failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Admin_ColorActivity.this, "Added failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                break;
+            case 2: // update
+                colorRef.document(colorId).set(color)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(Admin_ColorActivity.this, "Edited successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Admin_ColorActivity.this, "Edited failed", Toast.LENGTH_SHORT).show();
                             }
                         });
                 break;
         }
+    }
+
+    private boolean isHexadecimal(String input) {
+        final Matcher matcher = HEXADECIMAL_PATTERN.matcher(input);
+        return matcher.matches();
     }
 }
