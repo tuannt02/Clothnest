@@ -223,6 +223,7 @@ public class Admin_VoucherActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+
                         CustomToast.DisplayToast(Admin_VoucherActivity.this, 1, "Add voucher successfully");
                     }
                 })
