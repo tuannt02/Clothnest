@@ -40,7 +40,6 @@
             android:background="#FBC02D">
 
             <TextView
-                android:gravity="center_vertical"
                 android:id="@+id/transactionstate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,6 +47,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/lato_bold"
+                android:gravity="center_vertical"
                 android:text="In Progress"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
-                android:text="Hoang Dinh Anh Tuan"
+
                 android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
-                android:text="245 Le Duan F12 Ho Chi Minh, Quan Thu Duc, Phuong Linh Xuan"
+
                 android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
-                android:text="0912 345 678"
+
                 android:textColor="#494949"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -175,7 +175,7 @@
                 <ListView
                     android:id="@+id/listview_item_transaction"
                     android:layout_width="match_parent"
-                    android:layout_height="1500dp"
+                    android:layout_height="1000dp"
                     android:paddingRight="20dp"
                     tools:listitem="@layout/transaction_detail_item" />
             </LinearLayout>
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato"
-                android:text="7"
+
                 android:textColor="#3484F0"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -226,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato"
-                android:text="$ 71.93333"
+
                 android:textColor="#000000"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -252,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato"
-                android:text="$ 5"
+
                 android:textColor="#000000"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -277,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato"
-                android:text="$ 3"
+
                 android:textColor="#000000"
 
                 android:textSize="20dp" />
@@ -304,7 +304,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato_bold"
-                android:text="$ 3"
+
                 android:textColor="#FF0000"
                 android:textSize="20dp" />
         </RelativeLayout>

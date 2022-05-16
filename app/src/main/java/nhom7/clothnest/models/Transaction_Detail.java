@@ -4,29 +4,30 @@ import java.util.ArrayList;
 
 public class Transaction_Detail {
 
+    public static final String COLLECTION_TRANSACTIONDETAIL = "transactionItemList";
     private String idDetail;
     private String nameDetail;
     private double priceDetail;
-    private int imageListDetail;;
-    private  int quantilyDetail;
+    private String imageListDetail;
+    private int quantilyDetail;
     private String sizeDetail;
     private String colorDetail;
 
-    public Transaction_Detail()
-    {
+
+    public Transaction_Detail() {
 
     }
 
-    public Transaction_Detail(String idDetail, String nameDetail, double priceDetail, int imageListDetail, int quantilyDetail,
-                              String sizeDetail,String colorDetail) {
+    public Transaction_Detail(String idDetail, String nameDetail, double priceDetail, String imageListDetail, int quantilyDetail, String sizeDetail, String colorDetail) {
         this.idDetail = idDetail;
         this.nameDetail = nameDetail;
         this.priceDetail = priceDetail;
         this.imageListDetail = imageListDetail;
         this.quantilyDetail = quantilyDetail;
-        this.sizeDetail= sizeDetail;
-        this.colorDetail= colorDetail;
+        this.sizeDetail = sizeDetail;
+        this.colorDetail = colorDetail;
     }
+
     public String getIdDetail() {
         return idDetail;
     }
@@ -43,7 +44,7 @@ public class Transaction_Detail {
         this.priceDetail = priceDetail;
     }
 
-    public void setImageListDetail(int imageListDetail) {
+    public void setImageListDetail(String imageListDetail) {
         this.imageListDetail = imageListDetail;
     }
 
@@ -75,7 +76,7 @@ public class Transaction_Detail {
         return priceDetail;
     }
 
-    public int getImageListDetail() {
+    public String getImageListDetail() {
         return imageListDetail;
     }
 

@@ -73,7 +73,8 @@ public class TransactionFragment extends Fragment {
                 Intent intent = new Intent(getContext(), TransactionDetailActivity.class);
                 intent.putExtra("customer", transaction.getNameTransaction());
                 intent.putExtra("date", transaction.getDateTransaction());
-                intent.putExtra("state",transaction.getStateTransaction());
+                intent.putExtra("state", transaction.getStateTransaction());
+                intent.putExtra("key", transaction.getIdTransaction());
                 startActivity(intent);
             }
         });

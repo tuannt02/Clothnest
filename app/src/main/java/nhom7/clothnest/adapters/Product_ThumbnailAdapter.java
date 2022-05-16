@@ -160,6 +160,7 @@ public class Product_ThumbnailAdapter extends BaseAdapter {
 
                                         // Lặp qua từng field của một document
                                         Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+
                                         while (myVeryOwnIterator.hasNext()) {
                                             String key = (String) myVeryOwnIterator.next();
 

@@ -1,12 +1,15 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +23,12 @@ public class TransactionDetailAdapter extends BaseAdapter {
     private View mview;
     private TextView tvnameDetail, tvpriceDetail, tvquantityDetail, tvsizeDetail, tvcolorDetail;
     private ImageView imageViewDetail;
+    private Context context;
 
 
-    public TransactionDetailAdapter(ArrayList<Transaction_Detail> transaction_detailList) {
+    public TransactionDetailAdapter(ArrayList<Transaction_Detail> transaction_detailList,Context context) {
         this.transaction_detailList = transaction_detailList;
+        this.context=context;
     }
 
     @Override
@@ -43,23 +48,33 @@ public class TransactionDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         mview = view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.transaction_detail_item, viewGroup, false);
+
         reference();
         getdata(i);
+
         return view;
     }
 
+
+
     private void getdata(int i) {
         Transaction_Detail transaction = transaction_detailList.get(i);
+
         tvnameDetail.setText(transaction.getNameDetail());
-        Double price = Double.parseDouble(String.valueOf(transaction.getPriceDetail()));
-        tvpriceDetail.setText("$ " + price.toString().replaceAll("\\.?[0-9]*$", ""));
-        int quantity = transaction.getQuantilyDetail();
-        tvquantityDetail.setText("" + quantity);
-        imageViewDetail.setImageResource(transaction.getImageListDetail());
+
+        Glide.with(context).load(transaction.getImageListDetail()).into(imageViewDetail);
         tvsizeDetail.setText(transaction.getSizeDetail());
         tvcolorDetail.setText(transaction.getColorDetail());
+
+
+
+        Double price = Double.parseDouble(String.valueOf(transaction.getPriceDetail()));
+        tvpriceDetail.setText("$ " + price);
+        int quantity = transaction.getQuantilyDetail();
+        tvquantityDetail.setText("" + quantity);
 
     }
 
@@ -71,4 +86,5 @@ public class TransactionDetailAdapter extends BaseAdapter {
         tvsizeDetail = mview.findViewById(R.id.item_size);
         tvcolorDetail = mview.findViewById(R.id.item_color);
     }
+
 }

@@ -7,58 +7,21 @@ public class Transaction {
     private double priceTransaction;
     private String  dateTransaction;
     private String stateTransaction;
-    private String districtTransaction;
-    private String provinceTransaction;
-    private String streetnameTransaction;
-    private String wardTransaction;
 
-    public String getDistrictTransaction() {
-        return districtTransaction;
-    }
 
-    public void setDistrictTransaction(String districtTransaction) {
-        this.districtTransaction = districtTransaction;
-    }
-
-    public String getProvinceTransaction() {
-        return provinceTransaction;
-    }
-
-    public void setProvinceTransaction(String provinceTransaction) {
-        this.provinceTransaction = provinceTransaction;
-    }
-
-    public String getStreetnameTransaction() {
-        return streetnameTransaction;
-    }
-
-    public void setStreetnameTransaction(String streetnameTransaction) {
-        this.streetnameTransaction = streetnameTransaction;
-    }
-
-    public String getWardTransaction() {
-        return wardTransaction;
-    }
-
-    public void setWardTransaction(String wardTransaction) {
-        this.wardTransaction = wardTransaction;
-    }
 
     public Transaction()
     {
 
     }
 
-    public Transaction(String idTransaction, String nameTransaction, double priceTransaction, String dateTransaction, String stateTransaction, String districtTransaction, String provinceTransaction, String streetnameTransaction, String wardTransaction) {
+
+    public Transaction(String idTransaction, String nameTransaction, double priceTransaction, String dateTransaction, String stateTransaction) {
         this.idTransaction = idTransaction;
         this.nameTransaction = nameTransaction;
         this.priceTransaction = priceTransaction;
         this.dateTransaction = dateTransaction;
         this.stateTransaction = stateTransaction;
-        this.districtTransaction = districtTransaction;
-        this.provinceTransaction = provinceTransaction;
-        this.streetnameTransaction = streetnameTransaction;
-        this.wardTransaction = wardTransaction;
     }
 
     public void setIdTransaction(String idTransaction) {
