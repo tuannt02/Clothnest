@@ -3,86 +3,82 @@ package nhom7.clothnest.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import nhom7.clothnest.R;
-import nhom7.clothnest.models.ChatRoom;
-import nhom7.clothnest.models.Size;
+import nhom7.clothnest.models.ClothColor;
 
-public class CustomSizeAdapter extends ArrayAdapter {
-    Context context;
-    ArrayList<Size> sizes;
-    ArrayList<Size> originSizes;
+public class CustomColorAdapter extends ArrayAdapter<ClothColor> {
+    private Context context;
+    private ArrayList<ClothColor> colors;
+    private ArrayList<ClothColor> originColors;
+    private static final String TAG = "CustomColorAdapter";
 
-    public CustomSizeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Size> objects) {
+    public CustomColorAdapter(@NonNull Context context, int resource, @NonNull ArrayList<ClothColor> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.originSizes = objects;
-        this.sizes = objects;
+        colors = objects;
+        originColors = objects;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return sizes.size();
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null)
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_color, parent, false);
 
-    @Override
-    public Object getItem(int i) {
-        return sizes.get(i);
-    }
+        ClothColor color = colors.get(position);
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(context).inflate(R.layout.item_size, viewGroup, false);
-
-        Size size = sizes.get(i);
-
-        TextView tvShortName;
         TextView tvName;
+        TextView tvColor;
+        LinearLayout llColor;
         ImageView btnRemove;
 
         // init view
-        tvShortName = view.findViewById(R.id.textview_shortName);
-        tvName = view.findViewById(R.id.textview_name);
-        btnRemove = view.findViewById(R.id.imageview_trash);
+        tvName = convertView.findViewById(R.id.textview_name);
+        tvColor = convertView.findViewById(R.id.textview_color);
+        llColor = convertView.findViewById(R.id.linearLayout_color);
+        btnRemove = convertView.findViewById(R.id.imageview_trash);
 
         // set data
-        tvShortName.setText(size.shortName);
-        tvName.setText(size.name);
-
+        tvName.setText(color.name);
+        tvColor.setText(color.hex);
+        try {
+            llColor.setBackgroundColor(Color.parseColor(color.hex));
+        } catch (Exception e) {
+            Log.e(TAG, color.hex + " - " + position + " - " + color.name);
+        }
         // set btnRemove onClickEvent
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context)
-                        .setTitle("Delete Size")
-                        .setMessage("Are you sure to remove this size?")
+                        .setTitle("Delete Color")
+                        .setMessage("Are you sure to remove this color?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                FirebaseFirestore.getInstance().collection("sizes").document(size.sizeId)
+                                FirebaseFirestore.getInstance().collection("colors").document(color.colorId)
                                         .delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -111,7 +107,7 @@ public class CustomSizeAdapter extends ArrayAdapter {
             }
         });
 
-        return view;
+        return convertView;
     }
 
     @NonNull
@@ -121,7 +117,7 @@ public class CustomSizeAdapter extends ArrayAdapter {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                sizes = (ArrayList<Size>) results.values;
+                colors = (ArrayList<ClothColor>) results.values;
                 notifyDataSetChanged();
             }
 
@@ -130,21 +126,21 @@ public class CustomSizeAdapter extends ArrayAdapter {
                 FilterResults results = new FilterResults();
 
                 if (constraint.equals("")) {
-                    results.count = originSizes.size();
-                    results.values = originSizes;
+                    results.count = originColors.size();
+                    results.values = originColors;
                     return results;
                 }
 
-                ArrayList<Size> filteredSizes = new ArrayList<Size>();
+                ArrayList<ClothColor> filteredSizes = new ArrayList<>();
 
 
                 // perform your search here using the searchConstraint String.
 
                 constraint = constraint.toString().toLowerCase();
-                for (int i = 0; i < originSizes.size(); i++) {
-                    String name = originSizes.get(i).name;
+                for (int i = 0; i < originColors.size(); i++) {
+                    String name = originColors.get(i).name;
                     if (name.toLowerCase().contains(constraint.toString())) {
-                        filteredSizes.add(originSizes.get(i));
+                        filteredSizes.add(originColors.get(i));
                     }
                 }
 

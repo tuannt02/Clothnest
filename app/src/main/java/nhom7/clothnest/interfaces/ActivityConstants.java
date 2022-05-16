@@ -9,7 +9,7 @@ public interface ActivityConstants {
     public static final int CHOOSE_SIZE = 10005;
     public static final int VIEW_SIZE = 10006;
 
-    // Add Size
-    public static final int ADD_SIZE = 10003;
-    public static final int EDIT_SIZE = 10004;
+    // Color
+    public static final int CHOOSE_COLOR = 10007;
+    public static final int VIEW_COLOR = 10008;
 }
