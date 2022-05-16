@@ -15,8 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             //Size
 
@@ -31,24 +31,8 @@
             <GridView
                 android:id="@+id/filter_sizeGridView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:nestedScrollingEnabled="true"
-                android:numColumns="5" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="@font/lato_light"
-                android:text="Inches"
-                android:textSize="15dp" />
-
-            <GridView
-                android:id="@+id/filter_sizeInchesGridView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:nestedScrollingEnabled="true"
                 android:numColumns="3" />
@@ -58,14 +42,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="@font/lato_light"
+                android:fontFamily="@font/lato"
+                android:text="Inches"
+                android:textSize="15dp" />
+
+            <GridView
+                android:id="@+id/filter_sizeInchesGridView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:nestedScrollingEnabled="true"
+                android:numColumns="3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/lato"
                 android:text="Centimeter"
                 android:textSize="15dp" />
 
             <GridView
                 android:id="@+id/filter_sizeCentimeterGridView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:nestedScrollingEnabled="true"
                 android:numColumns="3" />
@@ -90,7 +93,8 @@
             <GridView
                 android:id="@+id/filter_ColorGridView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
                 android:nestedScrollingEnabled="true"
                 android:numColumns="5" />
 

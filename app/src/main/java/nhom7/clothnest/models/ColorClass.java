@@ -6,6 +6,7 @@ public class ColorClass {
 
     private String name;
     private String hex;
+    private boolean isSelected;
 
 
     public String getName() {
@@ -22,6 +23,14 @@ public class ColorClass {
 
     public void setHex(String hex) {
         this.hex = hex;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public ColorClass() {

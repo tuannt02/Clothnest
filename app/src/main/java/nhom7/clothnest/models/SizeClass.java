@@ -5,6 +5,8 @@ public class SizeClass {
 
     private String name;
     private String short_name;
+    private boolean isSelected;
+
 
     public SizeClass() {
     }
@@ -12,6 +14,7 @@ public class SizeClass {
     public SizeClass(String name, String short_name) {
         this.name = name;
         this.short_name = short_name;
+        isSelected = false;
     }
 
     public String getName() {
@@ -28,6 +31,15 @@ public class SizeClass {
 
     public void setShort_name(String short_name) {
         this.short_name = short_name;
+    }
+
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     @Override
