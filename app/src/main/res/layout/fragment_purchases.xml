@@ -9,7 +9,33 @@
     <ListView
         android:id="@+id/listview_purchases"
         android:layout_width="match_parent"
-        android:divider="@drawable/purchases_empty_divider"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="18dp"
-        android:layout_height="match_parent"/>
+        android:divider="@drawable/purchases_empty_divider" />
+
+
+    <LinearLayout
+        android:id="@+id/empty_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:paddingHorizontal="32dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/box_empty" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="You have not ordered anything yet."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
 </FrameLayout>

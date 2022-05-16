@@ -6,11 +6,11 @@
 
     <View
         android:id="@+id/myDivider"
-        android:layout_marginVertical="5dp"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="5dp"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
+        android:background="@android:color/darker_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,18 +31,23 @@
                 android:text="21/03/2022"
                 android:textColor="@color/black" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/textview_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
                 android:fontFamily="@font/lato_bold"
                 android:text="Finished" />
+
+            <ImageView
+                android:id="@+id/imageview_option"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginTop="-8dp"
+                android:paddingVertical="6dp"
+                android:paddingRight="6dp"
+                android:src="@drawable/ic_more3" />
 
         </LinearLayout>
 
@@ -97,7 +102,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-1dp"
                     android:fontFamily="@font/lato"
                     android:text="Delivery fee:"
                     android:textColor="@color/black"
@@ -112,7 +116,6 @@
                     android:id="@+id/textview_deliveryFee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-1dp"
                     android:layout_marginRight="8dp"
                     android:fontFamily="@font/lato"
                     android:gravity="right"
@@ -130,7 +133,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-1dp"
                     android:layout_marginBottom="6dp"
                     android:layout_toLeftOf="@id/textview_totalPurchases"
                     android:fontFamily="@font/lato_bold"

@@ -1,9 +1,26 @@
 package nhom7.clothnest.models;
 
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.PropertyName;
+
 import java.io.Serializable;
 
 public class Address implements Serializable {
-    private String fullName, province, district, ward, detail, phoneNumber;
+    private String province, district, ward;
+
+    @Exclude
+    public String addressId;
+
+    @PropertyName("name")
+    public String fullName;
+
+    @PropertyName("street_name")
+    public String detail;
+
+    @PropertyName("phone_num")
+    public String phoneNumber;
+
+    public Address() {}
 
     public Address(String fullName, String province, String district, String ward, String detail, String phoneNumber) {
         this.fullName = fullName;
@@ -14,51 +31,15 @@ public class Address implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getProvince() {
         return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
     }
 
     public String getDistrict() {
         return district;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
     public String getWard() {
         return ward;
-    }
-
-    public void setWard(String ward) {
-        this.ward = ward;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }
