@@ -155,13 +155,24 @@ public class TransactionAdapter extends BaseAdapter {
                                         transaction.setPriceTransaction(price);
                                         transactionAdapter.notifyDataSetChanged();
                                     }
+                                    if (key.equals("deliveryFee")) {
+                                        int delivery = (int) Math.round(document.getDouble(key));
+                                        transaction.setDeliveryTransaction(delivery);
+                                        transactionAdapter.notifyDataSetChanged();
+                                    }
+
+                                    if (key.equals("discount")) {
+                                        int discount = (int) Math.round(document.getDouble(key));
+                                        transaction.setDiscountTransaction(discount);
+                                        transactionAdapter.notifyDataSetChanged();
+                                    }
 
                                     if (key.equals("userRef")) {
                                         DocumentReference docRef = (DocumentReference) map.get(key);
                                         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                               transaction.setNameTransaction(documentSnapshot.getString("name"));
+                                                transaction.setNameTransaction(documentSnapshot.getString("name"));
                                                 transactionAdapter.notifyDataSetChanged();
                                             }
                                         });

@@ -43,7 +43,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private TextView customerTransactionDetail, dateTransactionDetail, stateTransactionDetail;
     private String nameDetail, dateDetail, stateDetail, idDetail;
     private RelativeLayout relativeLayout;
-    private TextView address, name, phone,qty, subtotal,discount,deliveryfee, total;
+    private TextView address, name, phone, qty, discount, deliveryfee, subtotal, total;
+    private int discountDetail, deliveryDetail;
+    private double stotal = 0.0;
+    private int count = 0;
 
 
     @Override
@@ -90,10 +93,13 @@ public class TransactionDetailActivity extends AppCompatActivity {
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 transaction_detail.setNameDetail(documentSnapshot.getString("name"));
                                                 transaction_detail.setImageListDetail(documentSnapshot.getString("main_img"));
+//                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+//                                                transaction_detail.setDiscountDetail(discount);
                                                 transactionDetailAdapter.notifyDataSetChanged();
                                             }
                                         });
                                     }
+
 
                                     if (key.equals("colorRef")) {
                                         DocumentReference documentReference = (DocumentReference) map.get(key);
@@ -123,6 +129,13 @@ public class TransactionDetailActivity extends AppCompatActivity {
                                         transactionDetailAdapter.notifyDataSetChanged();
                                     }
 
+                                    if (key.equals("sale_price")) {
+                                        Double price = doc_transactionitemlist.getDouble(key);
+                                        transaction_detail.setSalePriceDetail((price));
+                                        transactionDetailAdapter.notifyDataSetChanged();
+                                    }
+
+
                                     if (key.equals("quantity")) {
                                         int quantity = (int) Math.round(doc_transactionitemlist.getDouble(key));
                                         transaction_detail.setQuantilyDetail(quantity);
@@ -133,11 +146,19 @@ public class TransactionDetailActivity extends AppCompatActivity {
                                 transactionDetailAdapter.notifyDataSetChanged();
                             }
 
-                            int count = 0;
                             for (int i = 0; i < transaction_detailList.size(); i++) {
-                                    count += transaction_detailList.get(i).getQuantilyDetail();
+                                count += transaction_detailList.get(i).getQuantilyDetail();
                             }
-                            qty.setText(count+"");
+                            qty.setText(count + "");
+
+
+                            for (int i = 0; i < transaction_detailList.size(); i++) {
+                                stotal += transaction_detailList.get(i).getQuantilyDetail() * transaction_detailList.get(i).getSalePriceDetail();
+                            }
+                            subtotal.setText("$ " + (double) Math.round(stotal * 100) / 100);
+
+                            double a = discountDetail + deliveryDetail + stotal;
+                            total.setText("$ " + (double) Math.round(a * 100) / 100);
                         }
                     }
                 });
@@ -190,6 +211,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
         dateDetail = intent.getStringExtra("date");
         stateDetail = intent.getStringExtra("state");
         idDetail = intent.getStringExtra("key");
+        deliveryDetail = intent.getIntExtra("delivery", 0);
+        discountDetail = intent.getIntExtra("discount", 0);
 
         customerTransactionDetail.setText(nameDetail + "");
         SimpleDateFormat input = new SimpleDateFormat("yyyy/MM/dd");
@@ -214,6 +237,9 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 relativeLayout.setBackgroundColor(Color.parseColor("#FBC02D"));
                 break;
         }
+
+        discount.setText(discountDetail + "");
+        deliveryfee.setText(deliveryDetail + "");
     }
 
     private void reference() {
@@ -225,6 +251,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
         address = findViewById(R.id.addresss);
         name = findViewById(R.id.name);
         phone = findViewById(R.id.phone);
-        qty= findViewById(R.id.transactionQuantity);
+        qty = findViewById(R.id.transactionQuantity);
+        discount = findViewById(R.id.transactionDiscountPrice);
+        deliveryfee = findViewById(R.id.transactionDeliveryPrice);
+        subtotal = findViewById(R.id.transactionSumPrice);
+        total = findViewById(R.id.transactionTotal);
     }
 }

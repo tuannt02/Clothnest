@@ -226,7 +226,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato"
-
                 android:textColor="#000000"
                 android:textSize="20dp" />
         </RelativeLayout>
@@ -277,9 +276,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato"
-
                 android:textColor="#000000"
-
                 android:textSize="20dp" />
         </RelativeLayout>
 
@@ -304,7 +301,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
                 android:fontFamily="@font/lato_bold"
-
                 android:textColor="#FF0000"
                 android:textSize="20dp" />
         </RelativeLayout>
