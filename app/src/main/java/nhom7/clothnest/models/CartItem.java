@@ -1,6 +1,7 @@
 package nhom7.clothnest.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class CartItem implements Serializable {
 
@@ -14,6 +15,8 @@ public class CartItem implements Serializable {
     private Double price;
     private int discount;
     private double discountPrice;
+    private ArrayList<ColorClass> listColor;
+    private ArrayList<Size> listSize;
 
     public CartItem()   {
 

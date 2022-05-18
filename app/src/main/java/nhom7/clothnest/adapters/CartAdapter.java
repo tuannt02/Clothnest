@@ -57,6 +57,7 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
             convertView = LayoutInflater.from(context).inflate(R.layout.cart_item,parent, false);
         }
 
+        // Get view
         ImageView imageView = (ImageView) convertView.findViewById(R.id.cart_pic);
         TextView name = (TextView) convertView.findViewById(R.id.cart_name);
         TextView price = (TextView) convertView.findViewById(R.id.cart_price);
@@ -67,6 +68,7 @@ public class CartAdapter extends ArrayAdapter<CartItem> {
 
         setupOnClickListener(convertView, cartItem);
 
+        // set view
         ColorAdapter colorAdapter = new ColorAdapter(context, R.layout.color_item_selected, getListColor());
         SizeAdapter sizeAdapter = new SizeAdapter(context, R.layout.size_item_selected, getListSize());
         cbxColor.setAdapter(colorAdapter);

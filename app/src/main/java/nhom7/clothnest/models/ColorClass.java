@@ -41,6 +41,12 @@ public class ColorClass {
         this.hex = hex;
     }
 
+    public ColorClass(String name, String hex, boolean isSelected) {
+        this.name = name;
+        this.hex = hex;
+        this.isSelected = isSelected;
+    }
+
     @Override
     public String toString() {
         return "ColorClass{" +
