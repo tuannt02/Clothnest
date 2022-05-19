@@ -135,6 +135,8 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
         });
     }
 
+
+
     private ArrayList<ColorClass> getColor()    {
         ArrayList<ColorClass> colorClassArrayList = new ArrayList<>();
         colorClassArrayList.add(new ColorClass("Pink","#f542d7", false));

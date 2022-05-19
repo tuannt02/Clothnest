@@ -1,12 +1,14 @@
 package nhom7.clothnest.models;
 
+import com.google.firebase.firestore.DocumentReference;
+
 public class SizeClass {
     public static final String COLLECTION_NAME = "sizes";
 
     private String name;
     private String short_name;
     private boolean isSelected;
-
+    private DocumentReference sizeRef;
 
     public SizeClass() {
     }
@@ -15,6 +17,10 @@ public class SizeClass {
         this.name = name;
         this.short_name = short_name;
         isSelected = false;
+    }
+
+    public DocumentReference getSizeRef() {
+        return sizeRef;
     }
 
     public String getName() {
@@ -33,6 +39,9 @@ public class SizeClass {
         this.short_name = short_name;
     }
 
+    public void setSizeRef(DocumentReference sizeRef) {
+        this.sizeRef = sizeRef;
+    }
 
     public boolean isSelected() {
         return isSelected;
