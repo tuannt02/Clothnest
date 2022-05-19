@@ -3,41 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragments.ProductsFragment">
+    tools:context=".fragments.Admin_ProductsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
         android:layout_marginTop="30dp"
-        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_black"
             android:text="PRODUCTS"
-            android:textSize="30dp" />
-
-        <ImageView
-            android:id="@+id/admin_products_searchButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="50dp"
-            android:src="@drawable/ic_search" />
+            android:textColor="@color/black"
+            android:textSize="24dp" />
 
         <ImageView
             android:id="@+id/admin_products_addButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/products_add" />
 
         <ImageView
             android:id="@+id/admin_products_sortButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="20dp"
             android:src="@drawable/products_sort" />
 
@@ -47,5 +42,15 @@
         android:layout_width="match_parent"
         android:layout_marginVertical="@dimen/_10sdp"
         android:layout_height="1dp"/>
+
+    <include
+        android:id="@+id/admin_products_productListInclude"
+        layout="@layout/fragment_admin_productlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp"/>
+
+
+
 
 </LinearLayout>

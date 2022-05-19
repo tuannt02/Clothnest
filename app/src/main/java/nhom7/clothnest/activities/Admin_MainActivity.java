@@ -12,7 +12,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.fragments.Admin_ProductsFragment;
 import nhom7.clothnest.fragments.ChatListFragment;
+import nhom7.clothnest.fragments.HomeFragment;
 import nhom7.clothnest.fragments.MoreFragment;
 import nhom7.clothnest.fragments.TransactionFragment;
 
@@ -22,6 +24,7 @@ public class Admin_MainActivity extends AppCompatActivity {
     TransactionFragment  transactionFragment;
     MoreFragment moreFragment;
     ChatListFragment chatListFragment;
+    Admin_ProductsFragment adminProductsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,9 @@ public class Admin_MainActivity extends AppCompatActivity {
         transactionFragment = new TransactionFragment();
         moreFragment = new MoreFragment();
         chatListFragment = new ChatListFragment();
+        adminProductsFragment = new Admin_ProductsFragment();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Admin_ProductsFragment.class, null).commit();
         // Replace fragment with Product Fragment on start up
         setupBnv();
     }
@@ -48,7 +53,7 @@ public class Admin_MainActivity extends AppCompatActivity {
                 // Change fragment here
                 switch (item.getItemId()) {
                     case R.id.nav_product:
-                        selectedFragment = null;
+                        selectedFragment = adminProductsFragment;
                         break;
                     case R.id.nav_chat:
                         selectedFragment = chatListFragment;
