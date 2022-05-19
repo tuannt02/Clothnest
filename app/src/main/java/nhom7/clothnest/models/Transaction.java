@@ -7,21 +7,38 @@ public class Transaction {
     private double priceTransaction;
     private String  dateTransaction;
     private String stateTransaction;
+    private  int deliveryTransaction;
+    private int discountTransaction;
 
+    public int getDeliveryTransaction() {
+        return deliveryTransaction;
+    }
 
+    public void setDeliveryTransaction(int deliveryTransaction) {
+        this.deliveryTransaction = deliveryTransaction;
+    }
+
+    public int getDiscountTransaction() {
+        return discountTransaction;
+    }
+
+    public void setDiscountTransaction(int discountTransaction) {
+        this.discountTransaction = discountTransaction;
+    }
 
     public Transaction()
     {
 
     }
 
-
-    public Transaction(String idTransaction, String nameTransaction, double priceTransaction, String dateTransaction, String stateTransaction) {
+    public Transaction(String idTransaction, String nameTransaction, double priceTransaction, String dateTransaction, String stateTransaction, int deliveryTransaction, int discountTransaction) {
         this.idTransaction = idTransaction;
         this.nameTransaction = nameTransaction;
         this.priceTransaction = priceTransaction;
         this.dateTransaction = dateTransaction;
         this.stateTransaction = stateTransaction;
+        this.deliveryTransaction = deliveryTransaction;
+        this.discountTransaction = discountTransaction;
     }
 
     public void setIdTransaction(String idTransaction) {

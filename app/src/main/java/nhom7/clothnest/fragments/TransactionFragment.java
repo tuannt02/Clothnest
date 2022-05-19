@@ -75,6 +75,8 @@ public class TransactionFragment extends Fragment {
                 intent.putExtra("date", transaction.getDateTransaction());
                 intent.putExtra("state", transaction.getStateTransaction());
                 intent.putExtra("key", transaction.getIdTransaction());
+                intent.putExtra("discount",transaction.getDiscountTransaction());
+                intent.putExtra("delivery",transaction.getDeliveryTransaction());
                 startActivity(intent);
             }
         });

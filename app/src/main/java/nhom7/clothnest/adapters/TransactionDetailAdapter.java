@@ -21,14 +21,14 @@ import nhom7.clothnest.models.Transaction_Detail;
 public class TransactionDetailAdapter extends BaseAdapter {
     private ArrayList<Transaction_Detail> transaction_detailList;
     private View mview;
-    private TextView tvnameDetail, tvpriceDetail, tvquantityDetail, tvsizeDetail, tvcolorDetail;
+    private TextView tvnameDetail, tvpriceDetail, tvquantityDetail, tvsizeDetail, tvcolorDetail, tvsalepriceDetail;
     private ImageView imageViewDetail;
     private Context context;
 
 
-    public TransactionDetailAdapter(ArrayList<Transaction_Detail> transaction_detailList,Context context) {
+    public TransactionDetailAdapter(ArrayList<Transaction_Detail> transaction_detailList, Context context) {
         this.transaction_detailList = transaction_detailList;
-        this.context=context;
+        this.context = context;
     }
 
     @Override
@@ -54,10 +54,8 @@ public class TransactionDetailAdapter extends BaseAdapter {
 
         reference();
         getdata(i);
-
         return view;
     }
-
 
 
     private void getdata(int i) {
@@ -70,21 +68,26 @@ public class TransactionDetailAdapter extends BaseAdapter {
         tvcolorDetail.setText(transaction.getColorDetail());
 
 
-
         Double price = Double.parseDouble(String.valueOf(transaction.getPriceDetail()));
         tvpriceDetail.setText("$ " + price);
+
         int quantity = transaction.getQuantilyDetail();
         tvquantityDetail.setText("" + quantity);
+
+
+        Double saleprice = Double.parseDouble(String.valueOf(transaction.getSalePriceDetail()));
+        tvsalepriceDetail.setText("$ " + (double) Math.round(saleprice * 100) / 100);
 
     }
 
     private void reference() {
         tvnameDetail = mview.findViewById(R.id.item_name);
-        tvpriceDetail = mview.findViewById(R.id.item_price);
+        tvpriceDetail = mview.findViewById(R.id.item_pr);
         tvquantityDetail = mview.findViewById(R.id.item_quantity);
         imageViewDetail = mview.findViewById(R.id.item_image);
         tvsizeDetail = mview.findViewById(R.id.item_size);
         tvcolorDetail = mview.findViewById(R.id.item_color);
+        tvsalepriceDetail = mview.findViewById(R.id.item_saleprice);
     }
 
 }

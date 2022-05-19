@@ -12,8 +12,15 @@ public class Transaction_Detail {
     private int quantilyDetail;
     private String sizeDetail;
     private String colorDetail;
+    private double salePriceDetail;
 
+    public double getSalePriceDetail() {
+        return salePriceDetail;
+    }
 
+    public void setSalePriceDetail(double salePriceDetail) {
+        this.salePriceDetail = salePriceDetail;
+    }
     public Transaction_Detail() {
 
     }
