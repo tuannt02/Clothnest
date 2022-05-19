@@ -2,6 +2,7 @@ package nhom7.clothnest.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,10 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,33 +38,41 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_ChatActivity;
 import nhom7.clothnest.activities.CartActivity;
 import nhom7.clothnest.activities.SeeAllItemActivity;
+import nhom7.clothnest.adapters.ImageAdapter;
 import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
+import nhom7.clothnest.models.Image;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Thumbnail;
 
 
 public class HomeFragment extends Fragment {
     View mView;
-    GridView gridViewArrival, gridViewSales;
+    GridView gridViewArrival, gridViewSales, gridViewWinter;
     ProductSlider productSlider;
     LinearLayout containersilder;
     View includeView;
     ImageView buttoncart, btnChat;
-    Button btnSeeAllItem, btnSeeAllItemSales, btnWinter;
-    ViewFlipper viewFlipper;
-    Animation in, out, alpha;
+    Button btnSeeAllItem, btnSeeAllItemSales, btnWinter, btnLine;
+    ViewPager2 viewPager2;
+    ArrayList<Image> arrayList;
+    ImageAdapter imageAdapter;
+    Handler handler = new Handler();
 
     //Get product from FireStore
-    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList;
-    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter;
+    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList, winterList;
+    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter, winterAdapter;
 
     // Tuan be
     FirebaseFirestore tuanDb = FirebaseFirestore.getInstance();
@@ -75,21 +92,90 @@ public class HomeFragment extends Fragment {
 
         reference();
         AnimatonViewFliper();
-
+        slider();
         getProductThumbnail();
-
         getEvent();
         createSlider();
-
         initTuanBeVars();
 
         return mView;
     }
 
+    private void slider() {
+        viewPager2.setOffscreenPageLimit(3);
+        viewPager2.setClipChildren(false);
+        viewPager2.setClipToPadding(false);
+        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        CompositePageTransformer transformer = new CompositePageTransformer();
+        transformer.addTransformer(new MarginPageTransformer(40));
+        transformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.8f + r * 0.14f);
+            }
+        });
+
+        viewPager2.setPageTransformer(transformer);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 1500);
+            }
+        });
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void AnimatonViewFliper() {
+        arrayList = new ArrayList<>();
+        imageAdapter = new ImageAdapter(arrayList, viewPager2, getContext());
+        viewPager2.setAdapter(imageAdapter);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Image.COLLECTION_BANNERS)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                Image image = new Image();
+                                arrayList.add(image);
+
+                                Map<String, Object> map = documentSnapshot.getData();
+                                Iterator iterator = map.keySet().iterator();
+
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+                                    if (key.equals("img")) {
+                                        image.setImage((String) map.get(key));
+                                        imageAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                });
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-
         chatRoomListener = chatListRef.whereEqualTo("userRef", currUser)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -127,6 +213,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getProductThumbnail();
+        handler.postDelayed(runnable, 1500);
     }
 
     private void createSlider() {
@@ -140,25 +227,27 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CartActivity.class);
-                Toast toast = new Toast(getContext());
-                LayoutInflater inflater1 = getLayoutInflater();
-                View view1 = inflater1.inflate(R.layout.layout_custom_toast, (ViewGroup) mView.findViewById(R.id.layout_custom_toast));
-                TextView textView = view1.findViewById(R.id.tv_message);
-                textView.setText("Thanh Cong");
-                toast.setView(view1);
-                toast.setGravity(Gravity.BOTTOM, 0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.show();
-                //buttonOpenDialogClicked();
                 startActivity(intent);
             }
         });
 
-
         btnWinter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String a = "WINTER";
+                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
+                intent.putExtra("name", a);
+                startActivity(intent);
+            }
+        });
 
+        btnLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String a = "LINE";
+                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
+                intent.putExtra("name", a);
+                startActivity(intent);
             }
         });
 
@@ -182,6 +271,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         // Open chat activity
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,21 +294,13 @@ public class HomeFragment extends Fragment {
         btnSeeAllItem = mView.findViewById(R.id.btnarrival);
         btnSeeAllItemSales = mView.findViewById(R.id.btnsale);
         btnWinter = mView.findViewById(R.id.btnWinter);
-        viewFlipper = mView.findViewById(R.id.viewFlipper);
+        btnLine = mView.findViewById(R.id.btnLine);
         btnChat = mView.findViewById(R.id.btnchat);
-
         collectionsList = new ArrayList<>();
+        viewPager2 = mView.findViewById(R.id.viewPager);
+
     }
 
-
-    private void AnimatonViewFliper() {
-        in = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_anim);
-        out = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out_anim);
-        viewFlipper.setInAnimation(in);
-        viewFlipper.setOutAnimation(out);
-        viewFlipper.setFlipInterval(1500);
-        viewFlipper.setAutoStart(true);
-    }
 
     public void getProductThumbnail() {
         //Thêm sản phẩm vào arrivals
@@ -232,5 +314,6 @@ public class HomeFragment extends Fragment {
         salesAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
         gridViewSales.setAdapter(salesAdapter);
         Product_ThumbnailAdapter.getProductSalesAndPushToGridView(salesList, salesAdapter);
+
     }
 }

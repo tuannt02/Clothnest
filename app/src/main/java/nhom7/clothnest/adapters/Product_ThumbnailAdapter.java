@@ -136,6 +136,59 @@ public class Product_ThumbnailAdapter extends BaseAdapter {
         mContext.startActivity(intent_productDetail);
     }
 
+    public static void getProductFromCollection(ArrayList<Product_Thumbnail> listThumbnail,Product_ThumbnailAdapter thumbnailAdapter)
+    {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS+'/'+ "WINTER"+ '/'+  Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db= FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful())
+                        {
+                            for(QueryDocumentSnapshot document : task.getResult())
+                            {
+                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                listThumbnail.add(thumbnail);
+
+                                Map<String,Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext())
+                                {
+                                    String key = (String) iterator.next();
+
+                                    thumbnail.setId(document.getId());
+
+                                    if(key.equals("product_id"))
+                                    {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                thumbnail.setName(documentSnapshot.getString("name"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                thumbnail.setDiscount(discount);
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
     public static void getProductSalesAndPushToGridView(ArrayList<Product_Thumbnail> listProduct, Product_ThumbnailAdapter thumbnailAdapter) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Product_Thumbnail.COLECTION_NAME_SALES)
@@ -227,7 +280,7 @@ public class Product_ThumbnailAdapter extends BaseAdapter {
                 });
     }
 
-    public static void getProductArrivalAndPushToGridView(ArrayList<Product_Thumbnail> listProduct, Product_ThumbnailAdapter thumbnailAdapter) {
+    public  static void getProductArrivalAndPushToGridView(ArrayList<Product_Thumbnail> listProduct, Product_ThumbnailAdapter thumbnailAdapter) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Product_Thumbnail.COLECTION_NAME_ARRIVAL)
                 .get()
