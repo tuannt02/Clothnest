@@ -212,6 +212,307 @@ public class Product_ThumbnailAdapter extends BaseAdapter {
                 });
     }
 
+    public static void getProductLineFromCollection(ArrayList<Product_Thumbnail> listThumbnail, Product_ThumbnailAdapter thumbnailAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "LINE" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                listThumbnail.add(thumbnail);
+
+                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                thumbnail.setName(documentSnapshot.getString("name"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                thumbnail.setDiscount(discount);
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+
+                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        });
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProductUTFromCollection(ArrayList<Product_Thumbnail> listThumbnail, Product_ThumbnailAdapter thumbnailAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "UT" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                listThumbnail.add(thumbnail);
+
+                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                thumbnail.setName(documentSnapshot.getString("name"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                thumbnail.setDiscount(discount);
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+
+                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        });
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProductUnisexFromCollection(ArrayList<Product_Thumbnail> listThumbnail, Product_ThumbnailAdapter thumbnailAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "UNISEX" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                listThumbnail.add(thumbnail);
+
+                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                thumbnail.setName(documentSnapshot.getString("name"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                thumbnail.setDiscount(discount);
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+
+                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        });
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProductUvProtectionFromCollection(ArrayList<Product_Thumbnail> listThumbnail, Product_ThumbnailAdapter thumbnailAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "UV PROTECTION" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                listThumbnail.add(thumbnail);
+
+                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                thumbnail.setName(documentSnapshot.getString("name"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                thumbnail.setDiscount(discount);
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+
+                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        });
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+
     public static void getProductSalesAndPushToGridView(ArrayList<Product_Thumbnail> listProduct, Product_ThumbnailAdapter thumbnailAdapter) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Product_Thumbnail.COLECTION_NAME_SALES)
