@@ -24,6 +24,7 @@ public class Wishlist {
     public static final String COLLECTION_NAME = "wishlist";
 
     private String key;
+    private String keyProduct;
     private String productName;
     private String productImage;
     private double regularCost;
@@ -41,6 +42,10 @@ public class Wishlist {
         this.regularCost = regularCost;
         this.discount = discount;
         this.date_add = date_add;
+    }
+
+    public String getKeyProduct() {
+        return keyProduct;
     }
 
     public String getKey() {
@@ -97,6 +102,10 @@ public class Wishlist {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public void setKeyProduct(String keyProduct) {
+        this.keyProduct = keyProduct;
     }
 
     @Override

@@ -126,7 +126,7 @@
             android:id="@+id/add_to_cart_gridview_color"
             android:layout_width="match_parent"
             android:layout_height="116dp"
-            android:numColumns="3"
+            android:numColumns="2"
             tools:listitem="@layout/cart_color_item"
             />
 
@@ -159,7 +159,7 @@
             android:id="@+id/add_to_cart_gridview_size"
             android:layout_width="match_parent"
             android:layout_height="116dp"
-            android:numColumns="3"
+            android:numColumns="2"
             tools:listitem="@layout/cart_size_item"
             />
 

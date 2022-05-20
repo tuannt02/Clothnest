@@ -89,8 +89,9 @@ public class CustomWishlistAdapter extends ArrayAdapter<Wishlist> {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddToCart addToCartDialog = new AddToCart(getContext());
-                addToCartDialog.show();
+                System.out.println(wishlistItem.getKeyProduct());
+                AddToCart addToCartDialog = new AddToCart(getContext(), wishlistItem.getKeyProduct());
+//                addToCartDialog.show();
             }
         });
 
