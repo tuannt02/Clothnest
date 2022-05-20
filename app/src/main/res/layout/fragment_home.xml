@@ -66,24 +66,11 @@
         </RelativeLayout>
 
 
-        <ViewFlipper
-            android:id="@+id/viewFlipper"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:paddingHorizontal="20dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hinh1" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hinh2" />
-        </ViewFlipper>
+            android:layout_marginLeft="20dp" />
 
         <TextView
             android:id="@+id/txtArrivals"
@@ -157,9 +144,9 @@
             android:textSize="20dp" />
 
         <HorizontalScrollView
-            android:paddingHorizontal="20dp"
             android:layout_width="366dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -106,6 +106,7 @@
                         android:layout_width="28dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:inputType="number"
                         android:text="1"
                         android:textAlignment="center"
                         android:textSize="18sp" />

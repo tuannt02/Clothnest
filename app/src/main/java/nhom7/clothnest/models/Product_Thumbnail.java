@@ -4,6 +4,9 @@ public class Product_Thumbnail {
     public static final String COLLECTION_NAME = "products";
     public static final String COLECTION_NAME_ARRIVAL="new_arrivals";
     public static final String COLECTION_NAME_SALES="sales";
+    public static final String COLECTION_NAME_COLLECTIONS="collections";
+    public static final String COLECTION_NAME_PRODUCTS="products";
+
 
 
     private String id;

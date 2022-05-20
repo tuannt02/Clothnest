@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -83,7 +84,7 @@ public class Admin_VoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CustomDialogAdminAdd customDialogAdminAdd = new CustomDialogAdminAdd(Admin_VoucherActivity.this,
-                        "",
+                        "Add voucher",
                         2,
                         "Code",
                         "Discount",
@@ -138,6 +139,7 @@ public class Admin_VoucherActivity extends AppCompatActivity {
                             CustomDialog comfirmRemove = new CustomDialog(Admin_VoucherActivity.this,
                                     "Confirm remove",
                                     "Are you sure you want to delete this Voucher",
+                                    2,
                                     new CustomDialog.IClickListenerOnOkBtn() {
                                         @Override
                                         public void onResultOk() {
@@ -164,6 +166,7 @@ public class Admin_VoucherActivity extends AppCompatActivity {
 
         // Lấy tất cả voucher
         db.collection(Voucher.COLLECTION_NAME)
+                .orderBy("discount", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -214,9 +217,10 @@ public class Admin_VoucherActivity extends AppCompatActivity {
     private void addVoucherToFirestore(String code, String discount)    {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        int disc = Integer.valueOf(discount);
         Map<String, Object> data = new HashMap<>();
         data.put("code", code);
-        data.put("discount", discount);
+        data.put("discount", disc);
 
         db.collection(Voucher.COLLECTION_NAME)
                 .add(data)

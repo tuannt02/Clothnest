@@ -1,6 +1,7 @@
 package nhom7.clothnest.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class CartItem implements Serializable {
 
@@ -10,26 +11,48 @@ public class CartItem implements Serializable {
     private String key;
     private String img;
     private int qty;
-    private String name, color, size;
+    private String name;
     private Double price;
     private int discount;
     private double discountPrice;
+    private ArrayList<ColorClass> listColor = new ArrayList<>();
+    private ArrayList<SizeClass> listSize = new ArrayList<>();
+    private ColorClass colorSelected = new ColorClass();
+    private SizeClass sizeSelected = new SizeClass();
 
     public CartItem()   {
 
     }
 
-    public CartItem(String keyProduct,String key, String img, int qty, String name, String color, String size, Double price, int discount, Double discountPrice) {
+    public CartItem(String keyProduct, String key, String img, int qty, String name, Double price, int discount, double discountPrice, ArrayList<ColorClass> listColor, ArrayList<SizeClass> listSize, ColorClass colorSelected, SizeClass sizeSelected) {
         this.keyProduct = keyProduct;
         this.key = key;
         this.img = img;
         this.qty = qty;
         this.name = name;
-        this.color = color;
-        this.size = size;
         this.price = price;
         this.discount = discount;
         this.discountPrice = discountPrice;
+        this.listColor = listColor;
+        this.listSize = listSize;
+        this.colorSelected = colorSelected;
+        this.sizeSelected = sizeSelected;
+    }
+
+    public ColorClass getColorSelected() {
+        return colorSelected;
+    }
+
+    public SizeClass getSizeSelected() {
+        return sizeSelected;
+    }
+
+    public ArrayList<ColorClass> getListColor() {
+        return listColor;
+    }
+
+    public ArrayList<SizeClass> getListSize() {
+        return listSize;
     }
 
     public String getKeyProduct() {
@@ -60,14 +83,6 @@ public class CartItem implements Serializable {
         return name;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
     public Double getPrice() {
         return price;
     }
@@ -88,14 +103,6 @@ public class CartItem implements Serializable {
         this.name = name;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     public void setPrice(Double price) {
         this.price = price;
     }
@@ -110,6 +117,68 @@ public class CartItem implements Serializable {
 
     public void setKeyProduct(String keyProduct) {
         this.keyProduct = keyProduct;
+    }
+
+    public void setListColor(ArrayList<ColorClass> listColor) {
+        this.listColor = listColor;
+    }
+
+    public void setListSize(ArrayList<SizeClass> listSize) {
+        this.listSize = listSize;
+    }
+
+    public void setColorSelected(ColorClass colorSelected) {
+        this.colorSelected = colorSelected;
+    }
+
+    public void setSizeSelected(SizeClass sizeSelected) {
+        this.sizeSelected = sizeSelected;
+    }
+
+    public int getPosSelectedColor()   {
+        for(int i=0;i<listColor.size();i++) {
+            ColorClass colorItem = listColor.get(i);
+
+            if(colorItem.getHex().equals(this.colorSelected.getHex()))   {
+                clearSelectedColor();
+                colorItem.setSelected(true);
+                return i;
+            }
+
+        }
+
+        return 0;
+    }
+
+    public int getPosSelectedSize()   {
+        for(int i=0;i<listSize.size();i++) {
+            SizeClass sizeItem = listSize.get(i);
+
+            if(sizeItem.getName().equals(this.sizeSelected.getName()))   {
+                clearSelectedSize();
+                sizeItem.setSelected(true);
+                return i;
+            }
+
+        }
+
+        return 0;
+    }
+
+    public void clearSelectedColor()    {
+        for(int i=0;i<listColor.size();i++) {
+            ColorClass colorItem = listColor.get(i);
+            colorItem.setSelected(false);
+            listColor.set(i,colorItem);
+        }
+    }
+
+    public void clearSelectedSize()    {
+        for(int i=0;i<listSize.size();i++) {
+            SizeClass sizeItem = listSize.get(i);
+            sizeItem.setSelected(false);
+            listSize.set(i,sizeItem);
+        }
     }
 
     public void incrementQuantity() {

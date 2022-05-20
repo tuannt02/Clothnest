@@ -24,7 +24,7 @@ public class CustomDialog extends Dialog implements android.view.View.OnClickLis
     }
     private IClickListenerOnOkBtn mIClickListenerOnOkBtn;
 
-    public CustomDialog(@NonNull Context context, String titleDialog, String contentDialog, IClickListenerOnOkBtn listener) {
+    public CustomDialog(@NonNull Context context, String titleDialog, String contentDialog,int type , IClickListenerOnOkBtn listener) {
         super(context);
         this.mIClickListenerOnOkBtn = listener;
 
@@ -55,6 +55,9 @@ public class CustomDialog extends Dialog implements android.view.View.OnClickLis
         content.setText(contentDialog);
 
         // Set on click
+        if(type == 1)   {
+            btnClose.setVisibility(View.GONE);
+        }
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

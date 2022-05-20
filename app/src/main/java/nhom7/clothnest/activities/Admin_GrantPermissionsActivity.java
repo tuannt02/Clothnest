@@ -68,6 +68,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(Admin_GrantPermissionsActivity.this,
                         "Confirm",
                         "Are you sure you want to move this user as CLIENT?",
+                        2,
                         new CustomDialog.IClickListenerOnOkBtn() {
                             @Override
                             public void onResultOk() {
@@ -88,6 +89,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(Admin_GrantPermissionsActivity.this,
                         "Confirm",
                         "Are you sure you want to move this user as STAFF?",
+                        2,
                         new CustomDialog.IClickListenerOnOkBtn() {
                             @Override
                             public void onResultOk() {
@@ -108,6 +110,7 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(Admin_GrantPermissionsActivity.this,
                         "Confirm",
                         "Are you sure you want to move this user as ADMIN?",
+                        2,
                         new CustomDialog.IClickListenerOnOkBtn() {
                             @Override
                             public void onResultOk() {

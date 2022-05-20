@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:id="@+id/cart_color_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="8dp"
+        android:orientation="horizontal"
+        android:background="@drawable/border_radius_linear9"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        >
+
+        <TextView
+            android:id="@+id/cart_color_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="Đen"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cart_color_item_hex"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentRight="true"
+            android:src="#4CAF50"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="1dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

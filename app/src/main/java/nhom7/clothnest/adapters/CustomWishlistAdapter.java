@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.Wishlist;
+import nhom7.clothnest.util.AddToCart;
 import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 
 public class CustomWishlistAdapter extends ArrayAdapter<Wishlist> {
@@ -57,7 +59,7 @@ public class CustomWishlistAdapter extends ArrayAdapter<Wishlist> {
         TextView price = (TextView) convertView.findViewById(R.id.price);
         TextView downPrice = (TextView) convertView.findViewById(R.id.down_price);
         ImageButton btnOption = (ImageButton) convertView.findViewById(R.id.wishlist_item_option_btn);
-
+        Button btnAddToCart = (Button) convertView.findViewById(R.id.wishlist_item_btn_add_to_cart);
 
         Glide.with(getContext()).load(wishlistItem.getProductImage()).into(imageView);
         name.setText(wishlistItem.getProductName());
@@ -84,7 +86,12 @@ public class CustomWishlistAdapter extends ArrayAdapter<Wishlist> {
 
             }
         });
-
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddToCart addToCartDialog = new AddToCart(getContext(), wishlistItem.getKeyProduct());
+            }
+        });
 
         return convertView;
     }

@@ -131,11 +131,13 @@ public class WishlistFragment extends Fragment {
                                         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                String productRef = documentSnapshot.getReference().getId();
                                                 String name = documentSnapshot.getString("name");
                                                 String main_img = documentSnapshot.getString("main_img");
                                                 Double price = documentSnapshot.getDouble("price");
                                                 int discount = (int)Math.round(documentSnapshot.getDouble("discount"));
 
+                                                wishlistItem.setKeyProduct(productRef);
                                                 wishlistItem.setProductName(name);
                                                 wishlistItem.setProductImage(main_img);
                                                 wishlistItem.setRegularCost(price);

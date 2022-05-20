@@ -96,10 +96,15 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private List<SliderItem> GetListSliderItem() {
         List<SliderItem> list = new ArrayList<>();
-
-        for (String imgUrl : productDetail.getImageList()) {
-            list.add(new SliderItem(imgUrl));
+        try{
+            for (String imgUrl : productDetail.getImageList()) {
+                list.add(new SliderItem(imgUrl));
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
+
 
         return list;
     }
