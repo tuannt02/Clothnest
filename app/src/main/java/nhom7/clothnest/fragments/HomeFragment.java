@@ -59,7 +59,7 @@ import nhom7.clothnest.models.Product_Thumbnail;
 
 public class HomeFragment extends Fragment {
     View mView;
-    GridView gridViewArrival, gridViewSales, gridViewWinter;
+    GridView gridViewArrival, gridViewSales;
     ProductSlider productSlider;
     LinearLayout containersilder;
     View includeView;
@@ -71,8 +71,8 @@ public class HomeFragment extends Fragment {
     Handler handler = new Handler();
 
     //Get product from FireStore
-    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList, winterList;
-    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter, winterAdapter;
+    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList;
+    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter;
 
     // Tuan be
     FirebaseFirestore tuanDb = FirebaseFirestore.getInstance();
@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment {
         getEvent();
         createSlider();
         initTuanBeVars();
+
 
         return mView;
     }
@@ -139,6 +140,7 @@ public class HomeFragment extends Fragment {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
+
 
     private void AnimatonViewFliper() {
         arrayList = new ArrayList<>();
@@ -214,6 +216,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         getProductThumbnail();
         handler.postDelayed(runnable, 1500);
+
     }
 
     private void createSlider() {
@@ -311,7 +314,7 @@ public class HomeFragment extends Fragment {
 
         //Thêm sản phẩm vào sales
         salesList = new ArrayList<>();
-        salesAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
+        salesAdapter = new Product_ThumbnailAdapter(getContext(), salesList);
         gridViewSales.setAdapter(salesAdapter);
         Product_ThumbnailAdapter.getProductSalesAndPushToGridView(salesList, salesAdapter);
 

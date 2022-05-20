@@ -86,8 +86,24 @@ public class SeeAllItemActivity extends AppCompatActivity {
             Product_ThumbnailAdapter.getProductSalesAndPushToGridView(productArrayList, adapter);
         else if(name.compareTo("WINTER")==0)
             Product_ThumbnailAdapter.getProductFromCollection(productArrayList,adapter);
-//        else if(name.compareTo("LINE")==0)
-//            getProductLineFromCollection(productArrayList,adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getProductThumbnail();
+    }
+
+    public void getProductThumbnail() {
+        //Thêm sản phẩm vào sales
+        productArrayList = new ArrayList<>();
+        adapter = new Product_ThumbnailAdapter(getApplicationContext(), productArrayList);
+        gridView.setAdapter(adapter);
+        if (name.compareTo("NEW ARRIVALS") == 0)
+            Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(productArrayList, adapter);
+        else if(name.compareTo("SALES")==0)
+            Product_ThumbnailAdapter.getProductSalesAndPushToGridView(productArrayList, adapter);
+        else if(name.compareTo("WINTER")==0)
+            Product_ThumbnailAdapter.getProductFromCollection(productArrayList,adapter);
+    }
 }
