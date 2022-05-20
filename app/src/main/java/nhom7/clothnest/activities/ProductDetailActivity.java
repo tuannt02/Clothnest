@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     Button btnDescription, btnReviews;
     ImageButton btnReturn, btnFavorite;
+    ImageView ivAddToCart;
 
 
     //Bo sung
@@ -146,6 +148,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.productDetail_Description);
         ibFavorite = findViewById(R.id.productDetail_favoriteButton);
 
+        ivAddToCart = findViewById(R.id.productDetail_ivAddToCart);
+
         reviewFragment = new CommentFragment();
     }
 
@@ -173,6 +177,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setFavorite();
+            }
+        });
+        ivAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
