@@ -1,7 +1,5 @@
 package nhom7.clothnest.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,20 +9,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import nhom7.clothnest.adapters.GridViewApdater;
 import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
-import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
-import nhom7.clothnest.activities.ProductDetail_Activity;
-import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.Product_Thumbnail;
 
 public class SearchProductsFragment extends Fragment {

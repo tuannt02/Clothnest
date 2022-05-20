@@ -107,8 +107,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/lato"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/lato_bold"
             android:text="Address"
             android:textColor="#494949"
             android:textSize="20dp" />
@@ -163,19 +163,20 @@
         <ScrollView
             android:id="@+id/transaction_main_scrview"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:nestedScrollingEnabled="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/listview_item_transaction"
                     android:layout_width="match_parent"
-                    android:layout_height="1000dp"
+                    android:nestedScrollingEnabled="true"
+                    android:layout_height="200dp"
                     android:paddingRight="20dp"
                     tools:listitem="@layout/transaction_detail_item" />
             </LinearLayout>

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import nhom7.clothnest.R;
-import nhom7.clothnest.activities.ProductDetail_Activity;
+import nhom7.clothnest.activities.ProductDetailActivity;
 import nhom7.clothnest.models.Product1;
 
 public class GridViewApdater extends BaseAdapter {
@@ -102,7 +102,7 @@ public class GridViewApdater extends BaseAdapter {
     }
 
     private void gotoDetail(int i) {
-        Intent intent_productDetail = new Intent(context, ProductDetail_Activity.class);
+        Intent intent_productDetail = new Intent(context, ProductDetailActivity.class);
         intent_productDetail.putExtra("key", productList.get(i).getId());
         alpha = AnimationUtils.loadAnimation(context, R.anim.alpha_anim);
         mView.startAnimation(alpha);

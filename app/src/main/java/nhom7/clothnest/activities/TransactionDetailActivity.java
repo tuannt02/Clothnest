@@ -93,8 +93,6 @@ public class TransactionDetailActivity extends AppCompatActivity {
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 transaction_detail.setNameDetail(documentSnapshot.getString("name"));
                                                 transaction_detail.setImageListDetail(documentSnapshot.getString("main_img"));
-//                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
-//                                                transaction_detail.setDiscountDetail(discount);
                                                 transactionDetailAdapter.notifyDataSetChanged();
                                             }
                                         });
