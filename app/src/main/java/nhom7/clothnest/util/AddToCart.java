@@ -88,8 +88,8 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
         windowAttributes.gravity = Gravity.BOTTOM;
         window.setAttributes(windowAttributes);
 
-//        checkProductIdExists(context);
-        show();
+        checkProductIdExists(context);
+//        show();
 
         //Get view
         ImageView btnClose = findViewById(R.id.add_to_cart_btn_close);
@@ -304,20 +304,24 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
+        DocumentReference productRef = db.collection("products").document(keyProduct);
+
         db.collection(User.COLLECTION_NAME)
                 .document(userInfo.getUid())
                 .collection(CartItem.COLLECTION_NAME)
-                .document(keyProduct)
+                .whereEqualTo("product_id", productRef)
+                .limit(1)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            if (documentSnapshot.exists())  {
                                 CustomDialog customDialog = new CustomDialog(context,
                                         "Notify",
                                         "This product has been added to cart",
+                                        1, // hide btn close
                                         new CustomDialog.IClickListenerOnOkBtn() {
                                             @Override
                                             public void onResultOk() {
@@ -325,16 +329,11 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
                                             }
                                         });
                                 customDialog.show();
-                            } else {
-                                show();
+                                return;
                             }
 
-
                         }
-                        else    {
-                            // nothing
-                        }
-
+                        show();
                     }
                 });
     }

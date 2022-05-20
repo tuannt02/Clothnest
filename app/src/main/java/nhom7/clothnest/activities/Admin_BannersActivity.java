@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -157,6 +158,7 @@ public class Admin_BannersActivity extends AppCompatActivity {
                             CustomDialog comfirmRemove = new CustomDialog(Admin_BannersActivity.this,
                                     "Confirm remove",
                                     "Are you sure you want to delete this Banner",
+                                    2,
                                     new CustomDialog.IClickListenerOnOkBtn() {
                                         @Override
                                         public void onResultOk() {
@@ -183,6 +185,7 @@ public class Admin_BannersActivity extends AppCompatActivity {
 
         // Lấy tất cả banner
         db.collection(Banner.COLLECTION_NAME)
+                .orderBy("date_add", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
