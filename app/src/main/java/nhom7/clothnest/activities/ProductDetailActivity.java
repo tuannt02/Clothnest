@@ -194,7 +194,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 if(!task.getResult().isEmpty()){
                                     for(QueryDocumentSnapshot document: task.getResult()){
                                         Map<String, Object> object = document.getData();
-                                        Wishlist.removeWishlistItemFromFirestore(document.getId());
+                                        Wishlist.removeWishlistItemFromFirestore(ProductDetailActivity.this, document.getId());
                                         productDetail.setFavorite(false);
                                         ibFavorite.setImageResource(R.drawable.favorite);
                                     }
@@ -203,7 +203,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Wishlist.addProductToWishlist(productDetail.getId());
+            Wishlist.addProductToWishlist(ProductDetailActivity.this , productDetail.getId());
             productDetail.setFavorite(true);
             ibFavorite.setImageResource(R.drawable.is_favorite);
         }

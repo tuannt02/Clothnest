@@ -6,19 +6,27 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nhom7.clothnest.activities.Admin_MainActivity;
 import nhom7.clothnest.activities.MainActivity;
 import nhom7.clothnest.activities.SignInActivity;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.models.User;
 
 public class ValidateLogin {
+    public static int role = -1;
+
     public static final String EMAIL_VERIFICATION = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile(EMAIL_VERIFICATION, Pattern.CASE_INSENSITIVE);
@@ -96,6 +104,8 @@ public class ValidateLogin {
     }
 
     public static void reAuthentication(FirebaseUser user, Context context) {
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Get infouser past
         UserInfo_Sqlite userInfo_sqlite = new UserInfo_Sqlite(context);
@@ -114,10 +124,28 @@ public class ValidateLogin {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
+                            db.collection(User.COLLECTION_NAME)
+                                    .document(userInfo.getUid())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            role = (int)Math.round(documentSnapshot.getDouble("type"));
 
+                                            System.out.println("alo" + documentSnapshot.getDouble("type"));
+                                            if(role == 1)   {
+                                                Intent intent = new Intent(context, MainActivity.class);
+                                                context.startActivity(intent);
+                                            }
+                                            if(role == 2 || role == 3)  {
+                                                Intent intent = new Intent(context, Admin_MainActivity.class);
+                                                context.startActivity(intent);
+                                            }
+                                        }
+                                    });
 
-                            Intent intent = new Intent(context, MainActivity.class);
-                            context.startActivity(intent);
+//                            Intent intent = new Intent(context, MainActivity.class);
+//                            context.startActivity(intent);
                         }
                         else    {
                             Intent intent = new Intent(context, SignInActivity.class);

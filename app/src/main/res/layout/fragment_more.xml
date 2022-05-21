@@ -130,7 +130,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="330dp"
+        android:layout_marginTop="240dp"
         android:text="LOG OUT" />
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/btn_Logout_admin"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="24dp"-->
+<!--        android:fontFamily="@font/lato_bold"-->
+<!--        app:cornerRadius="10dp"-->
+<!--        android:textSize="14sp"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="LOG OUT" />-->
 
 </LinearLayout>
