@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
     LinearLayout containersilder;
     View includeView;
     ImageView buttoncart, btnChat;
-    Button btnSeeAllItem, btnSeeAllItemSales, btnWinter, btnLine,btnUT, btnUnisex,btnUvProtection;
+    Button btnSeeAllItem, btnSeeAllItemSales, btnWinter, btnLine, btnUT, btnUnisex, btnUvProtection;
     ViewPager2 viewPager2;
     ArrayList<Image> arrayList;
     ImageAdapter imageAdapter;
@@ -285,7 +285,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         btnSeeAllItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -333,8 +332,8 @@ public class HomeFragment extends Fragment {
         btnChat = mView.findViewById(R.id.btnchat);
         collectionsList = new ArrayList<>();
         viewPager2 = mView.findViewById(R.id.viewPager);
-        btnUT= mView.findViewById(R.id.btnUt);
-        btnUnisex= mView.findViewById(R.id.btnUnisex);
+        btnUT = mView.findViewById(R.id.btnUt);
+        btnUnisex = mView.findViewById(R.id.btnUnisex);
         btnUvProtection = mView.findViewById(R.id.btnUvprotection);
 
     }

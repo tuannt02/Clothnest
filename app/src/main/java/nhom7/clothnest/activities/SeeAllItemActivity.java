@@ -82,18 +82,18 @@ public class SeeAllItemActivity extends AppCompatActivity {
 
         if (name.compareTo("NEW ARRIVALS") == 0)
             Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(productArrayList, adapter);
-        else if(name.compareTo("SALES")==0)
+        else if (name.compareTo("SALES") == 0)
             Product_ThumbnailAdapter.getProductSalesAndPushToGridView(productArrayList, adapter);
-        else if(name.compareTo("WINTER")==0)
-            Product_ThumbnailAdapter.getProductFromCollection(productArrayList,adapter);
-        else if(name.compareTo("LINE")==0)
-            Product_ThumbnailAdapter.getProductLineFromCollection(productArrayList,adapter);
-        else if(name.compareTo("UT")==0)
-            Product_ThumbnailAdapter.getProductUTFromCollection(productArrayList,adapter);
-        else if(name.compareTo("UNISEX")==0)
-            Product_ThumbnailAdapter.getProductUnisexFromCollection(productArrayList,adapter);
-        else if(name.compareTo("UV PROTECTION")==0)
-            Product_ThumbnailAdapter.getProductUvProtectionFromCollection(productArrayList,adapter);
+        else if (name.compareTo("WINTER") == 0)
+            Product_ThumbnailAdapter.getProductFromCollection(productArrayList, adapter);
+        else if (name.compareTo("LINE") == 0)
+            Product_ThumbnailAdapter.getProductLineFromCollection(productArrayList, adapter);
+        else if (name.compareTo("UT") == 0)
+            Product_ThumbnailAdapter.getProductUTFromCollection(productArrayList, adapter);
+        else if (name.compareTo("UNISEX") == 0)
+            Product_ThumbnailAdapter.getProductUnisexFromCollection(productArrayList, adapter);
+        else if (name.compareTo("UV PROTECTION") == 0)
+            Product_ThumbnailAdapter.getProductUvProtectionFromCollection(productArrayList, adapter);
     }
 
     @Override
@@ -109,17 +109,17 @@ public class SeeAllItemActivity extends AppCompatActivity {
         gridView.setAdapter(adapter);
         if (name.compareTo("NEW ARRIVALS") == 0)
             Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(productArrayList, adapter);
-        else if(name.compareTo("SALES")==0)
+        else if (name.compareTo("SALES") == 0)
             Product_ThumbnailAdapter.getProductSalesAndPushToGridView(productArrayList, adapter);
-        else if(name.compareTo("WINTER")==0)
-            Product_ThumbnailAdapter.getProductFromCollection(productArrayList,adapter);
-        else if(name.compareTo("LINE")==0)
-            Product_ThumbnailAdapter.getProductLineFromCollection(productArrayList,adapter);
-        else if(name.compareTo("UT")==0)
-            Product_ThumbnailAdapter.getProductUTFromCollection(productArrayList,adapter);
-        else if(name.compareTo("UNISEX")==0)
-            Product_ThumbnailAdapter.getProductUnisexFromCollection(productArrayList,adapter);
-        else if(name.compareTo("UV PROTECTION")==0)
-            Product_ThumbnailAdapter.getProductUvProtectionFromCollection(productArrayList,adapter);
+        else if (name.compareTo("WINTER") == 0)
+            Product_ThumbnailAdapter.getProductFromCollection(productArrayList, adapter);
+        else if (name.compareTo("LINE") == 0)
+            Product_ThumbnailAdapter.getProductLineFromCollection(productArrayList, adapter);
+        else if (name.compareTo("UT") == 0)
+            Product_ThumbnailAdapter.getProductUTFromCollection(productArrayList, adapter);
+        else if (name.compareTo("UNISEX") == 0)
+            Product_ThumbnailAdapter.getProductUnisexFromCollection(productArrayList, adapter);
+        else if (name.compareTo("UV PROTECTION") == 0)
+            Product_ThumbnailAdapter.getProductUvProtectionFromCollection(productArrayList, adapter);
     }
 }

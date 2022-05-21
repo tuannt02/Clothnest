@@ -20,7 +20,8 @@ public class Address implements Serializable {
     @PropertyName("phone_num")
     public String phoneNumber;
 
-    public Address() {}
+    public Address() {
+    }
 
     public Address(String fullName, String province, String district, String ward, String detail, String phoneNumber) {
         this.fullName = fullName;

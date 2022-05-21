@@ -15,12 +15,7 @@
         android:theme="@style/Theme.Clothnest">
         <activity
             android:name=".activities.Admin_ProductDetailActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".activities.Admin_ColorActivity"
@@ -82,9 +77,15 @@
             android:exported="false" />
         <activity
             android:name=".activities.SplashScreen"
-            android:exported="false"
+            android:exported="true"
             android:noHistory="true"
             android:theme="@style/SplashScreen">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
