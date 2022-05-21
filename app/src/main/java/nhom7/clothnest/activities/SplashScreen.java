@@ -17,18 +17,17 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         nextActivity();
-       //startActivity(new Intent(this, Admin_MainActivity.class));
+        //startActivity(new Intent(this, Admin_MainActivity.class));
     }
 
     private void nextActivity() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null)    {
+        if (user == null) {
             // User is not logged in
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
             //finish();
-        }
-        else    {
+        } else {
             // User logged in
             // Some security-sensitive actions—such as deleting an account,
             // setting a primary email address, and changing a password -> reAuthen
@@ -40,7 +39,7 @@ public class SplashScreen extends AppCompatActivity {
     // Temp method
     private void startColor() {
         Intent intent = new Intent(this, Admin_ColorActivity.class);
-        intent.putExtra("activity_type", ActivityConstants.VIEW_COLOR);
+        intent.putExtra("activity_type", ActivityConstants.CHOOSE_COLOR);
         startActivity(intent);
     }
 }

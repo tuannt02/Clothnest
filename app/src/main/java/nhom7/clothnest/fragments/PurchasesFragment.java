@@ -51,7 +51,7 @@ public class PurchasesFragment extends Fragment {
     private ArrayList<Purchase> purchases;
     private CustomPurchaseAdapter adapter;
     private ListenerRegistration transactionListener;
-    private ArrayList<ListenerRegistration> transactionItemListenerList;
+    // private ArrayList<ListenerRegistration> transactionItemListenerList;
     private CustomProgressBar progressBar;
     private Purchase currLongClickPurchase;
 
@@ -84,7 +84,7 @@ public class PurchasesFragment extends Fragment {
         progressBar = new CustomProgressBar(getContext());
         currLongClickPurchase = null;
 
-        transactionItemListenerList = new ArrayList<>();
+        // transactionItemListenerList = new ArrayList<>();
 
         // get curr user ref
         String currUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -119,13 +119,6 @@ public class PurchasesFragment extends Fragment {
 
                 emptyPlaceholder.setVisibility(View.GONE);
 
-                if (transactionItemListenerList.size() > 0) {
-                    for (ListenerRegistration listenerRegistration : transactionItemListenerList) {
-                        listenerRegistration.remove();
-                    }
-                    transactionItemListenerList.clear();
-                }
-
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
 
                     Purchase purchase = documentSnapshot.toObject(Purchase.class);
@@ -133,58 +126,106 @@ public class PurchasesFragment extends Fragment {
                     purchases.add(purchase);
 
                     CollectionReference transactionItemListRef = transactionRef.document(documentSnapshot.getId()).collection("transactionItemList");
-                    transactionItemListRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if (error != null) {
-                                Toast.makeText(getContext(), "Error while loading item list", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "Loading item list error: " + error.toString());
-                                return;
-                            }
 
-                            if (purchase.getItems() == null) {
-                                purchase.setItems(new ArrayList<>());
-                            } else {
-                                purchase.getItems().clear();
-                            }
-                            for (DocumentSnapshot itemDocumentSnapshot : value.getDocuments()) {
-                                PurchaseItem purchaseItem = itemDocumentSnapshot.toObject(PurchaseItem.class);
-                                purchase.getItems().add(purchaseItem);
-
-                                // Get reference information
-                                Task getColorTask = purchaseItem.getColorRef().get();
-                                Task getSizeTask = purchaseItem.getSizeRef().get();
-                                Task getProductTask = purchaseItem.getProductRef().get();
-
-                                Task<List<DocumentSnapshot>> allTasks = Tasks.whenAllSuccess(getColorTask, getSizeTask, getProductTask);
-                                allTasks.addOnSuccessListener(new OnSuccessListener<List<DocumentSnapshot>>() {
-                                    @Override
-                                    public void onSuccess(List<DocumentSnapshot> documentSnapshots) {
-                                        String color = documentSnapshots.get(0).getString("name");
-                                        String size = documentSnapshots.get(1).getString("short_name");
-                                        DocumentSnapshot productSnapshot = documentSnapshots.get(2);
-                                        String name = productSnapshot.getString("name");
-                                        String image = productSnapshot.getString("main_img");
-                                        purchaseItem.setColor(color);
-                                        purchaseItem.setName(name);
-                                        purchaseItem.setSize(size);
-                                        purchaseItem.setImage(image);
-                                        progressBar.dismiss();
-                                        adapter.notifyDataSetChanged();
-
+                    transactionItemListRef.get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    if (purchase.getItems() == null) {
+                                        purchase.setItems(new ArrayList<>());
+                                    } else {
+                                        purchase.getItems().clear();
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getContext(), "Get reference information failed!", Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "Get ref information error: " + e.toString());
-                                        progressBar.dismiss();
-                                    }
-                                });
-                            }
+                                    for (DocumentSnapshot itemDocumentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                        PurchaseItem purchaseItem = itemDocumentSnapshot.toObject(PurchaseItem.class);
+                                        purchase.getItems().add(purchaseItem);
 
-                        }
-                    });
+                                        // Get reference information
+                                        Task getColorTask = purchaseItem.getColorRef().get();
+                                        Task getSizeTask = purchaseItem.getSizeRef().get();
+                                        Task getProductTask = purchaseItem.getProductRef().get();
+
+                                        Task<List<DocumentSnapshot>> allTasks = Tasks.whenAllSuccess(getColorTask, getSizeTask, getProductTask);
+                                        allTasks.addOnSuccessListener(new OnSuccessListener<List<DocumentSnapshot>>() {
+                                            @Override
+                                            public void onSuccess(List<DocumentSnapshot> documentSnapshots) {
+                                                String color = documentSnapshots.get(0).getString("name");
+                                                String size = documentSnapshots.get(1).getString("short_name");
+                                                DocumentSnapshot productSnapshot = documentSnapshots.get(2);
+                                                String name = productSnapshot.getString("name");
+                                                String image = productSnapshot.getString("main_img");
+                                                purchaseItem.setColor(color);
+                                                purchaseItem.setName(name);
+                                                purchaseItem.setSize(size);
+                                                purchaseItem.setImage(image);
+                                                progressBar.dismiss();
+                                                adapter.notifyDataSetChanged();
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getContext(), "Get reference information failed!", Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "Get ref information error: " + e.toString());
+                                                progressBar.dismiss();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+//                    transactionItemListRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                            if (error != null) {
+//                                Toast.makeText(getContext(), "Error while loading item list", Toast.LENGTH_SHORT).show();
+//                                Log.d(TAG, "Loading item list error: " + error.toString());
+//                                return;
+//                            }
+//
+//                            if (purchase.getItems() == null) {
+//                                purchase.setItems(new ArrayList<>());
+//                            } else {
+//                                purchase.getItems().clear();
+//                            }
+//                            for (DocumentSnapshot itemDocumentSnapshot : value.getDocuments()) {
+//                                PurchaseItem purchaseItem = itemDocumentSnapshot.toObject(PurchaseItem.class);
+//                                purchase.getItems().add(purchaseItem);
+//
+//                                // Get reference information
+//                                Task getColorTask = purchaseItem.getColorRef().get();
+//                                Task getSizeTask = purchaseItem.getSizeRef().get();
+//                                Task getProductTask = purchaseItem.getProductRef().get();
+//
+//                                Task<List<DocumentSnapshot>> allTasks = Tasks.whenAllSuccess(getColorTask, getSizeTask, getProductTask);
+//                                allTasks.addOnSuccessListener(new OnSuccessListener<List<DocumentSnapshot>>() {
+//                                    @Override
+//                                    public void onSuccess(List<DocumentSnapshot> documentSnapshots) {
+//                                        String color = documentSnapshots.get(0).getString("name");
+//                                        String size = documentSnapshots.get(1).getString("short_name");
+//                                        DocumentSnapshot productSnapshot = documentSnapshots.get(2);
+//                                        String name = productSnapshot.getString("name");
+//                                        String image = productSnapshot.getString("main_img");
+//                                        purchaseItem.setColor(color);
+//                                        purchaseItem.setName(name);
+//                                        purchaseItem.setSize(size);
+//                                        purchaseItem.setImage(image);
+//                                        progressBar.dismiss();
+//                                        adapter.notifyDataSetChanged();
+//
+//                                    }
+//                                }).addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Toast.makeText(getContext(), "Get reference information failed!", Toast.LENGTH_SHORT).show();
+//                                        Log.d(TAG, "Get ref information error: " + e.toString());
+//                                        progressBar.dismiss();
+//                                    }
+//                                });
+//                            }
+//
+//                        }
+//                    });
                 }
             }
         });
@@ -194,11 +235,11 @@ public class PurchasesFragment extends Fragment {
     public void onStop() {
         super.onStop();
         transactionListener.remove();
-        for (ListenerRegistration listenerRegistration : transactionItemListenerList) {
-            listenerRegistration.remove();
-        }
-
-        transactionItemListenerList.clear();
+//        for (ListenerRegistration listenerRegistration : transactionItemListenerList) {
+//            listenerRegistration.remove();
+//        }
+//
+//        transactionItemListenerList.clear();
     }
 
     private void initializePurchaseList() {
