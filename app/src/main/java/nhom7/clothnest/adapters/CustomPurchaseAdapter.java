@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Purchase;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.R;
@@ -92,8 +93,19 @@ public class CustomPurchaseAdapter extends BaseAdapter {
             }
         }
 
-        // Total
         Purchase currPurchase = purchases.get(i);
+        Address address = currPurchase.getAddress();
+        if (address != null) {
+            LinearLayout addressLayout = (LinearLayout) layoutInflater.inflate(R.layout.purchase_address_layout, null);
+            ((TextView) addressLayout.findViewById(R.id.textview_name)).setText(address.fullName);
+            ((TextView) addressLayout.findViewById(R.id.textview_detail)).setText(address.detail);
+            String addressText = address.getProvince() + ", " + address.getDistrict() + ", " + address.getWard();
+            ((TextView) addressLayout.findViewById(R.id.textview_address)).setText(addressText);
+            ((TextView) addressLayout.findViewById(R.id.textview_phone)).setText(address.phoneNumber);
+            list.addView(addressLayout);
+        }
+
+        // Total
         LinearLayout totalLayout = (LinearLayout) layoutInflater.inflate(R.layout.purchases_total, null);
         String totalStr = df.format(currPurchase.getTotal());
         ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$" + totalStr);

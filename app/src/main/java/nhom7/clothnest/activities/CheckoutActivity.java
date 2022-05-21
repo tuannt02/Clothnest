@@ -76,7 +76,7 @@ public class CheckoutActivity extends AppCompatActivity {
             CartItem cartItem = new CartItem();
             cartItem.setImg("https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/sales%2Fusgoods_09_446223.webp?alt=media&token=3f27ce5b-c68b-472e-b1c6-6dc755e54619");
             cartItem.setQty(1);
-            cartItem.setName("Áo Polo Thương Hiệu Chuẩn Thời Trang Việt");
+            cartItem.setName("Áo Polo Thương Hiệu Chuẩn  Thời Trang Việt");
             cartItem.setPrice(499.0);
             cartItem.setDiscount(5);
 
