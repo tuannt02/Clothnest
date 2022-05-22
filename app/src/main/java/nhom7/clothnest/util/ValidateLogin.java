@@ -132,7 +132,6 @@ public class ValidateLogin {
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             role = (int)Math.round(documentSnapshot.getDouble("type"));
 
-                                            System.out.println("alo" + documentSnapshot.getDouble("type"));
                                             if(role == 1)   {
                                                 Intent intent = new Intent(context, MainActivity.class);
                                                 context.startActivity(intent);
@@ -144,8 +143,7 @@ public class ValidateLogin {
                                         }
                                     });
 
-//                            Intent intent = new Intent(context, MainActivity.class);
-//                            context.startActivity(intent);
+
                         }
                         else    {
                             Intent intent = new Intent(context, SignInActivity.class);

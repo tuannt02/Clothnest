@@ -24,6 +24,7 @@ import nhom7.clothnest.activities.Admin_StatisticActivity;
 import nhom7.clothnest.activities.SignInActivity;
 import nhom7.clothnest.adapters.CategoryAdapter;
 import nhom7.clothnest.models.CategoryItem;
+import nhom7.clothnest.util.ValidateLogin;
 
 public class MoreFragment extends Fragment {
 
@@ -43,6 +44,11 @@ public class MoreFragment extends Fragment {
         itemGrantPermission = mView.findViewById(R.id.more_ItemGrantPermisssion);
         btnLogout = mView.findViewById(R.id.more_Btn_Logout);
 
+        // Check permission
+        if(ValidateLogin.role == 2) {
+            itemStatistic.setVisibility(View.GONE);
+            itemGrantPermission.setVisibility(View.GONE);
+        }
 
         // Set on click
         SetOnClick();
