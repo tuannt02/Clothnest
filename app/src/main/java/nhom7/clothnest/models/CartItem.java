@@ -21,7 +21,7 @@ public class CartItem implements Serializable {
     private SizeClass sizeSelected = new SizeClass();
 
     public CartItem()   {
-
+        discount = 0;
     }
 
     public CartItem(String keyProduct, String key, String img, int qty, String name, Double price, int discount, double discountPrice, ArrayList<ColorClass> listColor, ArrayList<SizeClass> listSize, ColorClass colorSelected, SizeClass sizeSelected) {
@@ -188,5 +188,9 @@ public class CartItem implements Serializable {
     public void decreaseQuantity()  {
         if(qty == 1) return;
         this.qty--;
+    }
+
+    public Long getTotalPrice() {
+        return Math.round(price) * qty;
     }
 }

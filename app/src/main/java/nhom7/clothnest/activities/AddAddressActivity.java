@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -49,6 +50,7 @@ public class AddAddressActivity extends AppCompatActivity {
     OpenProvincesAPI openProvincesAPI;
     CustomProgressBar customProgressBar;
     String addressId;
+    private static final String TAG = "AddAddressActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

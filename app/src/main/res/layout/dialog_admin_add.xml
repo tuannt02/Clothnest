@@ -9,82 +9,75 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:paddingVertical="20dp"
-        android:paddingHorizontal="36dp"
         android:background="@drawable/border_radius_linear2"
-        >
+        android:orientation="vertical"
+        android:paddingHorizontal="36dp"
+        android:paddingVertical="20dp">
 
         <TextView
             android:id="@+id/dig_admin_add_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato_black"
             android:text="Add Voucher"
             android:textAlignment="center"
-            android:textSize="24dp"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:fontFamily="@font/lato_black"
-            android:layout_marginBottom="10dp"
-            />
+            android:textSize="24dp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/dig_admin_add_input_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
-            android:paddingHorizontal="16dp"
-            android:fontFamily="@font/lato"
-            android:textSize="20sp"
-            android:text=""
-            android:hint="Code"
-            android:background="@drawable/border_input_voucher"
             android:layout_marginTop="20dp"
-            />
+            android:background="@drawable/border_input_voucher"
+            android:fontFamily="@font/lato"
+            android:hint="Code"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text=""
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/dig_admin_add_validate_input_1"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
             android:text="Please enter this field"
             android:textColor="@color/red"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/dig_admin_add_input_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
-            android:paddingHorizontal="16dp"
-            android:fontFamily="@font/lato"
-            android:textSize="20sp"
-            android:text=""
-            android:inputType="number"
-            android:hint="Discount"
-            android:background="@drawable/border_input_voucher"
             android:layout_marginTop="20dp"
-            />
+            android:background="@drawable/border_input_voucher"
+            android:fontFamily="@font/lato"
+            android:hint="Discount"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text=""
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/dig_admin_add_validate_input_2"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
             android:text="Please enter this field"
             android:textColor="@color/red"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:paddingHorizontal="40dp"
-            >
+            android:paddingHorizontal="40dp">
 
             <TextView
                 android:id="@+id/dig_admin_add_btnSave"
@@ -101,14 +94,12 @@
                 android:id="@+id/dig_admin_add_btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:fontFamily="@font/lato_black"
                 android:text="Cancel"
                 android:textColor="#FF0000"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:fontFamily="@font/lato_black"
-                android:layout_alignParentRight="true"
-                />
-
+                android:textStyle="bold" />
 
 
         </RelativeLayout>

@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -69,11 +70,16 @@ public class AddressBookActivity extends AppCompatActivity {
         // Thiet lap list view address book
         setupListViewAddressBook();
 
+        // Xac dinh activity duoc mo duoi hanh dong nao
+        specifyOnCreateBehavior();
+
         // Thiet lap LocalBroadcastReceiver
         setupBroadcastReceiver();
 
         progressBar = new CustomProgressBar(this);
         progressBar.show();
+
+
     }
 
     @Override
@@ -128,7 +134,6 @@ public class AddressBookActivity extends AppCompatActivity {
 
         adapter = new CustomAddressAdapter(addresses, getApplicationContext());
         lvAddressBook.setAdapter(adapter);
-        ;
     }
 
     private View.OnClickListener btnAddNewAddressListener = new View.OnClickListener() {
@@ -238,5 +243,20 @@ public class AddressBookActivity extends AppCompatActivity {
                         retrieveAddresses();
                     }
                 });
+    }
+
+    private void specifyOnCreateBehavior() {
+        Intent intent = getIntent();
+        int type = intent.getIntExtra("activity_type", -1);
+        if (type == ActivityConstants.CHOOSE_ADDRESSES) {
+            lvAddressBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent result = new Intent().putExtra("selected_address", addresses.get(position).addressId);
+                    setResult(RESULT_OK, result);
+                    finish();
+                }
+            });
+        }
     }
 }
