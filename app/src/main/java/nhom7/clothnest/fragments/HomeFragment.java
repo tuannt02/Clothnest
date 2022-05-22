@@ -59,20 +59,20 @@ import nhom7.clothnest.models.Product_Thumbnail;
 
 public class HomeFragment extends Fragment {
     View mView;
-    GridView gridViewArrival, gridViewSales, gridViewWinter;
+    GridView gridViewArrival, gridViewSales;
     ProductSlider productSlider;
     LinearLayout containersilder;
     View includeView;
     ImageView buttoncart, btnChat;
-    Button btnSeeAllItem, btnSeeAllItemSales, btnWinter, btnLine;
+    Button btnSeeAllItem, btnSeeAllItemSales, btnWinter, btnLine, btnUT, btnUnisex, btnUvProtection;
     ViewPager2 viewPager2;
     ArrayList<Image> arrayList;
     ImageAdapter imageAdapter;
     Handler handler = new Handler();
 
     //Get product from FireStore
-    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList, winterList;
-    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter, winterAdapter;
+    ArrayList<Product_Thumbnail> arrivalsList, salesList, collectionsList;
+    Product_ThumbnailAdapter arrivalsAdapter, salesAdapter;
 
     // Tuan be
     FirebaseFirestore tuanDb = FirebaseFirestore.getInstance();
@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment {
         getEvent();
         createSlider();
         initTuanBeVars();
+
 
         return mView;
     }
@@ -139,6 +140,7 @@ public class HomeFragment extends Fragment {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
+
 
     private void AnimatonViewFliper() {
         arrayList = new ArrayList<>();
@@ -214,6 +216,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         getProductThumbnail();
         handler.postDelayed(runnable, 1500);
+
     }
 
     private void createSlider() {
@@ -250,6 +253,37 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        btnUT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String a = "UT";
+                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
+                intent.putExtra("name", a);
+                startActivity(intent);
+            }
+        });
+
+
+        btnUnisex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String a = "UNISEX";
+                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
+                intent.putExtra("name", a);
+                startActivity(intent);
+            }
+        });
+        btnUvProtection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String a = "UV PROTECTION";
+                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
+                intent.putExtra("name", a);
+                startActivity(intent);
+            }
+        });
+
 
         btnSeeAllItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,6 +332,9 @@ public class HomeFragment extends Fragment {
         btnChat = mView.findViewById(R.id.btnchat);
         collectionsList = new ArrayList<>();
         viewPager2 = mView.findViewById(R.id.viewPager);
+        btnUT = mView.findViewById(R.id.btnUt);
+        btnUnisex = mView.findViewById(R.id.btnUnisex);
+        btnUvProtection = mView.findViewById(R.id.btnUvprotection);
 
     }
 
@@ -311,7 +348,7 @@ public class HomeFragment extends Fragment {
 
         //Thêm sản phẩm vào sales
         salesList = new ArrayList<>();
-        salesAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
+        salesAdapter = new Product_ThumbnailAdapter(getContext(), salesList);
         gridViewSales.setAdapter(salesAdapter);
         Product_ThumbnailAdapter.getProductSalesAndPushToGridView(salesList, salesAdapter);
 

@@ -21,6 +21,7 @@ public class Transaction_Detail {
     public void setSalePriceDetail(double salePriceDetail) {
         this.salePriceDetail = salePriceDetail;
     }
+
     public Transaction_Detail() {
 
     }

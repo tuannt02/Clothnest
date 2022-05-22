@@ -1,5 +1,8 @@
 package nhom7.clothnest.models;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.PropertyName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,6 +11,10 @@ public class Purchase implements Serializable {
     String transactionID;
     Double total, discount, deliveryFee;
     String orderDate, status;
+
+    @PropertyName("address_ref")
+    public DocumentReference addressRef;
+    Address address;
 
     public Purchase() {}
 
@@ -79,6 +86,14 @@ public class Purchase implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public void setStatus(String status) {

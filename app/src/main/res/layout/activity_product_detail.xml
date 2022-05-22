@@ -2,10 +2,10 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#F9F9F9"
-    android:id="@+id/nestedScrollView"
     tools:context=".activities.ProductDetailActivity">
 
     <LinearLayout
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -75,10 +75,10 @@
             android:id="@+id/productDetail_ProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_bold"
             android:layout_marginTop="20dp"
-            android:paddingVertical="10dp"
+            android:fontFamily="@font/lato_bold"
             android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
             android:text="Oversixe hoodie"
             android:textSize="35dp" />
 
@@ -180,12 +180,14 @@
                     android:layout_marginRight="20dp"
                     android:backgroundTint="@color/pri_col"
                     app:cardCornerRadius="10dp">
+
                     <ImageView
+                        android:id="@+id/productDetail_ivAddToCart"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_margin="10dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/cart_add"/>
+                        android:src="@drawable/cart_add" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -252,12 +254,11 @@
             android:textSize="25dp" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/productDetail_container_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingHorizontal="20dp">
-        </LinearLayout>
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"></LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
