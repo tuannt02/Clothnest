@@ -17,7 +17,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         nextActivity();
-//       startActivity(new Intent(this, Admin_MainActivity.class));
+        // startActivity(new Intent(this, Admin_MainActivity.class));
     }
 
     private void nextActivity() {
@@ -26,13 +26,13 @@ public class SplashScreen extends AppCompatActivity {
             // User is not logged in
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
-            //finish();
+            // finish();
         } else {
             // User logged in
             // Some security-sensitive actions—such as deleting an account,
             // setting a primary email address, and changing a password -> reAuthen
             ValidateLogin.reAuthentication(user, SplashScreen.this);
-            //finish();
+            // finish();
         }
     }
 
