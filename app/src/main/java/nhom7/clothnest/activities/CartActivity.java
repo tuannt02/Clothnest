@@ -61,6 +61,7 @@ import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
 import nhom7.clothnest.util.StringNormalizer;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
+import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -95,7 +96,7 @@ public class CartActivity extends AppCompatActivity {
         cartAdapter = new CartAdapter(CartActivity.this, R.layout.cart_item, cartItemArrayList, new CartAdapter.ICLickListenerOnItemListview() {
             @Override
             public void addItemToWishlist(String keyProduct) {
-                Wishlist.addProductToWishlist(keyProduct);
+                Wishlist.addProductToWishlist(CartActivity.this, keyProduct);
             }
             @Override
             public void removeItem(int position, String docID) {
@@ -202,6 +203,7 @@ public class CartActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(List<DocumentSnapshot> documentSnapshots) {
                                     // Ref Info cart
+                                    cartItem.setKeyProduct(documentSnapshots.get(0).getId());
                                     cartItem.setName(documentSnapshots.get(0).getString("name"));
                                     cartItem.setPrice(documentSnapshots.get(0).getDouble("price"));
                                     cartItem.setImg(documentSnapshots.get(0).getString("main_img"));
@@ -323,13 +325,17 @@ public class CartActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(CartActivity.this, "Delete success", Toast.LENGTH_SHORT).show();
+                        CustomToast.DisplayToast(CartActivity.this,
+                                4,
+                                "Remove from cart successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CartActivity.this, "Delete fails", Toast.LENGTH_SHORT).show();
+                        CustomToast.DisplayToast(CartActivity.this,
+                                2,
+                                "Remove from cart fail");
                     }
                 });
     }

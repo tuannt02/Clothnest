@@ -1,14 +1,28 @@
 package nhom7.clothnest.models;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.PropertyName;
+
 public class Transaction {
     public static final String COLLECTION_TRANSACTION = "transactions";
     private String idTransaction;
     private String nameTransaction;
     private double priceTransaction;
-    private String  dateTransaction;
+    private String dateTransaction;
     private String stateTransaction;
-    private  int deliveryTransaction;
+    private int deliveryTransaction;
     private int discountTransaction;
+    @PropertyName("address_ref")
+    private DocumentReference addressTransaction;
+
+
+    public DocumentReference getAddressTransaction() {
+        return addressTransaction;
+    }
+
+    public void setAddressTransaction(DocumentReference addressTransaction) {
+        this.addressTransaction = addressTransaction;
+    }
 
     public int getDeliveryTransaction() {
         return deliveryTransaction;
@@ -26,8 +40,7 @@ public class Transaction {
         this.discountTransaction = discountTransaction;
     }
 
-    public Transaction()
-    {
+    public Transaction() {
 
     }
 

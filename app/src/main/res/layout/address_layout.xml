@@ -69,8 +69,8 @@
         app:dividerColor="@color/dividerColor"
         android:theme="@style/Theme.AppCompat"/>
 
-    <ImageButton
-        android:id="@+id/imagebutton_edit_address"
+    <ImageView
+        android:id="@+id/imageview_edit_address"
         android:layout_width="52dp"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -78,7 +78,6 @@
         android:adjustViewBounds="true"
         android:padding="15dp"
         android:scaleType="fitCenter"
-        android:contentDescription="Edit Button"
         android:src="@drawable/ic_edit" />
 
 </LinearLayout>

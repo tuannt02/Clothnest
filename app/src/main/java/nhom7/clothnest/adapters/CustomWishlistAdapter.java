@@ -74,7 +74,7 @@ public class CustomWishlistAdapter extends ArrayAdapter<Wishlist> {
                     public void onClickItem(int pos) {
                         // 0: Add to cart, 1: Remove from wishlist
                         if(pos == 0)    { // Add to cart
-
+                            AddToCart addToCart = new AddToCart(getContext(), wishlistItem.getKeyProduct());
                         }
 
                         if(pos == 1)    { // Remove from wishlist

@@ -178,6 +178,11 @@ public class TransactionAdapter extends BaseAdapter {
                                         });
                                     }
 
+                                    if (key.equals("address_ref")) {
+                                        transaction.setAddressTransaction((DocumentReference) map.get(key));
+                                        transactionAdapter.notifyDataSetChanged();
+                                    }
+
                                 }
                             }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +8,8 @@
     tools:context=".activities.Admin_ModifyActivity">
 
     <LinearLayout
+        android:id="@+id/top_modify"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
@@ -37,13 +39,17 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:layout_below="@id/top_modify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dividerColor="@color/dividerColor" />
 
     <ListView
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/top_modify"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/more_ModifyList"/>
 
-</LinearLayout>
+
+</RelativeLayout>

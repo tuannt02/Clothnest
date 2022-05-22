@@ -47,6 +47,7 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_admin_main.xml" value="0.20833333333333334" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_change_password.xml" value="0.23109243697478993" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_chat.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_checkout.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_color.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/activity_government_approval.xml" value="0.25" />
@@ -64,8 +65,11 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/address_layout.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/admin_bottom_navigation_view.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/bottom_navigation_view.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/cart_item.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/chat_room.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/checkout_item.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/combobox_item_address.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/dialog_admin_add.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_comment.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/fragment_profile.xml" value="0.176" />
@@ -81,6 +85,8 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/item_size.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/message_received.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/message_sent.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/payment_method_dialog.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchase_address_layout.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_item.xml" value="0.264" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_list.xml" value="0.10989583333333333" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_margin_bottom.xml" value="0.25" />
@@ -101,6 +107,7 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_icon.xml" value="0.168" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_chat_fill.xml" value="0.168" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/splash_screen.xml" value="0.168" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_banners.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_main.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_voucher.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_cart.xml" value="0.25" />
@@ -109,15 +116,15 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_see_all_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
-        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_slider_collection.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_transaction_detail.xml" value="0.2" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/banner_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/bottom_navigation_view.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_transaction.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_transaction_detail.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/grant_permissions_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/image_container.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/item_container_user.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/layout_transaction.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.25" />
@@ -125,7 +132,6 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/admin_bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/bg_key.xml" value="0.1375" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_cart_select.xml" value="0.14" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_input_voucher.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear.xml" value="0.1365" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear2.xml" value="0.1" />
@@ -135,7 +141,6 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear6.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear7.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear8.xml" value="0.14" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear9.xml" value="0.14" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear_bg_hong.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_radius_linear_bg_xanh.xml" value="0.1" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/circle_button.xml" value="0.1785" />
@@ -189,24 +194,16 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_test.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_test_add_append.xml" value="0.22" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/add_color_dialog.xml" value="0.1421875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/add_to_cart_dialog.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/banner_item.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/bottom_navigation_view.xml" value="0.1796875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_color_item.xml" value="0.22" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_color_item_selected.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_item.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_size_item.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/color_item.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/color_item_selected.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/dialog_admin_add.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/dialog_custom.xml" value="0.1796875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/filter_color_item.xml" value="0.1421875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/filter_size_item.xml" value="0.1421875" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_filter.xml" value="0.1421875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.18215417106652587" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_modify.xml" value="0.22" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_more.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_more.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_profile.xml" value="0.1796875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_purchases.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.16666666666666666" />
@@ -215,7 +212,6 @@
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_wishlist.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/grant_permissions_item.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.11666666666666667" />
-        <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/item_size.xml" value="0.1421875" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/option_menu_customize.xml" value="0.22" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/option_menu_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/layout/progress_bar.xml" value="0.22" />
@@ -247,7 +243,6 @@
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.25" />
         <entry key="..\:/source/repos/NhapMonUDDD/Clothnest2/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.67" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2575" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/add_image.xml" value="0.207" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/background_icon.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/background_profile_appbar.xml" value="0.2575" />
@@ -311,39 +306,21 @@
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/transaction_selector.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/wishlist_selector.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_about.xml" value="0.32447916666666665" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_main.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_product_detail.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_cart.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_color.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_product_detail.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/add_color_dialog.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/cart_item.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/category_item.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/check_item.xml" value="0.3109375" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/color_item.xml" value="0.67" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/color_item_selected.xml" value="0.9" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/dialog_admin_add.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/filter_check_item.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/filter_color_item.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/filter_size_item.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_admin_productlist.xml" value="0.32277834525025534" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_admin_products.xml" value="0.33" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_comment.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_filter.xml" value="0.33" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_products.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search_products.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_wishlist.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_admin_productdetail_category.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_admin_productlist.xml" value="0.32277834525025534" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_color.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_stock.xml" value="0.32277834525025534" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_stock_image.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/progress_bar.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/slider_item.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.67" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/wishlist_item.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/Merge/Clothnest/app/src/main/res/drawable/size_background.xml" value="0.1655" />
         <entry key="..\:/source/repos/NhapMonUDDD/Merge/Clothnest/app/src/main/res/layout/activity_cart.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/Merge/Clothnest/app/src/main/res/layout/activity_product_detail.xml" value="0.32916666666666666" />
@@ -362,7 +339,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.16666666666666666" />
+        <option name="scale" value="0.22" />
       </ProjectState>
     </option>
   </component>

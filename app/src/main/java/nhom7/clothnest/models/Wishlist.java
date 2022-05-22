@@ -1,5 +1,7 @@
 package nhom7.clothnest.models;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class Wishlist {
 
@@ -119,7 +122,7 @@ public class Wishlist {
                 '}';
     }
 
-    public static void addProductToWishlist(String keyProduct) {
+    public static void addProductToWishlist(Context context, String keyProduct) {
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("products").document(keyProduct);
@@ -142,13 +145,17 @@ public class Wishlist {
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
-                                                System.out.println("Them vap wishlist thanh cong");
+                                                CustomToast.DisplayToast(context,
+                                                        1,
+                                                        "Add to wishlist successfully");
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                System.out.println("Them vap wishlist that bai");
+                                                CustomToast.DisplayToast(context,
+                                                        2,
+                                                        "Add to wishlist fail");
                                             }
                                         });
                             }
@@ -157,7 +164,7 @@ public class Wishlist {
                 });
     }
 
-    public static void removeWishlistItemFromFirestore(String wishlistID) {
+    public static void removeWishlistItemFromFirestore(Context context, String wishlistID) {
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -167,13 +174,17 @@ public class Wishlist {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-//                        Toast.makeText(getContext(), "Delete success", Toast.LENGTH_SHORT).show();
+                        CustomToast.DisplayToast(context,
+                                4,
+                                "Remove from wishlist successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getContext(), "Delete fails", Toast.LENGTH_SHORT).show();
+                        CustomToast.DisplayToast(context,
+                                2,
+                                "Remove from wishlist fail");
                     }
                 });
     }

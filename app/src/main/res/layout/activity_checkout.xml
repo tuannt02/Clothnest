@@ -55,10 +55,11 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/relativelayout_choose_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_radius_linear"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/border_radius_linear"
                 android:padding="12dp">
 
                 <ImageView
@@ -96,17 +97,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:paddingVertical="2dp"
-                        android:text="Phan Thanh Tú"
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:fontFamily="@font/lato"
-                        android:paddingVertical="2dp"
-                        android:text="|"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -116,7 +106,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:paddingVertical="2dp"
-                        android:text="0975 446 346"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -130,7 +119,6 @@
                     android:layout_marginLeft="28dp"
                     android:fontFamily="@font/lato"
                     android:paddingVertical="2dp"
-                    android:text="32 đường số 10, khu phố 3"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
@@ -142,7 +130,6 @@
                     android:layout_marginLeft="28dp"
                     android:fontFamily="@font/lato"
                     android:paddingVertical="2dp"
-                    android:text="Linh Trung, Thủ Đức, TP Hồ Chí Minh"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
@@ -154,15 +141,13 @@
                 android:layout_marginTop="12dp"
                 android:background="#E0E0E0" />
 
-<!--            Listview here-->
+            <!--            Listview here-->
             <ListView
                 android:id="@+id/listview_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="360dp"
                 android:divider="@null"
-                android:nestedScrollingEnabled="true"
-                tools:listitem="@layout/cart_item"
-                />
+                android:nestedScrollingEnabled="true" />
 
 
             <View
@@ -174,150 +159,134 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                >
+                android:layout_marginTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TOTAL"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/lato"
                     android:layout_centerVertical="true"
-                    />
+                    android:fontFamily="@font/lato"
+                    android:text="Subtotal"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/checkout_total_txt_discount_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:textAlignment="textEnd"
                     android:text="$600"
+                    android:textAlignment="textEnd"
                     android:textColor="@color/pri_col"
-                    android:textSize="24dp"
-                    android:textStyle="bold"
-                    />
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/checkout_total_txt_regular_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/checkout_total_txt_discount_price"
-                    android:textAlignment="textEnd"
-                    android:text="$702"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/checkout_total_txt_discount_price"
                     android:background="@drawable/strikethrough_foreground"
-                    />
+                    android:text="$702"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_marginTop="32dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_radius_linear_bg_xanh"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_toLeftOf="@+id/checkout_dvd"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_right_arrow" />
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/checkout_deli_method_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_fast_delivery"
-                    android:drawablePadding="6dp"
-                    android:fontFamily="@font/lato"
-                    android:text="Delivery method"
+                    android:fontFamily="@font/lato_bold"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-
-
-                <TextView
-                    android:id="@+id/checkout_deli_method_txt_method"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/checkout_deli_method_title"
-                    android:layout_marginLeft="28dp"
-                    android:fontFamily="@font/lato"
-                    android:paddingVertical="2dp"
-                    android:text="Giao hàng nhanh"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/checkout_deli_method_txt_date_rev"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/checkout_deli_method_txt_method"
-                    android:layout_marginLeft="28dp"
-                    android:fontFamily="@font/lato"
-                    android:paddingVertical="2dp"
-                    android:text="Nhận hàng vào 01/05 - 10/05"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="16sp"
+                    android:text="Delivery fee" />
 
                 <View
-                    android:id="@+id/checkout_dvd"
-                    android:layout_width="1dp"
-                    android:layout_height="60dp"
-                    android:layout_centerVertical="true"
-                    android:background="@color/black"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="60dp"
-                    />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textview_delivery_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:orientation="vertical"
-                    >
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
 
-                    <TextView
-                        android:id="@+id/checkout_deli_method_regular_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$20"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/lato"
-                        android:background="@drawable/strikethrough_foreground"
-                        android:layout_marginBottom="6dp"
-                        />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/checkout_deli_method_discount_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$10"
-                        android:textSize="20sp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/lato"
-                        />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginTop="24dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="Discount" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/textview_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:text="Discount" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/textview_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/black"
+                    android:text="$1000"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/border_radius_linear_bg_hong"
                 android:padding="12dp">
 
@@ -342,36 +311,24 @@
                     android:textStyle="bold" />
 
 
-
                 <TextView
-                    android:id="@+id/checkout_deli_voucher_name"
+                    android:id="@+id/textview_voucher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/checkout_deli_voucher_title"
                     android:layout_marginLeft="28dp"
                     android:fontFamily="@font/lato"
                     android:paddingVertical="2dp"
-                    android:text="Giảm giá 10% cho đơn hàng từ $400"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/checkout_deli_addr_voucher_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/checkout_deli_voucher_name"
-                    android:layout_marginLeft="28dp"
-                    android:fontFamily="@font/lato"
-                    android:paddingVertical="2dp"
-                    android:text="Mức giảm 10%"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginTop="24dp"
+                android:id="@+id/relativelayout_choose_payment_method"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/border_radius_linear"
                 android:padding="12dp">
 
@@ -397,14 +354,13 @@
 
 
                 <TextView
-                    android:id="@+id/checkout_deli_payment_method"
+                    android:id="@+id/textview_payment_method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/checkout_deli_payment_title"
                     android:layout_marginLeft="28dp"
                     android:fontFamily="@font/lato"
                     android:paddingVertical="2dp"
-                    android:text="Cash"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
@@ -413,17 +369,16 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/lato"
+                android:padding="10dp"
                 android:text="PAY NOW"
                 android:textSize="24dp"
                 android:textStyle="bold"
-                android:padding="10dp"
-                android:fontFamily="@font/lato"
-                app:cornerRadius="12dp"
-                />
+                app:cornerRadius="12dp" />
         </LinearLayout>
 
 

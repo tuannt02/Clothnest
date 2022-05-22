@@ -25,7 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -81,7 +83,7 @@ public class WishlistFragment extends Fragment {
             public void removeItem(int position, String docID) {
                 wishlistArray.remove(position);
                 customWishlistAdapter.notifyDataSetChanged();
-                Wishlist.removeWishlistItemFromFirestore(docID);
+                Wishlist.removeWishlistItemFromFirestore(getContext(), docID);
                 updateQuantityItemInListView(root, wishlistArray.size());
                 updateViewEmpty(root, wishlistArray.size());
             }
@@ -102,64 +104,65 @@ public class WishlistFragment extends Fragment {
         customProgressBar.show();
         // Lấy tất cả wishlist của một user
         db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            // Lặp qua từng document
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Wishlist wishlistItem = new Wishlist();
-                                Map<String, Object> tempObject;
-                                tempObject = document.getData();
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            System.out.println("Listen fail");
+                            return;
+                        }
 
-                                String docID = document.getId();
-                                wishlistItem.setKey(docID);
+                        wishlistArray.clear();
+                        for (QueryDocumentSnapshot doc : value) {
+                            Wishlist wishlistItem = new Wishlist();
+                            Map<String, Object> tempObject;
+                            tempObject = doc.getData();
 
-                                // Lặp qua từng field của một document
-                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
-                                while(myVeryOwnIterator.hasNext()) {
-                                    String key=(String)myVeryOwnIterator.next();
+                            String docID = doc.getId();
+                            wishlistItem.setKey(docID);
 
-                                    if(key.equals("date_add"))   {
-                                        Timestamp timestamp = (Timestamp)tempObject.get(key);
-                                        wishlistItem.setDate_add(timestamp);
-                                    }
+                            // Lặp qua từng field của một document
+                            Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+                            while(myVeryOwnIterator.hasNext()) {
+                                String key=(String)myVeryOwnIterator.next();
 
-                                    if (key.equals("product_id"))    {
-                                        DocumentReference docRef = (DocumentReference) tempObject.get(key);
-                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                String productRef = documentSnapshot.getReference().getId();
-                                                String name = documentSnapshot.getString("name");
-                                                String main_img = documentSnapshot.getString("main_img");
-                                                Double price = documentSnapshot.getDouble("price");
-                                                int discount = (int)Math.round(documentSnapshot.getDouble("discount"));
-
-                                                wishlistItem.setKeyProduct(productRef);
-                                                wishlistItem.setProductName(name);
-                                                wishlistItem.setProductImage(main_img);
-                                                wishlistItem.setRegularCost(price);
-                                                wishlistItem.setDiscount(discount);
-                                                wishlistArray.add(wishlistItem);
-                                                customWishlistAdapter.notifyDataSetChanged();
-                                                updateQuantityItemInListView(root, wishlistArray.size());
-                                                updateViewEmpty(root, wishlistArray.size());
-                                            }
-                                        });
-                                    }
-
-
+                                if(key.equals("date_add"))   {
+                                    Timestamp timestamp = (Timestamp)tempObject.get(key);
+                                    wishlistItem.setDate_add(timestamp);
                                 }
 
+                                if (key.equals("product_id"))    {
+                                    DocumentReference docRef = (DocumentReference) tempObject.get(key);
+                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            String productRef = documentSnapshot.getReference().getId();
+                                            String name = documentSnapshot.getString("name");
+                                            String main_img = documentSnapshot.getString("main_img");
+                                            Double price = documentSnapshot.getDouble("price");
+                                            int discount = (int)Math.round(documentSnapshot.getDouble("discount"));
+
+                                            wishlistItem.setKeyProduct(productRef);
+                                            wishlistItem.setProductName(name);
+                                            wishlistItem.setProductImage(main_img);
+                                            wishlistItem.setRegularCost(price);
+                                            wishlistItem.setDiscount(discount);
+                                            wishlistArray.add(wishlistItem);
+                                            customWishlistAdapter.notifyDataSetChanged();
+                                            updateQuantityItemInListView(root, wishlistArray.size());
+                                            updateViewEmpty(root, wishlistArray.size());
+                                        }
+                                    });
+                                }
+
+
                             }
-                            customProgressBar.dismiss();
-                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        // End loop
+                        customProgressBar.dismiss();
                     }
                 });
+
 
 
     }

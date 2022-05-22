@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.github.ybq.android.spinkit.style.WanderingCubes;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -122,6 +123,8 @@ public class SignInActivity extends AppCompatActivity {
         String txtEmail = input_email.getEditText().getText().toString().trim();
         String txtPw = input_pw.getEditText().getText().toString().trim();
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         customProgressBar.show();
         auth.signInWithEmailAndPassword(txtEmail, txtPw)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -139,17 +142,25 @@ public class SignInActivity extends AppCompatActivity {
                             userInfo_sqlite.setInfoUser();
 
                             // Sau khi sign dựa vào field type của Collection User để quyết định chuyển qua màn hình nào
-                            int typeUser = defineUser();
+                            db.collection(User.COLLECTION_NAME)
+                                    .document(task.getResult().getUser().getUid())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            ValidateLogin.role = (int)Math.round(documentSnapshot.getDouble("type"));
 
-                            if(typeUser == 1)   {
-                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }
-                            else    { // typeUser == 2 or 3
-                                Intent intent = new Intent(SignInActivity.this, Admin_MainActivity.class);
-                                startActivity(intent);
-                            }
-                            finishAffinity();
+                                            if(ValidateLogin.role == 1)   {
+                                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                            }
+                                            if(ValidateLogin.role == 2 || ValidateLogin.role == 3)  {
+                                                Intent intent = new Intent(SignInActivity.this, Admin_MainActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             input_pw.setError(ValidateLogin.ERROR_CODE4);
@@ -159,14 +170,4 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private int defineUser()    {
-        int typeUser = 1;
-        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-
-
-        return typeUser;
-    }
 }

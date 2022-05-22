@@ -13,14 +13,18 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_GrantPermissionsActivity;
 import nhom7.clothnest.activities.Admin_ModifyActivity;
 import nhom7.clothnest.activities.Admin_StatisticActivity;
+import nhom7.clothnest.activities.SignInActivity;
 import nhom7.clothnest.adapters.CategoryAdapter;
 import nhom7.clothnest.models.CategoryItem;
+import nhom7.clothnest.util.ValidateLogin;
 
 public class MoreFragment extends Fragment {
 
@@ -40,6 +44,11 @@ public class MoreFragment extends Fragment {
         itemGrantPermission = mView.findViewById(R.id.more_ItemGrantPermisssion);
         btnLogout = mView.findViewById(R.id.more_Btn_Logout);
 
+        // Check permission
+        if(ValidateLogin.role == 2) {
+            itemStatistic.setVisibility(View.GONE);
+            itemGrantPermission.setVisibility(View.GONE);
+        }
 
         // Set on click
         SetOnClick();
@@ -77,7 +86,10 @@ public class MoreFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), SignInActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
     }

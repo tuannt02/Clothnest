@@ -31,6 +31,7 @@ import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.TransactionDetailAdapter;
+import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.Transaction;
 import nhom7.clothnest.models.Transaction_Detail;
@@ -41,12 +42,13 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private ListView listView;
     private TransactionDetailAdapter transactionDetailAdapter;
     private TextView customerTransactionDetail, dateTransactionDetail, stateTransactionDetail;
-    private String nameDetail, dateDetail, stateDetail, idDetail;
+    private String nameDetail, dateDetail, stateDetail, idDetail, addressDetail;
     private RelativeLayout relativeLayout;
     private TextView address, name, phone, qty, discount, deliveryfee, subtotal, total;
     private int discountDetail, deliveryDetail;
     private double stotal = 0.0;
     private int count = 0;
+    private Address addr;
 
 
     @Override
@@ -56,7 +58,19 @@ public class TransactionDetailActivity extends AppCompatActivity {
         reference();
         saveData();
         getDetailData();
+
         getProductTransactionDetail();
+    }
+
+    private void getDetailData() {
+        String addresstransaction = addr.getProvince() + ", " + addr.getDistrict() + ", " + addr.getWard() + ", " + addr.detail;
+        address.setText(addresstransaction);
+
+        String nametransaction = addr.fullName;
+        name.setText(nametransaction);
+
+        String phonetransaction = addr.phoneNumber;
+        phone.setText(phonetransaction);
     }
 
 
@@ -162,49 +176,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 });
     }
 
-    private void getDetailData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Transaction.COLLECTION_TRANSACTION + '/' + idDetail + '/' + Transaction_Detail.COLLECTION_TRANSACTIONDETAIL)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                Map<String, Object> map = document.getData();
-                                Iterator iterator = map.keySet().iterator();
-                                while (iterator.hasNext()) {
-                                    String key = (String) iterator.next();
-
-                                    if (key.equals("addrRef")) {
-                                        DocumentReference documentReference = (DocumentReference) map.get(key);
-                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                String addresstransaction = documentSnapshot.getString("province") + ", " + documentSnapshot.getString("district") + ", " + documentSnapshot.getString("ward") + ", " + documentSnapshot.getString("street_name");
-                                                address.setText(addresstransaction);
-
-                                                String nametransaction = documentSnapshot.getString("name");
-                                                name.setText(nametransaction);
-
-                                                String phonetransaction = documentSnapshot.getString("phone_num");
-                                                phone.setText(phonetransaction);
-                                            }
-                                        });
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-                });
-    }
 
     private void saveData() {
         Intent intent = getIntent();
-
+        addr = (Address) intent.getSerializableExtra("address");
         nameDetail = intent.getStringExtra("customer");
         dateDetail = intent.getStringExtra("date");
         stateDetail = intent.getStringExtra("state");

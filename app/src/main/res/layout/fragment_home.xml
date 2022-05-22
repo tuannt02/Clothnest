@@ -67,10 +67,12 @@
 
 
         <androidx.viewpager2.widget.ViewPager2
+            android:adjustViewBounds="true"
             android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="20dp" />
+            android:layout_width="403.2dp"
+            android:layout_height="169dp"
+            android:layout_gravity="center"
+            />
 
         <TextView
             android:id="@+id/txtArrivals"

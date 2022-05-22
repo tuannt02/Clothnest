@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -46,37 +47,31 @@ public class CustomAddressAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        TextView fullName, detail, address, phoneNumber;
+        ImageView edit;
+
+        view = LayoutInflater.from(context).inflate(R.layout.address_layout, viewGroup, false);
+
         Log.d("customAddressAdapter", "Get View successfully");
-        ViewHolder viewHolder = null;
+        fullName = view.findViewById(R.id.textview_fullname_address);
+        detail = view.findViewById(R.id.textview_detail_address);
+        address = view.findViewById(R.id.textview_address_address);
+        phoneNumber = view.findViewById(R.id.textview_phoneNumber_address);
+        edit = view.findViewById(R.id.imageview_edit_address);
 
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.address_layout, viewGroup, false);
+        Address currAddress = addresses.get(i);
 
-            viewHolder = new ViewHolder();
-            viewHolder.fullName = view.findViewById(R.id.textview_fullname_address);
-            viewHolder.detail = view.findViewById(R.id.textview_detail_address);
-            viewHolder.address = view.findViewById(R.id.textview_address_address);
-            viewHolder.phoneNumber = view.findViewById(R.id.textview_phoneNumber_address);
-            viewHolder.edit = view.findViewById(R.id.imagebutton_edit_address);
-
-            view.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) view.getTag();
-        }
-
-        Address address = addresses.get(i);
-
-        viewHolder.fullName.setText(address.fullName);
-        viewHolder.detail.setText(address.detail);
-        viewHolder.address.setText(address.getProvince() + ", " + address.getDistrict() + ", " + address.getWard());
-        viewHolder.phoneNumber.setText(address.phoneNumber);
+        fullName.setText(currAddress.fullName);
+        detail.setText(currAddress.detail);
+        address.setText(currAddress.getProvince() + ", " + currAddress.getDistrict() + ", " + currAddress.getWard());
+        phoneNumber.setText(currAddress.phoneNumber);
 
         // set btnEdit click listener
-        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent("edit-address");
-                intent.putExtra("address", address);
+                intent.putExtra("address", currAddress);
                 intent.putExtra("index", i);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                 if (address == null) {
@@ -88,8 +83,4 @@ public class CustomAddressAdapter extends BaseAdapter {
         return view;
     }
 
-    static class ViewHolder {
-        TextView fullName, detail, address, phoneNumber;
-        ImageButton edit;
-    }
 }

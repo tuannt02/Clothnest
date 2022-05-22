@@ -38,6 +38,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.activities.TransactionDetailActivity;
 import nhom7.clothnest.adapters.Product_ThumbnailAdapter;
 import nhom7.clothnest.adapters.TransactionAdapter;
+import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.Transaction;
 import nhom7.clothnest.models.User;
@@ -70,14 +71,23 @@ public class TransactionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 transaction = arrayList.get(i);
-                Intent intent = new Intent(getContext(), TransactionDetailActivity.class);
-                intent.putExtra("customer", transaction.getNameTransaction());
-                intent.putExtra("date", transaction.getDateTransaction());
-                intent.putExtra("state", transaction.getStateTransaction());
-                intent.putExtra("key", transaction.getIdTransaction());
-                intent.putExtra("discount",transaction.getDiscountTransaction());
-                intent.putExtra("delivery",transaction.getDeliveryTransaction());
-                startActivity(intent);
+                transaction.getAddressTransaction().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        Address address = documentSnapshot.toObject(Address.class);
+                        Intent intent = new Intent(getContext(), TransactionDetailActivity.class);
+                        intent.putExtra("customer", transaction.getNameTransaction());
+                        intent.putExtra("date", transaction.getDateTransaction());
+                        intent.putExtra("state", transaction.getStateTransaction());
+                        intent.putExtra("key", transaction.getIdTransaction());
+                        intent.putExtra("discount", transaction.getDiscountTransaction());
+                        intent.putExtra("delivery", transaction.getDeliveryTransaction());
+                        intent.putExtra("address", address);
+
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }

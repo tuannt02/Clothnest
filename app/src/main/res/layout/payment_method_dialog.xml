@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="20dp">
+
+
+    <TextView
+        android:id="@+id/textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/lato_black"
+        android:text="Choose Payment Method"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
+
+    <RadioGroup
+        android:id="@+id/radiogroup_payment_method"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radiobutton_cod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/primary"
+            android:checked="true"
+            android:text="COD" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_momo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/primary"
+            android:text="MOMO" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_paypal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/primary"
+            android:text="PAYPAL" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textview_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/lato_bold"
+        android:padding="12dp"
+        android:text="Select"
+        android:textColor="@color/primaryBlue"
+        android:textSize="16dp" />
+
+</LinearLayout>

@@ -18,11 +18,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Purchase;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.R;
@@ -39,11 +42,13 @@ public class CustomPurchaseAdapter extends BaseAdapter {
     private String currTransactionId;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     private SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy/MM/dd");
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     public CustomPurchaseAdapter(Context context, ArrayList<Purchase> purchases) {
         this.context = context;
         this.purchases = purchases;
         layoutInflater = LayoutInflater.from(context);
+        df.setRoundingMode(RoundingMode.CEILING);
     }
 
     @Override
@@ -88,10 +93,22 @@ public class CustomPurchaseAdapter extends BaseAdapter {
             }
         }
 
-        // Total
         Purchase currPurchase = purchases.get(i);
+        Address address = currPurchase.getAddress();
+        if (address != null) {
+            LinearLayout addressLayout = (LinearLayout) layoutInflater.inflate(R.layout.purchase_address_layout, null);
+            ((TextView) addressLayout.findViewById(R.id.textview_name)).setText(address.fullName);
+            ((TextView) addressLayout.findViewById(R.id.textview_detail)).setText(address.detail);
+            String addressText = address.getProvince() + ", " + address.getDistrict() + ", " + address.getWard();
+            ((TextView) addressLayout.findViewById(R.id.textview_address)).setText(addressText);
+            ((TextView) addressLayout.findViewById(R.id.textview_phone)).setText(address.phoneNumber);
+            list.addView(addressLayout);
+        }
+
+        // Total
         LinearLayout totalLayout = (LinearLayout) layoutInflater.inflate(R.layout.purchases_total, null);
-        ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getTotal()));
+        String totalStr = df.format(currPurchase.getTotal());
+        ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$" + totalStr);
         ((TextView) totalLayout.findViewById(R.id.textview_discount)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getDiscount()));
         ((TextView) totalLayout.findViewById(R.id.textview_deliveryFee)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getDeliveryFee()));
         TextView tvOrderDate = totalLayout.findViewById(R.id.textview_orderDate);
