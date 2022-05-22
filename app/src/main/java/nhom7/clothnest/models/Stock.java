@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 public class Stock {
+    public static final String COLLECTION_NAME = "stocks";
     private String sizeID;
     private String colorID;
     private String sizeName, colorName;

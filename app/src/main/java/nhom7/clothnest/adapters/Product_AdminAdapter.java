@@ -24,6 +24,7 @@ import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.Product_Admin;
+import nhom7.clothnest.models.Product_Thumbnail;
 
 public class Product_AdminAdapter extends BaseAdapter {
     private Context mContext;
@@ -38,6 +39,8 @@ public class Product_AdminAdapter extends BaseAdapter {
     private TextView tvID;
     private TextView tvCost;
     private TextView tvStock;
+    public static int nProduct = 0, nStock = 0;
+
 
     public Product_AdminAdapter(Context mContext, ArrayList<Product_Admin> productAdminList) {
         this.mContext = mContext;
@@ -186,14 +189,25 @@ public class Product_AdminAdapter extends BaseAdapter {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            int nProduct = 0, nStock = 0;
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 nProduct++;
                                 tvNumOfProduct.setText(nProduct + "");
-                                int stock = (int) Math.round(document.getDouble("stock"));
-                                nStock += stock;
-                                tvNumOfStock.setText(nStock + "");
+
+                                db.collection("products/" + document.getId() + "/stocks")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    for(QueryDocumentSnapshot stock_doc : task.getResult()){
+                                                        int stock = (int) Math.round(stock_doc.getDouble("quantity"));
+                                                        nStock += stock;
+                                                        tvNumOfStock.setText(nStock + "");
+                                                    }
+                                                }
+                                            }
+                                        });
                             }
                         }
                     }

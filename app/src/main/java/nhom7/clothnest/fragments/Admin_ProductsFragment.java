@@ -1,9 +1,11 @@
 package nhom7.clothnest.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.Admin_ProductDetailActivity;
 import nhom7.clothnest.adapters.Product_AdminAdapter;
 import nhom7.clothnest.models.Product_Admin;
 
@@ -23,6 +26,7 @@ public class Admin_ProductsFragment extends Fragment {
     Product_AdminAdapter adminAdapter;
     ListView listView;
     TextView tvProducts, tvStock;
+    ImageView ivAdd, ivSort;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +38,18 @@ public class Admin_ProductsFragment extends Fragment {
 
         getProducts();
 
+        getEvents();
+
         return mView;
+    }
+
+    private void getEvents() {
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Admin_ProductDetailActivity.class));
+            }
+        });
     }
 
     private void getProducts() {
@@ -51,5 +66,7 @@ public class Admin_ProductsFragment extends Fragment {
         listView = mView.findViewById(R.id.admin_productList_productList);
         tvProducts = mView.findViewById(R.id.admin_productList_numOfProduct);
         tvStock = mView.findViewById(R.id.admin_productList_numOfStocks);
+        ivAdd = mView.findViewById(R.id.admin_products_ivAdd);
+        ivSort = mView.findViewById(R.id.admin_products_ivSort);
     }
 }

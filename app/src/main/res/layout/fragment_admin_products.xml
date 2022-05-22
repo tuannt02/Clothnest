@@ -23,14 +23,14 @@
             android:textSize="24dp" />
 
         <ImageView
-            android:id="@+id/admin_products_addButton"
+            android:id="@+id/admin_products_ivAdd"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="10dp"
             android:src="@drawable/products_add" />
 
         <ImageView
-            android:id="@+id/admin_products_sortButton"
+            android:id="@+id/admin_products_ivSort"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="20dp"
