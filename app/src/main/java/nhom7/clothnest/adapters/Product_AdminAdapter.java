@@ -25,6 +25,7 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.models.Product_Thumbnail;
+import nhom7.clothnest.models.Stock;
 
 public class Product_AdminAdapter extends BaseAdapter {
     private Context mContext;
@@ -164,14 +165,24 @@ public class Product_AdminAdapter extends BaseAdapter {
                                         productAdmin.setMainImage((String) tempObject.get(key));
                                         adapter.notifyDataSetChanged();
                                     }
-
-                                    //Set stock
-                                    if (key.equals("stock")) {
-                                        int stock = (int) Math.round(document.getDouble(key));
-                                        productAdmin.setStock(stock);
-                                        adapter.notifyDataSetChanged();
-                                    }
                                 }
+
+                                //Set stock
+                                db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    int stock = 0;
+                                                    for(QueryDocumentSnapshot stock_ref : task.getResult()){
+                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                        productAdmin.setStock(stock);
+                                                        adapter.notifyDataSetChanged();
+                                                    }
+                                                }
+                                            }
+                                        });
 
                             }
                         }

@@ -44,8 +44,10 @@ import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.SliderItem;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
+import nhom7.clothnest.util.AddToCart;
 
 public class ProductDetailActivity extends AppCompatActivity {
+    String productID;
     //Slider
     ViewPager viewPager;
     CircleIndicator circleIndicator;
@@ -83,7 +85,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void processDetail() {
-        String productID = (String) getIntent().getSerializableExtra("selected_Thumbnail");
+        productID = (String) getIntent().getSerializableExtra("selected_Thumbnail");
 
         getProductDetailFromFirestore(productID);
     }
@@ -187,7 +189,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         ivAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                AddToCart addToCartDialog = new AddToCart(getApplicationContext(), productID);
             }
         });
     }
