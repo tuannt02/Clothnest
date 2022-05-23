@@ -1,6 +1,7 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,10 +80,14 @@ public class CustomPurchaseAdapter extends BaseAdapter {
 
                 Picasso.get().load(purchaseItem.getImage()).into(((ImageView) item.findViewById(R.id.imageview_purchase)));
                 ((TextView) item.findViewById(R.id.purchases_item_title)).setText(purchaseItem.getName());
-                ((TextView) item.findViewById(R.id.purchases_item_color)).setText("Color: " + purchaseItem.getColor());
-                ((TextView) item.findViewById(R.id.purchases_item_size)).setText("Size: " + purchaseItem.getSize());
-                ((TextView) item.findViewById(R.id.purchases_item_price)).setText("$" + purchaseItem.getSalePrice().toString().replaceAll("\\.?0*$", ""));
+                ((TextView) item.findViewById(R.id.purchases_item_color)).setText(purchaseItem.getColor());
+                ((TextView) item.findViewById(R.id.purchases_item_size)).setText(purchaseItem.getSize());
+                ((TextView) item.findViewById(R.id.purchases_item_price)).setText("$ " + purchaseItem.getSalePrice().toString().replaceAll("\\.?0*$", ""));
                 ((TextView) item.findViewById(R.id.purchases_item_qty)).setText("" + purchaseItem.getQuantity());
+                TextView tvNormalPrice = item.findViewById(R.id.purchases_item_normal_price);
+                tvNormalPrice.setText("$ " + RemoveTrailingZero.removeTrailing(purchaseItem.getPrice()));
+                tvNormalPrice.setPaintFlags(tvNormalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                 (item.findViewById(R.id.purchases_item_review)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -108,9 +113,10 @@ public class CustomPurchaseAdapter extends BaseAdapter {
         // Total
         LinearLayout totalLayout = (LinearLayout) layoutInflater.inflate(R.layout.purchases_total, null);
         String totalStr = df.format(currPurchase.getTotal());
-        ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$" + totalStr);
-        ((TextView) totalLayout.findViewById(R.id.textview_discount)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getDiscount()));
-        ((TextView) totalLayout.findViewById(R.id.textview_deliveryFee)).setText("$" + RemoveTrailingZero.removeTrailing(currPurchase.getDeliveryFee()));
+        ((TextView) totalLayout.findViewById(R.id.textview_subtotal)).setText("$ " + RemoveTrailingZero.removeTrailing(currPurchase.getSubTotal()));
+        ((TextView) totalLayout.findViewById(R.id.textview_totalPurchases)).setText("$ " + totalStr);
+        ((TextView) totalLayout.findViewById(R.id.textview_discount)).setText("$ " + RemoveTrailingZero.removeTrailing(currPurchase.getDiscount()));
+        ((TextView) totalLayout.findViewById(R.id.textview_deliveryFee)).setText("$ " + RemoveTrailingZero.removeTrailing(currPurchase.getDeliveryFee()));
         TextView tvOrderDate = totalLayout.findViewById(R.id.textview_orderDate);
         tvOrderDate.setText(getDateInFormat(currPurchase.getOrderDate()));
 

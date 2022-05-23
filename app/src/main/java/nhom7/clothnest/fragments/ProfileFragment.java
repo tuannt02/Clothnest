@@ -12,18 +12,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.EditProfileActivity;
+import nhom7.clothnest.util.Constants;
 
 public class ProfileFragment extends Fragment {
     ImageButton ibEditProfile;
     PurchasesFragment purchasesFragment;
     SettingsFragment settingsFragment;
     Fragment selectedFragment = null;
+    TextView tvFullName;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -42,6 +48,18 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Assign UI Views
+        tvFullName = view.findViewById(R.id.textview_fullname);
+        FirebaseFirestore.getInstance().collection("users")
+                .document(Constants.getUserId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        tvFullName.setText(documentSnapshot.getString("name").toUpperCase());
+                    }
+                });
 
         if (selectedFragment == null)
             selectedFragment = purchasesFragment;

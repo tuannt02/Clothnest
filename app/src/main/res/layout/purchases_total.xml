@@ -39,12 +39,17 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Finished" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
             <ImageView
                 android:id="@+id/imageview_option"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginLeft="-4dp"
-                android:layout_marginTop="-8dp"
+                android:layout_marginTop="4dp"
                 android:paddingVertical="6dp"
                 android:paddingRight="6dp"
                 android:src="@drawable/ic_more3" />
@@ -61,6 +66,38 @@
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-1dp"
+                    android:fontFamily="@font/lato"
+                    android:text="Subtotal:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textview_subtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-1dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/lato"
+                    android:gravity="right"
+                    android:text="$5"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,7 +127,7 @@
                     android:fontFamily="@font/lato"
                     android:gravity="right"
                     android:text="$5"
-                    android:textColor="@color/price"
+                    android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -121,7 +158,7 @@
                     android:fontFamily="@font/lato"
                     android:gravity="right"
                     android:text="$5"
-                    android:textColor="@color/price"
+                    android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
 

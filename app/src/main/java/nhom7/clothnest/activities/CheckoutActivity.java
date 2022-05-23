@@ -50,6 +50,7 @@ import nhom7.clothnest.models.ColorClass;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.util.Constants;
+import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -429,7 +430,7 @@ public class CheckoutActivity extends AppCompatActivity {
         // Alert if resource is not provided
         if (resource == -1) {
             AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle("Payed failed!")
+                    .setTitle("Paid failed!")
                     .setMessage(msg)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -464,12 +465,34 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (cartItems.size() == 0) {
-                    createNewDialog(-1, "You have not added anything to your cart yet!").show();
+                    new CustomDialog(
+                            CheckoutActivity.this,
+                            "Paid failed",
+                            "You have not added anything to cart yet.",
+                            1,
+                            new CustomDialog.IClickListenerOnOkBtn() {
+                                @Override
+                                public void onResultOk() {
+
+                                }
+                            }
+                    ).show();
                     return;
                 }
 
                 if (isAddressChosen == false) {
-                    createNewDialog(-1, "You must chooose address!").show();
+                    new CustomDialog(
+                            CheckoutActivity.this,
+                            "Paid failed",
+                            "You must choose address.",
+                            1,
+                            new CustomDialog.IClickListenerOnOkBtn() {
+                                @Override
+                                public void onResultOk() {
+
+                                }
+                            }
+                    ).show();
                     return;
                 }
 

@@ -49,6 +49,14 @@ public class Purchase implements Serializable {
         this.total = sum + deliveryFee - discount;
     }
 
+    public double getSubTotal() {
+        Double result = 0d;
+        for (PurchaseItem item: items) {
+            result += item.getSalePrice();
+        }
+        return result;
+    }
+
     public ArrayList<PurchaseItem> getItems() {
         return items;
     }
