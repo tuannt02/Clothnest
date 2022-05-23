@@ -178,7 +178,7 @@
                     android:layout_alignParentRight="true"
                     android:text="$600"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/pri_col"
+                    android:textColor="@color/black"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -220,14 +220,17 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/black"
+                    android:text="$5"
                     android:textSize="16sp"/>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearlayout_discount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -249,6 +252,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/black"
+                    android:text="$0"
                     android:textSize="16sp"/>
 
             </LinearLayout>
@@ -265,7 +269,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:text="Discount" />
+                    android:text="Total" />
 
                 <View
                     android:layout_width="0dp"
@@ -277,13 +281,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/pri_col"
                     android:text="$1000"
                     android:textSize="20sp"/>
 
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/relativelayout_enter_voucher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -369,6 +374,7 @@
 
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

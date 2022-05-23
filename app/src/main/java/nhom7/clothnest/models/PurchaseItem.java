@@ -1,14 +1,21 @@
 package nhom7.clothnest.models;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.PropertyName;
 
 import java.io.Serializable;
 
 public class PurchaseItem implements Serializable {
     int quantity;
-    String name, color, size, image;
+    String name;
+
+    @Exclude
+    String color, size, image;
+
     DocumentReference colorRef, productRef, sizeRef;
-    Double price;
+    Double price, salePrice;
+
 
     public PurchaseItem() {}
 
@@ -19,6 +26,27 @@ public class PurchaseItem implements Serializable {
         this.price = price;
     }
 
+    public PurchaseItem(int quantity, DocumentReference productRef, DocumentReference colorRef, DocumentReference sizeRef, Double price, Double salePrice) {
+        this.quantity = quantity;
+        this.colorRef = colorRef;
+        this.productRef = productRef;
+        this.sizeRef = sizeRef;
+        this.price = price;
+        this.salePrice = salePrice;
+    }
+
+    @PropertyName("sale_price")
+    public Double getSalePrice() {
+        return salePrice;
+    }
+
+    @PropertyName("sale_price")
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+
+    @Exclude
     public String getImage() {
         return image;
     }
@@ -35,6 +63,7 @@ public class PurchaseItem implements Serializable {
         this.quantity = quantity;
     }
 
+    @Exclude
     public String getName() {
         return name;
     }
@@ -80,6 +109,7 @@ public class PurchaseItem implements Serializable {
         this.productRef = productRef;
     }
 
+    @Exclude
     public String getColor() {
         return color;
     }
@@ -88,6 +118,7 @@ public class PurchaseItem implements Serializable {
         this.color = color;
     }
 
+    @Exclude
     public String getSize() {
         return size;
     }

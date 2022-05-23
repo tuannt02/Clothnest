@@ -26,13 +26,8 @@ public class Constants {
         return remoteMsgHeaders;
     }
 
-    public static String userId;
-
     public static String getUserId() {
-        if (userId == null) {
-            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        }
-        return userId;
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 }
 

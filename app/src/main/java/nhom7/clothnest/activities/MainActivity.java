@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import nhom7.clothnest.fragments.ProfileFragment;
 import nhom7.clothnest.R;
 import nhom7.clothnest.fragments.SearchFragment;
 import nhom7.clothnest.fragments.WishlistFragment;
+import nhom7.clothnest.interfaces.ActivityConstants;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -36,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         wishlistFragment = new WishlistFragment();
         profileFragment = new ProfileFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, HomeFragment.class, null).commit();
         setupBottomNavigationView();
     }
 
-    private void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
         Log.i("setupBnv", "Setup Bottom Navigation View");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -65,7 +67,25 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (selectedFragment != null)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;            }
+                return true;
+            }
         });
+
+        bottomNavigationView.setSelectedItemId(getInitialItemId());
+    }
+
+    private int getInitialItemId() {
+        Intent intent = getIntent();
+        int fragmentType = intent.getIntExtra("fragment_type", -1);
+        switch (fragmentType) {
+            case ActivityConstants.SEARCH_FRAGMENT:
+                return R.id.nav_search;
+            case ActivityConstants.WISHLIST_FRAGMENT:
+                return R.id.nav_wishlist;
+            case ActivityConstants.PROFILE_FRAGMENT:
+                return R.id.nav_profile;
+            default:
+                return R.id.nav_home;
+        }
     }
 }
