@@ -60,7 +60,7 @@ public class CartItem implements Serializable {
     }
 
     public int getDiscountPrice() {
-        return (int)(price*(100-discount)/100)*qty;
+        return ((int)(price*(100-discount)/100.0))*qty;
     }
 
     public int getDiscount() {

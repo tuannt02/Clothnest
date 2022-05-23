@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/check"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Received!"
+        android:textColor="@color/black"
+        android:fontFamily="@font/lato_black"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thanks for your order."
+        android:textColor="@color/black"
+        android:fontFamily="@font/lato"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

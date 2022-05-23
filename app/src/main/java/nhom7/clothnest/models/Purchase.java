@@ -44,7 +44,7 @@ public class Purchase implements Serializable {
         Double sum = 0d;
         for (int i = 0; i < items.size(); i++) {
             PurchaseItem item = items.get(i);
-            sum += item.getPrice() * item.getQuantity();
+            sum += item.getSalePrice() * item.getQuantity();
         }
         this.total = sum + deliveryFee - discount;
     }

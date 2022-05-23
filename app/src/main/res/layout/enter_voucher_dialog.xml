@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/lato_black"
+        android:text="Enter Voucher"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/size_input_background"
+            android:hint="CODE" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textview_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:padding="12dp"
+            android:text="Apply"
+            android:textColor="@color/primaryBlue"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textview_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:padding="12dp"
+            android:text="Remove"
+            android:textColor="@color/red"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

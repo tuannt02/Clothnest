@@ -16,4 +16,11 @@ public interface ActivityConstants {
     // Color
     public static final int CHOOSE_COLOR = 10007;
     public static final int VIEW_COLOR = 10008;
+
+    // Main Activity
+    public static final int HOME_FRAGMENT = 10011;
+    public static final int SEARCH_FRAGMENT = 10012;
+    public static final int WISHLIST_FRAGMENT = 10013;
+    public static final int PROFILE_FRAGMENT = 10014;
+
 }

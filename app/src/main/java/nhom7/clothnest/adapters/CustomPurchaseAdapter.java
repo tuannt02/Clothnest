@@ -81,8 +81,8 @@ public class CustomPurchaseAdapter extends BaseAdapter {
                 ((TextView) item.findViewById(R.id.purchases_item_title)).setText(purchaseItem.getName());
                 ((TextView) item.findViewById(R.id.purchases_item_color)).setText("Color: " + purchaseItem.getColor());
                 ((TextView) item.findViewById(R.id.purchases_item_size)).setText("Size: " + purchaseItem.getSize());
-                ((TextView) item.findViewById(R.id.purchases_item_price)).setText("Price: $" + purchaseItem.getPrice().toString().replaceAll("\\.?0*$", ""));
-                ((TextView) item.findViewById(R.id.purchases_item_qty)).setText("Qty: " + purchaseItem.getQuantity());
+                ((TextView) item.findViewById(R.id.purchases_item_price)).setText("$" + purchaseItem.getSalePrice().toString().replaceAll("\\.?0*$", ""));
+                ((TextView) item.findViewById(R.id.purchases_item_qty)).setText("" + purchaseItem.getQuantity());
                 (item.findViewById(R.id.purchases_item_review)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
