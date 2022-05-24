@@ -1,6 +1,7 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.Admin_ProductDetailActivity;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.Stock;
@@ -111,11 +113,9 @@ public class Product_AdminAdapter extends BaseAdapter {
     }
 
     private void gotoDetail(int i) {
-//        Intent intent_productDetail = new Intent(mContext, ProductDetail_Activity.class);
-//        intent_productDetail.putExtra("selected_Thumbnail", listThumbnail.get(i).getId());
-//        alpha = AnimationUtils.loadAnimation(mContext, R.anim.alpha_anim);
-//        mView.startAnimation(alpha);
-//        mContext.startActivity(intent_productDetail);
+        Intent intent_AdminProductDetail = new Intent(mContext, Admin_ProductDetailActivity.class);
+        intent_AdminProductDetail.putExtra("handle_adminProductDetail", productAdminList.get(i).getId());
+        mContext.startActivity(intent_AdminProductDetail);
     }
 
     public static void getProductAndPushToGridView(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter) {

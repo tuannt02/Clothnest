@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,6 +49,8 @@ import nhom7.clothnest.adapters.StockImageAdapter;
 import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.CategoryItem;
 import nhom7.clothnest.models.ColorClass;
+import nhom7.clothnest.models.Product_Admin;
+import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.models.Stock;
@@ -55,6 +60,9 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_COLOR = 0x2903;
     private static final int REQUEST_CODE_IMAGE = 0x2904;
     private static final int REQUEST_CODE_IMAGE_MAIN = 0x2905;
+
+    NestedScrollView nestedScrollView;
+    Product_Detail productDetail;
 
     String colorID;
     String sizeID;
@@ -68,7 +76,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
     TextView tvCancel, tvSave;
     EditText etName, etPrice, etDiscount, etDescription;
-    Button btnAdd, btnClear;
+    Button btnAdd, btnClear, btnRemove;
     EditText etSize, etColor, etQuantity;
     ListView lvStock;
     GridView gvImages;
@@ -93,9 +101,49 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_product_detail);
 
         reference();
+
+        handleExtra();
+
         createStock();
         getCategory();
         getEvent();
+    }
+
+    private void handleExtra() {
+        String key = getIntent().getStringExtra("handle_adminProductDetail");
+        switch (key){
+            case "add":
+                btnRemove.setVisibility(View.GONE);
+                nestedScrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                break;
+
+            default:
+                getAdminProductDetail(key);
+        }
+    }
+
+    private void getAdminProductDetail(String productID) {
+        productDetail = new Product_Detail();
+        productDetail.getProductDetail(productID);
+        showAdminProductDetail();
+    }
+
+    private void showAdminProductDetail() {
+        etName.setText(productDetail.getName());
+        autoCpTv_category.setText(productDetail.getCategory());
+        etPrice.setText(productDetail.getPrice() + "");
+        etDiscount.setText(productDetail.getDiscount() + "");
+        etDescription.setText(productDetail.getDescription());
+        Glide.with(getApplicationContext()).load(productDetail.getMainImage()).into(ivMainImage);
+        stockList = productDetail.getStockList();
+//        stockAdapter = new StockAdapter(this, stockList, new StockAdapter.ClickListener() {
+//            @Override
+//            public void removeItem(int position) {
+//                stockList.remove(position);
+//                stockAdapter.notifyDataSetChanged();
+//            }
+//        });
+//        lvStock.setAdapter(stockAdapter);
     }
 
     private void getEvent() {
@@ -168,6 +216,9 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     selectImage(REQUEST_CODE_IMAGE);
+                }else{
+                    uriList.remove(i);
+                    stockImageAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -216,7 +267,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     try {
                         price_Double = Double.valueOf(price);
                     } catch (NumberFormatException e) {
-                        Toast.makeText(Admin_ProductDetailActivity.this, "Price is an integer", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Admin_ProductDetailActivity.this, "Price is an double", Toast.LENGTH_SHORT).show();
                         if (pd.isShowing())
                             pd.dismiss();
                         return;
@@ -408,6 +459,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void reference() {
+        nestedScrollView = findViewById(R.id.admin_productDetail_nestedSV);
         autoCpTv_category = findViewById(R.id.admin_productDetail_ddCategory);
         etName = findViewById(R.id.admin_productDetail_etName);
         etPrice = findViewById(R.id.admin_productDetail_etPrice);
@@ -417,6 +469,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         tvCancel = findViewById(R.id.admin_productDetail_tvCancel);
         btnAdd = findViewById(R.id.admin_productDetail_btnAdd);
         btnClear = findViewById(R.id.admin_productDetail_btnClear);
+        btnRemove = findViewById(R.id.admin_productDetail_btnRemove);
         etSize = findViewById(R.id.admin_productDetail_etSize);
         etColor = findViewById(R.id.admin_productDetail_etColor);
         etQuantity = findViewById(R.id.admin_productDetail_etQuantity);

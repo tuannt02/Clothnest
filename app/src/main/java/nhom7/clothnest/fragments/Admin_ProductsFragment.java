@@ -47,7 +47,9 @@ public class Admin_ProductsFragment extends Fragment {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), Admin_ProductDetailActivity.class));
+                Intent intent_AdminProductDetail = new Intent(getContext(), Admin_ProductDetailActivity.class);
+                intent_AdminProductDetail.putExtra("handle_adminProductDetail", "add");
+                startActivity(intent_AdminProductDetail);
             }
         });
     }
@@ -68,5 +70,11 @@ public class Admin_ProductsFragment extends Fragment {
         tvStock = mView.findViewById(R.id.admin_productList_numOfStocks);
         ivAdd = mView.findViewById(R.id.admin_products_ivAdd);
         ivSort = mView.findViewById(R.id.admin_products_ivSort);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProducts();
     }
 }

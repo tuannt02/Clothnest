@@ -51,8 +51,9 @@
         android:layout_marginVertical="@dimen/_10sdp" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/admin_productDetail_nestedSV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="528dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -227,11 +228,12 @@
                     android:fontFamily="@font/lato"
                     android:text="Main image"
                     android:textSize="20dp" />
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/dividerColor"
                     android:layout_gravity="center_vertical"
+                    android:backgroundTint="@color/dividerColor"
                     app:cardCornerRadius="10dp">
 
                     <ImageView
@@ -242,6 +244,7 @@
                         android:src="@drawable/add_image" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -379,5 +382,14 @@
                 tools:listitem="@layout/item_stock" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/admin_productDetail_btnRemove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/lato_black"
+        android:text="remove" />
 
 </LinearLayout>

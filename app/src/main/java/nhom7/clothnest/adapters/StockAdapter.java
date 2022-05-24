@@ -1,6 +1,7 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,15 @@ public class StockAdapter extends BaseAdapter {
         tvColor.setText(stock.getColorName());
         tvQuantity.setText(stock.getQuantity() + "");
 
-        civColor.setImageResource(getColorFromName(stock.getColorName()));
+        //civColor.setImageResource(getColorFromName(stock.getColorName()));
+        FirebaseFirestore.getInstance().collection(ColorClass.COLLECTION_NAME).document(stock.getColorID())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        civColor.setBackgroundColor(Color.parseColor(documentSnapshot.getString("hex")));
+                    }
+                });
 
         //Đổ dữ liệu vào gridView
         stockImageAdapter = new StockImageAdapter(mContext, stock.getImageList());
