@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Preconditions;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -87,8 +89,11 @@ public class ProductDetailActivity extends AppCompatActivity {
     private void processDetail() {
         productID = (String) getIntent().getSerializableExtra("selected_Thumbnail");
 
-        getProductDetailFromFirestore(productID);
+       getProductDetailFromFirestore(productID);
+
     }
+
+
 
     private void getSimilarProducts() {
         productSlider = new ProductSlider(this, containersilder, productArrayList);
@@ -98,15 +103,17 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private List<SliderItem> GetListSliderItem() {
         List<SliderItem> list = new ArrayList<>();
+
         try{
             for (String imgUrl : productDetail.getImageList()) {
+
                 list.add(new SliderItem(imgUrl));
             }
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
-
 
         return list;
     }
@@ -225,7 +232,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             ibFavorite.setImageResource(R.drawable.is_favorite);
         }
     }
-
     public void getProductDetailFromFirestore(String id) {
         productDetail = new Product_Detail();
 
