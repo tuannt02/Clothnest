@@ -1,6 +1,12 @@
 package nhom7.clothnest.models;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -13,6 +19,7 @@ public class Stock {
     private ArrayList<Uri> imageList;
 
     public Stock() {
+        imageList = new ArrayList<>();
     }
 
     public Stock(String sizeID, String colorID, int quantity, ArrayList<Uri> imageList) {

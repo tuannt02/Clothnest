@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.Admin_Modify_ProductActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/admin_modifyProduct_tvTitle"
+            android:layout_width="221dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_black"
+            android:text="New arrivals"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/admin_modifyProduct_tvAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/lato_black"
+            android:text="Add"
+            android:textColor="@color/blue"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/admin_modifyProduct_tvClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/lato_black"
+            android:text="Close"
+            android:textColor="@color/red"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="@dimen/_10sdp" />
+
+    <include
+        android:id="@+id/admin_modifyProduct_Include"
+        layout="@layout/fragment_admin_productlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp"/>
+
+</LinearLayout>

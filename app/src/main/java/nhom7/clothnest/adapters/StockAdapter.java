@@ -40,6 +40,7 @@ public class StockAdapter extends BaseAdapter {
     GridView gvImage;
     StockImageAdapter stockImageAdapter;
 
+
     public StockAdapter(Context mContext, ArrayList<Stock> stocks, ClickListener mClickListener) {
         this.mContext = mContext;
         this.stocks = stocks;
@@ -108,31 +109,6 @@ public class StockAdapter extends BaseAdapter {
         ivDelete = mView.findViewById(R.id.item_stock_ivDelete);
         civColor = mView.findViewById(R.id.item_stock_civColor);
         gvImage = mView.findViewById(R.id.item_stock_gvImage);
-    }
-
-    private int getColorFromName(String name) {
-        switch (name) {
-            case "Black":
-                return R.color.black;
-            case "Blue":
-                return R.color.blue;
-            case "Lime Green":
-                return R.color.lime_green;
-            case "Yellow":
-                return R.color.yellow;
-            case "Red":
-                return R.color.red;
-            case "Pink":
-                return R.color.pink;
-            case "Green":
-                return R.color.green;
-            case "Gray":
-                return R.color.gray;
-            case "Light Pink":
-                return R.color.light_pink;
-            default:
-                return R.color.white;
-        }
     }
 
     private void removeItemFromStocks(int position){

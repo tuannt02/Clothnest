@@ -1,5 +1,6 @@
 package nhom7.clothnest.models;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import nhom7.clothnest.activities.Admin_ProductDetailActivity;
+
 public class Product_Detail {
     public static final String COLLECTION_NAME = "products";
 
@@ -31,6 +34,8 @@ public class Product_Detail {
     private String description;
     private ArrayList<Stock> stockList;
     private String mainImage;
+
+    private ProgressDialog pd;
 
     public Product_Detail() {
         imageList = new ArrayList<>();
@@ -201,83 +206,5 @@ public class Product_Detail {
                 });
 
         return sizeList;
-    }
-
-    public Product_Detail getProductDetail(String productID) {
-        Product_Detail product = new Product_Detail();
-        DocumentReference product_docRef = FirebaseFirestore.getInstance().collection(Product_Admin.COLLECTION_NAME).document(productID);
-        product_docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot doc) {
-                product.setId(productID);
-
-                product.setName(doc.getString("name"));
-
-                DocumentReference category_docRef = (DocumentReference) doc.get("category");
-                category_docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        product.setCategory(documentSnapshot.getString("name"));
-                    }
-                });
-
-                product.setPrice(Double.valueOf(doc.getDouble("price")));
-
-                int discount = (int) Math.round(doc.getDouble("discount"));
-                product.setDiscount(discount);
-
-                product.setDescription(doc.getString("desc"));
-
-                product.setMainImage(doc.getString("main_img"));
-
-                product.setStockList(getStockList(productID));
-            }
-        });
-
-        return product;
-    }
-
-    public ArrayList<Stock> getStockList(String productID){
-        DocumentReference product_docRef = FirebaseFirestore.getInstance().collection(Product_Admin.COLLECTION_NAME).document(productID);
-        ArrayList<Stock> stocks = new ArrayList<>();
-        product_docRef.collection(Stock.COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot stock_doc: task.getResult()) {
-                        Stock stock = new Stock();
-
-                        stock.setSizeName(stock_doc.getString("size"));
-                        stock.setColorName(stock_doc.getString("color"));
-                        int quantity = (int)Math.round(stock_doc.getDouble("quantity"));
-                        stock.setQuantity(quantity);
-                        stock.setImageList(getImageList(productID));
-                    }
-                }
-            }
-        });
-        return stocks;
-    }
-
-    private ArrayList<Uri> getImageList(String productID) {
-        ArrayList<Uri> images = new ArrayList<>();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storage_ref  = storage.getReference().child(Product_Detail.COLLECTION_NAME).child(productID);
-        storage_ref.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                for(StorageReference fileRef : listResult.getItems()){
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            images.add(uri);
-                        }
-                    });
-                }
-            }
-        });
-
-        return images;
     }
 }

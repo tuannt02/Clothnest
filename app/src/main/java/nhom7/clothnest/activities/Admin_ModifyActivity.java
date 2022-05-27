@@ -56,11 +56,15 @@ public class Admin_ModifyActivity extends AppCompatActivity {
                 }
 
                 if(i==1)    { // New Arrivals
-
+                    Intent intent = new Intent(Admin_ModifyActivity.this, Admin_Modify_ProductActivity.class);
+                    intent.putExtra("adminModifyProduct_key", "NewArrivals");
+                    startActivity(intent);
                 }
 
                 if(i==2)    { // Sale
-
+                    Intent intent = new Intent(Admin_ModifyActivity.this, Admin_Modify_ProductActivity.class);
+                    intent.putExtra("adminModifyProduct_key", "Sales");
+                    startActivity(intent);
                 }
 
                 if(i==3)    { // Collections

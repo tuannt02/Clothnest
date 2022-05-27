@@ -60,8 +60,8 @@ public class Admin_ProductsFragment extends Fragment {
 
         listView.setAdapter(adminAdapter);
 
-        Product_AdminAdapter.getNumberTotal(tvProducts, tvStock);
-        Product_AdminAdapter.getProductAndPushToGridView(productList, adminAdapter);
+//        Product_AdminAdapter.getNumberTotal(tvProducts, tvStock);
+        Product_AdminAdapter.getProductAndPushToGridView(productList, adminAdapter, tvProducts, tvStock);
     }
 
     private void reference() {
