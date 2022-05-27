@@ -147,6 +147,7 @@ public class WishlistFragment extends Fragment {
                                             wishlistItem.setProductImage(main_img);
                                             wishlistItem.setRegularCost(price);
                                             wishlistItem.setDiscount(discount);
+                                            customWishlistAdapter.notifyDataSetChanged();
                                         }
                                     });
                                 }

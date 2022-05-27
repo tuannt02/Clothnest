@@ -282,7 +282,6 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
 
                                             if(listImg.size() >= 0) {
                                                 stockItem.setImg(listImg.get(0));
-                                                System.out.println(stockItem.getImg());
                                             }
                                             else    {
                                                 stockItem.setImg(cartItem.getImg());
@@ -294,7 +293,6 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
                                             totalStock += quantity;
 
                                             stockArrayList.add(stockItem);
-                                            System.out.println(stockItem);
                                         }
                                         txtStock.setText(String.valueOf(totalStock));
                                     }
