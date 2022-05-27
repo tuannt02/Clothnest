@@ -196,7 +196,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         ivAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddToCart addToCartDialog = new AddToCart(getApplicationContext(), productID);
+                AddToCart addToCartDialog = new AddToCart(ProductDetailActivity.this, productID);
             }
         });
     }
