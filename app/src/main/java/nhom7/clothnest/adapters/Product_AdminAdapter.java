@@ -14,7 +14,10 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -26,7 +29,6 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_ProductDetailActivity;
 import nhom7.clothnest.models.Product_Admin;
-import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.Stock;
 
 public class Product_AdminAdapter extends BaseAdapter {
@@ -42,7 +44,7 @@ public class Product_AdminAdapter extends BaseAdapter {
     private TextView tvID;
     private TextView tvCost;
     private TextView tvStock;
-    public static int nProduct = 0, nStock = 0;
+    public static int nProduct, nStock;
 
 
     public Product_AdminAdapter(Context mContext, ArrayList<Product_Admin> productAdminList) {
@@ -118,8 +120,9 @@ public class Product_AdminAdapter extends BaseAdapter {
         mContext.startActivity(intent_AdminProductDetail);
     }
 
-    public static void getProductAndPushToGridView(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter) {
+    public static void getProductAndPushToGridView(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter, TextView tvNumOfProduct, TextView tvNumOfStock) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        nStock = 0;
 
         //get data
         db.collection(Product_Admin.COLLECTION_NAME)
@@ -128,6 +131,8 @@ public class Product_AdminAdapter extends BaseAdapter {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            tvNumOfProduct.setText(task.getResult().size() + "");
+
                             //Duyệt từng product
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //product để thêm vào arrayList
@@ -173,17 +178,18 @@ public class Product_AdminAdapter extends BaseAdapter {
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful()){
+                                                if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_ref : task.getResult()){
+                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
                                                         stock += (int) Math.round(stock_ref.getDouble("quantity"));
                                                         productAdmin.setStock(stock);
                                                         adapter.notifyDataSetChanged();
                                                     }
+                                                    nStock += stock;
+                                                    tvNumOfStock.setText(nStock + "");
                                                 }
                                             }
                                         });
-
                             }
                         }
                     }
@@ -191,6 +197,9 @@ public class Product_AdminAdapter extends BaseAdapter {
     }
 
     public static void getNumberTotal(TextView tvNumOfProduct, TextView tvNumOfStock) {
+        nProduct = 0;
+        nStock = 0;
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //get data
@@ -200,18 +209,16 @@ public class Product_AdminAdapter extends BaseAdapter {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
+                            tvNumOfProduct.setText(task.getResult().size() + "");
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                nProduct++;
-                                tvNumOfProduct.setText(nProduct + "");
 
                                 db.collection("products/" + document.getId() + "/stocks")
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if(task.isSuccessful()){
-                                                    for(QueryDocumentSnapshot stock_doc : task.getResult()){
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot stock_doc : task.getResult()) {
                                                         int stock = (int) Math.round(stock_doc.getDouble("quantity"));
                                                         nStock += stock;
                                                         tvNumOfStock.setText(nStock + "");
@@ -219,6 +226,59 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                 }
                                             }
                                         });
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getModifyProducts(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter, String modifyName) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(modifyName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot query : task.getResult()) {
+                                DocumentReference document_Ref = query.getDocumentReference("product_id");
+                                document_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot document) {
+                                        Product_Admin productAdmin = new Product_Admin();
+                                        listProduct.add(productAdmin);
+
+                                        productAdmin.setId(document.getId());
+                                        adapter.notifyDataSetChanged();
+
+
+                                        productAdmin.setName(document.getString("name"));
+                                        adapter.notifyDataSetChanged();
+
+                                        Double price = document.getDouble("price");
+                                        productAdmin.setPrice(price);
+                                        adapter.notifyDataSetChanged();
+
+                                        productAdmin.setMainImage((document.getString("main_img")));
+                                        adapter.notifyDataSetChanged();
+
+                                        db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            int stock = 0;
+                                                            for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                                productAdmin.setStock(stock);
+                                                                adapter.notifyDataSetChanged();
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
                             }
                         }
                     }

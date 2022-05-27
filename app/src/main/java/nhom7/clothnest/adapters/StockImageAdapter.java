@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
@@ -15,6 +17,7 @@ import nhom7.clothnest.R;
 public class StockImageAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Uri> uriList;
+
     View mView;
 
     public StockImageAdapter(Context mContext, ArrayList<Uri> uriList) {

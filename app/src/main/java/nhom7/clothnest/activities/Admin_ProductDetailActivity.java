@@ -35,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -91,9 +92,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     ProgressDialog pd;
     FirebaseFirestore db;
     DocumentReference docRef_product;
-
-    //Colors, Sizes, Images
-    ArrayList<String> productImages;
+    String productID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,39 +110,146 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
     private void handleExtra() {
         String key = getIntent().getStringExtra("handle_adminProductDetail");
-        switch (key){
+        switch (key) {
             case "add":
                 btnRemove.setVisibility(View.GONE);
                 nestedScrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 break;
 
             default:
-                getAdminProductDetail(key);
+                productID = key;
+                getAdminProductDetail(productID);
         }
     }
 
     private void getAdminProductDetail(String productID) {
-        productDetail = new Product_Detail();
-        productDetail.getProductDetail(productID);
-        showAdminProductDetail();
+        pd = new ProgressDialog(Admin_ProductDetailActivity.this);
+        pd.setMessage("Loading...");
+        pd.show();
+
+        getProductDetail(productID);
     }
 
-    private void showAdminProductDetail() {
-        etName.setText(productDetail.getName());
-        autoCpTv_category.setText(productDetail.getCategory());
-        etPrice.setText(productDetail.getPrice() + "");
-        etDiscount.setText(productDetail.getDiscount() + "");
-        etDescription.setText(productDetail.getDescription());
-        Glide.with(getApplicationContext()).load(productDetail.getMainImage()).into(ivMainImage);
-        stockList = productDetail.getStockList();
-//        stockAdapter = new StockAdapter(this, stockList, new StockAdapter.ClickListener() {
-//            @Override
-//            public void removeItem(int position) {
-//                stockList.remove(position);
-//                stockAdapter.notifyDataSetChanged();
-//            }
-//        });
-//        lvStock.setAdapter(stockAdapter);
+
+    public void getProductDetail(String productID) {
+        productDetail = new Product_Detail();
+
+        DocumentReference product_docRef = FirebaseFirestore.getInstance().collection(Product_Admin.COLLECTION_NAME).document(productID);
+        product_docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot doc) {
+                productDetail.setId(productID);
+                productDetail.setName(doc.getString("name"));
+                etName.setText(productDetail.getName());
+
+                DocumentReference category_docRef = (DocumentReference) doc.get("category");
+                category_docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        productDetail.setCategory(documentSnapshot.getString("name"));
+                        autoCpTv_category.setText(productDetail.getCategory());
+                    }
+                });
+                productDetail.setPrice(Double.valueOf(doc.getDouble("price")));
+                etPrice.setText(productDetail.getPrice() + "");
+
+                productDetail.setDiscount((int) Math.round(doc.getDouble("discount")));
+                etDiscount.setText(productDetail.getDiscount() + "");
+
+                productDetail.setDescription(doc.getString("desc"));
+                etDescription.setText(productDetail.getDescription());
+
+                productDetail.setMainImage(doc.getString("main_img"));
+                Glide.with(getApplicationContext()).load(productDetail.getMainImage()).into(ivMainImage);
+
+                getStockListFromFireStore(productID);
+
+                if(pd.isShowing())
+                    pd.dismiss();
+            }
+        });
+    }
+
+    public void getStockListFromFireStore(String productID) {
+        DocumentReference product_docRef = FirebaseFirestore.getInstance().collection(Product_Admin.COLLECTION_NAME).document(productID);
+        product_docRef.collection(Stock.COLLECTION_NAME).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    createStock();
+
+                    for (QueryDocumentSnapshot stock_doc : task.getResult()) {
+                        Stock stock = new Stock();
+                        stockList.add(stock);
+                        addStockToList(stock, stock_doc);
+                    }
+
+                    productDetail.setStockList(stockList);
+                }
+            }
+        });
+    }
+
+    private void addStockToList(Stock stock, QueryDocumentSnapshot stock_doc){
+
+        stock.setSizeName(stock_doc.getString("size"));
+        stock.setColorName(stock_doc.getString("color"));
+        int quantity = (int) Math.round(stock_doc.getDouble("quantity"));
+        stock.setQuantity(quantity);
+
+        stock.setColorID("nKavecMrOQqbCicJg96b");
+        stock.setSizeID("KCzGpGvEptHpIl1ZctvX");
+
+        db.collection(ColorClass.COLLECTION_NAME).whereEqualTo("name", stock.getColorName())
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot result : task.getResult()) {
+                                stock.setColorID(result.getId());
+                                stockAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+
+        db.collection(SizeClass.COLLECTION_NAME).whereEqualTo("short_name", stock.getSizeName())
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot result : task.getResult()) {
+                                stock.setSizeID(result.getId());
+                                stockAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storage_ref = storage.getReference().child(Product_Detail.COLLECTION_NAME).child(productID);
+        storage_ref.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                ArrayList<Uri> uris = new ArrayList<>();
+                stock.setImageList(uris);
+                for (StorageReference fileRef : listResult.getItems()) {
+                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            uris.add(uri);
+                            stockAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     private void getEvent() {
@@ -216,7 +322,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     selectImage(REQUEST_CODE_IMAGE);
-                }else{
+                } else {
                     uriList.remove(i);
                     stockImageAdapter.notifyDataSetChanged();
                 }
@@ -459,6 +565,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void reference() {
+        db = FirebaseFirestore.getInstance();
+
         nestedScrollView = findViewById(R.id.admin_productDetail_nestedSV);
         autoCpTv_category = findViewById(R.id.admin_productDetail_ddCategory);
         etName = findViewById(R.id.admin_productDetail_etName);
