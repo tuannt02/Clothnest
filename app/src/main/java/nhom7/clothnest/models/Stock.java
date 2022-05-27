@@ -10,6 +10,7 @@ public class Stock {
     private String colorID;
     private String sizeName, colorName;
     private int quantity;
+    private String img;
     private ArrayList<Uri> imageList;
 
     public Stock() {
@@ -20,6 +21,10 @@ public class Stock {
         this.colorID = colorID;
         this.quantity = quantity;
         this.imageList = imageList;
+    }
+
+    public String getImg() {
+        return img;
     }
 
     public String getSizeID() {
@@ -68,5 +73,22 @@ public class Stock {
 
     public void setImageList(ArrayList<Uri> imageList) {
         this.imageList = imageList;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "sizeID='" + sizeID + '\'' +
+                ", colorID='" + colorID + '\'' +
+                ", sizeName='" + sizeName + '\'' +
+                ", colorName='" + colorName + '\'' +
+                ", quantity=" + quantity +
+                ", img='" + img + '\'' +
+                ", imageList=" + imageList +
+                '}';
     }
 }
