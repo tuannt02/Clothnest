@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clothnest">
         <activity
+            android:name=".activities.Admin_Collections_ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Admin_CollectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Admin_Modify_ProductActivity"
             android:exported="false" />
         <activity
