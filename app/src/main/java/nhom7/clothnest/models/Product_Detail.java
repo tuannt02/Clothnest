@@ -97,7 +97,7 @@ public class Product_Detail {
     }
 
     public void setImageList(ArrayList<String> imageList) {
-        this.imageList = imageList;
+        this.imageList.addAll(imageList);
     }
 
     public boolean isFavorite() {

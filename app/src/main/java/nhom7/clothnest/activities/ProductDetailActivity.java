@@ -1,5 +1,7 @@
 package nhom7.clothnest.activities;
 
+import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Preconditions;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,22 +30,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import me.relex.circleindicator.CircleIndicator;
 import nhom7.clothnest.R;
-import nhom7.clothnest.adapters.CustomWishlistAdapter;
 import nhom7.clothnest.adapters.SliderAdapter;
 import nhom7.clothnest.fragments.CommentFragment;
-import nhom7.clothnest.fragments.HomeFragment;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
-import nhom7.clothnest.models.SliderItem;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
 import nhom7.clothnest.util.AddToCart;
@@ -89,11 +90,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private void processDetail() {
         productID = (String) getIntent().getSerializableExtra("selected_Thumbnail");
 
-       getProductDetailFromFirestore(productID);
-
+        getProductDetail(productID);
     }
-
-
 
     private void getSimilarProducts() {
         productSlider = new ProductSlider(this, containersilder, productArrayList);
@@ -101,25 +99,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         productSlider.getSimilarProduct(productArrayList, productDetail.getCategory());
     }
 
-    private List<SliderItem> GetListSliderItem() {
-        List<SliderItem> list = new ArrayList<>();
-
-        try{
-            for (String imgUrl : productDetail.getImageList()) {
-
-                list.add(new SliderItem(imgUrl));
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
-
     private void ActiveSlider() {
-        sliderAdapter = new SliderAdapter(this, GetListSliderItem());
+        sliderAdapter = new SliderAdapter(this, productDetail.getImageList());
         viewPager.setAdapter(sliderAdapter);
         circleIndicator.setViewPager(viewPager);
         sliderAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
@@ -214,9 +195,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                if(!task.getResult().isEmpty()){
-                                    for(QueryDocumentSnapshot document: task.getResult()){
+                            if (task.isSuccessful()) {
+                                if (!task.getResult().isEmpty()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
                                         Map<String, Object> object = document.getData();
                                         Wishlist.removeWishlistItemFromFirestore(ProductDetailActivity.this, document.getId());
                                         productDetail.setFavorite(false);
@@ -227,87 +208,93 @@ public class ProductDetailActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Wishlist.addProductToWishlist(ProductDetailActivity.this , productDetail.getId());
+            Wishlist.addProductToWishlist(ProductDetailActivity.this, productDetail.getId());
             productDetail.setFavorite(true);
             ibFavorite.setImageResource(R.drawable.is_favorite);
         }
     }
-    public void getProductDetailFromFirestore(String id) {
+    
+    public void getProductDetail(String productId) {
+        ProgressDialog dialog = new ProgressDialog(ProductDetailActivity.this);
+        dialog.setMessage("Loading...");
+        dialog.show();
+
         productDetail = new Product_Detail();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
 
-        //get data
-        db.collection(Product_Thumbnail.COLLECTION_NAME)
-                .document(id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        DocumentReference product_Ref = db.collection(Product_Thumbnail.COLLECTION_NAME).document(productId);
+
+        product_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot product_Doc) {
+                StorageReference storage_Ref = storage.getReference("products/" + productId);
+                DocumentReference category_Ref = product_Doc.getDocumentReference("category");
+                CollectionReference wishList_Ref = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+
+                Task<ListResult> getImages = storage_Ref.listAll();
+                Task<QuerySnapshot> getFavorite = wishList_Ref.whereEqualTo("product_id", product_Ref).limit(1).get();
+
+                //set category
+                category_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                //set ID
-                                productDetail.setId(id);
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        productDetail.setCategory(documentSnapshot.getString("name"));
 
-                                //set category
-                                DocumentReference categoryDoRef = document.getDocumentReference("category");
-                                categoryDoRef
-                                        .get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                productDetail.setCategory(documentSnapshot.getString("name"));
-                                                getSimilarProducts();
+                        //set favorite
+                        getFavorite.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    productDetail.setFavorite(!task.getResult().isEmpty());
+                                    //set other info
+                                    productDetail.setId(product_Doc.getId());
+                                    productDetail.setName(product_Doc.getString("name"));
+                                    productDetail.setDiscount((int) Math.round(product_Doc.getDouble("discount")));
+                                    productDetail.setPrice(Double.parseDouble(String.valueOf(product_Doc.getDouble("price"))));
+                                    productDetail.setDescription(product_Doc.getString("desc"));
+                                    //set images
+                                    getImages.addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                                        @Override
+                                        public void onSuccess(ListResult listResult) {
+                                            ArrayList<String> listUri = new ArrayList<>();
+                                            for (StorageReference image_Ref : listResult.getItems()) {
+                                                image_Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        listUri.add(uri.toString());
+                                                        if(listUri.size() == listResult.getItems().size()){
+                                                            productDetail.setImageList(listUri);
+                                                            showData();
+                                                            if(dialog.isShowing())
+                                                                dialog.dismiss();
+                                                        }
+                                                    }
+                                                });
                                             }
-                                        });
-
-                                //set name
-                                productDetail.setName(document.getString("name"));
-                                tvName.setText(productDetail.getName());
-
-                                //set discount
-                                int discount = (int) Math.round(document.getDouble("discount"));
-                                productDetail.setDiscount(discount);
-                                tvDiscount.setText("-" + discount + "%");
-
-                                //set price
-                                Double price = Double.parseDouble(String.valueOf(document.getDouble("price")));
-                                productDetail.setPrice(price);
-
-                                Double discountPrice = price * (1 - discount / 100.0);
-                                tvDiscountPrice.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
-
-
-                                //set imageList
-                                ArrayList<String> list = (ArrayList<String>) document.get("imgs");
-                                productDetail.setImageList(list);
-                                ActiveSlider();
-
-                                //set isFavorite
-                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
-
-                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            productDetail.setFavorite(!task.getResult().isEmpty());
-                                            if (productDetail.isFavorite())
-                                                ibFavorite.setImageResource(R.drawable.is_favorite);
                                         }
-                                    }
-                                });
-
-                                //set description
-                                productDetail.setDescription(document.getString("desc"));
-                                tvDescription.setText(productDetail.getDescription());
+                                    });
+                                }
                             }
-                        }
+                        });
                     }
                 });
+            }
+        });
+    }
+
+    private void showData(){
+        ActiveSlider();
+        getSimilarProducts();
+        tvName.setText(productDetail.getName());
+        tvDiscount.setText("-" + productDetail.getDiscount() + "%");
+        Double discountPrice = productDetail.getPrice() * (1 - productDetail.getDiscount() / 100.0);
+        tvDiscountPrice.setText("$" + discountPrice.toString().replaceAll("\\.?[0-9]*$", ""));
+        tvDescription.setText(productDetail.getDescription());
+        if (productDetail.isFavorite())
+            ibFavorite.setImageResource(R.drawable.is_favorite);
     }
 
     @Override
