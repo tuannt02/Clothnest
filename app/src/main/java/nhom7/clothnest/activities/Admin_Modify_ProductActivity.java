@@ -53,14 +53,7 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
 
     private void handleData() {
         key = getIntent().getStringExtra("adminModifyProduct_key");
-        switch (key){
-            case "NewArrivals":
-                getProducts("new_arrivals");
-                break;
-            case "Sales":
-                getProducts("sales");
-                break;
-        }
+        getProducts(key);
     }
 
     private void reference() {

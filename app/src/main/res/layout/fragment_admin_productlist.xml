@@ -6,34 +6,56 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:cardCornerRadius="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_radius_linear8"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="12dp"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/admin_productList_searchView"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:background="#D0CCCC" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
-                android:paddingRight="20dp"
-                android:fontFamily="@font/lato_black"
-                android:background="#D0CCCC"
-                android:text="Clear"
-                android:textColor="@color/black"
-                android:textSize="20dp"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/icSearch"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/admin_grant_permissions_input_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/admin_grant_permissions_btn_clear"
+            android:layout_toRightOf="@+id/icSearch"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/lato"
+            android:hint="Search by email or name ..."
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/admin_grant_permissions_btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/lato_black"
+            android:text="Clear"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
 
-    </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 
 
 

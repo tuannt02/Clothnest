@@ -17,6 +17,7 @@ public class Stock {
     private String sizeName, colorName;
     private int quantity;
     private ArrayList<Uri> imageList;
+    private ArrayList<String> downloadUrls;
 
     public Stock() {
         imageList = new ArrayList<>();
@@ -27,6 +28,15 @@ public class Stock {
         this.colorID = colorID;
         this.quantity = quantity;
         this.imageList = imageList;
+    }
+
+    public Stock(String sizeID, String colorID, String sizeName, String colorName, int quantity, ArrayList<String> downloadUrls) {
+        this.sizeID = sizeID;
+        this.colorID = colorID;
+        this.sizeName = sizeName;
+        this.colorName = colorName;
+        this.quantity = quantity;
+        this.downloadUrls = downloadUrls;
     }
 
     public String getSizeID() {
@@ -75,5 +85,13 @@ public class Stock {
 
     public void setImageList(ArrayList<Uri> imageList) {
         this.imageList = imageList;
+    }
+
+    public ArrayList<String> getDownloadUrls() {
+        return downloadUrls;
+    }
+
+    public void setDownloadUrls(ArrayList<String> downloadUrls) {
+        this.downloadUrls = downloadUrls;
     }
 }
