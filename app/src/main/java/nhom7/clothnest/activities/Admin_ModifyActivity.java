@@ -41,42 +41,45 @@ public class Admin_ModifyActivity extends AppCompatActivity {
         setOnClickListener();
     }
 
-    private void initUi()   {
+    private void initUi() {
 
         lvModify = findViewById(R.id.more_ModifyList);
         btnclose = findViewById(R.id.modify_closeButton);
     }
 
-    private void setOnClickListener()   {
+    private void setOnClickListener() {
         lvModify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i==0)    { // Category
+                if (i == 0) { // Category
 
                 }
 
-                if(i==1)    { // New Arrivals
+                if (i == 1) { // New Arrivals
                     Intent intent = new Intent(Admin_ModifyActivity.this, Admin_Modify_ProductActivity.class);
                     intent.putExtra("adminModifyProduct_key", "new_arrivals");
                     startActivity(intent);
                 }
 
-                if(i==2)    { // Sale
+                if (i == 2) { // Sale
                     Intent intent = new Intent(Admin_ModifyActivity.this, Admin_Modify_ProductActivity.class);
                     intent.putExtra("adminModifyProduct_key", "sales");
                     startActivity(intent);
                 }
 
-                if(i==3)    { // Collections
+                if (i == 3) { // Collections
+                    Intent intent = new Intent(Admin_ModifyActivity.this, Admin_CollectionActivity.class);
+                    intent.putExtra("adminModifyProduct_key", "Collections");
+                    startActivity(intent);
 
                 }
 
-                if(i==4)    { // Voucher
+                if (i == 4) { // Voucher
                     Intent intent = new Intent(Admin_ModifyActivity.this, Admin_VoucherActivity.class);
                     startActivity(intent);
                 }
 
-                if(i==5)    { // Banners
+                if (i == 5) { // Banners
                     Intent intent = new Intent(Admin_ModifyActivity.this, Admin_BannersActivity.class);
                     startActivity(intent);
                 }
@@ -100,7 +103,7 @@ public class Admin_ModifyActivity extends AppCompatActivity {
         modifyList.add(new CategoryItem("Collections", R.drawable.ic_right_arrow));
         modifyList.add(new CategoryItem("Voucher", R.drawable.ic_right_arrow));
         modifyList.add(new CategoryItem("Banners", R.drawable.ic_right_arrow));
-        adapter = new CategoryAdapter(Admin_ModifyActivity.this,  R.layout.category_item, modifyList);
+        adapter = new CategoryAdapter(Admin_ModifyActivity.this, R.layout.category_item, modifyList);
         lvModify.setAdapter(adapter);
     }
 

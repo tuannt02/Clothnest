@@ -147,16 +147,17 @@ public class WishlistFragment extends Fragment {
                                             wishlistItem.setProductImage(main_img);
                                             wishlistItem.setRegularCost(price);
                                             wishlistItem.setDiscount(discount);
-                                            wishlistArray.add(wishlistItem);
                                             customWishlistAdapter.notifyDataSetChanged();
-                                            updateQuantityItemInListView(root, wishlistArray.size());
-                                            updateViewEmpty(root, wishlistArray.size());
                                         }
                                     });
                                 }
 
 
                             }
+                            wishlistArray.add(wishlistItem);
+                            customWishlistAdapter.notifyDataSetChanged();
+                            updateQuantityItemInListView(root, wishlistArray.size());
+                            updateViewEmpty(root, wishlistArray.size());
                         }
                         // End loop
                         customProgressBar.dismiss();

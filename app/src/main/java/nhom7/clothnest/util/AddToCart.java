@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import nhom7.clothnest.R;
@@ -40,6 +41,7 @@ import nhom7.clothnest.models.CartItem;
 import nhom7.clothnest.models.ColorClass;
 import nhom7.clothnest.models.Product;
 import nhom7.clothnest.models.SizeClass;
+import nhom7.clothnest.models.Stock;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
@@ -48,11 +50,16 @@ import nhom7.clothnest.util.customizeComponent.CustomToast;
 public class AddToCart extends Dialog implements android.view.View.OnClickListener{
     private ArrayList<ColorClass> colorClassArrayList;
     private ArrayList<SizeClass> sizeClassArrayList;
+    private ArrayList<Stock> stockArrayList;
+    private ColorClass colorSelected;
+    private SizeClass sizeSelected;
     private int qtyChoose = 1;
+    private int totalStock = 0;
+    private int currentStock = 0;
     private String keyProduct;
     private CartItem cartItem;
-    CartColorAdapter cartColorAdapter;
-    CartSizeAdapter cartSizeAdapter;
+    private CartColorAdapter cartColorAdapter;
+    private CartSizeAdapter cartSizeAdapter;
 
     private boolean isColorSelect = false;
     private boolean isSizeSelect = false;
@@ -63,9 +70,10 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
     private Button btnAddToCart;
     private ImageButton btnIncrease, btnDecrease;
     private TextView txtQty;
+    private TextView txtStock;
     private ImageView mainImg;
     private TextView regularPrice, discountPrice;
-    CustomProgressBar progressBar;
+    private CustomProgressBar progressBar;
 
 
     public AddToCart(@NonNull Context context, String keyProduct) {
@@ -88,8 +96,8 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
         windowAttributes.gravity = Gravity.BOTTOM;
         window.setAttributes(windowAttributes);
 
-        checkProductIdExists(context);
-//        show();
+//        checkProductIdExists(context);
+        show();
 
         //Get view
         ImageView btnClose = findViewById(R.id.add_to_cart_btn_close);
@@ -99,6 +107,7 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
         btnIncrease = findViewById(R.id.add_to_cart_btn_increase);
         btnDecrease = findViewById(R.id.add_to_cart_btn_decrease);
         txtQty = findViewById(R.id.add_to_cart_txt_qty);
+        txtStock = findViewById(R.id.add_to_cart_stock);
         cartItem = new CartItem();
         mainImg = findViewById(R.id.add_to_cart_main_img);
         regularPrice = findViewById(R.id.add_to_cart_regular_price);
@@ -119,6 +128,7 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
 //        sizeClassArrayList = getSize();
         cartSizeAdapter = new CartSizeAdapter(getContext(), R.layout.cart_size_item, sizeClassArrayList);
         gvSize.setAdapter(cartSizeAdapter);
+        stockArrayList = new ArrayList<>();
 
         getInfoProductWhenClickOnItem();
 
@@ -134,11 +144,16 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 isColorSelect = true;
                 posColorSelected = i;
-                checkAndMoveStatusBtn();
                 clearIsSelectedColor();
+                colorSelected = colorClassArrayList.get(i);
                 ColorClass colorClass = colorClassArrayList.get(i);
                 colorClass.setSelected(true);
                 colorClassArrayList.set(i,colorClass);
+
+                reAssignStock();
+                reImg();
+                checkAndMoveStatusBtn();
+
                 cartColorAdapter.selectedItem(i);
                 cartColorAdapter.notifyDataSetChanged();
             }
@@ -148,11 +163,16 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 isSizeSelect = true;
                 posSizeSelected = i;
-                checkAndMoveStatusBtn();
                 clearIsSelectedSize();
+                sizeSelected = sizeClassArrayList.get(i);
                 SizeClass sizeClass = sizeClassArrayList.get(i);
                 sizeClass.setSelected(true);
                 sizeClassArrayList.set(i, sizeClass);
+
+                reAssignStock();
+                reImg();
+                checkAndMoveStatusBtn();
+
                 cartSizeAdapter.selectedItem(i);
                 cartSizeAdapter.notifyDataSetChanged();
             }
@@ -203,6 +223,7 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
 
                         colorClassArrayList.clear();
                         sizeClassArrayList.clear();
+                        stockArrayList.clear();
 
                         db.collection("products")
                                 .document(keyProduct)
@@ -224,6 +245,7 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
                                         cartColorAdapter.notifyDataSetChanged();
                                     }
                                 });
+
                         db.collection("products")
                                 .document(keyProduct)
                                 .collection(SizeClass.COLLECTION_NAME)
@@ -245,7 +267,36 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
                                     }
                                 });
 
+                        db.collection("products")
+                                .document(keyProduct)
+                                .collection(Stock.COLLECTION_NAME)
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                                        for(DocumentSnapshot stockListItem : queryDocumentSnapshots)    {
+                                            Stock stockItem = new Stock();
+
+                                            List<String> listImg = (List<String>) stockListItem.get("images");
+
+                                            if(listImg.size() >= 0) {
+                                                stockItem.setImg(listImg.get(0));
+                                            }
+                                            else    {
+                                                stockItem.setImg(cartItem.getImg());
+                                            }
+                                            stockItem.setColorName(stockListItem.getString("color"));
+                                            stockItem.setSizeName(stockListItem.getString("size"));
+                                            int quantity = (int)Math.round(stockListItem.getDouble("quantity"));
+                                            stockItem.setQuantity(quantity);
+                                            totalStock += quantity;
+
+                                            stockArrayList.add(stockItem);
+                                        }
+                                        txtStock.setText(String.valueOf(totalStock));
+                                    }
+                                });
                     }
                 });
     }
@@ -295,6 +346,10 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
     }
 
     private void checkAndMoveStatusBtn()    {
+        if(currentStock == 0)   {
+            btnAddToCart.setEnabled(false);
+            return;
+        }
         if(isSizeSelect && isColorSelect)   {
             btnAddToCart.setEnabled(true);
         }
@@ -336,6 +391,40 @@ public class AddToCart extends Dialog implements android.view.View.OnClickListen
                         show();
                     }
                 });
+    }
+
+    private void reAssignStock()    {
+        if(isSizeSelect && isColorSelect)   {
+            String nameColorSelected = colorSelected.getName();
+            String nameSizeSelected = sizeSelected.getShort_name();
+
+            for(Stock stockItem : stockArrayList)   {
+                if(stockItem.getColorName().equals(nameColorSelected)
+                && stockItem.getSizeName().equals(nameSizeSelected))    {
+                    currentStock = stockItem.getQuantity();
+                    txtStock.setText(String.valueOf(currentStock));
+                    return;
+                }
+            }
+
+            currentStock = 0;
+            txtStock.setText(String.valueOf(currentStock));
+
+        }
+    }
+
+    private void reImg()    {
+        if(isColorSelect)   {
+            String nameColorSelected = colorSelected.getName();
+
+            for(Stock stockItem : stockArrayList)   {
+                if(stockItem.getColorName().equals(nameColorSelected))    {
+                    String img = stockItem.getImg();
+                    Glide.with(getContext()).load(img).error(cartItem.getImg()).into(mainImg);
+                    return;
+                }
+            }
+        }
     }
 
     @Override

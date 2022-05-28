@@ -16,9 +16,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -29,7 +33,10 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_ProductDetailActivity;
 import nhom7.clothnest.models.Product_Admin;
+import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.Stock;
+import nhom7.clothnest.models.User;
+import nhom7.clothnest.models.Wishlist;
 
 public class Product_AdminAdapter extends BaseAdapter {
     private Context mContext;
@@ -284,4 +291,306 @@ public class Product_AdminAdapter extends BaseAdapter {
                     }
                 });
     }
+
+    public static void getProductUTFromCollection(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adminAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "UT" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Admin productAdmin = new Product_Admin();
+                                                listProduct.add(productAdmin);
+
+                                                productAdmin.setId(documentSnapshot.getId());
+
+                                                productAdmin.setName(documentSnapshot.getString("name"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                productAdmin.setPrice(documentSnapshot.getDouble("price"));
+                                                adminAdapter.notifyDataSetChanged();
+
+
+                                                productAdmin.setMainImage(documentSnapshot.getString("main_img"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    int stock = 0;
+                                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                                        productAdmin.setStock(stock);
+                                                                        adminAdapter.notifyDataSetChanged();
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProductLINEFromCollection(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adminAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "LINE" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Admin productAdmin = new Product_Admin();
+                                                listProduct.add(productAdmin);
+
+                                                productAdmin.setId(documentSnapshot.getId());
+
+                                                productAdmin.setName(documentSnapshot.getString("name"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                productAdmin.setPrice(documentSnapshot.getDouble("price"));
+                                                adminAdapter.notifyDataSetChanged();
+
+
+                                                productAdmin.setMainImage(documentSnapshot.getString("main_img"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    int stock = 0;
+                                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                                        productAdmin.setStock(stock);
+                                                                        adminAdapter.notifyDataSetChanged();
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProductUNISEXFromCollection(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adminAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "UNISEX" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Admin productAdmin = new Product_Admin();
+                                                listProduct.add(productAdmin);
+
+                                                productAdmin.setId(documentSnapshot.getId());
+
+                                                productAdmin.setName(documentSnapshot.getString("name"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                productAdmin.setPrice(documentSnapshot.getDouble("price"));
+                                                adminAdapter.notifyDataSetChanged();
+
+
+                                                productAdmin.setMainImage(documentSnapshot.getString("main_img"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    int stock = 0;
+                                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                                        productAdmin.setStock(stock);
+                                                                        adminAdapter.notifyDataSetChanged();
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProducWINTERtFromCollection(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adminAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "WINTER" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Admin productAdmin = new Product_Admin();
+                                                listProduct.add(productAdmin);
+
+                                                productAdmin.setId(documentSnapshot.getId());
+
+                                                productAdmin.setName(documentSnapshot.getString("name"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                productAdmin.setPrice(documentSnapshot.getDouble("price"));
+                                                adminAdapter.notifyDataSetChanged();
+
+
+                                                productAdmin.setMainImage(documentSnapshot.getString("main_img"));
+                                                adminAdapter.notifyDataSetChanged();
+                                                db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    int stock = 0;
+                                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                                        productAdmin.setStock(stock);
+                                                                        adminAdapter.notifyDataSetChanged();
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void getProducUVPROTECTIONtFromCollection(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adminAdapter) {
+        String temp = Product_Thumbnail.COLECTION_NAME_COLLECTIONS + '/' + "UV PROTECTION" + '/' + Product_Thumbnail.COLECTION_NAME_PRODUCTS;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(temp)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> map = document.getData();
+                                Iterator iterator = map.keySet().iterator();
+                                while (iterator.hasNext()) {
+                                    String key = (String) iterator.next();
+
+                                    if (key.equals("product_id")) {
+                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Product_Admin productAdmin = new Product_Admin();
+                                                listProduct.add(productAdmin);
+
+                                                productAdmin.setId(documentSnapshot.getId());
+
+                                                productAdmin.setName(documentSnapshot.getString("name"));
+                                                adminAdapter.notifyDataSetChanged();
+
+                                                productAdmin.setPrice(documentSnapshot.getDouble("price"));
+                                                adminAdapter.notifyDataSetChanged();
+
+
+                                                productAdmin.setMainImage(documentSnapshot.getString("main_img"));
+                                                adminAdapter.notifyDataSetChanged();
+                                                db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    int stock = 0;
+                                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                                                        productAdmin.setStock(stock);
+                                                                        adminAdapter.notifyDataSetChanged();
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
 }
+
