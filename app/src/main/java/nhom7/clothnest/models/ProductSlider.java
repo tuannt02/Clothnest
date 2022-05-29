@@ -43,6 +43,11 @@ public class ProductSlider {
     private final String htmlDot = "&#8226";
     private LinearLayout container;
     private LinearLayout linearLayout;
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
     private Context mContext;
     private ProductSliderAdapter adapter;
 
@@ -136,6 +141,74 @@ public class ProductSlider {
 
         if (currDot != null)
             currDot.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+    }
+
+
+    public void getCollectionProduct(ArrayList<Product_Thumbnail> listProduct, String collectionName){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        listProduct.clear();
+        db.collection("collections").document(collectionName).collection("products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document: task.getResult()){
+                                DocumentReference productRef = (DocumentReference) document.get("product_id");
+                                productRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                        listProduct.add(thumbnail);
+                                        adapter.notifyDataSetChanged();
+
+                                        //Set id
+                                        thumbnail.setId(documentSnapshot.getId());
+                                        adapter.notifyDataSetChanged();
+
+                                        DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
+
+                                        thumbnail.setName(documentSnapshot.getString("name"));
+                                        adapter.notifyDataSetChanged();
+
+                                        thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                        adapter.notifyDataSetChanged();
+
+                                        thumbnail.setDiscount((int)Math.round(documentSnapshot.getDouble("discount")));
+                                        adapter.notifyDataSetChanged();
+
+                                        thumbnail.setMainImage((documentSnapshot.getString("main_img")));
+                                        adapter.notifyDataSetChanged();
+
+                                        //set isFavorite
+                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                        DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                        CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                        Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                        query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                    adapter.notifyDataSetChanged();
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
     }
 
     //Lấy 10 sản phẩm cùng danh mục

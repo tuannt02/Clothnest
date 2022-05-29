@@ -1,6 +1,7 @@
 package nhom7.clothnest.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment {
         slider();
         getProductThumbnail();
         getEvent();
-        createSlider();
+        createSlider("WINTER");
         initTuanBeVars();
 
 
@@ -219,10 +220,14 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void createSlider() {
+    private void createSlider(String collectionName) {
+        View view1 = containersilder.getChildAt(0);
+        containersilder.removeView(view1);
+        collectionsList = new ArrayList<>();
         productSlider = new ProductSlider(getContext(), containersilder, collectionsList);
         productSlider.createProductSlider();
-        productSlider.getSimilarProduct(collectionsList, "T-Shirts");
+        productSlider.getCollectionProduct(collectionsList, collectionName);
+        btnWinter.setBackgroundColor(Color.parseColor("#DF7861"));
     }
 
     private void getEvent() {
@@ -241,26 +246,52 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
                 intent.putExtra("name", a);
                 startActivity(intent);
+                View view1 = containersilder.getChildAt(0);
+                containersilder.removeView(view1);
+                createSlider("WINTER");
+
+                btnWinter.setBackgroundColor(Color.parseColor("#DF7861"));
+                btnUT.setBackgroundColor(Color.WHITE);
+                btnUvProtection.setBackgroundColor(Color.WHITE);
+                btnUnisex.setBackgroundColor(Color.WHITE);
+                btnLine.setBackgroundColor(Color.WHITE);
             }
         });
 
         btnLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String a = "LINE";
                 Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
                 intent.putExtra("name", a);
                 startActivity(intent);
+                View view1 = containersilder.getChildAt(0);
+                containersilder.removeView(view1);
+                createSlider("LINE");
+                btnUT.setBackgroundColor(Color.WHITE);
+                btnWinter.setBackgroundColor(Color.WHITE);
+                btnUvProtection.setBackgroundColor(Color.WHITE);
+                btnUnisex.setBackgroundColor(Color.WHITE);
+                btnLine.setBackgroundColor(Color.parseColor("#DF7861"));
             }
         });
 
         btnUT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String a = "UT";
                 Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
                 intent.putExtra("name", a);
                 startActivity(intent);
+                containersilder.removeViewAt(0);
+                createSlider("UT");
+                btnLine.setBackgroundColor(Color.WHITE);
+                btnWinter.setBackgroundColor(Color.WHITE);
+                btnUvProtection.setBackgroundColor(Color.WHITE);
+                btnUnisex.setBackgroundColor(Color.WHITE);
+                btnUT.setBackgroundColor(Color.parseColor("#DF7861"));
             }
         });
 
@@ -272,6 +303,15 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
                 intent.putExtra("name", a);
                 startActivity(intent);
+                containersilder.removeViewAt(0);
+
+                createSlider("UNISEX");
+                btnLine.setBackgroundColor(Color.WHITE);
+                btnUT.setBackgroundColor(Color.WHITE);
+                btnWinter.setBackgroundColor(Color.WHITE);
+
+                btnUvProtection.setBackgroundColor(Color.WHITE);
+                btnUnisex.setBackgroundColor(Color.parseColor("#DF7861"));
             }
         });
         btnUvProtection.setOnClickListener(new View.OnClickListener() {
@@ -281,6 +321,14 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
                 intent.putExtra("name", a);
                 startActivity(intent);
+                containersilder.removeViewAt(0);
+
+                createSlider("UV PROTECTION");
+                btnLine.setBackgroundColor(Color.WHITE);
+                btnUT.setBackgroundColor(Color.WHITE);
+                btnWinter.setBackgroundColor(Color.WHITE);
+                btnUnisex.setBackgroundColor(Color.WHITE);
+                btnUvProtection.setBackgroundColor(Color.parseColor("#DF7861"));
             }
         });
 
