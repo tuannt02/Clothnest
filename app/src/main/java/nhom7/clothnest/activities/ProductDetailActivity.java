@@ -213,7 +213,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             ibFavorite.setImageResource(R.drawable.is_favorite);
         }
     }
-    
+
     public void getProductDetail(String productId) {
         ProgressDialog dialog = new ProgressDialog(ProductDetailActivity.this);
         dialog.setMessage("Loading...");

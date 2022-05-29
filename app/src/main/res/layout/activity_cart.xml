@@ -113,7 +113,6 @@
                 android:background="#E0E0E0" />
 
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,13 +123,13 @@
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/cart_container_slider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingHorizontal="20dp"/>
+            <LinearLayout
+                android:id="@+id/cart_container_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="20dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -55,6 +55,7 @@ import nhom7.clothnest.models.Product;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.ProductSlider;
+import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.models.User;
@@ -69,7 +70,7 @@ public class CartActivity extends AppCompatActivity {
     ImageView btnBack;
     LinearLayout emptyView;
     CartAdapter cartAdapter;
-    ArrayList<Product1> productArrayList;
+    ArrayList<Product_Thumbnail> productArrayList;
     ArrayList<CartItem> cartItemArrayList;
     ScrollView scrollView;
     CustomProgressBar customProgressBar;
@@ -89,7 +90,7 @@ public class CartActivity extends AppCompatActivity {
         initUi();
         setupClickOnListener();
         setupScrollViewListener();
-        getProductPropose();
+        //getProductPropose();
 
 //        cartItemArrayList = getProductToDisplayListview();
 
@@ -245,8 +246,10 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void getLikeProducts() {
-//        productSlider = new ProductSlider(this, containersilder, productArrayList);
-//        productSlider.createProductSlider();
+        productArrayList = new ArrayList<>();
+        productSlider = new ProductSlider(this, containersilder, productArrayList);
+        productSlider.createProductSlider();
+        productSlider.getTenProducts(productArrayList);
     }
 
     private void setupClickOnListener() {
@@ -282,19 +285,19 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    private void getProductPropose()    {
-        productArrayList = new ArrayList<>();
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
-
-    }
+//    private void getProductPropose()    {
+//        productArrayList = new ArrayList<>();
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//        productArrayList.add(new Product1("1", "Oversize Hoodie", R.drawable.productimage, 307, 24));
+//
+//    }
 
     private void updateViewEmpty()  {
         if(cartItemArrayList.size() == 0)    {
