@@ -53,6 +53,9 @@ public class Admin_ModifyActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) { // Category
 
+                    Intent intent = new Intent(Admin_ModifyActivity.this, Admin_Modify_ProductActivity.class);
+                    intent.putExtra("adminModifyProduct_key", "new_arrivals");
+                    startActivity(intent);
                 }
 
                 if (i == 1) { // New Arrivals
