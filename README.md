@@ -6,7 +6,7 @@
 ## 🤷‍♂️  Clothnest là gì?
 Clothnest là một ứng dụng di động quản lý shop quần áo, cho phép khách hàng có thể mua hàng trực tuyến, thanh toán chỉ cần vài thao tác đơn giản. Ngoài ra ứng dụng có phân quyền dành cho nhân viên và admin; cho mục đích có thể cập trạng thái mới nhất của sản phẩm, tạo voucher, xem chi tiết trạng thái đơn hàng, thống kê, ... Theo dõi mục chức năng để biết thêm nhé 😉
 ## 🔥 Danh sách các chức năng của ứng dụng
->Ứng dụng có phân quyền cho 3 vai trò là Customer, Staff, Admin. Vì thế nhóm mình sẽ liệt kê ==theo phân quyền== và ==chức năng chung cho cả hệ thống==
+>Ứng dụng có phân quyền cho 3 vai trò là Customer, Staff, Admin. Vì thế nhóm mình sẽ liệt kê *theo phân quyền* và *chức năng chung cho cả hệ thống*
 1. Customer
 	- Xem danh sách các sản phẩm theo danh mục, chủ đề.
 	- Xem chi tiết sản phẩm một sản phẩm.
@@ -49,7 +49,7 @@ Clothnest là một ứng dụng di động quản lý shop quần áo, cho phé
 
 ## 🚀 Cách sử dụng
 #### 1. Chuẩn bị môi trường
->Để chạy được ứng dụng chúng ta cần IDE là ==Android Studio==.
+>Để chạy được ứng dụng chúng ta cần IDE là `Android Studio`.
 
 <p align="center">
   <img width="400" src="https://cdn.sforum.vn/sforum/wp-content/uploads/2021/12/android-studio.png" alt="cli output"/>
