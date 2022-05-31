@@ -6,7 +6,7 @@
 ## 🤷‍♂️  Clothnest là gì?
 Clothnest là một ứng dụng di động quản lý shop quần áo, cho phép khách hàng có thể mua hàng trực tuyến, thanh toán chỉ cần vài thao tác đơn giản. Ngoài ra ứng dụng có phân quyền dành cho nhân viên và admin; cho mục đích có thể cập trạng thái mới nhất của sản phẩm, tạo voucher, xem chi tiết trạng thái đơn hàng, thống kê, ... Theo dõi mục chức năng để biết thêm nhé 😉
 ## 🔥 Danh sách các chức năng của ứng dụng
-*Ứng dụng có phân quyền cho 3 vài trò là Customer, Staff, Admin. Vì thế nhóm mình sẽ liệt kê *theo phân quyền* và *chức năng chung cho cả hệ thống*
+>Ứng dụng có phân quyền cho 3 vai trò là Customer, Staff, Admin. Vì thế nhóm mình sẽ liệt kê ==theo phân quyền== và ==chức năng chung cho cả hệ thống==
 1. Customer
 	- Xem danh sách các sản phẩm theo danh mục, chủ đề.
 	- Xem chi tiết sản phẩm một sản phẩm.
@@ -48,6 +48,46 @@ Clothnest là một ứng dụng di động quản lý shop quần áo, cho phé
 - Võ Đình Vân - 20522147
 
 ## 🚀 Cách sử dụng
+#### 1. Chuẩn bị môi trường
+>Để chạy được ứng dụng chúng ta cần IDE là ==Android Studio==.
 
-## 💪 Công nghệ sử dụng
+<p align="center">
+  <img width="400" src="https://cdn.sforum.vn/sforum/wp-content/uploads/2021/12/android-studio.png" alt="cli output"/>
+  
+</p>
 
+[Link Download ở đây](https://developer.android.com/studio)
+
+#### 2. Download source code
+Download source code qua dòng lệnh sau:
+```sh
+git clone https://github.com/tuannt02/Clothnest.git
+```
+
+#### 3. Chạy chương trình
+Đầu tiên, ta cần mở project sau khi tải về
+<p align="center">
+  <img width="250" src="https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/utils%2FScreenshot%202022-05-31%20224842.png?alt=media&token=397b0cdb-5288-4c0f-91c4-b4545760118d"/>
+  
+</p>
+Tiếp theo, run VM lên mà chạy thôi!
+
+<p align="center">
+  <img width="250" src="https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/utils%2F2.png?alt=media&token=f9d5439c-5547-43bc-89ed-cb5ba338b6e5"/>
+</p>
+
+## 💪 Công nghệ, công cụ sử dụng liên quan
+1. Notion
+2. Figma
+3. Draw.io
+4. Firebase
+5. Android Studio
+
+## 👊 Ủng hộ Clothnest
+- Bằng cách ⭐️ repo này nhé! ❤️
+
+## 📝 Giấy phép
+- Copyright © 2022 [Nhóm 7](https://github.com/tuannt02/Clothnest).<br />
+- This project is [MIT](https://github.com/tuannt02/Clothnest) licensed.
+---
+_This README was generated with  ❤️  by _[enthusiasm, creativity, sense of responsibility](https://github.com/tuannt02/Clothnest)_
