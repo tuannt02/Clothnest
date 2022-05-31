@@ -52,10 +52,17 @@ public class SeeAllItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_all_item);
         reference();
-
+        intentData();
         GetProduct();
         AnimationScale();
 
+    }
+
+    private void intentData() {
+        Intent intent = getIntent();
+        TextView textView = findViewById(R.id.textview2);
+        name = intent.getStringExtra("name");
+        textView.setText("" + name);
     }
 
 
