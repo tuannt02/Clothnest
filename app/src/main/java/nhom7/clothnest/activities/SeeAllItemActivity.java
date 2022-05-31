@@ -52,7 +52,7 @@ public class SeeAllItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_all_item);
         reference();
-        intentData();
+
         GetProduct();
         AnimationScale();
 
@@ -68,12 +68,6 @@ public class SeeAllItemActivity extends AppCompatActivity {
         gridView.startAnimation(scale);
     }
 
-    private void intentData() {
-        Intent intent = getIntent();
-        TextView textView = findViewById(R.id.textview2);
-        name = intent.getStringExtra("name");
-        textView.setText("" + name);
-    }
 
     private void GetProduct() {
         productArrayList = new ArrayList<>();

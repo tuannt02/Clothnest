@@ -22,21 +22,12 @@
             android:textColor="@color/black"
             android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/collections_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/lato_black"
-            android:text="Add"
-            android:textColor="@color/blue"
-            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/collections_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="90dp"
             android:fontFamily="@font/lato_black"
             android:text="Close"
             android:textColor="@color/red"
