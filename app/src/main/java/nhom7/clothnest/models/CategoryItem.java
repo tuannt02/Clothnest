@@ -6,6 +6,10 @@ public class CategoryItem {
     private String categoryName;
     public int icon;
 
+    public CategoryItem() {
+
+    }
+
     public String getCategoryName() {
         return categoryName;
     }

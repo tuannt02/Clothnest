@@ -16,6 +16,12 @@ import nhom7.clothnest.R;
 public class CategoryAdapter extends BaseAdapter {
     Context mContext;
     private int mLayout;
+
+    public CategoryAdapter(Context mContext, List<CategoryItem> listCategory) {
+        this.mContext = mContext;
+        this.listCategory = listCategory;
+    }
+
     private List<CategoryItem> listCategory;
 
     public CategoryAdapter(Context mContext, int mLayout, List<CategoryItem> listCategory) {

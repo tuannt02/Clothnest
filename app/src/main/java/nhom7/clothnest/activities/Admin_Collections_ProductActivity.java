@@ -21,6 +21,7 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
     Product_AdminAdapter adminAdapter;
     ListView lvProduct;
     View includeView;
+    TextView tvNumOfProduct,tvNumOfStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
         admin_collectionProduct_tvClose = findViewById(R.id.admin_collectionProduct_tvClose);
         includeView = findViewById(R.id.admin_modifyProduct_Include);
         lvProduct = includeView.findViewById(R.id.admin_productList_productList);
+        tvNumOfProduct = includeView.findViewById(R.id.admin_productList_numOfProduct);
+        tvNumOfStock= includeView.findViewById(R.id.admin_productList_numOfStocks);
     }
 
     private void getData() {
@@ -62,15 +65,15 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
         lvProduct.setAdapter(adminAdapter);
 
         if (name.compareTo("UT") == 0)
-            Product_AdminAdapter.getProductUTFromCollection(productList, adminAdapter);
+            Product_AdminAdapter.getProductUTFromCollection(productList, adminAdapter,tvNumOfProduct,tvNumOfStock);
         if (name.compareTo("LINE") == 0)
-            Product_AdminAdapter.getProductLINEFromCollection(productList, adminAdapter);
+            Product_AdminAdapter.getProductLINEFromCollection(productList, adminAdapter,tvNumOfProduct,tvNumOfStock);
         if (name.compareTo("UNISEX") == 0)
-            Product_AdminAdapter.getProductUNISEXFromCollection(productList, adminAdapter);
+            Product_AdminAdapter.getProductUNISEXFromCollection(productList, adminAdapter,tvNumOfProduct,tvNumOfStock);
         if (name.compareTo("WINTER") == 0)
-            Product_AdminAdapter.getProducWINTERtFromCollection(productList, adminAdapter);
+            Product_AdminAdapter.getProducWINTERtFromCollection(productList, adminAdapter,tvNumOfProduct,tvNumOfStock);
         if (name.compareTo("UV PROTECTION") == 0)
-            Product_AdminAdapter.getProducUVPROTECTIONtFromCollection(productList, adminAdapter);
+            Product_AdminAdapter.getProducUVPROTECTIONtFromCollection(productList, adminAdapter,tvNumOfProduct,tvNumOfStock);
     }
 
 }

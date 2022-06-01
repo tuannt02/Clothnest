@@ -30,11 +30,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +50,7 @@ import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.CartItem;
 import nhom7.clothnest.models.CheckoutTransaction;
+import nhom7.clothnest.models.ClothColor;
 import nhom7.clothnest.models.ColorClass;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.models.SizeClass;
@@ -284,7 +289,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void showPaymentMethodDialog() {
         // Create a new dialog
-        Dialog dialog = createNewDialog(R.layout.payment_method_dialog, null);
+        Dialog dialog = createNewDialog(R.layout.payment_method_dialog, null, true);
 
         // Init UI Views
         TextView btnSelect = dialog.findViewById(R.id.textview_select);
@@ -353,7 +358,7 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void showEnterVoucherDialog() {
-        Dialog dialog = createNewDialog(R.layout.enter_voucher_dialog, null);
+        Dialog dialog = createNewDialog(R.layout.enter_voucher_dialog, null, true);
 
         // Init UI Views
         TextInputEditText etCode = dialog.findViewById(R.id.edittext_code);
@@ -413,10 +418,10 @@ public class CheckoutActivity extends AppCompatActivity {
         Long discount = -1l;
 
         Task getVouchers = voucherRef.get();
-        while (!getVouchers.isComplete());
+        while (!getVouchers.isComplete()) ;
 
         QuerySnapshot result = (QuerySnapshot) getVouchers.getResult();
-        for (DocumentSnapshot documentSnapshot: result.getDocuments()) {
+        for (DocumentSnapshot documentSnapshot : result.getDocuments()) {
             if (documentSnapshot.getString("code").equals(code)) {
                 discount = documentSnapshot.getLong("discount");
                 break;
@@ -426,7 +431,7 @@ public class CheckoutActivity extends AppCompatActivity {
         return discount;
     }
 
-    private Dialog createNewDialog(int resource, @Nullable String msg) {
+    private Dialog createNewDialog(int resource, @Nullable String msg, boolean isCancelable) {
         // Alert if resource is not provided
         if (resource == -1) {
             AlertDialog dialog = new AlertDialog.Builder(this)
@@ -445,7 +450,7 @@ public class CheckoutActivity extends AppCompatActivity {
         // Create a new dialog
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
+        dialog.setCancelable(isCancelable);
         dialog.setContentView(resource);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return dialog;
@@ -496,75 +501,169 @@ public class CheckoutActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Create new transaction
-                DocumentReference newTransaction = transactionRef.document();
-                CheckoutTransaction checkoutTransaction = new CheckoutTransaction();
-                checkoutTransaction.setAddressRef(userRef.collection("addr").document(addressId));
-                checkoutTransaction.setUserRef(userRef);
-                checkoutTransaction.setDeliveryFee(deliveryFee);
-                checkoutTransaction.setStatus("In Progress");
-                checkoutTransaction.setOrderDate(getDate());
-                checkoutTransaction.setDiscount(discountInMoney);
-                checkoutTransaction.setTotal(updateTotal());
-
-                Task createTransaction = newTransaction.set(checkoutTransaction);
-                while (!createTransaction.isComplete());
-
-                // Add item to transaction
-                ArrayList<Task> addTransactionItemsTask = new ArrayList<>();
-
-                CollectionReference transactionItemList = newTransaction.collection("transactionItemList");
-                for (int i = 0; i < cartItems.size(); i++) {
-                    CartItem item = cartItems.get(i);
-
-                    Double salePrice = (double) (item.getDiscountPrice() / item.getQty());
-
-                    PurchaseItem transactionItem = new PurchaseItem(
-                            item.getQty(),
-                            products.get(i),
-                            colors.get(i),
-                            sizes.get(i),
-                            item.getPrice(),
-                            salePrice
-                    );
-
-                    addTransactionItemsTask.add(transactionItemList.document().set(transactionItem));
-                }
-
-                Tasks.whenAllSuccess(addTransactionItemsTask)
-                        .addOnCompleteListener(new OnCompleteListener<List<Object>>() {
-                            @Override
-                            public void onComplete(@NonNull Task<List<Object>> task) {
-                                // Show Order success dialog
-                                Dialog dialog = createNewDialog(R.layout.order_received_dialog, null);
-                                dialog.show();
-
-                                // Remove cart items
-                                cartRef.get()
-                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
-                                                    cartRef.document(documentSnapshot.getId()).delete();
-                                                }
-                                            }
-                                        });
-
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        dialog.dismiss();
-                                        Intent intent = new Intent(CheckoutActivity.this, MainActivity.class);
-                                        intent.putExtra("fragment_type", ActivityConstants.PROFILE_FRAGMENT);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }, 3000);
-                            }
-                        });
+                checkStock();
             }
         });
     }
+
+    private void checkStock() {
+        // Check stock
+        ArrayList<Task> checkStockTask = new ArrayList<>();
+        for (int i = 0; i < cartItems.size(); i++) {
+            CartItem item = cartItems.get(i);
+            ColorClass color = item.getColorSelected();
+
+            Task task = products.get(i)
+                    .collection("stocks")
+                    .whereEqualTo("color", color.getName())
+                    .get();
+
+
+            checkStockTask.add(task);
+        }
+
+        Tasks.whenAllSuccess(checkStockTask)
+                .addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> objects) {
+                        ArrayList<QuerySnapshot> querySnapshots = new ArrayList<>();
+
+                        // Check every product's stock
+                        for (int i = 0; i < objects.size(); i++) {
+                            // If one of them is not enough quantity, return
+                            querySnapshots.add((QuerySnapshot) objects.get(i));
+                            if (!checkSingleStock(querySnapshots.get(i), i)) {
+                                new CustomDialog(
+                                        CheckoutActivity.this,
+                                        "Paid Failed",
+                                        "Not enough stock.",
+                                        1,
+                                        new CustomDialog.IClickListenerOnOkBtn() {
+                                            @Override
+                                            public void onResultOk() {
+                                                finish();
+                                            }
+                                        }
+                                ).show();
+
+                                return;
+                            }
+                        }
+
+                        // Update stock if quantity is enough
+                        for (int i = 0; i < objects.size(); i++) {
+                            querySnapshots.add((QuerySnapshot) objects.get(i));
+                            updateStock(querySnapshots.get(i), i);
+                        }
+
+                        // If success create new transaction
+                        createNewTransaction();
+                    }
+                });
+    }
+
+    private boolean checkSingleStock(QuerySnapshot querySnapshot, int index) {
+        // Get current item's size
+        CartItem item = cartItems.get(index);
+        String size = item.getSizeSelected().getShort_name();
+
+        // We only check size here because we queried color before
+        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+            if (documentSnapshot.getString("size").equals(size) &&
+                    documentSnapshot.getLong("quantity") >= item.getQty()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void updateStock(QuerySnapshot querySnapshot, int index) {
+        // Get current item's size
+        CartItem item = cartItems.get(index);
+        String size = item.getSizeSelected().getShort_name();
+
+        // We only check size here because we queried color before
+        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+            if (documentSnapshot.getString("size").equals(size)) {
+                String stockId = documentSnapshot.getId();
+                Long newQty = documentSnapshot.getLong("quantity") - item.getQty();
+                products.get(index).collection("stocks").document(stockId)
+                        .update("quantity", newQty);
+            }
+        }
+    }
+
+    private void createNewTransaction() {
+        // Create new transaction
+        DocumentReference newTransaction = transactionRef.document();
+        CheckoutTransaction checkoutTransaction = new CheckoutTransaction();
+        checkoutTransaction.setAddressRef(userRef.collection("addr").document(addressId));
+        checkoutTransaction.setUserRef(userRef);
+        checkoutTransaction.setDeliveryFee(deliveryFee);
+        checkoutTransaction.setStatus("In Progress");
+        checkoutTransaction.setOrderDate(getDate());
+        checkoutTransaction.setDiscount(discountInMoney);
+        checkoutTransaction.setTotal(updateTotal());
+        checkoutTransaction.setTime(Timestamp.now());
+
+        Task createTransaction = newTransaction.set(checkoutTransaction);
+        while (!createTransaction.isComplete()) ;
+
+        // Add item to transaction
+        ArrayList<Task> addTransactionItemsTask = new ArrayList<>();
+
+        CollectionReference transactionItemList = newTransaction.collection("transactionItemList");
+        for (int i = 0; i < cartItems.size(); i++) {
+            CartItem item = cartItems.get(i);
+
+            Double salePrice = (double) (item.getDiscountPrice() / item.getQty());
+
+            PurchaseItem transactionItem = new PurchaseItem(
+                    item.getQty(),
+                    products.get(i),
+                    colors.get(i),
+                    sizes.get(i),
+                    item.getPrice(),
+                    salePrice
+            );
+
+            addTransactionItemsTask.add(transactionItemList.document().set(transactionItem));
+        }
+
+        Tasks.whenAllSuccess(addTransactionItemsTask)
+                .addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Object>> task) {
+                        // Show Order success dialog
+                        Dialog dialog = createNewDialog(R.layout.order_received_dialog, null, false);
+                        dialog.show();
+
+                        // Remove cart items
+                        cartRef.get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                            cartRef.document(documentSnapshot.getId()).delete();
+                                        }
+                                    }
+                                });
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                Intent intent = new Intent(CheckoutActivity.this, MainActivity.class);
+                                intent.putExtra("fragment_type", ActivityConstants.PROFILE_FRAGMENT);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 3000);
+                    }
+                });
+    }
+
 
     private String getDate() {
         Date date = new Date();

@@ -58,6 +58,13 @@ public class SeeAllItemActivity extends AppCompatActivity {
 
     }
 
+    private void intentData() {
+        Intent intent = getIntent();
+        TextView textView = findViewById(R.id.textview2);
+        name = intent.getStringExtra("name");
+        textView.setText("" + name);
+    }
+
 
     private void reference() {
         gridView = findViewById(R.id.gridviewSeeAllItem);
@@ -68,12 +75,6 @@ public class SeeAllItemActivity extends AppCompatActivity {
         gridView.startAnimation(scale);
     }
 
-    private void intentData() {
-        Intent intent = getIntent();
-        TextView textView = findViewById(R.id.textview2);
-        name = intent.getStringExtra("name");
-        textView.setText("" + name);
-    }
 
     private void GetProduct() {
         productArrayList = new ArrayList<>();

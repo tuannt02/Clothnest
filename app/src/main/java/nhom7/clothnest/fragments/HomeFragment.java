@@ -242,10 +242,6 @@ public class HomeFragment extends Fragment {
         btnWinter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String a = "WINTER";
-                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
-                intent.putExtra("name", a);
-                startActivity(intent);
                 View view1 = containersilder.getChildAt(0);
                 containersilder.removeView(view1);
                 createSlider("WINTER");
@@ -262,10 +258,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String a = "LINE";
-                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
-                intent.putExtra("name", a);
-                startActivity(intent);
                 View view1 = containersilder.getChildAt(0);
                 containersilder.removeView(view1);
                 createSlider("LINE");
@@ -281,10 +273,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String a = "UT";
-                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
-                intent.putExtra("name", a);
-                startActivity(intent);
                 containersilder.removeViewAt(0);
                 createSlider("UT");
                 btnLine.setBackgroundColor(Color.WHITE);
@@ -299,12 +287,7 @@ public class HomeFragment extends Fragment {
         btnUnisex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String a = "UNISEX";
-                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
-                intent.putExtra("name", a);
-                startActivity(intent);
                 containersilder.removeViewAt(0);
-
                 createSlider("UNISEX");
                 btnLine.setBackgroundColor(Color.WHITE);
                 btnUT.setBackgroundColor(Color.WHITE);
@@ -317,10 +300,6 @@ public class HomeFragment extends Fragment {
         btnUvProtection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String a = "UV PROTECTION";
-                Intent intent = new Intent(getContext(), SeeAllItemActivity.class);
-                intent.putExtra("name", a);
-                startActivity(intent);
                 containersilder.removeViewAt(0);
 
                 createSlider("UV PROTECTION");

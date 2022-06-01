@@ -100,7 +100,7 @@ public class PurchasesFragment extends Fragment {
         progressBar.show();
         transactionListener = transactionRef
                 .whereEqualTo("userRef", currUserRef)
-                .orderBy("orderDate", Query.Direction.DESCENDING)
+                .orderBy("time", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
