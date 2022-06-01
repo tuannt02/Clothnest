@@ -53,8 +53,8 @@ public class CustomCheckoutItemAdapter extends ArrayAdapter<CartItem> {
         // Set data for UI Views
         Picasso.get().load(item.getImg()).into(ivProduct);
         tvName.setText(item.getName());
-        tvSize.setText("Size: " + item.getSizeSelected().getShort_name());
-        tvColor.setText("Color: " + item.getColorSelected().getName());
+        tvSize.setText(item.getSizeSelected().getShort_name());
+        tvColor.setText(item.getColorSelected().getName());
         tvQty.setText(item.getQty() + "");
         tvPrice.setText(item.getDiscountPrice() + "");
 

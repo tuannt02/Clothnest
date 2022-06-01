@@ -1,5 +1,6 @@
 package nhom7.clothnest.models;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.PropertyName;
 
@@ -9,6 +10,15 @@ public class CheckoutTransaction {
     private long deliveryFee, discount, total;
     private DocumentReference addressRef, userRef;
     private String orderDate, status;
+    private Timestamp time;
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
 
     public long getDeliveryFee() {
         return deliveryFee;
