@@ -72,7 +72,6 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
 
         lvProduct.setAdapter(adminAdapter);
 
-        //Product_AdminAdapter.getNumberTotal(tvNumOfProduct, tvNumOfStock);
-        Product_AdminAdapter.getModifyProducts(productList, adminAdapter, collectionName);
+        Product_AdminAdapter.getModifyProducts(productList, adminAdapter, collectionName,tvNumOfProduct,tvNumOfStock);
     }
 }
