@@ -1,11 +1,15 @@
 package nhom7.clothnest.models;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.util.ArrayList;
 
+import nhom7.clothnest.adapters.StockImageUpdateAdapter;
+
 public class Stock {
     public static final String COLLECTION_NAME = "stocks";
+    private String stockID;
     private String sizeID;
     private String colorID;
     private String sizeName, colorName;
@@ -13,6 +17,7 @@ public class Stock {
     private String img;
     private ArrayList<Uri> imageList;
     private ArrayList<String> downloadUrls;
+    private ArrayList<Bitmap> bitmapList;
 
     public Stock() {
         imageList = new ArrayList<>();
@@ -23,6 +28,7 @@ public class Stock {
         this.colorID = colorID;
         this.quantity = quantity;
         this.imageList = imageList;
+        this.bitmapList = new ArrayList<>();
     }
 
     public Stock(String sizeID, String colorID, String sizeName, String colorName, int quantity, ArrayList<String> downloadUrls) {
@@ -32,6 +38,14 @@ public class Stock {
         this.colorName = colorName;
         this.quantity = quantity;
         this.downloadUrls = downloadUrls;
+    }
+
+    public String getStockID() {
+        return stockID;
+    }
+
+    public void setStockID(String stockID) {
+        this.stockID = stockID;
     }
 
     public String getImg() {
@@ -92,6 +106,22 @@ public class Stock {
 
     public void setDownloadUrls(ArrayList<String> downloadUrls) {
         this.downloadUrls = downloadUrls;
+    }
+
+    public ArrayList<Bitmap> getBitmapList() {
+        return bitmapList;
+    }
+
+    public void setBitmapList(ArrayList<Bitmap> bitmapList) {
+        this.bitmapList = bitmapList;
+    }
+
+    public Bitmap getBitmap(int i){
+        return  bitmapList.get(i);
+    }
+
+    public void addBitMapToList(Bitmap bitmap){
+        this.bitmapList.add(bitmap);
     }
 
     public void setImg(String img) {

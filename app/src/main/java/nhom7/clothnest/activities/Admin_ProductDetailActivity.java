@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -207,6 +210,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                                 for (DocumentSnapshot docSize : querySnapshots.get(0).getDocuments()) {
                                                     stock.setSizeID(docSize.getId());
                                                 }
+                                                stock.setStockID(stock_doc.getId());
                                                 stock.setSizeName(stock_doc.getString("size"));
                                                 stock.setColorName(stock_doc.getString("color"));
                                                 stock.setQuantity((int) Math.round(stock_doc.getDouble("quantity")));
@@ -428,7 +432,54 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void updateProduct() {
+        Map<String, Object> product = new HashMap<>();
 
+        //set references
+        StorageReference storageRef = storage.getReference();
+
+
+        //get data
+        for(Stock currentStock : stockList){
+            ArrayList<String> stockDonwloadUri = new ArrayList<>();
+            if(currentStock.getStockID() != null){
+                for(int i = 0; i < currentStock.getDownloadUrls().size(); i++){
+                    String imageID = currentStock.getStockID() + '_' + i;
+
+                    StorageReference currentImage_Ref = storageRef.child("products" + '/' + currentStock.getStockID() + '/' + imageID);
+                    Bitmap currentImageBitmap = currentStock.getBitmap(i);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    currentImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
+                    UploadTask uploadTask = currentImage_Ref.putBytes(data);
+                    Task<Uri> urltask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            return currentImage_Ref.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if(task.isSuccessful())
+                                stockDonwloadUri.add(task.getResult().toString());
+                        }
+                    });
+                }
+
+                Map<String, Object> product_Stock = new HashMap<>();
+                product_Stock.put("color", currentStock.getColorName());
+                product_Stock.put("images", stockDonwloadUri);
+                product_Stock.put("quantity",currentStock.getQuantity());
+                product_Stock.put("size", currentStock.getSizeName());
+
+
+            }
+            else{
+
+            }
+        }
+
+//        db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId())
+//                .set()
     }
 
     private void removeProduct(String productID) {

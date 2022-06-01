@@ -1,6 +1,8 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,14 @@ public class StockImageUpdateAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> downloadList;
 
-    View mView;
+    private ArrayList<Bitmap> bitmapList;
+
+    private View mView;
 
     public StockImageUpdateAdapter(Context mContext, ArrayList<String> downloadList) {
         this.mContext = mContext;
         this.downloadList = downloadList;
+        bitmapList = new ArrayList<>();
     }
 
     @Override
@@ -49,6 +54,14 @@ public class StockImageUpdateAdapter extends BaseAdapter {
 
         Glide.with(mContext).load(downloadList.get(i)).into(ivStock);
 
+        ivStock.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) ivStock.getDrawable()).getBitmap();
+        bitmapList.add(bitmap);
+
         return mView;
+    }
+
+    public Bitmap getImageBitmap(int i){
+        return bitmapList.get(i);
     }
 }

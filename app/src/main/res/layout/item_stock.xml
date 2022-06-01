@@ -35,7 +35,7 @@
                         android:id="@+id/item_stock_tvSize"
                         android:layout_width="78dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
+                        android:fontFamily="@font/lato_bold"
                         android:text="33INCH"
                         android:textSize="18dp" />
 
@@ -55,7 +55,7 @@
                         android:id="@+id/item_stock_tvColor"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
+                        android:fontFamily="@font/lato_bold"
                         android:text="Black"
                         android:textSize="18dp" />
 
@@ -68,7 +68,7 @@
                         android:id="@+id/item_stock_tvQuantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
+                        android:fontFamily="@font/lato_bold"
                         android:text="20"
                         android:textSize="18dp" />
                 </LinearLayout>

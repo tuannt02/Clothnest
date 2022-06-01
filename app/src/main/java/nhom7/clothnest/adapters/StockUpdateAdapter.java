@@ -33,13 +33,14 @@ public class StockUpdateAdapter extends BaseAdapter {
     private ArrayList<Stock> stocks;
     private View mView;
     private ClickListener mClickListener;
+    private StockImageUpdateAdapter stockImageUpdateAdapter;
+
 
     //View
     TextView tvSize, tvColor, tvQuantity;
     ImageView ivDelete;
     CircleImageView civColor;
     GridView gvImage;
-    StockImageUpdateAdapter stockImageUpdateAdapter;
 
 
     public StockUpdateAdapter(Context mContext, ArrayList<Stock> stocks, ClickListener mClickListener) {
@@ -89,6 +90,7 @@ public class StockUpdateAdapter extends BaseAdapter {
         //Đổ dữ liệu vào gridView
         stockImageUpdateAdapter = new StockImageUpdateAdapter(mContext, stock.getDownloadUrls());
         gvImage.setAdapter(stockImageUpdateAdapter);
+        stock.addBitMapToList(stockImageUpdateAdapter.getImageBitmap(i));
 
         getEvent(i);
         return view;
