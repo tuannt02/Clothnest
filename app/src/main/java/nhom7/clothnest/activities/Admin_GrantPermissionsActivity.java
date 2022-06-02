@@ -3,6 +3,9 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,6 +39,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.UserGrantPermissionsAdapter;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 
 public class Admin_GrantPermissionsActivity extends AppCompatActivity {
@@ -48,10 +52,15 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
     ArrayList<User> listOriginal;
     UserGrantPermissionsAdapter userGrantPermissionsAdapter;
 
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_grant_permissions);
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         // Init ui
         initUi();
@@ -131,6 +140,12 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
 
         getUserAndShowOnListview();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initUi()   {

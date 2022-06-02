@@ -27,6 +27,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     LinearLayout btnNavSignIn;
     CustomProgressBar customProgressBar;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

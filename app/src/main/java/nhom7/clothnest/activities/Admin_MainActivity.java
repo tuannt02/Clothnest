@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -17,6 +20,7 @@ import nhom7.clothnest.fragments.ChatListFragment;
 import nhom7.clothnest.fragments.HomeFragment;
 import nhom7.clothnest.fragments.MoreFragment;
 import nhom7.clothnest.fragments.TransactionFragment;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_MainActivity extends AppCompatActivity {
     BottomNavigationView adminBnv;
@@ -25,6 +29,7 @@ public class Admin_MainActivity extends AppCompatActivity {
     MoreFragment moreFragment;
     ChatListFragment chatListFragment;
     Admin_ProductsFragment adminProductsFragment;
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,15 @@ public class Admin_MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Admin_ProductsFragment.class, null).commit();
         // Replace fragment with Product Fragment on start up
         setupBnv();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void setupBnv() {

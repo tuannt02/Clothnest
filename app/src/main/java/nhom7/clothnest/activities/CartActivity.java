@@ -1,6 +1,9 @@
 package nhom7.clothnest.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -60,6 +63,7 @@ import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.StringNormalizer;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 import nhom7.clothnest.util.customizeComponent.CustomToast;
@@ -79,6 +83,8 @@ public class CartActivity extends AppCompatActivity {
     //You might like
     LinearLayout containersilder;
     ProductSlider productSlider;
+
+    BroadcastReceiver broadcastReceiver;
 
     private ListenerRegistration cartListener;
 
@@ -115,6 +121,15 @@ public class CartActivity extends AppCompatActivity {
 
         getCartAndShowOnListview();
         getLikeProducts();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initUi()   {

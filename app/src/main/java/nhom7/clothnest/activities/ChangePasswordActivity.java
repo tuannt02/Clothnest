@@ -3,6 +3,9 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -18,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.ValidateLogin;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
@@ -28,7 +32,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     TextView txtSuccessChangePassword;
     MaterialButton btnSave;
     CustomProgressBar customProgressBar;
-
+    BroadcastReceiver broadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         // Thiet lap button Save
         setupBtnSave();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initView() {

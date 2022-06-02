@@ -4,6 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +32,7 @@ import java.util.Locale;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.Transaction;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomDialogAdminAdd;
 import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
@@ -58,6 +62,8 @@ public class Admin_StatisticsDetailActivity extends AppCompatActivity {
     SimpleDateFormat format2 = new SimpleDateFormat("MM / yyyy");
     SimpleDateFormat format3 = new SimpleDateFormat("yyyy");
 
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,15 @@ public class Admin_StatisticsDetailActivity extends AppCompatActivity {
 
         // Set on click
         setOnClick();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initUi()   {

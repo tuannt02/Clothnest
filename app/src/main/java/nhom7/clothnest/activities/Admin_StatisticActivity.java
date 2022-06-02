@@ -2,7 +2,10 @@ package nhom7.clothnest.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import nhom7.clothnest.R;
 import nhom7.clothnest.models.Transaction;
 import nhom7.clothnest.models.User;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
@@ -33,6 +37,7 @@ public class Admin_StatisticActivity extends AppCompatActivity {
     TextView txtTotalProduct;
     CustomProgressBar progressBar;
 
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,15 @@ public class Admin_StatisticActivity extends AppCompatActivity {
 
         // Set view
         statistics();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initUi()   {

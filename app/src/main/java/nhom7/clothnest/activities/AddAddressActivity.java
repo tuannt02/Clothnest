@@ -4,7 +4,10 @@ import static nhom7.clothnest.util.ValidateAddress.isValid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +30,7 @@ import nhom7.clothnest.models.District;
 import nhom7.clothnest.interfaces.OpenProvincesAPI;
 import nhom7.clothnest.models.Province;
 import nhom7.clothnest.R;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.StringNormalizer;
 import nhom7.clothnest.models.Ward;
 import nhom7.clothnest.util.ValidateAddress;
@@ -51,6 +55,7 @@ public class AddAddressActivity extends AppCompatActivity {
     CustomProgressBar customProgressBar;
     String addressId;
     private static final String TAG = "AddAddressActivity";
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,9 @@ public class AddAddressActivity extends AppCompatActivity {
 
         // Khoi tao du lieu cho combobox
         initDataForComboboxes();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     private void initDataForComboboxes() {
@@ -90,6 +98,12 @@ public class AddAddressActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void determineOnCreateBehavior() {

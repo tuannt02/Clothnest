@@ -4,6 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +38,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.CustomMessageAdapter;
 import nhom7.clothnest.adapters.CustomMessageRecyclerAdapter;
 import nhom7.clothnest.models.ChatMessage;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_ChatActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -53,6 +57,8 @@ public class Admin_ChatActivity extends AppCompatActivity {
 
     private Boolean isAdminAccessed, isRoomCreated = true;
     private String chatRoomID, clientName, clientAvatar;
+
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,15 @@ public class Admin_ChatActivity extends AppCompatActivity {
         // setup onclick listener
         btnSend.setOnClickListener(sendListener);
         btnClose.setOnClickListener(closeListener);
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void getChatRoomInfo() {

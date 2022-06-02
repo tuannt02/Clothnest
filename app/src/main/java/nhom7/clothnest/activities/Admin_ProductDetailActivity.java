@@ -3,9 +3,12 @@ package nhom7.clothnest.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -64,6 +67,7 @@ import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.models.Stock;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_ProductDetailActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SIZE = 0x2902;
@@ -73,6 +77,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     private static final int ADD_PRODUCT = 0x2906;
     private static final int UPDATE_PRODUCT = 0x2907;
     private static int CURRENT_CODE;
+    BroadcastReceiver broadcastReceiver;
 
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
@@ -116,7 +121,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     AutoCompleteTextView autoCpTv_category;
     ImageView ivMainImage;
 
-    //Select image
+    // Select image
     ArrayList<Uri> uriList;
     StockImageAdapter stockImageAdapter;
     Uri imageUri, mainImageUri;
@@ -143,6 +148,15 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         handleExtra();
 
         getEvent();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void handleExtra() {
@@ -151,7 +165,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             case "add":
                 CURRENT_CODE = ADD_PRODUCT;
                 btnRemove.setVisibility(View.GONE);
-                nestedScrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                nestedScrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT));
                 createStock();
                 break;
 
@@ -184,7 +199,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                 categoryRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        CollectionReference stockRef = db.collection(Product_Admin.COLLECTION_NAME).document(productID).collection(Stock.COLLECTION_NAME);
+                        CollectionReference stockRef = db.collection(Product_Admin.COLLECTION_NAME).document(productID)
+                                .collection(Stock.COLLECTION_NAME);
                         stockRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -197,10 +213,13 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                     for (QueryDocumentSnapshot stock_doc : task.getResult()) {
                                         Stock stock = new Stock();
 
-                                        Task<QuerySnapshot> getColorStock = color_Ref.whereEqualTo("name", stock_doc.getString("color")).limit(1).get();
-                                        Task<QuerySnapshot> getSizeStock = size_Ref.whereEqualTo("short_name", stock_doc.getString("size")).limit(1).get();
+                                        Task<QuerySnapshot> getColorStock = color_Ref
+                                                .whereEqualTo("name", stock_doc.getString("color")).limit(1).get();
+                                        Task<QuerySnapshot> getSizeStock = size_Ref
+                                                .whereEqualTo("short_name", stock_doc.getString("size")).limit(1).get();
 
-                                        Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getColorStock, getSizeStock);
+                                        Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getColorStock,
+                                                getSizeStock);
                                         listTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
                                             @Override
                                             public void onSuccess(List<QuerySnapshot> querySnapshots) {
@@ -222,7 +241,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                         });
                                     }
 
-                                    //set info product detail
+                                    // set info product detail
                                     productDetail.setName(doc.getString("name"));
                                     productDetail.setCategory(documentSnapshot.getString("name"));
                                     productDetail.setPrice(Double.valueOf(doc.getDouble("price")));
@@ -273,7 +292,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etSize.getText().toString().isEmpty() || etColor.getText().toString().isEmpty() || etQuantity.getText().toString().isEmpty() || uriList.size() == 1) {
+                if (etSize.getText().toString().isEmpty() || etColor.getText().toString().isEmpty()
+                        || etQuantity.getText().toString().isEmpty() || uriList.size() == 1) {
                     Toast.makeText(Admin_ProductDetailActivity.this, "Lack of information", Toast.LENGTH_SHORT).show();
                 } else {
                     int quantity = 0;
@@ -294,7 +314,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
                         getStockImageList();
                     } catch (NumberFormatException e) {
-                        Toast.makeText(Admin_ProductDetailActivity.this, "Quantity is an integer", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Admin_ProductDetailActivity.this, "Quantity is an integer", Toast.LENGTH_SHORT)
+                                .show();
                     }
                 }
             }
@@ -372,15 +393,15 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             pd.setMessage("Saving...");
             pd.show();
 
-            //create database
+            // create database
             db = FirebaseFirestore.getInstance();
 
-            //get data
-            //get docRef of category
+            // get data
+            // get docRef of category
             int indexId = categoryList.indexOf(category);
             String categoryId = categoryIdList.get(indexId);
             DocumentReference docRef_category = db.document(CategoryItem.COLLECTION_NAME + '/' + categoryId);
-            //get double value of price
+            // get double value of price
             Double price_Double = 0.0;
             try {
                 price_Double = Double.valueOf(price);
@@ -390,7 +411,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     pd.dismiss();
                 return;
             }
-            //get int value of discount
+            // get int value of discount
             int discount_Int = 0;
             try {
                 discount_Int = Integer.parseInt(discount);
@@ -400,11 +421,11 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     pd.dismiss();
                 return;
             }
-            //get current datetime
+            // get current datetime
             Timestamp now = new Timestamp(new Date());
 
             Map<String, Object> product = new HashMap<>();
-//                    product.put("category", category_DocRef);
+            // product.put("category", category_DocRef);
             product.put("category", docRef_category);
             product.put("date_add", now);
             product.put("desc", description);
@@ -434,52 +455,51 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     private void updateProduct() {
         Map<String, Object> product = new HashMap<>();
 
-        //set references
+        // set references
         StorageReference storageRef = storage.getReference();
 
-
-        //get data
-        for(Stock currentStock : stockList){
+        // get data
+        for (Stock currentStock : stockList) {
             ArrayList<String> stockDonwloadUri = new ArrayList<>();
-            if(currentStock.getStockID() != null){
-                for(int i = 0; i < currentStock.getDownloadUrls().size(); i++){
+            if (currentStock.getStockID() != null) {
+                for (int i = 0; i < currentStock.getDownloadUrls().size(); i++) {
                     String imageID = currentStock.getStockID() + '_' + i;
 
-                    StorageReference currentImage_Ref = storageRef.child("products" + '/' + currentStock.getStockID() + '/' + imageID);
+                    StorageReference currentImage_Ref = storageRef
+                            .child("products" + '/' + currentStock.getStockID() + '/' + imageID);
                     Bitmap currentImageBitmap = currentStock.getBitmap(i);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     currentImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] data = baos.toByteArray();
                     UploadTask uploadTask = currentImage_Ref.putBytes(data);
-                    Task<Uri> urltask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            return currentImage_Ref.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if(task.isSuccessful())
-                                stockDonwloadUri.add(task.getResult().toString());
-                        }
-                    });
+                    Task<Uri> urltask = uploadTask
+                            .continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                    return currentImage_Ref.getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful())
+                                        stockDonwloadUri.add(task.getResult().toString());
+                                }
+                            });
                 }
 
                 Map<String, Object> product_Stock = new HashMap<>();
                 product_Stock.put("color", currentStock.getColorName());
                 product_Stock.put("images", stockDonwloadUri);
-                product_Stock.put("quantity",currentStock.getQuantity());
+                product_Stock.put("quantity", currentStock.getQuantity());
                 product_Stock.put("size", currentStock.getSizeName());
 
-
-            }
-            else{
+            } else {
 
             }
         }
 
-//        db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId())
-//                .set()
+        // db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId())
+        // .set()
     }
 
     private void removeProduct(String productID) {
@@ -493,7 +513,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(Admin_ProductDetailActivity.this, "Successfully deleted!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Admin_ProductDetailActivity.this, "Successfully deleted!",
+                                        Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         });
@@ -510,10 +531,11 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addMainImage() {
-        //Đặt tên file ảnh
+        // Đặt tên file ảnh
         String filename = docRef_product.getId() + "_MainImage";
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference(Product_Thumbnail.COLLECTION_NAME + '/' + docRef_product.getId() + '/' + filename);
+        StorageReference storageReference = FirebaseStorage.getInstance()
+                .getReference(Product_Thumbnail.COLLECTION_NAME + '/' + docRef_product.getId() + '/' + filename);
         storageReference
                 .putFile(mainImageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -533,7 +555,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addStocksToProduct() {
-        //push Stock
+        // push Stock
         for (Stock stock : stockList) {
             Map<String, Object> stockMap = new HashMap<>();
 
@@ -555,11 +577,12 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
     private void addImagesToStock(DocumentReference docRef_currentStock, ArrayList<Uri> uris) {
         for (Uri uri : uris) {
-            //Đặt tên file ảnh
+            // Đặt tên file ảnh
             String filename = docRef_currentStock.getId() + '_' + uris.indexOf(uri);
 
-            //Lấy tham chiếu đến ảnh
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference(Product_Thumbnail.COLLECTION_NAME + '/' + docRef_product.getId() + '/' + filename);
+            // Lấy tham chiếu đến ảnh
+            StorageReference storageReference = FirebaseStorage.getInstance()
+                    .getReference(Product_Thumbnail.COLLECTION_NAME + '/' + docRef_product.getId() + '/' + filename);
             storageReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -568,7 +591,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri downloadUri) {
-                                            docRef_currentStock.update("images", FieldValue.arrayUnion(downloadUri.toString()));
+                                            docRef_currentStock.update("images",
+                                                    FieldValue.arrayUnion(downloadUri.toString()));
                                         }
                                     });
                         }
@@ -673,7 +697,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     private void createStock() {
         stockList = new ArrayList<>();
         AlertDialog.Builder builder = new AlertDialog.Builder(Admin_ProductDetailActivity.this);
-        builder.setMessage("Do you want to remove this stock?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener);
+        builder.setMessage("Do you want to remove this stock?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener);
 
         switch (CURRENT_CODE) {
             case ADD_PRODUCT:
@@ -697,9 +722,9 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void selectItem(int position) {
                         selectedStock = position;
-//                        etSize.setText(stockList.get(selectedStock).getSizeName());
-//                        etColor.setText(stockList.get(selectedStock).getColorName());
-//                        etQuantity.setText(stockList.get(selectedStock).getQuantity());
+                        // etSize.setText(stockList.get(selectedStock).getSizeName());
+                        // etColor.setText(stockList.get(selectedStock).getColorName());
+                        // etQuantity.setText(stockList.get(selectedStock).getQuantity());
                     }
                 });
                 lvStock.setAdapter(stockUpdateAdapter);
