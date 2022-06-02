@@ -54,6 +54,8 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(Admin_Modify_ProductActivity.this,Admin_DisplayProductActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -68,8 +70,11 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
 
     private void handleData() {
         key = getIntent().getStringExtra("adminModifyProduct_key");
+        tvTitle.setText(key);
         getProducts(key);
     }
+
+
 
     private void reference() {
         includeView = findViewById(R.id.admin_modifyProduct_Include);

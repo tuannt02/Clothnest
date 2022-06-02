@@ -22,6 +22,9 @@
         </receiver>
 
         <activity
+            android:name=".activities.Admin_DisplayProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Admin_CategoryActivity"
             android:exported="false" />
         <activity
