@@ -3,7 +3,10 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -39,6 +42,7 @@ import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class SeeAllItemActivity extends AppCompatActivity {
     GridView gridView;
@@ -46,6 +50,7 @@ public class SeeAllItemActivity extends AppCompatActivity {
     Product_ThumbnailAdapter adapter;
     Animation scale;
     String name;
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,15 @@ public class SeeAllItemActivity extends AppCompatActivity {
         GetProduct();
         AnimationScale();
 
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void intentData() {

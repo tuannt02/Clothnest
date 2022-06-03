@@ -3,6 +3,9 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +25,7 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.CategoryAdapter;
 import nhom7.clothnest.models.CategoryItem;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_CategoryActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class Admin_CategoryActivity extends AppCompatActivity {
     ArrayList<CategoryItem> arrayList;
     ListView lv_category;
     CategoryAdapter categoryAdapter;
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,15 @@ public class Admin_CategoryActivity extends AppCompatActivity {
         setOnClickListenerClose();
         getCategoryFromFireStore();
         setOnClickListenerItem();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void setOnClickListenerItem() {

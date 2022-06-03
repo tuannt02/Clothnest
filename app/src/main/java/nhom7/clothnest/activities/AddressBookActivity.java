@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,7 @@ import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.Address;
 import nhom7.clothnest.adapters.CustomAddressAdapter;
 import nhom7.clothnest.R;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.Constants;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
@@ -54,6 +56,8 @@ public class AddressBookActivity extends AppCompatActivity {
 
     private int currIndex = -1;
     private static final String TAG = "AddressBookActivity";
+
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,8 @@ public class AddressBookActivity extends AppCompatActivity {
         progressBar = new CustomProgressBar(this);
         progressBar.show();
 
-
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -120,6 +125,7 @@ public class AddressBookActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void setupBtnAddNewAddress() {

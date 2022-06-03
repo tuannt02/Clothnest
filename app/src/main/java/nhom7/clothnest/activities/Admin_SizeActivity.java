@@ -5,9 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,6 +39,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.CustomSizeAdapter;
 import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.Size;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_SizeActivity extends AppCompatActivity {
@@ -55,6 +59,8 @@ public class Admin_SizeActivity extends AppCompatActivity {
     // search
     private EditText etSearch;
     private TextView btnClear;
+
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +121,15 @@ public class Admin_SizeActivity extends AppCompatActivity {
         });
 
         handleExtra();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     @Override

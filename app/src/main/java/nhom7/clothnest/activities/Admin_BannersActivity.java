@@ -7,9 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +54,7 @@ import nhom7.clothnest.adapters.BannerAdapter;
 import nhom7.clothnest.models.Banner;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Voucher;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.OpenGallery;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomDialogAdminAdd;
@@ -97,6 +101,8 @@ public class Admin_BannersActivity extends AppCompatActivity {
     private ArrayList<Banner> bannerArrayList;
     private BannerAdapter bannerAdapter;
 
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +119,15 @@ public class Admin_BannersActivity extends AppCompatActivity {
         lvBanner.setAdapter(bannerAdapter);
 
         getBannersAndShowOnListview();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initUi()   {

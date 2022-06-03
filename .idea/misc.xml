@@ -85,6 +85,7 @@
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/item_size.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/message_received.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/message_sent.xml" value="0.25" />
+        <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/no_internet_dialog.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/payment_method_dialog.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchase_address_layout.xml" value="0.25" />
         <entry key="..\:/Gawr/Uni/SE114-NMUDDD/Project/Clothnest/app/src/main/res/layout/purchases_item.xml" value="0.264" />
@@ -111,6 +112,7 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_category.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_collection.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_collections_product.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_display_product.xml" value="0.23229166666666667" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_grant_permissions.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_main.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_modify.xml" value="0.25" />
@@ -129,14 +131,18 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/cart_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/category_item.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_admin_productlist.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_admin_products.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_transaction.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/fragment_transaction_detail.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/grant_permissions_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/item_admin_productlist.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/item_container_user.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/layout_custom_toast.xml" value="0.23425925925925925" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/layout_transaction.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/toast_customize.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/transaction_detail_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/admin_bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.1375" />

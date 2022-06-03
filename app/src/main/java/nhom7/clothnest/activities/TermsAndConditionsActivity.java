@@ -2,6 +2,9 @@ package nhom7.clothnest.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -11,10 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class TermsAndConditionsActivity extends AppCompatActivity {
     WebView wvTac;
     ImageView btnBack;
+
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,5 +37,14 @@ public class TermsAndConditionsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 }

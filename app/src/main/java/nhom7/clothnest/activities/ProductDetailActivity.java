@@ -1,6 +1,9 @@
 package nhom7.clothnest.activities;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +50,7 @@ import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.AddToCart;
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -75,6 +79,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageButton ibFavorite;
     Fragment reviewFragment;
 
+
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +92,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         processDetail();
 
         setEventsClick();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void processDetail() {

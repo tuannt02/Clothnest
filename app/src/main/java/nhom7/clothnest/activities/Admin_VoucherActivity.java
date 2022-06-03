@@ -3,6 +3,9 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +35,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.VoucherAdapter;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Voucher;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomDialogAdminAdd;
 import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
@@ -44,7 +48,7 @@ public class Admin_VoucherActivity extends AppCompatActivity {
     GridView gridViewVoucher;
     ArrayList<Voucher> voucherArrayList;
     VoucherAdapter voucherAdapter;
-
+    BroadcastReceiver broadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,15 @@ public class Admin_VoucherActivity extends AppCompatActivity {
 
 
         getVoucherAndShowOnGridview();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void initUi()   {

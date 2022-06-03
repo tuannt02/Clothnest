@@ -5,9 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,6 +43,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.CustomColorAdapter;
 import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.ClothColor;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_ColorActivity extends AppCompatActivity {
@@ -63,11 +67,15 @@ public class Admin_ColorActivity extends AppCompatActivity {
     private EditText etSearch;
     private TextView btnClear;
 
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         // init views
         etSearch = findViewById(R.id.edittext_search);
@@ -124,6 +132,12 @@ public class Admin_ColorActivity extends AppCompatActivity {
         });
 
         handleExtra();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     @Override

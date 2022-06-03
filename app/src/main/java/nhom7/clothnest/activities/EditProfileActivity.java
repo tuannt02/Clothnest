@@ -12,12 +12,15 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,6 +68,7 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.localDatabase.UserInfo_Sqlite;
 import nhom7.clothnest.models.User;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.OpenGallery;
 import nhom7.clothnest.util.ValidateLogin;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
@@ -104,6 +108,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private MaterialButton btnSave;
     private CustomProgressBar customProgressBar;
 
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +122,15 @@ public class EditProfileActivity extends AppCompatActivity {
         setupDatePicker();
         setupChangeAvatar();
         setupChangePassword();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     // Thiet lap profile tu database

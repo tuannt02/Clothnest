@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,10 +38,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,14 +46,15 @@ import java.util.Date;
 import java.util.List;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.adapters.CustomCheckoutItemAdapter;
 import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.CartItem;
 import nhom7.clothnest.models.CheckoutTransaction;
-import nhom7.clothnest.models.ClothColor;
 import nhom7.clothnest.models.ColorClass;
 import nhom7.clothnest.models.PurchaseItem;
 import nhom7.clothnest.models.SizeClass;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.Constants;
 import nhom7.clothnest.util.customizeComponent.CustomDialog;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
@@ -92,6 +93,8 @@ public class CheckoutActivity extends AppCompatActivity {
     CollectionReference voucherRef;
     CollectionReference transactionRef;
 
+    BroadcastReceiver broadcastReceiver;
+
     public final int CHOOSE_ADDRESS = 1;
 
     @Override
@@ -121,6 +124,33 @@ public class CheckoutActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
 
         getCheckoutItems();
+        getDefaultAddress();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    private void getDefaultAddress() {
+        userRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        try {
+                            DocumentReference defaultAddress =  documentSnapshot.getDocumentReference("default_addr");
+                            if (defaultAddress != null) {
+                                setAddress(defaultAddress.getId(), false);
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(CheckoutActivity.this, "idk" + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void getCheckoutItems() {
@@ -681,28 +711,47 @@ public class CheckoutActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 addressId = data.getStringExtra("selected_address");
                 if (addressId != null)
-                    userRef.collection("addr")
-                            .document(addressId)
-                            .get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    Address address = documentSnapshot.toObject(Address.class);
-                                    tvName.setText(address.fullName + " | ");
-                                    tvPhone.setText(address.phoneNumber);
-                                    tvDetailWard.setText(address.detail + ", " + address.getWard());
-                                    tvDistrictProvince.setText(address.getDistrict() + ", " + address.getProvince());
-                                    isAddressChosen = true;
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(CheckoutActivity.this, "Failed while loading address", Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "onFailure: " + e);
-                                }
-                            });
+                    setAddress(addressId, true);
             }
         }
+    }
+
+    private void setAddress(String addressId, boolean setDefaultAddress) {
+        if (setDefaultAddress) {
+            changeDefaultAddress(addressId);
+        }
+
+        userRef.collection("addr")
+                .document(addressId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Address address = documentSnapshot.toObject(Address.class);
+                        tvName.setText(address.fullName + " | ");
+                        tvPhone.setText(address.phoneNumber);
+                        tvDetailWard.setText(address.detail + ", " + address.getWard());
+                        tvDistrictProvince.setText(address.getDistrict() + ", " + address.getProvince());
+                        isAddressChosen = true;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CheckoutActivity.this, "Failed while loading address", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onFailure: " + e);
+                    }
+                });
+    }
+
+    private void changeDefaultAddress(String addressId) {
+        DocumentReference defaultAddr = userRef.collection("addr").document(addressId);
+        userRef.update("default_addr", defaultAddr)
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(CheckoutActivity.this, "Failed while changing default address!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

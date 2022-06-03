@@ -1,5 +1,6 @@
-package nhom7.clothnest.activities;
+package nhom7.clothnest.adapters;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

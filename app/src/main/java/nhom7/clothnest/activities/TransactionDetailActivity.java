@@ -3,8 +3,11 @@ package nhom7.clothnest.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -35,6 +38,7 @@ import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.Transaction;
 import nhom7.clothnest.models.Transaction_Detail;
+import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class TransactionDetailActivity extends AppCompatActivity {
 
@@ -50,6 +54,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private int count = 0;
     private Address addr;
 
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,15 @@ public class TransactionDetailActivity extends AppCompatActivity {
         getDetailData();
 
         getProductTransactionDetail();
+
+        broadcastReceiver = new NetworkChangeReceiver();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void getDetailData() {
