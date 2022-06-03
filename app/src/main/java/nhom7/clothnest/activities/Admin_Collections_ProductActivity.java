@@ -1,5 +1,6 @@
 package nhom7.clothnest.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.BroadcastReceiver;
@@ -8,10 +9,21 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.Product_AdminAdapter;
@@ -19,7 +31,7 @@ import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_Collections_ProductActivity extends AppCompatActivity {
-    TextView admin_collectionProduct_tvTitle, admin_collectionProduct_tvClose;
+    TextView admin_collectionProduct_tvTitle, admin_collectionProduct_tvClose ,admin_collectionProduct_tvAdd;
     String name;
     ArrayList<Product_Admin> productList;
     Product_AdminAdapter adminAdapter;
@@ -36,11 +48,25 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
 
         getData();
         onClickListenerClose();
+        onClickListenerAdd();
 
         getProducts();
 
+
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    private void onClickListenerAdd() {
+        admin_collectionProduct_tvAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Admin_DisplayProductActivity.class);
+                intent.putExtra("name",getIntent().getStringExtra("name"));
+                intent.putExtra("iscollection","abc");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -65,11 +91,11 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
         lvProduct = includeView.findViewById(R.id.admin_productList_productList);
         tvNumOfProduct = includeView.findViewById(R.id.admin_productList_numOfProduct);
         tvNumOfStock= includeView.findViewById(R.id.admin_productList_numOfStocks);
+        admin_collectionProduct_tvAdd= findViewById(R.id.admin_collectionProduct_tvAdd);
     }
 
     private void getData() {
-        Intent intent = getIntent();
-        name = intent.getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         admin_collectionProduct_tvTitle.setText(name);
     }
 

@@ -5,55 +5,49 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 import nhom7.clothnest.R;
-import nhom7.clothnest.adapters.Product_AdminAdapter;
 import nhom7.clothnest.adapters.Product_AdminReadOnlyAdapter;
 import nhom7.clothnest.models.Product_Admin;
-import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Stock;
 
 public class Admin_DisplayProductActivity extends AppCompatActivity {
 
-    ArrayList<Product_Admin> arrayList;
+    ArrayList<Product_Admin> arrayList= new ArrayList<>();
     Product_AdminReadOnlyAdapter product_adminAdapter;
     ListView listView;
     View includeview;
     TextView tvCountProduct, tvCountStock;
+    String key,iscollection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_display_product);
         reference();
+        saveIntent();
         GetProduct(tvCountProduct, tvCountStock);
-        setOnClickListView();
+
     }
 
-    private void setOnClickListView() {
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
+    private void saveIntent() {
+        key = getIntent().getStringExtra("adminModifyProduct_key");
+        if(key==null)
+        key=getIntent().getStringExtra("name");
+        iscollection= getIntent().getStringExtra("iscollection");
     }
+
 
     private void reference() {
         includeview = findViewById(R.id.admin_display_product);
@@ -62,12 +56,15 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
         tvCountStock = includeview.findViewById(R.id.admin_productList_numOfStocks);
     }
 
+
     private void GetProduct(TextView tvCountProduct, TextView tvCountStock) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         arrayList = new ArrayList<>();
-        product_adminAdapter = new Product_AdminReadOnlyAdapter(getApplicationContext(), arrayList);
+
+        product_adminAdapter = new Product_AdminReadOnlyAdapter(Admin_DisplayProductActivity.this, arrayList,key,iscollection);
         listView.setAdapter(product_adminAdapter);
+
         db.collection("products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

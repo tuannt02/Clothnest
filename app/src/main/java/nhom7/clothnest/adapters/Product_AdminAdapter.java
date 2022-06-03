@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -210,7 +212,6 @@ public class Product_AdminAdapter extends BaseAdapter {
                     }
                 });
     }
-
 
     public static void getModifyProducts(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter, String modifyName, TextView tvNumOfProduct, TextView tvNumOfStock) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -603,5 +604,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                     }
                 });
     }
+
+
 }
 
