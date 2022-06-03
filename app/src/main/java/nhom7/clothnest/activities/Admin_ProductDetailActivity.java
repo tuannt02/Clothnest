@@ -436,41 +436,13 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
         //set references
         StorageReference storageRef = storage.getReference();
+        DocumentReference product_Ref = db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId());
+        CollectionReference stocks_Ref = product_Ref.collection("stocks");
 
-
-        //get data
+        //update image and stock
         for(Stock currentStock : stockList){
             ArrayList<String> stockDonwloadUri = new ArrayList<>();
             if(currentStock.getStockID() != null){
-                for(int i = 0; i < currentStock.getDownloadUrls().size(); i++){
-                    String imageID = currentStock.getStockID() + '_' + i;
-
-                    StorageReference currentImage_Ref = storageRef.child("products" + '/' + currentStock.getStockID() + '/' + imageID);
-                    Bitmap currentImageBitmap = currentStock.getBitmap(i);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    currentImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] data = baos.toByteArray();
-                    UploadTask uploadTask = currentImage_Ref.putBytes(data);
-                    Task<Uri> urltask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            return currentImage_Ref.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if(task.isSuccessful())
-                                stockDonwloadUri.add(task.getResult().toString());
-                        }
-                    });
-                }
-
-                Map<String, Object> product_Stock = new HashMap<>();
-                product_Stock.put("color", currentStock.getColorName());
-                product_Stock.put("images", stockDonwloadUri);
-                product_Stock.put("quantity",currentStock.getQuantity());
-                product_Stock.put("size", currentStock.getSizeName());
-
 
             }
             else{

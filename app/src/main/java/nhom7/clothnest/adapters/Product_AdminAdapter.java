@@ -199,12 +199,12 @@ public class Product_AdminAdapter extends BaseAdapter {
                                 Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
                                         .get();
                                 int stock = 0;
-                                while (!a.isComplete()) ;
-                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-                                }
-                                CountStock += stock;
-                                tvNumOfStock.setText(CountStock + "");
+//                                while (!a.isComplete()) ;
+//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
+//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
+//                                }
+//                                CountStock += stock;
+//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }

@@ -90,7 +90,7 @@ public class StockUpdateAdapter extends BaseAdapter {
         //Đổ dữ liệu vào gridView
         stockImageUpdateAdapter = new StockImageUpdateAdapter(mContext, stock.getDownloadUrls());
         gvImage.setAdapter(stockImageUpdateAdapter);
-        stock.addBitMapToList(stockImageUpdateAdapter.getImageBitmap(i));
+//        stock.setBitmapList(stockImageUpdateAdapter.getBitmapList());
 
         getEvent(i);
         return view;

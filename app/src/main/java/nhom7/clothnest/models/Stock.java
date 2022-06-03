@@ -108,21 +108,23 @@ public class Stock {
         this.downloadUrls = downloadUrls;
     }
 
-    public ArrayList<Bitmap> getBitmapList() {
-        return bitmapList;
-    }
+//    public ArrayList<Bitmap> getBitmapList() {
+//        return bitmapList;
+//    }
 
-    public void setBitmapList(ArrayList<Bitmap> bitmapList) {
-        this.bitmapList = bitmapList;
-    }
+//    public void setBitmapList(ArrayList<Bitmap> bitmapList) {
+//        this.bitmapList = bitmapList;
+//    }
 
-    public Bitmap getBitmap(int i){
-        return  bitmapList.get(i);
-    }
+//    public Bitmap getBitmap(int i){
+//        return  bitmapList.get(i);
+//    }
 
-    public void addBitMapToList(Bitmap bitmap){
-        this.bitmapList.add(bitmap);
-    }
+//    public void addBitMapToList(Bitmap bitmap){
+//        if(bitmap == null) {
+//            bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);        }
+//        this.bitmapList.add(bitmap);
+//    }
 
     public void setImg(String img) {
         this.img = img;
