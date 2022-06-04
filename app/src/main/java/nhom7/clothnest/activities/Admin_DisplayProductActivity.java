@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,12 +27,17 @@ import nhom7.clothnest.models.Stock;
 
 public class Admin_DisplayProductActivity extends AppCompatActivity {
 
-    ArrayList<Product_Admin> arrayList= new ArrayList<>();
+    ArrayList<Product_Admin> arrayList = new ArrayList<>();
+    ArrayList<Product_Admin> listOriginal;
+
     Product_AdminReadOnlyAdapter product_adminAdapter;
     ListView listView;
     View includeview;
     TextView tvCountProduct, tvCountStock;
-    String key,iscollection;
+    String key, iscollection;
+    EditText inputSearch;
+    TextView clearSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +46,16 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
         reference();
         saveIntent();
         GetProduct(tvCountProduct, tvCountStock);
+        setOnClickClearSearch();
+        setOnTextChange();
 
     }
 
     private void saveIntent() {
         key = getIntent().getStringExtra("adminModifyProduct_key");
-        if(key==null)
-        key=getIntent().getStringExtra("name");
-        iscollection= getIntent().getStringExtra("iscollection");
+        if (key == null)
+            key = getIntent().getStringExtra("name");
+        iscollection = getIntent().getStringExtra("iscollection");
     }
 
 
@@ -54,6 +64,58 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
         listView = includeview.findViewById(R.id.admin_productList_productList);
         tvCountProduct = includeview.findViewById(R.id.admin_productList_numOfProduct);
         tvCountStock = includeview.findViewById(R.id.admin_productList_numOfStocks);
+        inputSearch = findViewById(R.id.admin_input_search);
+        clearSearch = findViewById(R.id.admin_btn_clear);
+    }
+
+    private void setOnClickClearSearch() {
+        clearSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputSearch.setText("");
+            }
+        });
+    }
+
+
+    private void setOnTextChange() {
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String inputSearch = charSequence.toString().toLowerCase();
+                if (inputSearch == null || inputSearch.length() == 0) {
+                    arrayList.clear();
+                    arrayList.addAll(listOriginal);
+                    product_adminAdapter.notifyDataSetChanged();
+                } else {
+                    ArrayList<Product_Admin> listFilter = getFilterByname(inputSearch);
+                    arrayList.clear();
+                    arrayList.addAll(listFilter);
+                    product_adminAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private ArrayList<Product_Admin> getFilterByname(String inputSearch) {
+        ArrayList<Product_Admin> listAfterFiltered = new ArrayList<>();
+        for (int k = 0; k < listOriginal.size(); k++) {
+            Product_Admin productAdmin = listOriginal.get(k);
+            if (productAdmin.getName().toLowerCase().contains(inputSearch)) {
+                listAfterFiltered.add(productAdmin);
+            }
+        }
+        return listAfterFiltered;
     }
 
 
@@ -61,8 +123,8 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         arrayList = new ArrayList<>();
-
-        product_adminAdapter = new Product_AdminReadOnlyAdapter(Admin_DisplayProductActivity.this, arrayList,key,iscollection);
+        listOriginal = new ArrayList<>();
+        product_adminAdapter = new Product_AdminReadOnlyAdapter(Admin_DisplayProductActivity.this, arrayList, key, iscollection);
         listView.setAdapter(product_adminAdapter);
 
         db.collection("products")
@@ -76,6 +138,7 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Product_Admin productAdmin = new Product_Admin();
                                 arrayList.add(productAdmin);
+                                listOriginal.add(productAdmin);
 
                                 productAdmin.setId(documentSnapshot.getId());
                                 productAdmin.setName(documentSnapshot.getString("name"));
