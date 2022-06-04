@@ -129,7 +129,7 @@ public class Product_AdminAdapter extends BaseAdapter {
         mContext.startActivity(intent_AdminProductDetail);
     }
 
-    public static void getProductAndPushToGridView(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter, TextView tvNumOfProduct, TextView tvNumOfStock) {
+    public static void getProductAndPushToGridView(ArrayList<Product_Admin> listProduct,ArrayList <Product_Admin> listOriginal, Product_AdminAdapter adapter, TextView tvNumOfProduct, TextView tvNumOfStock) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         //get data
         db.collection(Product_Admin.COLLECTION_NAME)
@@ -147,6 +147,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                                 Product_Admin productAdmin = new Product_Admin();
                                 //Thêm thumbnail vào arraylist và notifyDataSetChanged
                                 listProduct.add(productAdmin);
+                                listOriginal.add(productAdmin);
 
                                 //tempOject chứa product
                                 Map<String, Object> tempObject = document.getData();
