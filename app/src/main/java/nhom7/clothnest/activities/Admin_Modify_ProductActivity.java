@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,12 +35,16 @@ import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_Modify_ProductActivity extends AppCompatActivity {
     ArrayList<Product_Admin> productList;
+    ArrayList<Product_Admin> listOriginal;
     Product_AdminAdapter adminAdapter;
 
     TextView tvTitle, tvAdd, tvClose;
     View includeView;
     TextView tvNumOfProduct, tvNumOfStock;
     ListView lvProduct;
+    EditText inputSearch;
+    TextView clearSearch;
+
 
     String key;
     LinearLayout product;
@@ -52,6 +59,8 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
         reference();
         handleData();
         getEvent();
+        setOnTextChange();
+        setOnClickClearSearch();
 
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -89,6 +98,56 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
 
     }
 
+    private void setOnClickClearSearch() {
+        clearSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputSearch.setText("");
+            }
+        });
+    }
+
+
+    private void setOnTextChange() {
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String inputSearch = charSequence.toString().toLowerCase();
+                if (inputSearch == null || inputSearch.length() == 0) {
+                    productList.clear();
+                    productList.addAll(listOriginal);
+                    adminAdapter.notifyDataSetChanged();
+                } else {
+                    ArrayList<Product_Admin> listFilter = getFilterByname(inputSearch);
+                    productList.clear();
+                    productList.addAll(listFilter);
+                    adminAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private ArrayList<Product_Admin> getFilterByname(String inputSearch) {
+        ArrayList<Product_Admin> listAfterFiltered = new ArrayList<>();
+        for (int k = 0; k < listOriginal.size(); k++) {
+            Product_Admin productAdmin = listOriginal.get(k);
+            if (productAdmin.getName().toLowerCase().contains(inputSearch)) {
+                listAfterFiltered.add(productAdmin);
+            }
+        }
+        return listAfterFiltered;
+    }
+
 
 
 
@@ -101,15 +160,18 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
         tvNumOfStock = includeView.findViewById(R.id.admin_productList_numOfStocks);
         lvProduct = includeView.findViewById(R.id.admin_productList_productList);
         product = findViewById(R.id.item_admin_productList_View);
+        inputSearch = findViewById(R.id.admin_input_search);
+        clearSearch =findViewById(R.id.admin_btn_clear);
     }
 
     private void getProducts(String collectionName) {
+        listOriginal= new ArrayList<>();
         productList = new ArrayList<>();
         adminAdapter = new Product_AdminAdapter(getApplicationContext(), productList);
 
         lvProduct.setAdapter(adminAdapter);
 
-        Product_AdminAdapter.getModifyProducts(productList, adminAdapter, collectionName,tvNumOfProduct,tvNumOfStock);
+        Product_AdminAdapter.getModifyProducts(productList, listOriginal,adminAdapter, collectionName,tvNumOfProduct,tvNumOfStock);
 
     }
 }

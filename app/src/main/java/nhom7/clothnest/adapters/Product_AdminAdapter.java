@@ -214,7 +214,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                 });
     }
 
-    public static void getModifyProducts(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adapter, String modifyName, TextView tvNumOfProduct, TextView tvNumOfStock) {
+    public static void getModifyProducts(ArrayList<Product_Admin> listProduct,ArrayList<Product_Admin> originalList, Product_AdminAdapter adapter, String modifyName, TextView tvNumOfProduct, TextView tvNumOfStock) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(modifyName)
                 .get()
@@ -232,6 +232,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                                     public void onSuccess(DocumentSnapshot document) {
                                         Product_Admin productAdmin = new Product_Admin();
                                         listProduct.add(productAdmin);
+                                        originalList.add(productAdmin);
 
                                         productAdmin.setId(document.getId());
                                         adapter.notifyDataSetChanged();
