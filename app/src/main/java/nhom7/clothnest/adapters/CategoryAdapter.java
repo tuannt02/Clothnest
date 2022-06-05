@@ -50,6 +50,7 @@ public class CategoryAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.category_item, null);
 
+
         TextView textView = view.findViewById(R.id.category_itemName);
         ImageView icon = view.findViewById(R.id.category_itemButton);
 

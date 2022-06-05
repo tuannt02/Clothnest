@@ -7,8 +7,11 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.CategoryAdapter;
 import nhom7.clothnest.models.CategoryItem;
+import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
 
 public class Admin_CategoryActivity extends AppCompatActivity {
@@ -34,6 +38,11 @@ public class Admin_CategoryActivity extends AppCompatActivity {
     ListView lv_category;
     CategoryAdapter categoryAdapter;
     BroadcastReceiver broadcastReceiver;
+    ArrayList<CategoryItem> listOriginal;
+
+    EditText inputSearch;
+    TextView clearSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +51,18 @@ public class Admin_CategoryActivity extends AppCompatActivity {
 
         reference();
         setOnClickListenerClose();
+
+
         getCategoryFromFireStore();
+
         setOnClickListenerItem();
+
+        setOnClickClearSearch();
+
+        setOnTextChange();
+
+
+
 
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -64,8 +83,60 @@ public class Admin_CategoryActivity extends AppCompatActivity {
         });
     }
 
+    private void setOnClickClearSearch() {
+      clearSearch.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              inputSearch.setText("");
+          }
+      });
+    }
+
+
+    private void setOnTextChange() {
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String inputSearch = charSequence.toString().toLowerCase();
+                if (inputSearch == null || inputSearch.length() == 0) {
+                    arrayList.clear();
+                    arrayList.addAll(listOriginal);
+                    categoryAdapter.notifyDataSetChanged();
+                } else {
+                    ArrayList<CategoryItem> listFilter = getFilterByname(inputSearch);
+                    arrayList.clear();
+                    arrayList.addAll(listFilter);
+                    categoryAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private ArrayList<CategoryItem> getFilterByname(String inputSearch) {
+        ArrayList<CategoryItem> listAfterFiltered = new ArrayList<>();
+        for (int k = 0; k < listOriginal.size(); k++) {
+            CategoryItem categoryItem = listOriginal.get(k);
+            if (categoryItem.getCategoryName().toLowerCase().contains(inputSearch)) {
+                listAfterFiltered.add(categoryItem);
+            }
+        }
+        return listAfterFiltered;
+    }
+
+
     private void getCategoryFromFireStore() {
         arrayList = new ArrayList<>();
+        listOriginal= new ArrayList<>();
         categoryAdapter = new CategoryAdapter(getApplicationContext(),arrayList);
         lv_category.setAdapter(categoryAdapter);
 
@@ -81,6 +152,7 @@ public class Admin_CategoryActivity extends AppCompatActivity {
                             {
                                 CategoryItem categoryItem = new CategoryItem();
                                 arrayList.add(categoryItem);
+                                listOriginal.add(categoryItem);
 
                                 Map<String, Object> map = documentSnapshot.getData();
                                 Iterator iterator = map.keySet().iterator();
@@ -112,5 +184,7 @@ public class Admin_CategoryActivity extends AppCompatActivity {
     private void reference() {
         admin_Category_tvClose= findViewById(R.id.admin_Category_tvClose);
         lv_category= findViewById(R.id.lv_category);
+        inputSearch = (EditText) findViewById(R.id.admin_category_input_search);
+        clearSearch = (TextView) findViewById(R.id.admin_category_btn_clear);
     }
 }
