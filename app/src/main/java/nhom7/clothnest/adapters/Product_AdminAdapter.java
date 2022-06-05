@@ -136,7 +136,6 @@ public class Product_AdminAdapter extends BaseAdapter {
                             tvNumOfProduct.setText(task.getResult().size() + "");
 
                             int CountStock = 0;
-                            nStock = 0;
                             //Duyệt từng product
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //product để thêm vào arrayList
@@ -190,20 +189,18 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                         productAdmin.setStock(stock);
                                                         adapter.notifyDataSetChanged();
                                                     }
-                                                    nStock += stock;
-                                                    tvNumOfStock.setText(nStock/2 + "");
                                                 }
                                             }
                                         });
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
+                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
+                                        .get();
+                                int stock = 0;
+                                while (!a.isComplete()) ;
+                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
+                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
+                                }
+                                CountStock += stock;
+                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
