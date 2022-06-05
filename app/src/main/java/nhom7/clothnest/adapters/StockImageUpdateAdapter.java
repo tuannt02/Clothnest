@@ -65,27 +65,7 @@ public class StockImageUpdateAdapter extends BaseAdapter {
         ImageView ivStock = mView.findViewById(R.id.item_stock_ivImageItem);
 
         Glide.with(mContext).load(downloadList.get(i)).into(ivStock);
-//        bitmapList.add(getBitmapFromURL(downloadList.get(i)));
 
         return mView;
     }
-//
-//    public Bitmap getBitmapFromURL(String src) {
-//        try {
-//            URL url = new URL(src);
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setDoInput(true);
-//            connection.connect();
-//            InputStream input = connection.getInputStream();
-//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-//            return myBitmap;
-//        } catch (IOException e) {
-//            // Log exception
-//            return null;
-//        }
-//    }
-//
-//    public ArrayList<Bitmap> getBitmapList() {
-//        return bitmapList;
-//    }
 }

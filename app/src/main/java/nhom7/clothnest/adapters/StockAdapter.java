@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,8 +26,10 @@ import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.models.Stock;
 
 public class StockAdapter extends BaseAdapter {
-    public interface ClickListener   {
+    public interface ClickListener {
         void removeItem(int position);
+
+        void selectItem(int position);
     }
 
     private Context mContext;
@@ -39,6 +43,7 @@ public class StockAdapter extends BaseAdapter {
     CircleImageView civColor;
     GridView gvImage;
     StockImageAdapter stockImageAdapter;
+    LinearLayout mainLinearlayout;
 
 
     public StockAdapter(Context mContext, ArrayList<Stock> stocks, ClickListener mClickListener) {
@@ -100,6 +105,12 @@ public class StockAdapter extends BaseAdapter {
                 removeItemFromStocks(i);
             }
         });
+        mainLinearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItemStock(i);
+            }
+        });
     }
 
     private void reference() {
@@ -109,9 +120,14 @@ public class StockAdapter extends BaseAdapter {
         ivDelete = mView.findViewById(R.id.item_stock_ivDelete);
         civColor = mView.findViewById(R.id.item_stock_civColor);
         gvImage = mView.findViewById(R.id.item_stock_gvImage);
+        mainLinearlayout = mView.findViewById(R.id.item_stock_mainLinearLayout);
     }
 
     private void removeItemFromStocks(int position){
         mClickListener.removeItem(position);
+    }
+
+    private void selectItemStock(int posision) {
+        mClickListener.selectItem(posision);
     }
 }

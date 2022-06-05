@@ -94,4 +94,5 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
 
         Product_AdminAdapter.getModifyProducts(productList, adminAdapter, collectionName,tvNumOfProduct,tvNumOfStock);
     }
+
 }

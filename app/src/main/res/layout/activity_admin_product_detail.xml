@@ -15,6 +15,7 @@
         android:paddingHorizontal="20dp">
 
         <TextView
+            android:id="@+id/admin_productDetail_tvTitle"
             android:layout_width="221dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_black"
@@ -375,11 +376,21 @@
             <ListView
                 android:id="@+id/admin_productDetail_lvStock"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
                 android:nestedScrollingEnabled="true"
                 tools:listitem="@layout/item_stock" />
+
+            <ListView
+                android:id="@+id/admin_productDetail_lvStockUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="20dp"
+                android:nestedScrollingEnabled="true"
+                tools:listitem="@layout/item_stock" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

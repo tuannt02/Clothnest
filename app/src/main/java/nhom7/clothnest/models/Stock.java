@@ -17,7 +17,6 @@ public class Stock {
     private String img;
     private ArrayList<Uri> imageList;
     private ArrayList<String> downloadUrls;
-    private ArrayList<Bitmap> bitmapList;
 
     public Stock() {
         imageList = new ArrayList<>();
@@ -28,7 +27,6 @@ public class Stock {
         this.colorID = colorID;
         this.quantity = quantity;
         this.imageList = imageList;
-        this.bitmapList = new ArrayList<>();
     }
 
     public Stock(String sizeID, String colorID, String sizeName, String colorName, int quantity, ArrayList<String> downloadUrls) {

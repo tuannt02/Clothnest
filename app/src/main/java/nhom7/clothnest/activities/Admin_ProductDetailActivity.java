@@ -1,12 +1,8 @@
 package nhom7.clothnest.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -22,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +41,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,7 +50,6 @@ import java.util.Map;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.StockAdapter;
 import nhom7.clothnest.adapters.StockImageAdapter;
-import nhom7.clothnest.adapters.StockImageUpdateAdapter;
 import nhom7.clothnest.adapters.StockUpdateAdapter;
 import nhom7.clothnest.interfaces.ActivityConstants;
 import nhom7.clothnest.models.CategoryItem;
@@ -68,6 +60,9 @@ import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.SizeClass;
 import nhom7.clothnest.models.Stock;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
+import nhom7.clothnest.util.customizeComponent.CustomDialog;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
+import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class Admin_ProductDetailActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SIZE = 0x2902;
@@ -79,25 +74,6 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     private static int CURRENT_CODE;
     BroadcastReceiver broadcastReceiver;
 
-    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            switch (i) {
-                case DialogInterface.BUTTON_POSITIVE:
-                    stockList.remove(selectedStock);
-                    switch (CURRENT_CODE) {
-                        case ADD_PRODUCT:
-                            stockAdapter.notifyDataSetChanged();
-                        case UPDATE_PRODUCT:
-                            stockUpdateAdapter.notifyDataSetChanged();
-                    }
-                    break;
-                case DialogInterface.BUTTON_NEGATIVE:
-                    break;
-            }
-        }
-    };
-
     NestedScrollView nestedScrollView;
     Product_Detail productDetail;
 
@@ -106,17 +82,18 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
     ArrayList<String> categoryList;
     ArrayList<String> categoryIdList;
-    ArrayList<Stock> stockList;
+    ArrayList<Stock> stockList, stockUpdateList;
+    ArrayList<String> idStockRemoveList;
 
     ArrayAdapter<String> categoryAdapter;
     StockAdapter stockAdapter;
     StockUpdateAdapter stockUpdateAdapter;
 
-    TextView tvCancel, tvSave;
+    TextView tvTitle, tvCancel, tvSave;
     EditText etName, etPrice, etDiscount, etDescription;
     Button btnAdd, btnClear, btnRemove;
     EditText etSize, etColor, etQuantity;
-    ListView lvStock;
+    ListView lvStock, lvStockUpdate;
     GridView gvImages;
     AutoCompleteTextView autoCpTv_category;
     ImageView ivMainImage;
@@ -126,10 +103,10 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     StockImageAdapter stockImageAdapter;
     Uri imageUri, mainImageUri;
 
-    ProgressDialog pd;
+    CustomProgressBar dialog;
     FirebaseFirestore db;
     FirebaseStorage storage;
-    DocumentReference docRef_product;
+    DocumentReference product_Ref;
     String productID;
 
     int selectedStock;
@@ -167,20 +144,23 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                 btnRemove.setVisibility(View.GONE);
                 nestedScrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT));
-                createStock();
                 break;
 
             default:
                 CURRENT_CODE = UPDATE_PRODUCT;
+                tvTitle.setText("Update");
+                idStockRemoveList = new ArrayList<>();
                 productID = key;
                 getAdminProductDetail(productID);
+                break;
         }
+        createStock();
     }
 
     private void getAdminProductDetail(String productID) {
-        pd = new ProgressDialog(Admin_ProductDetailActivity.this);
-        pd.setMessage("Loading...");
-        pd.show();
+        dialog = new CustomProgressBar(Admin_ProductDetailActivity.this);
+
+        dialog.show();
 
         getProductDetail(productID);
     }
@@ -194,13 +174,16 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot doc) {
                 productDetail = new Product_Detail();
+                productDetail.setId(doc.getId());
 
                 DocumentReference categoryRef = (DocumentReference) doc.get("category");
                 categoryRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        CollectionReference stockRef = db.collection(Product_Admin.COLLECTION_NAME).document(productID)
+                        CollectionReference stockRef = db.collection(Product_Admin.COLLECTION_NAME)
+                                .document(productID)
                                 .collection(Stock.COLLECTION_NAME);
+
                         stockRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -208,7 +191,6 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
                                     CollectionReference color_Ref = db.collection(ColorClass.COLLECTION_NAME);
                                     CollectionReference size_Ref = db.collection(SizeClass.COLLECTION_NAME);
-                                    createStock();
 
                                     for (QueryDocumentSnapshot stock_doc : task.getResult()) {
                                         Stock stock = new Stock();
@@ -217,16 +199,15 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                                 .whereEqualTo("name", stock_doc.getString("color")).limit(1).get();
                                         Task<QuerySnapshot> getSizeStock = size_Ref
                                                 .whereEqualTo("short_name", stock_doc.getString("size")).limit(1).get();
+                                        Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getColorStock, getSizeStock);
 
-                                        Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getColorStock,
-                                                getSizeStock);
                                         listTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
                                             @Override
                                             public void onSuccess(List<QuerySnapshot> querySnapshots) {
                                                 for (DocumentSnapshot docColor : querySnapshots.get(0).getDocuments()) {
                                                     stock.setColorID(docColor.getId());
                                                 }
-                                                for (DocumentSnapshot docSize : querySnapshots.get(0).getDocuments()) {
+                                                for (DocumentSnapshot docSize : querySnapshots.get(1).getDocuments()) {
                                                     stock.setSizeID(docSize.getId());
                                                 }
                                                 stock.setStockID(stock_doc.getId());
@@ -235,7 +216,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                                 stock.setQuantity((int) Math.round(stock_doc.getDouble("quantity")));
                                                 stock.setDownloadUrls((ArrayList<String>) stock_doc.get("images"));
 
-                                                stockList.add(stock);
+                                                stockUpdateList.add(stock);
                                                 stockUpdateAdapter.notifyDataSetChanged();
                                             }
                                         });
@@ -243,14 +224,22 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
                                     // set info product detail
                                     productDetail.setName(doc.getString("name"));
+
                                     productDetail.setCategory(documentSnapshot.getString("name"));
+
                                     productDetail.setPrice(Double.valueOf(doc.getDouble("price")));
+
                                     productDetail.setDiscount((int) Math.round(doc.getDouble("discount")));
+
                                     productDetail.setDescription(doc.getString("desc"));
+
                                     productDetail.setMainImage(doc.getString("main_img"));
+                                    mainImageUri = null;
+
                                     productDetail.setStockList(stockList);
-                                    if (pd.isShowing()) {
-                                        pd.dismiss();
+
+                                    if (dialog.isShowing()) {
+                                        dialog.dismiss();
                                         showDetail(productDetail);
                                     }
                                 }
@@ -294,7 +283,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (etSize.getText().toString().isEmpty() || etColor.getText().toString().isEmpty()
                         || etQuantity.getText().toString().isEmpty() || uriList.size() == 1) {
-                    Toast.makeText(Admin_ProductDetailActivity.this, "Lack of information", Toast.LENGTH_SHORT).show();
+                    CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Lack of information!");
                 } else {
                     int quantity = 0;
                     try {
@@ -312,10 +301,14 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
                         etQuantity.setText("");
 
+                        etSize.setText("");
+                        etColor.setText("");
+                        etQuantity.setText("");
                         getStockImageList();
+
+                        CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Add successfully");
                     } catch (NumberFormatException e) {
-                        Toast.makeText(Admin_ProductDetailActivity.this, "Quantity is an integer", Toast.LENGTH_SHORT)
-                                .show();
+                        CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Quantity is an integer!");
                     }
                 }
             }
@@ -327,6 +320,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                 etSize.setText("");
                 etColor.setText("");
                 etQuantity.setText("");
+                getStockImageList();
             }
         });
 
@@ -387,28 +381,24 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         boolean b7 = ivMainImage.getDrawable() == getResources().getDrawable(R.drawable.add_image);
 
         if (b1 || b2 || b3 || b4 || b5 || b6 || b7) {
-            Toast.makeText(Admin_ProductDetailActivity.this, "Lack of information", Toast.LENGTH_SHORT).show();
+            CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Lack of information!");
         } else {
-            pd = new ProgressDialog(Admin_ProductDetailActivity.this);
-            pd.setMessage("Saving...");
-            pd.show();
+            dialog = new CustomProgressBar(Admin_ProductDetailActivity.this);
+            dialog.show();
 
-            // create database
-            db = FirebaseFirestore.getInstance();
-
-            // get data
             // get docRef of category
             int indexId = categoryList.indexOf(category);
             String categoryId = categoryIdList.get(indexId);
             DocumentReference docRef_category = db.document(CategoryItem.COLLECTION_NAME + '/' + categoryId);
+
             // get double value of price
             Double price_Double = 0.0;
             try {
                 price_Double = Double.valueOf(price);
             } catch (NumberFormatException e) {
-                Toast.makeText(Admin_ProductDetailActivity.this, "Price is an double", Toast.LENGTH_SHORT).show();
-                if (pd.isShowing())
-                    pd.dismiss();
+                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price is an integer!");
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 return;
             }
             // get int value of discount
@@ -416,9 +406,9 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             try {
                 discount_Int = Integer.parseInt(discount);
             } catch (NumberFormatException e) {
-                Toast.makeText(Admin_ProductDetailActivity.this, "Discount is an integer", Toast.LENGTH_SHORT).show();
-                if (pd.isShowing())
-                    pd.dismiss();
+                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Discount is an integer!");
+                if (dialog.isShowing())
+                    dialog.dismiss();
                 return;
             }
             // get current datetime
@@ -437,15 +427,16 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            docRef_product = documentReference;
+                            product_Ref = documentReference;
                             addMainImage();
                             addStocksToProduct();
                             addCollectionColors();
                             addCollectionSizes();
 
-                            if (pd.isShowing()) {
+                            if (dialog.isShowing()) {
                                 clearInfo();
-                                pd.dismiss();
+                                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Update successfully");
+                                dialog.dismiss();
                             }
                         }
                     });
@@ -453,62 +444,124 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void updateProduct() {
-        Map<String, Object> product = new HashMap<>();
+        //check
+        String name = etName.getText().toString();
+        String category = autoCpTv_category.getText().toString();
+        String price = etPrice.getText().toString();
+        String discount = etDiscount.getText().toString();
+        String description = etDescription.getText().toString();
 
-        // set references
-        StorageReference storageRef = storage.getReference();
-        DocumentReference product_Ref = db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId());
-        CollectionReference stocks_Ref = product_Ref.collection("stocks");
+        boolean b1 = name.isEmpty();
+        boolean b2 = category.isEmpty();
+        boolean b3 = price.isEmpty();
+        boolean b4 = discount.isEmpty();
+        boolean b5 = description.isEmpty();
 
-        //update image and stock
-        for(Stock currentStock : stockList){
-            ArrayList<String> stockDonwloadUri = new ArrayList<>();
-            if(currentStock.getStockID() != null){
-
-            }
-            else{
-
-            }
+        if (b1 || b2 || b3 || b4 || b5) {
+            CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Lack of information!");
+            return;
         }
 
-        // db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId())
-        // .set()
+        //update
+        dialog = new CustomProgressBar(Admin_ProductDetailActivity.this);
+        dialog.show();
+
+        Map<String, Object> product = new HashMap<>();
+
+        // get docRef of category
+        int indexId = categoryList.indexOf(category);
+        String categoryId = categoryIdList.get(indexId);
+        DocumentReference category_Ref = db.document(CategoryItem.COLLECTION_NAME + '/' + categoryId);
+
+        // get double value of price
+        Double price_Double = 0.0;
+        try {
+            price_Double = Double.valueOf(price);
+        } catch (NumberFormatException e) {
+            CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price is an double!");
+            if (dialog.isShowing())
+                dialog.dismiss();
+            return;
+        }
+        // get int value of discount
+        int discount_Int = 0;
+        try {
+            discount_Int = Integer.parseInt(discount);
+        } catch (NumberFormatException e) {
+            CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Discount is an integer!");
+            if (dialog.isShowing())
+                dialog.dismiss();
+            return;
+        }
+        // get current datetime
+        Timestamp now = new Timestamp(new Date());
+
+        //put value into map
+        product.put("category", category_Ref);
+        product.put("date_add", now);
+        product.put("desc", description);
+        product.put("discount", discount_Int);
+        product.put("name", name);
+        product.put("price", price_Double);
+
+        // set references
+        product_Ref = db.collection(Product_Admin.COLLECTION_NAME).document(productDetail.getId());
+        CollectionReference stocks_Ref = product_Ref.collection("stocks");
+
+        //update main image
+        if (mainImageUri != null)
+            addMainImage();
+
+        //update stock
+        for (String stockID : idStockRemoveList) {
+            stocks_Ref.document(stockID).delete();
+        }
+
+        //update remaining
+        product_Ref.update(product).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                addStocksToProduct();
+                addCollectionColors();
+                addCollectionSizes();
+
+                if (dialog.isShowing() && mainImageUri == null) {
+                    CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Update successfully");
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
     private void removeProduct(String productID) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Admin_ProductDetailActivity.this);
-        builder.setMessage("Do you want to remove this product?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                db.collection(Product_Admin.COLLECTION_NAME).document(productID)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(Admin_ProductDetailActivity.this, "Successfully deleted!",
-                                        Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
+        CustomDialog comfirmRemove = new CustomDialog(Admin_ProductDetailActivity.this,
+                "",
+                "Are you sure you want to delete this product?",
+                2,
+                new CustomDialog.IClickListenerOnOkBtn() {
+                    @Override
+                    public void onResultOk() {
+                        db.collection(Product_Admin.COLLECTION_NAME).document(productID)
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Delete successfully");
+                                        finish();
+                                    }
+                                });
+                    }
+                });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        comfirmRemove.show();
     }
 
     private void addMainImage() {
         // Đặt tên file ảnh
-        String filename = docRef_product.getId() + "_MainImage";
+        String filename = product_Ref.getId() + "_MainImage";
 
         StorageReference storageReference = FirebaseStorage.getInstance()
-                .getReference(Product_Thumbnail.COLLECTION_NAME + '/' + docRef_product.getId() + '/' + filename);
+                .getReference(Product_Thumbnail.COLLECTION_NAME + '/' + product_Ref.getId() + '/' + filename);
         storageReference
                 .putFile(mainImageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -520,9 +573,14 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                                     public void onSuccess(Uri downloadUri) {
                                         Map<String, Object> product = new HashMap<>();
                                         product.put("main_img", downloadUri.toString());
-                                        docRef_product.update(product);
+                                        product_Ref.update(product);
                                     }
                                 });
+
+                        if (dialog.isShowing()) {
+                            CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Successfully");
+                            dialog.dismiss();
+                        }
                     }
                 });
     }
@@ -530,6 +588,9 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     private void addStocksToProduct() {
         // push Stock
         for (Stock stock : stockList) {
+            if (stock.getStockID() != null)
+                return;
+
             Map<String, Object> stockMap = new HashMap<>();
 
             stockMap.put("color", stock.getColorName());
@@ -537,7 +598,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             stockMap.put("quantity", stock.getQuantity());
             stockMap.put("images", new ArrayList<String>());
 
-            docRef_product.collection(Stock.COLLECTION_NAME)
+            product_Ref.collection(Stock.COLLECTION_NAME)
                     .add(stockMap)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -555,7 +616,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
 
             // Lấy tham chiếu đến ảnh
             StorageReference storageReference = FirebaseStorage.getInstance()
-                    .getReference(Product_Thumbnail.COLLECTION_NAME + '/' + docRef_product.getId() + '/' + filename);
+                    .getReference(Product_Thumbnail.COLLECTION_NAME + '/' + product_Ref.getId() + '/' + filename);
             storageReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -601,7 +662,6 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void getColor(String colorID) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.document(ColorClass.COLLECTION_NAME + '/' + colorID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -613,7 +673,6 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void getSize(String sizeID) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.document(SizeClass.COLLECTION_NAME + '/' + sizeID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -648,6 +707,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     }
 
     private void reference() {
+        tvTitle = findViewById(R.id.admin_productDetail_tvTitle);
         nestedScrollView = findViewById(R.id.admin_productDetail_nestedSV);
         autoCpTv_category = findViewById(R.id.admin_productDetail_ddCategory);
         etName = findViewById(R.id.admin_productDetail_etName);
@@ -663,47 +723,71 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         etColor = findViewById(R.id.admin_productDetail_etColor);
         etQuantity = findViewById(R.id.admin_productDetail_etQuantity);
         lvStock = findViewById(R.id.admin_productDetail_lvStock);
+        lvStockUpdate = findViewById(R.id.admin_productDetail_lvStockUpdate);
         gvImages = findViewById(R.id.admin_productDetail_gvImage);
         ivMainImage = findViewById(R.id.admin_productDetail_ivMainImage);
     }
 
     private void createStock() {
         stockList = new ArrayList<>();
-        AlertDialog.Builder builder = new AlertDialog.Builder(Admin_ProductDetailActivity.this);
-        builder.setMessage("Do you want to remove this stock?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener);
+        stockUpdateList = new ArrayList<>();
 
-        switch (CURRENT_CODE) {
-            case ADD_PRODUCT:
-                stockAdapter = new StockAdapter(this, stockList, new StockAdapter.ClickListener() {
+        //dialog confirm remove a stock
+        CustomDialog dialogRemoveStock = new CustomDialog(Admin_ProductDetailActivity.this,
+                "",
+                "Do you want to remove this stock?",
+                2,
+                new CustomDialog.IClickListenerOnOkBtn() {
                     @Override
-                    public void removeItem(int position) {
-                        selectedStock = position;
-                        builder.show();
+                    public void onResultOk() {
+                        stockList.remove(selectedStock);
+                        stockAdapter.notifyDataSetChanged();
                     }
                 });
-                lvStock.setAdapter(stockAdapter);
-                break;
-            case UPDATE_PRODUCT:
-                stockUpdateAdapter = new StockUpdateAdapter(this, stockList, new StockUpdateAdapter.ClickListener() {
+        //dialog confirm remove a stockUpdate
+        CustomDialog dialogRemoveStockUpdate = new CustomDialog(Admin_ProductDetailActivity.this,
+                "",
+                "Do you want to remove this stock?",
+                2,
+                new CustomDialog.IClickListenerOnOkBtn() {
                     @Override
-                    public void removeItem(int position) {
-                        selectedStock = position;
-                        builder.show();
-                    }
+                    public void onResultOk() {
+                        if (stockUpdateList.get(selectedStock).getStockID() != null)
+                            idStockRemoveList.add(stockUpdateList.get(selectedStock).getStockID());
 
-                    @Override
-                    public void selectItem(int position) {
-                        selectedStock = position;
-                        // etSize.setText(stockList.get(selectedStock).getSizeName());
-                        // etColor.setText(stockList.get(selectedStock).getColorName());
-                        // etQuantity.setText(stockList.get(selectedStock).getQuantity());
+                        stockUpdateList.remove(selectedStock);
+                        stockUpdateAdapter.notifyDataSetChanged();
                     }
                 });
-                lvStock.setAdapter(stockUpdateAdapter);
-                break;
-        }
+
+        //create adapter for local stock
+        stockAdapter = new StockAdapter(this, stockList, new StockAdapter.ClickListener() {
+            @Override
+            public void removeItem(int position) {
+                selectedStock = position;
+                dialogRemoveStock.show();
+            }
+
+            @Override
+            public void selectItem(int position) {
+                selectedStock(position);
+            }
+        });
+        lvStock.setAdapter(stockAdapter);
+
+        //create adapter for FireStore stock
+        stockUpdateAdapter = new StockUpdateAdapter(this, stockUpdateList, new StockUpdateAdapter.ClickListener() {
+            @Override
+            public void removeItem(int position) {
+                selectedStock = position;
+                dialogRemoveStockUpdate.show();
+            }
+        });
+        lvStockUpdate.setAdapter(stockUpdateAdapter);
+
+        //create a new stock
         getStockImageList();
+
     }
 
     private void selectImage(int request_code) {
@@ -734,55 +818,80 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         etSize.setText("");
         etColor.setText("");
         etQuantity.setText("");
+        getStockImageList();
         stockList.clear();
         stockAdapter.notifyDataSetChanged();
     }
 
     private void addCollectionColors() {
-        ArrayList<String> colorsOfProduct = new ArrayList<>();
-        for (Stock stock : stockList) {
-            if (!colorsOfProduct.contains(stock.getColorID()))
-                colorsOfProduct.add(stock.getColorID());
-        }
-        for (String colorID : colorsOfProduct) {
-            Map<String, Object> colorMap = new HashMap<>();
+        product_Ref.collection(ColorClass.COLLECTION_NAME)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot color_Sn : task.getResult())
+                                color_Sn.getReference().delete();
 
-            db.collection(ColorClass.COLLECTION_NAME).document(colorID)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot docS) {
-                            colorMap.put("hex", docS.get("hex"));
-                            colorMap.put("name", docS.get("name"));
+                            ArrayList<String> colorsOfProduct = new ArrayList<>();
+                            for (Stock stock : stockList) {
+                                if (!colorsOfProduct.contains(stock.getColorID()))
+                                    colorsOfProduct.add(stock.getColorID());
+                            }
+                            for (String colorID : colorsOfProduct) {
+                                Map<String, Object> colorMap = new HashMap<>();
 
-                            docRef_product.collection(ColorClass.COLLECTION_NAME).add(colorMap);
+                                db.collection(ColorClass.COLLECTION_NAME).document(colorID)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot docS) {
+                                                colorMap.put("hex", docS.get("hex"));
+                                                colorMap.put("name", docS.get("name"));
+
+                                                product_Ref.collection(ColorClass.COLLECTION_NAME).add(colorMap);
+                                            }
+                                        });
+                            }
                         }
-                    });
-        }
+                    }
+                });
     }
 
     private void addCollectionSizes() {
-        ArrayList<String> sizesOfProduct = new ArrayList<>();
-        for (Stock stock : stockList) {
-            if (!sizesOfProduct.contains(stock.getSizeID()))
-                sizesOfProduct.add(stock.getSizeID());
-        }
-        for (String sizeID : sizesOfProduct) {
-            Map<String, Object> sizeMap = new HashMap<>();
+        product_Ref.collection(SizeClass.COLLECTION_NAME)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot size_Sn : task.getResult())
+                                size_Sn.getReference().delete();
 
-            db.collection(SizeClass.COLLECTION_NAME).document(sizeID)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot docS) {
-                            sizeMap.put("name", docS.get("name"));
-                            sizeMap.put("short_name", docS.get("short_name"));
-                            sizeMap.put("type", docS.get("type"));
+                            ArrayList<String> sizesOfProduct = new ArrayList<>();
+                            for (Stock stock : stockList) {
+                                if (!sizesOfProduct.contains(stock.getSizeID()))
+                                    sizesOfProduct.add(stock.getSizeID());
+                            }
+                            for (String sizeID : sizesOfProduct) {
+                                Map<String, Object> sizeMap = new HashMap<>();
 
-                            docRef_product.collection(SizeClass.COLLECTION_NAME).add(sizeMap);
+                                db.collection(SizeClass.COLLECTION_NAME).document(sizeID)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot docS) {
+                                                sizeMap.put("name", docS.get("name"));
+                                                sizeMap.put("short_name", docS.get("short_name"));
+                                                sizeMap.put("type", docS.get("type"));
+
+                                                product_Ref.collection(SizeClass.COLLECTION_NAME).add(sizeMap);
+                                            }
+                                        });
+                            }
                         }
-                    });
-        }
+                    }
+                });
     }
 
     private void showDetail(Product_Detail detail) {
@@ -792,5 +901,19 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         etDiscount.setText(detail.getDiscount() + "");
         etDescription.setText(detail.getDescription());
         Glide.with(getApplicationContext()).load(detail.getMainImage()).into(ivMainImage);
+    }
+
+    private void selectedStock(int i) {
+        Stock selectedStock = stockList.get(i);
+        if (selectedStock != null) {
+            etSize.setText(selectedStock.getSizeName());
+            etColor.setText(selectedStock.getColorName());
+            etQuantity.setText(selectedStock.getQuantity() + "");
+            for(Uri uri: selectedStock.getImageList())
+                uriList.add(uri);
+            stockImageAdapter.notifyDataSetChanged();
+        }
+        stockList.remove(i);
+        stockAdapter.notifyDataSetChanged();
     }
 }

@@ -23,10 +23,8 @@ import nhom7.clothnest.models.ColorClass;
 import nhom7.clothnest.models.Stock;
 
 public class StockUpdateAdapter extends BaseAdapter {
-    public interface ClickListener {
+    public interface ClickListener   {
         void removeItem(int position);
-
-        void selectItem(int position);
     }
 
     private Context mContext;
@@ -103,19 +101,6 @@ public class StockUpdateAdapter extends BaseAdapter {
                 removeItemFromStocks(position);
             }
         });
-
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectItemStock(position);
-            }
-        });
-        gvImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectItemStock(position);
-            }
-        });
     }
 
     private void reference() {
@@ -129,9 +114,5 @@ public class StockUpdateAdapter extends BaseAdapter {
 
     private void removeItemFromStocks(int position) {
         mClickListener.removeItem(position);
-    }
-
-    private void selectItemStock(int posision) {
-        mClickListener.selectItem(posision);
     }
 }

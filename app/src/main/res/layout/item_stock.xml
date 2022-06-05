@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_vertical"
     android:gravity="center_vertical"
+    android:id="@+id/item_stock_mainLinearLayout"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView

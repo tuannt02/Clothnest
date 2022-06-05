@@ -41,15 +41,13 @@ public class Product_Detail {
         imageList = new ArrayList<>();
     }
 
-    public Product_Detail(String id, String category, String name, double price, int discount, ArrayList<String> imageList, boolean isFavorite, String description) {
-        this.id = id;
+    public Product_Detail(String name, String category, double price, int discount, String description, ArrayList<Stock> stockList) {
         this.category = category;
         this.name = name;
         this.price = price;
         this.discount = discount;
-        this.imageList = imageList;
-        this.isFavorite = isFavorite;
         this.description = description;
+        this.stockList = stockList;
     }
 
     public String getId() {

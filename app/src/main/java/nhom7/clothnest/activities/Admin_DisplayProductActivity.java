@@ -102,12 +102,12 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
                                 Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
                                         .get();
                                 int stock = 0;
-                                while (!a.isComplete()) ;
-                                for (DocumentSnapshot documentSnapshot1 : a.getResult()) {
-                                    stock += (int) Math.round(documentSnapshot1.getDouble("quantity"));
-                                }
-                                CountStock += stock;
-                                tvCountStock.setText(CountStock + "");
+//                                while (!a.isComplete()) ;
+//                                for (DocumentSnapshot documentSnapshot1 : a.getResult()) {
+//                                    stock += (int) Math.round(documentSnapshot1.getDouble("quantity"));
+//                                }
+//                                CountStock += stock;
+//                                tvCountStock.setText(CountStock + "");
                             }
                         }
 
