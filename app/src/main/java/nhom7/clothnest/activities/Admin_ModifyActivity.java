@@ -116,7 +116,7 @@ public class Admin_ModifyActivity extends AppCompatActivity {
         modifyList = new ArrayList<>();
         modifyList.add(new CategoryItem("Category", R.drawable.ic_right_arrow));
         modifyList.add(new CategoryItem("New Arrivals", R.drawable.ic_right_arrow));
-        modifyList.add(new CategoryItem("Sale", R.drawable.ic_right_arrow));
+        modifyList.add(new CategoryItem("Sales", R.drawable.ic_right_arrow));
         modifyList.add(new CategoryItem("Collections", R.drawable.ic_right_arrow));
         modifyList.add(new CategoryItem("Voucher", R.drawable.ic_right_arrow));
         modifyList.add(new CategoryItem("Banners", R.drawable.ic_right_arrow));

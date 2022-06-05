@@ -1,13 +1,17 @@
 package nhom7.clothnest.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,17 +20,22 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_ProductDetailActivity;
+import nhom7.clothnest.activities.CartActivity;
 import nhom7.clothnest.models.Product_Admin;
+import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class Product_AdminReadOnlyAdapter extends BaseAdapter {
     private Context mContext;
@@ -41,11 +50,15 @@ public class Product_AdminReadOnlyAdapter extends BaseAdapter {
     private TextView tvID;
     private TextView tvCost;
     private TextView tvStock;
+    private LinearLayout product;
+    String key,iscollection;
 
 
-    public Product_AdminReadOnlyAdapter(Context mContext, ArrayList<Product_Admin> productAdminList) {
+    public Product_AdminReadOnlyAdapter(Context mContext, ArrayList<Product_Admin> productAdminList,String key,String iscollection) {
         this.mContext = mContext;
         this.productAdminList = productAdminList;
+        this.key = key;
+        this.iscollection= iscollection;
     }
 
     @Override
@@ -70,54 +83,21 @@ public class Product_AdminReadOnlyAdapter extends BaseAdapter {
 
         reference();
         getData(i);
+        if(iscollection==null)
         setEventsClickArrivals(i);
-        setEventsClickSales(i);
-
+        else
+        setEventsClickCollectionsWinter(i);
         return view;
-    }
-
-    private void setEventsClickSales(int i) {
-
-        LinearLayout product = mView.findViewById(R.id.item_admin_productList_View);
-        product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("sales").whereEqualTo("product_id", db.document("/products/" + productAdminList.get(i).getId()))
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    Boolean check = false;
-                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                        check = true;
-                                        break;
-                                    }
-                                    if (check) {
-                                        Toast.makeText(mContext, "Product is already haved", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Map<String, Object> map = new HashMap<>();
-                                        map.put("product_id", db.document("/products/" + productAdminList.get(i).getId()));
-                                        db.collection("sales").add(map);
-                                        Toast.makeText(mContext, "Add product is successfully", Toast.LENGTH_LONG).show();
-                                    }
-
-                                }
-                            }
-                        });
-            }
-        });
     }
 
 
     private void setEventsClickArrivals(int i) {
-        LinearLayout product = mView.findViewById(R.id.item_admin_productList_View);
         product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("new_arrivals").whereEqualTo("product_id", db.document("/products/" + productAdminList.get(i).getId()))
+                db.collection(key)
+                        .whereEqualTo("product_id", db.document("/products/" + productAdminList.get(i).getId()))
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -129,22 +109,68 @@ public class Product_AdminReadOnlyAdapter extends BaseAdapter {
                                         break;
                                     }
                                     if (check) {
-                                        Toast.makeText(mContext, "Product is already haved", Toast.LENGTH_LONG).show();
+                                        CustomToast.DisplayToast(mContext,
+                                                2,
+                                                "Product have already existed");
                                     } else {
                                         Map<String, Object> map = new HashMap<>();
                                         map.put("product_id", db.document("/products/" + productAdminList.get(i).getId()));
-                                        db.collection("new_arrivals").add(map);
-                                        Toast.makeText(mContext, "Add product is successfully", Toast.LENGTH_LONG).show();
+                                        map.put("date_add", Calendar.getInstance().getTime());
+                                        db.collection(key).add(map);
 
+                                        CustomToast.DisplayToast(mContext,
+                                                1,
+                                                "Add product is sucessfully");
                                     }
 
                                 }
                             }
                         });
-
             }
         });
 
+    }
+
+    private void setEventsClickCollectionsWinter(int i) {
+        product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("collections")
+                        .document(key)
+                        .collection("products")
+                        .whereEqualTo("product_id", db.document("/products/" + productAdminList.get(i).getId()))
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    Boolean check = false;
+                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                        check = true;
+                                        break;
+                                    }
+                                    if (check) {
+                                        CustomToast.DisplayToast(mContext,
+                                                2,
+                                                "Product have already existed");
+                                    } else {
+                                        Map<String, Object> map = new HashMap<>();
+                                        map.put("product_id", db.document("/products/" + productAdminList.get(i).getId()));
+                                        map.put("date_add", Calendar.getInstance().getTime());
+                                        db.collection("collections")
+                                                .document(key)
+                                                .collection("products")
+                                                .add(map);
+                                        CustomToast.DisplayToast(mContext,
+                                                1,
+                                                "Add product is sucessfully");
+                                    }
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     private void getData(int i) {
@@ -162,11 +188,13 @@ public class Product_AdminReadOnlyAdapter extends BaseAdapter {
         tvStock.setText("" + product.getStock());
     }
 
-    private void reference() {
+    private void reference()
+    {
         tvProductName = (TextView) mView.findViewById(R.id.item_admin_productList_productName);
         ivProductImage = (ImageView) mView.findViewById(R.id.item_admin_productList_productImage);
         tvID = (TextView) mView.findViewById(R.id.item_admin_productList_productID);
         tvCost = (TextView) mView.findViewById(R.id.item_admin_productList_productPrice);
         tvStock = (TextView) mView.findViewById(R.id.item_admin_productList_productStock);
+        product = (LinearLayout) mView.findViewById(R.id.item_admin_productList_View);
     }
 }

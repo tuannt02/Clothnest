@@ -260,7 +260,6 @@ public class Admin_GrantPermissionsActivity extends AppCompatActivity {
                 }
                 else    {
                     ArrayList<User> listFilter = getFilterByEmailOrName(inputSearch);
-
                     userArrayList.clear();
                     userArrayList.addAll(listFilter);
                     userGrantPermissionsAdapter.notifyDataSetChanged();

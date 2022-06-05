@@ -24,23 +24,23 @@
             android:src="@drawable/ic_search" />
 
         <EditText
-            android:id="@+id/admin_grant_permissions_input_search"
+            android:id="@+id/admin_input_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/admin_grant_permissions_btn_clear"
+            android:layout_toLeftOf="@+id/admin_btn_clear"
             android:layout_toRightOf="@+id/icSearch"
             android:background="@android:color/transparent"
             android:fontFamily="@font/lato"
-            android:hint="Search by product's name ..."
+            android:hint="Search here ..."
             android:text=""
             android:textColor="@color/black"
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/admin_grant_permissions_btn_clear"
+            android:id="@+id/admin_btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -50,9 +50,7 @@
             android:textColor="@color/black"
             android:textSize="18dp" />
 
-
     </RelativeLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
