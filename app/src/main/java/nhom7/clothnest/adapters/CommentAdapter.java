@@ -8,8 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import nhom7.clothnest.activities.EditProfileActivity;
+import nhom7.clothnest.activities.ProductDetailActivity;
 import nhom7.clothnest.models.Comment;
 import nhom7.clothnest.R;
 
@@ -56,7 +60,7 @@ public class CommentAdapter extends BaseAdapter {
         TextView comment = view.findViewById(R.id.comment_ProductComment);
 
         name.setText(commentList.get(i).getName());
-        avt.setImageResource(commentList.get(i).getAvt());
+        Glide.with(view).load(commentList.get(i).getAvt()).error(R.drawable.ic_avatar_default).into(avt);
         dateTime.setText(commentList.get(i).getDateTime());
         switch (commentList.get(i).getStarNumber()) {
             case 5:
@@ -70,7 +74,7 @@ public class CommentAdapter extends BaseAdapter {
             default:
                 star1.setImageResource(R.drawable.ic_star);
         }
-        type.setText(commentList.get(i).getType());
+        type.setText("Type: " + commentList.get(i).getType());
         comment.setText(commentList.get(i).getComment());
 
         return view;

@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,17 +44,24 @@ import nhom7.clothnest.models.Wishlist;
 public class CategoryFragment extends Fragment {
     ListView listView;
     ArrayList<CategoryItem> categoryItemArrayList;
-    CategoryAdapter categoryAdapter;
+    private CategoryAdapter categoryAdapter;
 
     public static String selectedCategory;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_category, container, false);
 
         listView = mView.findViewById(R.id.list_Item);
+
         GetCategory();
+
+        getEvents();
+
+        return mView;
+    }
+
+    private void getEvents() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -62,10 +71,23 @@ public class CategoryFragment extends Fragment {
                 ReplaceFragment(new SearchProductsFragment());
             }
         });
+        SearchFragment.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        return mView;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                categoryAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
-
 
     private void GetCategory() {
         categoryItemArrayList = new ArrayList<>();
@@ -89,6 +111,7 @@ public class CategoryFragment extends Fragment {
                     }
                 });
     }
+
     private void ReplaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.search_frame, fragment);

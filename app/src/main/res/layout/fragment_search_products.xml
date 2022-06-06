@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/searchProduct_WinterBtn"
+                android:id="@+id/searchProduct_btn_WINTER"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
@@ -27,6 +27,7 @@
                 android:textColor="@color/black" />
 
             <Button
+                android:id="@+id/searchProduct_btn_LINE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
@@ -36,6 +37,7 @@
                 android:textColor="@color/black" />
 
             <Button
+                android:id="@+id/searchProduct_btn_UT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
@@ -45,6 +47,7 @@
                 android:textColor="@color/black" />
 
             <Button
+                android:id="@+id/searchProduct_btn_UNISEX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
@@ -54,6 +57,7 @@
                 android:textColor="@color/black" />
 
             <Button
+                android:id="@+id/searchProduct_btn_UV_PROTECTION"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"

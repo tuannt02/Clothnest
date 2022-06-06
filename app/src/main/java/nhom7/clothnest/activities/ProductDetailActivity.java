@@ -54,7 +54,7 @@ import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.AddToCart;
 
 public class ProductDetailActivity extends AppCompatActivity {
-    String productID;
+    public static String productID;
     //Slider
     ViewPager viewPager;
     CircleIndicator circleIndicator;
@@ -75,7 +75,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     //Detail của product và các view liên quan
     Product_Detail productDetail;
-    TextView tvName, tvDiscountPrice, tvDiscount, tvDescription;
+    TextView tvName, tvDiscountPrice, tvDiscount;
+    public static TextView tvDescription;
     ImageButton ibFavorite;
     Fragment reviewFragment;
 
@@ -168,13 +169,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvDescription.setVisibility(View.VISIBLE);
                 removeFragment(reviewFragment);
-                ((TextView) findViewById(R.id.productDetail_Description)).setText(productDetail.getDescription());
+                removeFragment(CommentFragment.writeCommentFragment);
+                tvDescription.setText(productDetail.getDescription());
             }
         });
         btnReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvDescription.setVisibility(View.INVISIBLE);
                 replaceFragment(reviewFragment);
             }
         });

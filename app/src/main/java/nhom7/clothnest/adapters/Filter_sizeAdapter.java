@@ -19,6 +19,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.fragments.FilterFragment;
+import nhom7.clothnest.fragments.SearchFragment;
 import nhom7.clothnest.models.SizeClass;
 
 public class Filter_sizeAdapter extends BaseAdapter {
@@ -57,22 +59,34 @@ public class Filter_sizeAdapter extends BaseAdapter {
 
         btnSize.setText(sizeList.get(i).getShort_name());
 
+        if(sizeList.get(i).isSelected())
+            btnSize.setBackgroundColor(Color.parseColor("#DF7861"));
+        else
+            btnSize.setBackgroundColor(Color.TRANSPARENT);
+
         getEvent(i);
 
         return view;
     }
 
     private void getEvent(int i) {
-
         btnSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!sizeList.get(i).isSelected()) {
+                    //Trường hợp chọn
                     view.findViewById(R.id.sizeItem_btn).setBackgroundColor(Color.parseColor("#DF7861"));
                     sizeList.get(i).setSelected(true);
+
+                    if(!SearchFragment.selectedSize.contains(sizeList.get(i).getShort_name()))
+                        SearchFragment.selectedSize.add(sizeList.get(i).getShort_name());
                 }else{
+                    //Hủy chọn
                     view.findViewById(R.id.sizeItem_btn).setBackgroundColor(Color.TRANSPARENT);
                     sizeList.get(i).setSelected(false);
+
+                    if(SearchFragment.selectedSize.contains(sizeList.get(i).getShort_name()))
+                        SearchFragment.selectedSize.remove(sizeList.get(i).getShort_name());
                 }
             }
         });

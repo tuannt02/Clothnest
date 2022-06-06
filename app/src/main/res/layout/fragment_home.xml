@@ -71,10 +71,9 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="15dp"
             android:layout_gravity="center"
-            />
+            android:paddingStart="20dp"
+            android:paddingEnd="15dp" />
 
         <TextView
             android:id="@+id/txtArrivals"
@@ -161,6 +160,7 @@
                     android:id="@+id/btnWinter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="WINTER"
@@ -170,6 +170,7 @@
                     android:id="@+id/btnLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="LINE"
@@ -179,6 +180,7 @@
                     android:id="@+id/btnUt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="UT"
@@ -188,6 +190,7 @@
                     android:id="@+id/btnUnisex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="UNISEX"
@@ -197,6 +200,7 @@
                     android:id="@+id/btnUvprotection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:backgroundTint="#fff"
                     android:fontFamily="@font/lato"
                     android:text="UV PROTECTION"
@@ -209,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"/>
+            android:paddingHorizontal="20dp" />
 
         <TextView
             android:layout_width="wrap_content"

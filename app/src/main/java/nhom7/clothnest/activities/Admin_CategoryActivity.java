@@ -66,7 +66,7 @@ public class Admin_CategoryActivity extends AppCompatActivity {
 
     private void getCategoryFromFireStore() {
         arrayList = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter(getApplicationContext(),arrayList);
+        categoryAdapter = new CategoryAdapter(getApplicationContext(), R.layout.category_item, arrayList);
         lv_category.setAdapter(categoryAdapter);
 
         FirebaseFirestore db= FirebaseFirestore.getInstance();

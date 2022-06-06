@@ -49,6 +49,7 @@ public class ColorClass {
     public ColorClass(String name, String hex) {
         this.name = name;
         this.hex = hex;
+        this.isSelected = false;
     }
 
     public ColorClass(String name, String hex, boolean isSelected) {

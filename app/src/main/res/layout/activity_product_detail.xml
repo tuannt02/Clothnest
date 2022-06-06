@@ -226,7 +226,7 @@
             android:id="@+id/productDetail_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp">
 
             <TextView
                 android:id="@+id/productDetail_Description"

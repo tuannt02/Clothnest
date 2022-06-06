@@ -92,7 +92,7 @@ public class SeeAllItemActivity extends AppCompatActivity {
 
     private void GetProduct() {
         productArrayList = new ArrayList<>();
-        adapter = new Product_ThumbnailAdapter(getApplicationContext(), productArrayList);
+        adapter = new Product_ThumbnailAdapter(getApplicationContext(), R.layout.thumbnail, productArrayList);
         gridView.setAdapter(adapter);
 
         if (name.compareTo("NEW ARRIVALS") == 0)
@@ -120,7 +120,7 @@ public class SeeAllItemActivity extends AppCompatActivity {
     public void getProductThumbnail() {
         //Thêm sản phẩm vào sales
         productArrayList = new ArrayList<>();
-        adapter = new Product_ThumbnailAdapter(getApplicationContext(), productArrayList);
+        adapter = new Product_ThumbnailAdapter(getApplicationContext(), R.layout.thumbnail, productArrayList);
         gridView.setAdapter(adapter);
         if (name.compareTo("NEW ARRIVALS") == 0)
             Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(productArrayList, adapter);

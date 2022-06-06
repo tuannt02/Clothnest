@@ -2,40 +2,60 @@ package nhom7.clothnest.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 
+import nhom7.clothnest.activities.ProductDetailActivity;
 import nhom7.clothnest.models.Comment;
 import nhom7.clothnest.adapters.CommentAdapter;
 import nhom7.clothnest.R;
 
 public class CommentFragment extends Fragment {
+    View mView;
     ListView listView;
     ArrayList<Comment> commentArrayList;
     CommentAdapter commentAdapter;
+    Button btnWriteReview;
+    public static WriteCommentFragment writeCommentFragment = new WriteCommentFragment();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mView = inflater.inflate(R.layout.fragment_comment, container, false);
+        mView = inflater.inflate(R.layout.fragment_comment, container, false);
 
-        listView = mView.findViewById(R.id.list_Comment);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "Listview clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        reference();
 
+        getEvents();
+
+        GetComment();
+
+        return mView;
+    }
+
+    private void getEvents() {
         // setup listview to make it scrollable
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -56,20 +76,54 @@ public class CommentFragment extends Fragment {
             }
         });
 
-        GetComment();
-
-        return mView;
+        btnWriteReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProductDetailActivity.tvDescription.setVisibility(View.INVISIBLE);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.productDetail_frame, writeCommentFragment);
+                transaction.commit();
+            }
+        });
     }
+
+    private void reference() {
+        listView = mView.findViewById(R.id.list_Comment);
+        btnWriteReview = mView.findViewById(R.id.commentFragment_WriteComment);
+    }
+
     private void GetComment() {
         commentArrayList = new ArrayList<>();
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 3, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 2, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 1, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 2, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-        commentArrayList.add(new Comment("Phan Thanh Tu", R.drawable.avt_1, "15.04.2022 - 15:30", 4, "Type: white - NAM S", "Good product, beautiful, beautiful, beautiful"));
-
         commentAdapter = new CommentAdapter(getContext(), R.layout.comment_item, commentArrayList);
         listView.setAdapter(commentAdapter);
+
+        FirebaseFirestore.getInstance().collection("products").document(ProductDetailActivity.productID).collection("reviews")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot review_Ref : task.getResult()){
+                                DocumentReference review = review_Ref.getDocumentReference("review_ref");
+                                review.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot review_Doc) {
+                                        Comment comment = new Comment(
+                                                review_Doc.getString("username"),
+                                                review_Doc.getString("avt"),
+                                                review_Doc.getString("time"),
+                                                (int)Math.round(review_Doc.getDouble("star_number")),
+                                                review_Doc.getString("type"),
+                                                review_Doc.getString("review")
+                                        );
+                                        commentArrayList.add(comment);
+                                        commentAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+
     }
 }

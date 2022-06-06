@@ -369,13 +369,13 @@ public class HomeFragment extends Fragment {
     public void getProductThumbnail() {
         //Thêm sản phẩm vào arrivals
         arrivalsList = new ArrayList<>();
-        arrivalsAdapter = new Product_ThumbnailAdapter(getContext(), arrivalsList);
+        arrivalsAdapter = new Product_ThumbnailAdapter(getContext(), R.layout.thumbnail, arrivalsList);
         gridViewArrival.setAdapter(arrivalsAdapter);
         Product_ThumbnailAdapter.getProductArrivalAndPushToGridView(arrivalsList, arrivalsAdapter);
 
         //Thêm sản phẩm vào sales
         salesList = new ArrayList<>();
-        salesAdapter = new Product_ThumbnailAdapter(getContext(), salesList);
+        salesAdapter = new Product_ThumbnailAdapter(getContext(), R.layout.thumbnail, salesList);
         gridViewSales.setAdapter(salesAdapter);
         Product_ThumbnailAdapter.getProductSalesAndPushToGridView(salesList, salesAdapter);
 

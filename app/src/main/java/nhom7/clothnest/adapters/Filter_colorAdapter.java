@@ -1,11 +1,14 @@
 package nhom7.clothnest.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -25,7 +28,7 @@ public class Filter_colorAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<ColorClass> colorList;
     private View mView;
-    private CircleImageView colorItem;
+    private ImageView colorItem,  ivCheck;
 
     public Filter_colorAdapter(Context mContext, ArrayList<ColorClass> colorList) {
         this.mContext = mContext;
@@ -53,65 +56,17 @@ public class Filter_colorAdapter extends BaseAdapter {
         mView = view = inflater.inflate(R.layout.filter_color_item, null);
 
         colorItem = mView.findViewById(R.id.colorItem_ivCircle);
+        ivCheck = mView.findViewById(R.id.colorItem_ivCheck);
 
-        colorItem.setImageResource(getColorFromName(colorList.get(i).getName()));
-        if (colorList.get(i).getName().compareTo("White") == 0) {
-            colorItem.setBorderColor(Color.BLACK);
-            colorItem.setBorderWidth(1);
+        colorItem.setBackgroundColor(Color.parseColor(colorList.get(i).getHex()));
+
+        if (colorList.get(i).isSelected()) {
+            ivCheck.setVisibility(View.VISIBLE);
+        }else{
+            ivCheck.setVisibility(View.INVISIBLE);
         }
-
-        getEvent(i);
 
         return view;
-    }
-
-    private void getEvent(int i) {
-        colorItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CircleImageView temp = (CircleImageView)view.findViewById(R.id.colorItem_ivCircle);
-
-                if (!colorList.get(i).isSelected()) {
-                    temp.setBorderColor(Color.parseColor("#DF7861"));
-                    temp.setBorderWidth(10);
-                    colorList.get(i).setSelected(true);
-                }else{
-                    if (colorList.get(i).getName().compareTo("White") == 0) {
-                        temp.setBorderColor(Color.BLACK);
-                        temp.setBorderWidth(1);
-                    }else{
-                        temp.setBorderColor(Color.TRANSPARENT);
-                        temp.setBorderWidth(0);
-                    }
-                    colorList.get(i).setSelected(false);
-                }
-            }
-        });
-    }
-
-    private int getColorFromName(String name) {
-        switch (name) {
-            case "Black":
-                return R.color.black;
-            case "Blue":
-                return R.color.blue;
-            case "Lime Green":
-                return R.color.lime_green;
-            case "Yellow":
-                return R.color.yellow;
-            case "Red":
-                return R.color.red;
-            case "Pink":
-                return R.color.pink;
-            case "Green":
-                return R.color.green;
-            case "Gray":
-                return R.color.gray;
-            case "Light Pink":
-                return R.color.light_pink;
-            default:
-                return R.color.white;
-        }
     }
 
     public static void getColorAndNotify(ArrayList<ColorClass> list, Filter_colorAdapter adapter) {
