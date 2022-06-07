@@ -91,6 +91,7 @@ public class Product_AdminReadOnlyAdapter extends BaseAdapter {
     }
 
 
+
     private void setEventsClickArrivals(int i) {
         product.setOnClickListener(new View.OnClickListener() {
             @Override

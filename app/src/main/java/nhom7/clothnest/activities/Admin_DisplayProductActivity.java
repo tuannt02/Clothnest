@@ -117,8 +117,7 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
         }
         return listAfterFiltered;
     }
-
-
+    
     private void GetProduct(TextView tvCountProduct, TextView tvCountStock) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
