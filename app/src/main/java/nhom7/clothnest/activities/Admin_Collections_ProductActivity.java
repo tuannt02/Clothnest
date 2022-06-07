@@ -32,6 +32,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.Product_AdminAdapter;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_Collections_ProductActivity extends AppCompatActivity {
     TextView admin_collectionProduct_tvTitle, admin_collectionProduct_tvClose, admin_collectionProduct_tvAdd;
@@ -46,12 +47,14 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
     EditText inputSearch;
     TextView clearSearch;
     ArrayList<Product_Admin> listOriginal;
+    public static CustomProgressBar dialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_collections_product);
+        dialog = new CustomProgressBar(Admin_Collections_ProductActivity.this);
         reference();
 
         getData();
@@ -157,6 +160,7 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
     }
 
     private void getData() {
+        dialog.show();
         name = getIntent().getStringExtra("name");
         admin_collectionProduct_tvTitle.setText(name);
         getProducts(name);

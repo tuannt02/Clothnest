@@ -92,7 +92,7 @@
             android:layout_marginVertical="10dp"
             android:fontFamily="@font/lato"
             android:gravity="left"
-            android:text=" stocks"
+            android:text=" available"
             android:textColor="@color/black"
             android:textSize="20dp" />
     </LinearLayout>

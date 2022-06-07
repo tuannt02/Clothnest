@@ -27,6 +27,7 @@ import nhom7.clothnest.adapters.CategoryAdapter;
 import nhom7.clothnest.models.CategoryItem;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_CollectionActivity extends AppCompatActivity {
     ListView lvCategoryCollecttion;
@@ -106,6 +107,9 @@ public class Admin_CollectionActivity extends AppCompatActivity {
     }
 
     private void loadCategoryCollection() {
+        CustomProgressBar dialog = new CustomProgressBar(Admin_CollectionActivity.this);
+        dialog.show();
+
         categoryItems = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(Admin_CollectionActivity.this,  R.layout.category_item, categoryItems);
         lvCategoryCollecttion.setAdapter(categoryAdapter);
@@ -121,6 +125,8 @@ public class Admin_CollectionActivity extends AppCompatActivity {
                             {
                                 categoryItems.add(new CategoryItem(documentSnapshot.getId(), R.drawable.ic_right_arrow));
                                 categoryAdapter.notifyDataSetChanged();
+                                if(task.getResult().getDocuments().indexOf(documentSnapshot) == task.getResult().size() - 1)
+                                    dialog.dismiss();
                             }
                         }
                     }

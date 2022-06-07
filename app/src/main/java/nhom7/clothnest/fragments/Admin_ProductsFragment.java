@@ -24,6 +24,7 @@ import nhom7.clothnest.activities.Admin_ProductDetailActivity;
 import nhom7.clothnest.adapters.Product_AdminAdapter;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.models.User;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_ProductsFragment extends Fragment {
     View mView;
@@ -36,12 +37,14 @@ public class Admin_ProductsFragment extends Fragment {
     ImageView ivAdd, ivSort;
     EditText inputSearch;
     TextView clearSearch;
+    public static CustomProgressBar dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_admin_products, container, false);
+        dialog = new CustomProgressBar(getContext());
 
         reference();
 
@@ -118,6 +121,7 @@ public class Admin_ProductsFragment extends Fragment {
     }
 
     private void getProducts() {
+        dialog.show();
         listOriginal = new ArrayList<>();
         productList = new ArrayList<>();
         adminAdapter = new Product_AdminAdapter(getContext(), productList);

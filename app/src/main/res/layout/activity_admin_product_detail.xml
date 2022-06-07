@@ -144,6 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
+                        android:inputType="number"
                         android:textSize="20dp" />
 
                     <TextView
@@ -192,6 +193,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:fontFamily="@font/lato"
+                        android:inputType="number"
                         android:text="%"
                         android:textSize="20dp" />
                 </RelativeLayout>

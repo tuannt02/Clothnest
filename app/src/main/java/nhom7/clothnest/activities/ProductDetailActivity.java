@@ -52,6 +52,7 @@ import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.AddToCart;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class ProductDetailActivity extends AppCompatActivity {
     public static String productID;
@@ -79,6 +80,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     public static TextView tvDescription;
     ImageButton ibFavorite;
     Fragment reviewFragment;
+    CustomProgressBar dialog;
 
 
     BroadcastReceiver broadcastReceiver;
@@ -87,6 +89,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+        dialog = new CustomProgressBar(ProductDetailActivity.this);
 
         reference();
         //Lấy và xử lý dữ liệu
@@ -235,8 +238,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     public void getProductDetail(String productId) {
-        ProgressDialog dialog = new ProgressDialog(ProductDetailActivity.this);
-        dialog.setMessage("Loading...");
         dialog.show();
 
         productDetail = new Product_Detail();

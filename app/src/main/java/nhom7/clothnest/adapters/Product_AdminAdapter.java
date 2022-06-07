@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -24,12 +23,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.Admin_Collections_ProductActivity;
+import nhom7.clothnest.activities.Admin_Modify_ProductActivity;
 import nhom7.clothnest.activities.Admin_ProductDetailActivity;
+import nhom7.clothnest.fragments.Admin_ProductsFragment;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.Stock;
@@ -48,8 +49,8 @@ public class Product_AdminAdapter extends BaseAdapter {
     private TextView tvID;
     private TextView tvCost;
     private TextView tvStock;
-    public static int nStock;
 
+    private static int available;
 
     public Product_AdminAdapter(Context mContext, ArrayList<Product_Admin> productAdminList) {
         this.mContext = mContext;
@@ -131,13 +132,13 @@ public class Product_AdminAdapter extends BaseAdapter {
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            tvNumOfProduct.setText(task.getResult().size() + "");
-
-                            int CountStock = 0;
+                    public void onComplete(@NonNull Task<QuerySnapshot> productTask) {
+                        if (productTask.isSuccessful()) {
+                            tvNumOfProduct.setText(productTask.getResult().size() + "");
                             //Duyệt từng product
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            available = 0;
+
+                            for (QueryDocumentSnapshot document : productTask.getResult()) {
                                 //product để thêm vào arrayList
                                 Product_Admin productAdmin = new Product_Admin();
                                 //Thêm thumbnail vào arraylist và notifyDataSetChanged
@@ -176,31 +177,38 @@ public class Product_AdminAdapter extends BaseAdapter {
                                     }
                                 }
 
-                                //Set stock
-                                db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
+                                document.getReference().collection(Stock.COLLECTION_NAME)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                int stock = 0;
                                                 if (task.isSuccessful()) {
+                                                    int stock = 0;
                                                     for (QueryDocumentSnapshot stock_ref : task.getResult()) {
                                                         stock += (int) Math.round(stock_ref.getDouble("quantity"));
-                                                        productAdmin.setStock(stock);
-                                                        adapter.notifyDataSetChanged();
+                                                        if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+                                                            productAdmin.setStock(stock);
+                                                            adapter.notifyDataSetChanged();
+
+                                                            if(stock > 0)
+                                                                tvNumOfStock.setText(++available/2 + "");
+
+                                                            if (productTask.getResult().getDocuments().indexOf(document) == productTask.getResult().size() - 1) {
+//                                                                int available = 0;
+//                                                                for (Product_Admin admin : listProduct) {
+//                                                                    if (admin.getStock() > 0) {
+//                                                                        tvNumOfStock.setText(++available + "");
+//                                                                    }
+//                                                                }
+
+                                                                if (Admin_ProductsFragment.dialog.isShowing())
+                                                                    Admin_ProductsFragment.dialog.dismiss();
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
                                         });
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
@@ -213,14 +221,15 @@ public class Product_AdminAdapter extends BaseAdapter {
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            tvNumOfProduct.setText(task.getResult().size() + "");
-                            int CountStock = 0;
-                            for (QueryDocumentSnapshot query : task.getResult()) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> productTask) {
+                        if (productTask.isSuccessful()) {
+                            tvNumOfProduct.setText(productTask.getResult().size() + "");
+
+                            available = 0;
+
+                            for (QueryDocumentSnapshot query : productTask.getResult()) {
                                 DocumentReference document_Ref = query.getDocumentReference("product_id");
-                                document_Ref.get();
-                                Task<DocumentSnapshot> task1 = document_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                document_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot document) {
                                         Product_Admin productAdmin = new Product_Admin();
@@ -241,7 +250,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                                         productAdmin.setMainImage((document.getString("main_img")));
                                         adapter.notifyDataSetChanged();
 
-                                        db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
+                                        document.getReference().collection(Stock.COLLECTION_NAME)
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -250,24 +259,23 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                             int stock = 0;
                                                             for (QueryDocumentSnapshot stock_ref : task.getResult()) {
                                                                 stock += (int) Math.round(stock_ref.getDouble("quantity"));
-                                                                productAdmin.setStock(stock);
-                                                                adapter.notifyDataSetChanged();
+
+                                                                if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+                                                                    productAdmin.setStock(stock);
+                                                                    adapter.notifyDataSetChanged();
+
+                                                                    if (stock > 0)
+                                                                        tvNumOfStock.setText(++available + "");
+
+                                                                    if (Admin_Modify_ProductActivity.dialog.isShowing())
+                                                                        Admin_Modify_ProductActivity.dialog.dismiss();
+                                                                }
                                                             }
                                                         }
                                                     }
                                                 });
                                     }
                                 });
-                                while (!task1.isComplete()) ;
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(task1.getResult().getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
@@ -281,14 +289,15 @@ public class Product_AdminAdapter extends BaseAdapter {
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            tvNumOfProduct.setText(task.getResult().size() + "");
-                            int CountStock = 0;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> productTask) {
+                        if (productTask.isSuccessful()) {
+                            tvNumOfProduct.setText(productTask.getResult().size() + "");
+
+                            available = 0;
+
+                            for (QueryDocumentSnapshot document : productTask.getResult()) {
                                 DocumentReference documentReference1 = document.getDocumentReference("product_id");
-                                documentReference1.get();
-                                Task<DocumentSnapshot> task1 = documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         Product_Admin productAdmin = new Product_Admin();
@@ -307,7 +316,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                                         productAdmin.setMainImage(documentSnapshot.getString("main_img"));
                                         adminAdapter.notifyDataSetChanged();
 
-                                        db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
+                                        documentSnapshot.getReference().collection(Stock.COLLECTION_NAME)
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -316,30 +325,27 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                             int stock = 0;
                                                             for (QueryDocumentSnapshot stock_ref : task.getResult()) {
                                                                 stock += (int) Math.round(stock_ref.getDouble("quantity"));
-                                                                productAdmin.setStock(stock);
-                                                                adminAdapter.notifyDataSetChanged();
+
+                                                                if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+                                                                    productAdmin.setStock(stock);
+                                                                    adminAdapter.notifyDataSetChanged();
+
+                                                                    if(stock > 0)
+                                                                        tvNumOfStock.setText(++available + "");
+
+                                                                    if (Admin_Collections_ProductActivity.dialog.isShowing())
+                                                                        Admin_Collections_ProductActivity.dialog.dismiss();
+                                                                }
                                                             }
                                                         }
                                                     }
                                                 });
                                     }
                                 });
-//                                while (!task1.isComplete()) ;
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(task1.getResult().getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
                 });
     }
-
-
 }
 

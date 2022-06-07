@@ -32,6 +32,7 @@ import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.Product_AdminAdapter;
 import nhom7.clothnest.models.Product_Admin;
 import nhom7.clothnest.notifications.NetworkChangeReceiver;
+import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_Modify_ProductActivity extends AppCompatActivity {
     ArrayList<Product_Admin> productList;
@@ -50,11 +51,13 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
     LinearLayout product;
 
     BroadcastReceiver broadcastReceiver;
+    public static CustomProgressBar dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_modify_product);
+        dialog = new CustomProgressBar(Admin_Modify_ProductActivity.this);
 
         reference();
         handleData();
@@ -148,9 +151,6 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
         return listAfterFiltered;
     }
 
-
-
-
     private void reference() {
         includeView = findViewById(R.id.admin_modifyProduct_Include);
         tvTitle = findViewById(R.id.admin_modifyProduct_tvTitle);
@@ -165,14 +165,14 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
     }
 
     private void getProducts(String collectionName) {
+        dialog.show();
         listOriginal= new ArrayList<>();
         productList = new ArrayList<>();
         adminAdapter = new Product_AdminAdapter(getApplicationContext(), productList);
 
         lvProduct.setAdapter(adminAdapter);
 
-        Product_AdminAdapter.getModifyProducts(productList, listOriginal,adminAdapter, collectionName,tvNumOfProduct,tvNumOfStock);
-
+        Product_AdminAdapter.getModifyProducts(productList, listOriginal,adminAdapter, collectionName, tvNumOfProduct, tvNumOfStock);
     }
 
 }
