@@ -60,6 +60,7 @@ public class WriteCommentFragment extends Fragment {
     private CustomProgressBar dialog;
     private Comment comment;
     FirebaseFirestore db;
+    DocumentReference user_Ref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,7 +80,7 @@ public class WriteCommentFragment extends Fragment {
         setStarsColor(5);
 
         FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-        DocumentReference user_Ref = FirebaseFirestore.getInstance().collection(User.COLLECTION_NAME).document(userInfo.getUid());
+        user_Ref = FirebaseFirestore.getInstance().collection(User.COLLECTION_NAME).document(userInfo.getUid());
         user_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -115,11 +116,12 @@ public class WriteCommentFragment extends Fragment {
                 Map<String, Object> commentMap = new HashMap<>();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 LocalDateTime local = LocalDateTime.now();
+                String selectedColor = ((ColorClass)cbxColor.getSelectedItem()).getName();
+                String selectedSize = ((SizeClass)cbxSize.getSelectedItem()).getName();
 
-                commentMap.put("username", comment.getName());
-                commentMap.put("avt", comment.getAvt());
+                commentMap.put("user", user_Ref);
                 commentMap.put("star_number", comment.getStarNumber());
-                commentMap.put("type", comment.getColorSelected().getName() + " - " + comment.getSizeSelected().getName());
+                commentMap.put("type", selectedColor + " - " + selectedSize);
                 commentMap.put("review", etWriteReview.getText().toString());
                 commentMap.put("time", formatter.format(local));
 

@@ -30,6 +30,7 @@ import nhom7.clothnest.activities.ProductDetailActivity;
 import nhom7.clothnest.models.Comment;
 import nhom7.clothnest.adapters.CommentAdapter;
 import nhom7.clothnest.R;
+import nhom7.clothnest.models.User;
 
 public class CommentFragment extends Fragment {
     View mView;
@@ -108,16 +109,24 @@ public class CommentFragment extends Fragment {
                                 review.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot review_Doc) {
-                                        Comment comment = new Comment(
-                                                review_Doc.getString("username"),
-                                                review_Doc.getString("avt"),
-                                                review_Doc.getString("time"),
-                                                (int)Math.round(review_Doc.getDouble("star_number")),
-                                                review_Doc.getString("type"),
-                                                review_Doc.getString("review")
-                                        );
-                                        commentArrayList.add(comment);
-                                        commentAdapter.notifyDataSetChanged();
+                                       review_Doc.getDocumentReference("user")
+                                               .get()
+                                               .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                   @Override
+                                                   public void onSuccess(DocumentSnapshot user_Doc) {
+                                                       User user = user_Doc.toObject(User.class);
+                                                       Comment comment = new Comment(
+                                                               user.getEMAIL(),
+                                                               user.getIMG(),
+                                                               review_Doc.getString("time"),
+                                                               (int)Math.round(review_Doc.getDouble("star_number")),
+                                                               review_Doc.getString("type"),
+                                                               review_Doc.getString("review")
+                                                       );
+                                                       commentArrayList.add(comment);
+                                                       commentAdapter.notifyDataSetChanged();
+                                                   }
+                                               });
                                     }
                                 });
                             }
