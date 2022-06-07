@@ -192,15 +192,6 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                 }
                                             }
                                         });
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(document.getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
@@ -258,16 +249,6 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                 });
                                     }
                                 });
-                                while (!task1.isComplete()) ;
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(task1.getResult().getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
@@ -288,7 +269,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 DocumentReference documentReference1 = document.getDocumentReference("product_id");
                                 documentReference1.get();
-                                Task<DocumentSnapshot> task1 = documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         Product_Admin productAdmin = new Product_Admin();
@@ -324,16 +305,6 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                 });
                                     }
                                 });
-//                                while (!task1.isComplete()) ;
-//                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(task1.getResult().getId()).collection(Stock.COLLECTION_NAME)
-//                                        .get();
-//                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvNumOfStock.setText(CountStock + "");
                             }
                         }
                     }
