@@ -1,6 +1,5 @@
 package nhom7.clothnest.activities;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -23,14 +22,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -38,13 +35,13 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import me.relex.circleindicator.CircleIndicator;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.SliderAdapter;
 import nhom7.clothnest.fragments.CommentFragment;
+import nhom7.clothnest.models.Comment;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
@@ -76,11 +73,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     //Detail của product và các view liên quan
     Product_Detail productDetail;
-    TextView tvName, tvDiscountPrice, tvDiscount, tvStarNumber, tvReviewNumber;
-    public static TextView tvDescription;
+    TextView tvName, tvDiscountPrice, tvDiscount;
+    public static TextView tvDescription, tvStarNumber, tvReviewNumber;
     ImageButton ibFavorite;
     Fragment reviewFragment;
     CustomProgressBar dialog;
+    static Double starNumber;
 
 
     BroadcastReceiver broadcastReceiver;
@@ -270,7 +268,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         getFavorite.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     productDetail.setFavorite(!task.getResult().isEmpty());
                                     //set other info
                                     productDetail.setId(product_Doc.getId());
@@ -288,10 +286,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Uri uri) {
                                                         listUri.add(uri.toString());
-                                                        if(listUri.size() == listResult.getItems().size()){
+                                                        if (listUri.size() == listResult.getItems().size()) {
                                                             productDetail.setImageList(listUri);
                                                             showData();
-                                                            if(dialog.isShowing())
+                                                            if (dialog.isShowing())
                                                                 dialog.dismiss();
                                                         }
                                                     }
@@ -306,11 +304,41 @@ public class ProductDetailActivity extends AppCompatActivity {
                 });
             }
         });
+
+        getReviewInfo(productId);
     }
 
+    public static void getReviewInfo(String productID) {
+        FirebaseFirestore.getInstance().collection("products").document(productID).collection("reviews")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            tvReviewNumber.setText("(" + task.getResult().size() + " reviews)");
+                            starNumber = 0.0;
+                            for (QueryDocumentSnapshot review_Ref : task.getResult()) {
+                                DocumentReference review = review_Ref.getDocumentReference("review_ref");
+                                review.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot review_Doc) {
+                                        starNumber += review_Doc.getDouble("star_number");
+
+                                        if (task.getResult().getDocuments().indexOf(review_Ref) == task.getResult().size() - 1) {
+                                            Double rate = starNumber * 10 / task.getResult().size();
+                                            tvStarNumber.setText((double)Math.round(rate) / 10 + "");
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
 
 
-    private void showData(){
+    }
+
+    private void showData() {
         ActiveSlider();
         getSimilarProducts();
         tvName.setText(productDetail.getName());

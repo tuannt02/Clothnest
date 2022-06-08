@@ -114,7 +114,7 @@ public class WriteCommentFragment extends Fragment {
                 dialog.show();
 
                 Map<String, Object> commentMap = new HashMap<>();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
                 LocalDateTime local = LocalDateTime.now();
                 String selectedColor = ((ColorClass)cbxColor.getSelectedItem()).getName();
                 String selectedSize = ((SizeClass)cbxSize.getSelectedItem()).getName();
@@ -140,6 +140,7 @@ public class WriteCommentFragment extends Fragment {
                                                 if(dialog.isShowing())
                                                     dialog.dismiss();
                                                 CustomToast.DisplayToast(getContext(), 1, "write review successfully");
+                                                ProductDetailActivity.getReviewInfo(ProductDetailActivity.productID);
                                             }
                                         });
                             }
