@@ -121,6 +121,7 @@ public class Product_AdminAdapter extends BaseAdapter {
 
     private void gotoDetail(int i) {
         Intent intent_AdminProductDetail = new Intent(mContext, Admin_ProductDetailActivity.class);
+        intent_AdminProductDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent_AdminProductDetail.putExtra("handle_adminProductDetail", productAdminList.get(i).getId());
         mContext.startActivity(intent_AdminProductDetail);
     }

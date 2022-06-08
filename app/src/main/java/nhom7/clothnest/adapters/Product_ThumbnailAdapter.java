@@ -177,6 +177,7 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
 
     private void gotoDetail(int i) {
         Intent intent_productDetail = new Intent(mContext, ProductDetailActivity.class);
+        intent_productDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent_productDetail.putExtra("selected_Thumbnail", listThumbnail.get(i).getId());
         alpha = AnimationUtils.loadAnimation(mContext, R.anim.alpha_anim);
         mView.startAnimation(alpha);

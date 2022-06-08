@@ -76,7 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     //Detail của product và các view liên quan
     Product_Detail productDetail;
-    TextView tvName, tvDiscountPrice, tvDiscount;
+    TextView tvName, tvDiscountPrice, tvDiscount, tvStarNumber, tvReviewNumber;
     public static TextView tvDescription;
     ImageButton ibFavorite;
     Fragment reviewFragment;
@@ -164,6 +164,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         ibFavorite = findViewById(R.id.productDetail_favoriteButton);
 
         ivAddToCart = findViewById(R.id.productDetail_ivAddToCart);
+        tvStarNumber = findViewById(R.id.productDetail_starNummber);
+        tvReviewNumber = findViewById(R.id.productDetail_reviewNumber);
 
         reviewFragment = new CommentFragment();
     }
@@ -305,6 +307,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void showData(){
         ActiveSlider();
