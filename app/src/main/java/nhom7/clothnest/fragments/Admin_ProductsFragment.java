@@ -10,20 +10,19 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.activities.Admin_ProductDetailActivity;
 import nhom7.clothnest.adapters.Product_AdminAdapter;
 import nhom7.clothnest.models.Product_Admin;
-import nhom7.clothnest.models.User;
+import nhom7.clothnest.util.customizeComponent.CustomOptionMenu;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_ProductsFragment extends Fragment {
@@ -118,6 +117,111 @@ public class Admin_ProductsFragment extends Fragment {
                 startActivity(intent_AdminProductDetail);
             }
         });
+
+        ivSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<String> list = getListOptionMenu();
+                CustomOptionMenu orderOptionMenu = new CustomOptionMenu(getContext(), new CustomOptionMenu.IClickListenerOnItemListview() {
+                    @Override
+                    public void onClickItem(int pos) {
+                        switch (pos){
+                            case 0:// name a- z
+                                orderByNameA_Z(productList);
+                                break;
+                            case 1:// name z- a
+                                orderByNameZ_A(productList);
+                                break;
+                            case 2:// Price Low -> High
+                                orderByPriceLowToHigh(productList);
+                                break;
+                            case 3:// Price High -> Low
+                                orderByPriceHighToLow(productList);
+                                break;
+                            case 4:// Stock Low -> High
+                                orderByStockLowToHigh(productList);
+                                break;
+                            default:// Stock High -> Low
+                                orderByStockHighToLow(productList);
+                                break;
+                        }
+                    }
+                }, list, "ORDER BY", null);
+                orderOptionMenu.show();
+            }
+        });
+    }
+
+    private ArrayList<String> getListOptionMenu() {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Name (A - Z)");
+        list.add("Name (Z - A)");
+        list.add("Price (Low - High)");
+        list.add("Price (High - Low)");
+        list.add("Stock (Low - High)");
+        list.add("Stock (High - Low)");
+
+        return list;
+    }
+
+    private void orderByStockLowToHigh(ArrayList<Product_Admin> productList) {
+        Collections.sort(productList, new Comparator<Product_Admin>() {
+            @Override
+            public int compare(Product_Admin productAdmin, Product_Admin productAdmin1) {
+                return Double.compare(productAdmin.getStock(), productAdmin1.getStock());
+            }
+        });
+        adminAdapter.notifyDataSetChanged();
+    }
+
+    private void orderByStockHighToLow(ArrayList<Product_Admin> productList) {
+        Collections.sort(productList, new Comparator<Product_Admin>() {
+            @Override
+            public int compare(Product_Admin productAdmin, Product_Admin productAdmin1) {
+                return Double.compare(productAdmin1.getStock(), productAdmin.getStock());
+            }
+        });
+        adminAdapter.notifyDataSetChanged();
+    }
+
+    private void orderByNameA_Z(ArrayList<Product_Admin> productList) {
+        Collections.sort(productList, new Comparator<Product_Admin>() {
+            @Override
+            public int compare(Product_Admin productAdmin, Product_Admin productAdmin1) {
+                return productAdmin.getName().compareTo(productAdmin1.getName());
+            }
+        });
+        adminAdapter.notifyDataSetChanged();
+    }
+
+    private void orderByNameZ_A(ArrayList<Product_Admin> productList) {
+        Collections.sort(productList, new Comparator<Product_Admin>() {
+            @Override
+            public int compare(Product_Admin productAdmin, Product_Admin productAdmin1) {
+                return productAdmin1.getName().compareTo(productAdmin.getName());
+            }
+        });
+        adminAdapter.notifyDataSetChanged();
+    }
+
+    private void orderByPriceLowToHigh(ArrayList<Product_Admin> productList) {
+        Collections.sort(productList, new Comparator<Product_Admin>() {
+            @Override
+            public int compare(Product_Admin productAdmin, Product_Admin productAdmin1) {
+                return Double.compare(productAdmin.getPrice(), productAdmin1.getPrice());
+            }
+        });
+        adminAdapter.notifyDataSetChanged();
+    }
+
+    private void orderByPriceHighToLow(ArrayList<Product_Admin> productList) {
+        Collections.sort(productList, new Comparator<Product_Admin>() {
+            @Override
+            public int compare(Product_Admin productAdmin, Product_Admin productAdmin1) {
+                return Double.compare(productAdmin1.getPrice(), productAdmin.getPrice());
+            }
+        });
+        adminAdapter.notifyDataSetChanged();
     }
 
     private void getProducts() {
