@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +50,6 @@ public class TransactionAdapter extends BaseAdapter {
     private View mview;
     private Context context;
     private TextView tvname, tvdate, tvprice, tvstate;
-
 
     public TransactionAdapter(Context context, List<Transaction> transactionList) {
         this.context = context;
@@ -78,6 +79,7 @@ public class TransactionAdapter extends BaseAdapter {
         getdata(i);
         return view;
     }
+
 
 
     private void getdata(int i) {

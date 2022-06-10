@@ -105,6 +105,7 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/address_background.xml" value="0.168" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.168" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_icon.xml" value="0.168" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_back.xml" value="0.1525" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/ic_chat_fill.xml" value="0.168" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/splash_screen.xml" value="0.168" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/activity_admin_banners.xml" value="0.25" />
@@ -139,6 +140,10 @@
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/thumbnail.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/layout/transaction_detail_item.xml" value="0.25" />
         <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/admin_bottom_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/filter_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/profile_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/Users/20522/AndroidStudioProjects/Clothnest/app/src/main/res/menu/transaction_detail_menu.xml" value="0.25" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/background_edit_button.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/bg_key.xml" value="0.1375" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Clothnest/app/src/main/res/drawable/border_input_voucher.xml" value="0.1375" />
