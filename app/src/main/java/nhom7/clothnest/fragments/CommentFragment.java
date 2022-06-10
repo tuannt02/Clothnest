@@ -1,19 +1,16 @@
 package nhom7.clothnest.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,10 +23,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-import nhom7.clothnest.activities.ProductDetailActivity;
-import nhom7.clothnest.models.Comment;
-import nhom7.clothnest.adapters.CommentAdapter;
 import nhom7.clothnest.R;
+import nhom7.clothnest.activities.ProductDetailActivity;
+import nhom7.clothnest.adapters.CommentAdapter;
+import nhom7.clothnest.models.Comment;
 import nhom7.clothnest.models.User;
 
 public class CommentFragment extends Fragment {
@@ -63,7 +60,7 @@ public class CommentFragment extends Fragment {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 int action = motionEvent.getAction();
 
-                switch (action){
+                switch (action) {
                     case MotionEvent.ACTION_DOWN:
                         mView.getParent().requestDisallowInterceptTouchEvent(true);
                         break;
@@ -103,30 +100,34 @@ public class CommentFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot review_Ref : task.getResult()){
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() == 0) {
+                                listView.requestLayout();
+                                listView.getLayoutParams().height = 0;
+                            }
+                            for (QueryDocumentSnapshot review_Ref : task.getResult()) {
                                 DocumentReference review = review_Ref.getDocumentReference("review_ref");
                                 review.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot review_Doc) {
-                                       review_Doc.getDocumentReference("user")
-                                               .get()
-                                               .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                   @Override
-                                                   public void onSuccess(DocumentSnapshot user_Doc) {
-                                                       User user = user_Doc.toObject(User.class);
-                                                       Comment comment = new Comment(
-                                                               user.getEMAIL(),
-                                                               user.getIMG(),
-                                                               review_Doc.getString("time"),
-                                                               (int)Math.round(review_Doc.getDouble("star_number")),
-                                                               review_Doc.getString("type"),
-                                                               review_Doc.getString("review")
-                                                       );
-                                                       commentArrayList.add(comment);
-                                                       commentAdapter.notifyDataSetChanged();
-                                                   }
-                                               });
+                                        review_Doc.getDocumentReference("user")
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot user_Doc) {
+                                                        User user = user_Doc.toObject(User.class);
+                                                        Comment comment = new Comment(
+                                                                user.getEMAIL(),
+                                                                user.getIMG(),
+                                                                review_Doc.getString("time"),
+                                                                (int) Math.round(review_Doc.getDouble("star_number")),
+                                                                review_Doc.getString("type"),
+                                                                review_Doc.getString("review")
+                                                        );
+                                                        commentArrayList.add(comment);
+                                                        commentAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
                                     }
                                 });
                             }

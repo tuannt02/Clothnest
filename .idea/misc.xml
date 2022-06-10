@@ -260,7 +260,9 @@
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/border_input_voucher.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/border_radius_linear4.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/border_radius_linear5.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/border_radius_linear8.xml" value="0.185" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/border_radius_linear_bg_xanh.xml" value="0.2575" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/cart4.xml" value="0.185" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/filter_color_background.xml" value="0.211" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/filter_color_item.xml" value="0.2575" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/drawable/filter_colorwhite_item.xml" value="0.2575" />
@@ -350,7 +352,7 @@
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_home.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_modify_products.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_products.xml" value="0.32916666666666666" />
-        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_search_products.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_wishlist.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/fragment_write_comment.xml" value="0.32916666666666666" />

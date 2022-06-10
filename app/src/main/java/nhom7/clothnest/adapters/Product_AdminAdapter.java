@@ -178,6 +178,9 @@ public class Product_AdminAdapter extends BaseAdapter {
                                     }
                                 }
 
+                                if (Admin_ProductsFragment.dialog.isShowing())
+                                    Admin_ProductsFragment.dialog.dismiss();
+
                                 document.getReference().collection(Stock.COLLECTION_NAME)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -193,18 +196,6 @@ public class Product_AdminAdapter extends BaseAdapter {
 
                                                             if(stock > 0)
                                                                 tvNumOfStock.setText(++available/2 + "");
-
-                                                            if (productTask.getResult().getDocuments().indexOf(document) == productTask.getResult().size() - 1) {
-//                                                                int available = 0;
-//                                                                for (Product_Admin admin : listProduct) {
-//                                                                    if (admin.getStock() > 0) {
-//                                                                        tvNumOfStock.setText(++available + "");
-//                                                                    }
-//                                                                }
-
-                                                                if (Admin_ProductsFragment.dialog.isShowing())
-                                                                    Admin_ProductsFragment.dialog.dismiss();
-                                                            }
                                                         }
                                                     }
                                                 }
@@ -251,6 +242,9 @@ public class Product_AdminAdapter extends BaseAdapter {
                                         productAdmin.setMainImage((document.getString("main_img")));
                                         adapter.notifyDataSetChanged();
 
+                                        if (Admin_Modify_ProductActivity.dialog.isShowing())
+                                            Admin_Modify_ProductActivity.dialog.dismiss();
+
                                         document.getReference().collection(Stock.COLLECTION_NAME)
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -267,9 +261,6 @@ public class Product_AdminAdapter extends BaseAdapter {
 
                                                                     if (stock > 0)
                                                                         tvNumOfStock.setText(++available + "");
-
-                                                                    if (Admin_Modify_ProductActivity.dialog.isShowing())
-                                                                        Admin_Modify_ProductActivity.dialog.dismiss();
                                                                 }
                                                             }
                                                         }
@@ -317,6 +308,9 @@ public class Product_AdminAdapter extends BaseAdapter {
                                         productAdmin.setMainImage(documentSnapshot.getString("main_img"));
                                         adminAdapter.notifyDataSetChanged();
 
+                                        if (Admin_Collections_ProductActivity.dialog.isShowing())
+                                            Admin_Collections_ProductActivity.dialog.dismiss();
+
                                         documentSnapshot.getReference().collection(Stock.COLLECTION_NAME)
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -334,8 +328,6 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                                     if(stock > 0)
                                                                         tvNumOfStock.setText(++available + "");
 
-                                                                    if (Admin_Collections_ProductActivity.dialog.isShowing())
-                                                                        Admin_Collections_ProductActivity.dialog.dismiss();
                                                                 }
                                                             }
                                                         }

@@ -211,7 +211,7 @@ public class WriteCommentFragment extends Fragment {
                     size.setName(size_Doc.getString("name"));
                     sizeList.add(size);
 
-                    if (querySnapshots.get(1).getDocuments().indexOf(size_Doc) == querySnapshots.get(0).size() - 1) {
+                    if (querySnapshots.get(1).getDocuments().indexOf(size_Doc) == querySnapshots.get(1).size() - 1) {
                         comment.setSizeList(sizeList);
                         SizeAdapter sizeAdapter = new SizeAdapter(getContext(), R.layout.size_item_selected, sizeList);
                         cbxSize.setAdapter(sizeAdapter);
