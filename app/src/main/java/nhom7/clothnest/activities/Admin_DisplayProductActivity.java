@@ -37,7 +37,7 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
     String key, iscollection;
     EditText inputSearch;
     TextView clearSearch;
-
+    private  int available;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,28 +145,28 @@ public class Admin_DisplayProductActivity extends AppCompatActivity {
                                 productAdmin.setPrice(documentSnapshot.getDouble("price"));
                                 product_adminAdapter.notifyDataSetChanged();
 
-                                documentSnapshot.getReference().collection("stocks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            int stock = 0;
-                                            for (QueryDocumentSnapshot documentSnapshot1 : task.getResult()) {
-                                                stock += (int) Math.round(documentSnapshot1.getDouble("quantity"));
-                                                productAdmin.setStock(stock);
-                                                product_adminAdapter.notifyDataSetChanged();
+                                documentSnapshot.getReference().collection(Stock.COLLECTION_NAME)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    int stock = 0;
+                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+
+                                                        if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+                                                            productAdmin.setStock(stock);
+                                                            product_adminAdapter.notifyDataSetChanged();
+
+                                                            if(stock > 0)
+                                                                tvCountStock.setText(++available + "");
+                                                        }
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
-                                });
-                                Task<QuerySnapshot> a = db.collection(Product_Admin.COLLECTION_NAME).document(documentSnapshot.getId()).collection(Stock.COLLECTION_NAME)
-                                        .get();
-                                int stock = 0;
-//                                while (!a.isComplete()) ;
-//                                for (DocumentSnapshot documentSnapshot1 : a.getResult()) {
-//                                    stock += (int) Math.round(documentSnapshot1.getDouble("quantity"));
-//                                }
-//                                CountStock += stock;
-//                                tvCountStock.setText(CountStock + "");
+                                        });
+
                             }
                         }
 
