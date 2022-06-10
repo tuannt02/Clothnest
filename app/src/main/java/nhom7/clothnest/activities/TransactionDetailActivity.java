@@ -110,10 +110,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
                                 break;
                             }
                             case R.id.completed: {
-                                stateTransactionDetail.setText("Completed");
+                                stateTransactionDetail.setText("Finished");
                                 relativeLayout.setBackgroundColor(Color.parseColor("#20AF14"));
                                 Map<String,Object> map = new HashMap<>();
-                                map.put("status","Completed");
+                                map.put("status","Finished");
                                 FirebaseFirestore db= FirebaseFirestore.getInstance();
                                 db.document("transactions"+'/'+ idDetail).update(map);
                                 break;

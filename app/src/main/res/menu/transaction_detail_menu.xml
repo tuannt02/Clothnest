@@ -4,6 +4,6 @@
         android:title="Canceled"
          />
     <item android:id="@+id/completed"
-        android:title="Completed"
+        android:title="Finished"
        />
 </menu>
