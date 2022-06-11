@@ -32,11 +32,11 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:background="@color/white"
                 android:id="@+id/img_optionstate"
-                android:layout_marginLeft="300dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="345dp"
+                android:background="@color/white"
                 android:src="@drawable/threedots">
 
             </ImageButton>
