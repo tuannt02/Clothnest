@@ -30,6 +30,7 @@ import nhom7.clothnest.models.Comment;
 import nhom7.clothnest.models.User;
 
 public class CommentFragment extends Fragment {
+    public static final String RELOAD_CODE = CommentFragment.class.getName();
     View mView;
     ListView listView;
     ArrayList<Comment> commentArrayList;
@@ -48,7 +49,7 @@ public class CommentFragment extends Fragment {
 
         getEvents();
 
-        GetComment();
+        getComment();
 
         return mView;
     }
@@ -80,6 +81,7 @@ public class CommentFragment extends Fragment {
                 ProductDetailActivity.tvDescription.setVisibility(View.INVISIBLE);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.productDetail_frame, writeCommentFragment);
+                transaction.addToBackStack(RELOAD_CODE);
                 transaction.commit();
             }
         });
@@ -90,7 +92,7 @@ public class CommentFragment extends Fragment {
         btnWriteReview = mView.findViewById(R.id.commentFragment_WriteComment);
     }
 
-    private void GetComment() {
+    private void getComment() {
         commentArrayList = new ArrayList<>();
         commentAdapter = new CommentAdapter(getContext(), R.layout.comment_item, commentArrayList);
         listView.setAdapter(commentAdapter);

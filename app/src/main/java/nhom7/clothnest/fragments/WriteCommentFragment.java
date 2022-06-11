@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -71,6 +72,8 @@ public class WriteCommentFragment extends Fragment {
         reference();
 
         getEvents();
+
+        etWriteReview.requestFocus();
 
         return mView;
     }
@@ -140,7 +143,10 @@ public class WriteCommentFragment extends Fragment {
                                                 if(dialog.isShowing())
                                                     dialog.dismiss();
                                                 CustomToast.DisplayToast(getContext(), 1, "write review successfully");
-                                                ProductDetailActivity.getReviewInfo(ProductDetailActivity.productID);
+
+                                                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                                                transaction.replace(R.id.productDetail_frame, new CommentFragment());
+                                                transaction.commit();
                                             }
                                         });
                             }

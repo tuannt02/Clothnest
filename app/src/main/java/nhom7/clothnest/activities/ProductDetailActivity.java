@@ -1,6 +1,8 @@
 package nhom7.clothnest.activities;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -41,7 +43,7 @@ import me.relex.circleindicator.CircleIndicator;
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.SliderAdapter;
 import nhom7.clothnest.fragments.CommentFragment;
-import nhom7.clothnest.models.Comment;
+import nhom7.clothnest.fragments.WriteCommentFragment;
 import nhom7.clothnest.models.ProductSlider;
 import nhom7.clothnest.models.Product_Detail;
 import nhom7.clothnest.models.Product_Thumbnail;
@@ -109,6 +111,20 @@ public class ProductDetailActivity extends AppCompatActivity {
         productID = (String) getIntent().getSerializableExtra("selected_Thumbnail");
 
         getProductDetail(productID);
+
+        String write_review = (String) getIntent().getSerializableExtra("write_review");
+        if (write_review.compareTo("write_review") == 0) {
+            Fragment fragment = new WriteCommentFragment();
+            replaceFragment(fragment);
+        }
+    }
+
+    public static void writeAReview(Context context, String productID){
+        Intent intent_productDetail = new Intent(context, ProductDetailActivity.class);
+        intent_productDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent_productDetail.putExtra("selected_Thumbnail", productID);
+        intent_productDetail.putExtra("write_review", "write_review");
+        context.startActivity(intent_productDetail);
     }
 
     private void getSimilarProducts() {
@@ -326,7 +342,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                                         if (task.getResult().getDocuments().indexOf(review_Ref) == task.getResult().size() - 1) {
                                             Double rate = starNumber * 10 / task.getResult().size();
-                                            tvStarNumber.setText((double)Math.round(rate) / 10 + "");
+                                            tvStarNumber.setText((double) Math.round(rate) / 10 + "");
                                         }
                                     }
                                 });
