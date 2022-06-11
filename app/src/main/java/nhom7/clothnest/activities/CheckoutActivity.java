@@ -144,6 +144,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         try {
                             DocumentReference defaultAddress =  documentSnapshot.getDocumentReference("default_addr");
                             if (defaultAddress != null) {
+                                addressId = defaultAddress.getId();
                                 setAddress(defaultAddress.getId(), false);
                             }
                         } catch (Exception e) {
@@ -154,7 +155,7 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void getCheckoutItems() {
-        // Declare an Array List of Task here. This List contains Task that get some more detail in each checkout item
+        // Declare an Array List of Task here. This List contains Task that get some new detail in each checkout item
         ArrayList<Task> checkoutTasks = new ArrayList<>();
         progressBar.show();
 
