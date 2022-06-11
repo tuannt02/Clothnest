@@ -174,7 +174,7 @@
                 android:layout_marginLeft="8dp"
                 android:fontFamily="@font/lato"
                 android:padding="10dp"
-                android:text="$ 1,234"
+                android:text="$ 0"
                 android:textColor="@color/black"
                 android:textSize="28sp"
                 android:textStyle="bold" />

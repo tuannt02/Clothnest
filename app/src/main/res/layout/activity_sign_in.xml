@@ -136,31 +136,31 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:layout_marginTop="40dp"
         >
 
 
-        <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/google"
-            android:layout_alignParentLeft="true"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="65dp"-->
+<!--            android:src="@drawable/google"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            />-->
 
-        <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/apple"
-            android:layout_centerHorizontal="true"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="65dp"-->
+<!--            android:src="@drawable/apple"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            />-->
 
-        <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@drawable/facebook"
-            android:layout_alignParentRight="true"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="65dp"-->
+<!--            android:src="@drawable/facebook"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            />-->
 
 
     </RelativeLayout>
@@ -168,7 +168,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:layout_gravity="bottom"
+        >
 
         <TextView
             android:id="@+id/sign_in_btn_nav_sign_up"

@@ -180,6 +180,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
                         }
                         else    {
+                            customProgressBar.dismiss();
                             confirmPassword.setError(ValidateLogin.ERROR_CODE8);
                         }
 
