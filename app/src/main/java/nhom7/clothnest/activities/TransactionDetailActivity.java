@@ -1,18 +1,29 @@
 package nhom7.clothnest.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,12 +39,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import nhom7.clothnest.R;
 import nhom7.clothnest.adapters.TransactionDetailAdapter;
+import nhom7.clothnest.fragments.TransactionFragment;
 import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Product1;
 import nhom7.clothnest.models.Transaction;
@@ -46,13 +59,14 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private ListView listView;
     private TransactionDetailAdapter transactionDetailAdapter;
     private TextView customerTransactionDetail, dateTransactionDetail, stateTransactionDetail;
-    private String nameDetail, dateDetail, stateDetail, idDetail, addressDetail;
+    private String nameDetail, dateDetail, stateDetail, idDetail;
     private RelativeLayout relativeLayout;
     private TextView address, name, phone, qty, discount, deliveryfee, subtotal, total;
     private int discountDetail, deliveryDetail;
     private double stotal = 0.0;
     private int count = 0;
     private Address addr;
+    private ImageButton img_optionstate;
 
     BroadcastReceiver broadcastReceiver;
 
@@ -68,7 +82,51 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        optionState();
+
     }
+
+
+
+    private void optionState() {
+        img_optionstate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.transaction_detail_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.canceled: {
+                                stateTransactionDetail.setText("Canceled");
+                                relativeLayout.setBackgroundColor(Color.parseColor("#DF7861"));
+                                Map<String,Object> map = new HashMap<>();
+                                map.put("status","Canceled");
+                                FirebaseFirestore db= FirebaseFirestore.getInstance();
+                                db.document("transactions"+'/'+ idDetail).update(map);
+                                break;
+                            }
+                            case R.id.completed: {
+                                stateTransactionDetail.setText("Finished");
+                                relativeLayout.setBackgroundColor(Color.parseColor("#20AF14"));
+                                Map<String,Object> map = new HashMap<>();
+                                map.put("status","Finished");
+                                FirebaseFirestore db= FirebaseFirestore.getInstance();
+                                db.document("transactions"+'/'+ idDetail).update(map);
+                                break;
+                            }
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
+            }
+        });
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -229,6 +287,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
         deliveryfee.setText(deliveryDetail + "");
     }
 
+
     private void reference() {
         relativeLayout = findViewById(R.id.rlayout);
         customerTransactionDetail = findViewById(R.id.transactionCustomer);
@@ -243,5 +302,6 @@ public class TransactionDetailActivity extends AppCompatActivity {
         deliveryfee = findViewById(R.id.transactionDeliveryPrice);
         subtotal = findViewById(R.id.transactionSumPrice);
         total = findViewById(R.id.transactionTotal);
+        img_optionstate = findViewById(R.id.img_optionstate);
     }
 }
