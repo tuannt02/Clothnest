@@ -96,7 +96,15 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
 
     private void handleData() {
         key = getIntent().getStringExtra("adminModifyProduct_key");
-        tvTitle.setText(key);
+        switch (key)
+        {
+            case "new_arrivals":
+                tvTitle.setText("New Arrivals");
+                break;
+            default:
+                tvTitle.setText("Sales");
+                break;
+        }
         getProducts(key);
 
     }
