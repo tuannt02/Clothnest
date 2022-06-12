@@ -179,6 +179,7 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
         Intent intent_productDetail = new Intent(mContext, ProductDetailActivity.class);
         intent_productDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent_productDetail.putExtra("selected_Thumbnail", listThumbnail.get(i).getId());
+        intent_productDetail.putExtra("write_review", "not_write_review");
         alpha = AnimationUtils.loadAnimation(mContext, R.anim.alpha_anim);
         mView.startAnimation(alpha);
         mContext.startActivity(intent_productDetail);
