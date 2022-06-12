@@ -337,55 +337,49 @@ public class Product_AdminAdapter extends BaseAdapter {
 
                             available = 0;
 
-                            for (QueryDocumentSnapshot query : productTask.getResult()) {
-                                DocumentReference document_Ref = query.getDocumentReference("product_id");
-                                document_Ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot document) {
-                                        Product_Admin productAdmin = new Product_Admin();
-                                        listProduct.add(productAdmin);
-                                        originalList.add(productAdmin);
+                            for (QueryDocumentSnapshot document : productTask.getResult()) {
+                                Product_Admin productAdmin = new Product_Admin();
+                                listProduct.add(productAdmin);
+                                originalList.add(productAdmin);
 
-                                        productAdmin.setId(document.getId());
-                                        adapter.notifyDataSetChanged();
+                                productAdmin.setId(document.getId());
+                                adapter.notifyDataSetChanged();
 
 
-                                        productAdmin.setName(document.getString("name"));
-                                        adapter.notifyDataSetChanged();
+                                productAdmin.setName(document.getString("name"));
+                                adapter.notifyDataSetChanged();
 
-                                        Double price = document.getDouble("price");
-                                        productAdmin.setPrice(price);
-                                        adapter.notifyDataSetChanged();
+                                Double price = document.getDouble("price");
+                                productAdmin.setPrice(price);
+                                adapter.notifyDataSetChanged();
 
-                                        productAdmin.setMainImage((document.getString("main_img")));
-                                        adapter.notifyDataSetChanged();
+                                productAdmin.setMainImage((document.getString("main_img")));
+                                adapter.notifyDataSetChanged();
 
-                                        if (Admin_Modify_ProductActivity.dialog.isShowing())
-                                            Admin_Modify_ProductActivity.dialog.dismiss();
+//                                if (Admin_ProductsFragment.dialog.isShowing())
+//                                    Admin_ProductsFragment.dialog.dismiss();
 
-                                        document.getReference().collection(Stock.COLLECTION_NAME)
-                                                .get()
-                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            int stock = 0;
-                                                            for (QueryDocumentSnapshot stock_ref : task.getResult()) {
-                                                                stock += (int) Math.round(stock_ref.getDouble("quantity"));
+                                document.getReference().collection(Stock.COLLECTION_NAME)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    int stock = 0;
+                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
 
-                                                                if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
-                                                                    productAdmin.setStock(stock);
-                                                                    adapter.notifyDataSetChanged();
+                                                        if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+                                                            productAdmin.setStock(stock);
+                                                            adapter.notifyDataSetChanged();
 
-                                                                    if (stock > 0)
-                                                                        tvNumOfStock.setText(++available + "");
-                                                                }
-                                                            }
+                                                            if (stock > 0)
+                                                                tvNumOfStock.setText(++available + "");
                                                         }
                                                     }
-                                                });
-                                    }
-                                });
+                                                }
+                                            }
+                                        });
                             }
                         }
                     }
