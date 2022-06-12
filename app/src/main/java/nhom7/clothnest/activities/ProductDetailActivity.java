@@ -114,6 +114,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         String write_review = (String) getIntent().getSerializableExtra("write_review");
         if (write_review.compareTo("write_review") == 0) {
+            tvDescription.setVisibility(View.INVISIBLE);
             Fragment fragment = new WriteCommentFragment();
             replaceFragment(fragment);
         }
