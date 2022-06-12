@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import nhom7.clothnest.activities.ProductDetailActivity;
 import nhom7.clothnest.models.Address;
 import nhom7.clothnest.models.Purchase;
 import nhom7.clothnest.models.PurchaseItem;
@@ -91,6 +92,7 @@ public class CustomPurchaseAdapter extends BaseAdapter {
                 (item.findViewById(R.id.purchases_item_review)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        ProductDetailActivity.writeAReview(context, purchaseItem.getProductRef().getId());
                     }
                 });
 
