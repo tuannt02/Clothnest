@@ -22,6 +22,11 @@
             android:textColor="@color/black"
             android:textSize="24dp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
         <ImageView
             android:id="@+id/admin_products_ivAdd"
             android:layout_width="24dp"

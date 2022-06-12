@@ -327,6 +327,7 @@
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_about.xml" value="0.32447916666666665" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_display_product.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_grant_permissions.xml" value="0.32916666666666666" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_main.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_modify.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_modify_product.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/activity_admin_product_detail.xml" value="0.32277834525025534" />
@@ -364,6 +365,7 @@
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/group_thumbnail.xml" value="0.32916666666666666" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_admin_productdetail_category.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_admin_productlist.xml" value="0.32277834525025534" />
+        <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_color.xml" value="0.29074074074074074" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_stock.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/item_stock_image.xml" value="0.32277834525025534" />
         <entry key="..\:/source/repos/NhapMonUDDD/DoAn/Clothnest/app/src/main/res/layout/slider_item.xml" value="0.32916666666666666" />
