@@ -15,18 +15,22 @@
 
         <TextView
             android:id="@+id/admin_collectionProduct_tvTitle"
-            android:layout_width="221dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_black"
             android:text="Choose Category"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
         <TextView
             android:id="@+id/admin_Category_tvClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="90dp"
             android:fontFamily="@font/lato_black"
             android:text="Close"
             android:textColor="@color/red"

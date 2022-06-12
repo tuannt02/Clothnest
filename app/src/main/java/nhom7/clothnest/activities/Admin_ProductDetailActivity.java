@@ -456,8 +456,9 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         boolean b3 = price.isEmpty();
         boolean b4 = discount.isEmpty();
         boolean b5 = description.isEmpty();
+        boolean b6 = stockList.size() + stockUpdateList.size() == 0;
 
-        if (b1 || b2 || b3 || b4 || b5) {
+        if (b1 || b2 || b3 || b4 || b5 || b6) {
             CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Lack of information!");
             return;
         }

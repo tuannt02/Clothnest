@@ -141,42 +141,83 @@ public class Product_AdminAdapter extends BaseAdapter {
 
                             for (QueryDocumentSnapshot document : productTask.getResult()) {
                                 //product để thêm vào arrayList
+//                                Product_Admin productAdmin = new Product_Admin();
+//                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
+//                                listProduct.add(productAdmin);
+//                                listOriginal.add(productAdmin);
+//
+//                                //tempOject chứa product
+//                                Map<String, Object> tempObject = document.getData();
+//
+//                                //Set id
+//                                productAdmin.setId(document.getId());
+//                                adapter.notifyDataSetChanged();
+//
+//                                // Lặp qua từng field của một document
+//                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+//                                while (myVeryOwnIterator.hasNext()) {
+//                                    String key = (String) myVeryOwnIterator.next();
+//
+//                                    //Set name
+//                                    if (key.equals("name")) {
+//                                        productAdmin.setName((String) tempObject.get(key));
+//                                        adapter.notifyDataSetChanged();
+//                                    }
+//
+//                                    //Set price
+//                                    if (key.equals("price")) {
+//                                        Double price = document.getDouble(key);
+//                                        productAdmin.setPrice(price);
+//                                        adapter.notifyDataSetChanged();
+//                                    }
+//
+//                                    //set mainImage
+//                                    if (key.equals("main_img")) {
+//                                        productAdmin.setMainImage((String) tempObject.get(key));
+//                                        adapter.notifyDataSetChanged();
+//                                    }
+//                                }
+//
+//                                if (Admin_ProductsFragment.dialog.isShowing())
+//                                    Admin_ProductsFragment.dialog.dismiss();
+//
+//                                document.getReference().collection(Stock.COLLECTION_NAME)
+//                                        .get()
+//                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if (task.isSuccessful()) {
+//                                                    int stock = 0;
+//                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+//                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
+//                                                        if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+//                                                            productAdmin.setStock(stock);
+//                                                            adapter.notifyDataSetChanged();
+//
+//                                                            if(stock > 0)
+//                                                                tvNumOfStock.setText(++available/2 + "");
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                        });
                                 Product_Admin productAdmin = new Product_Admin();
-                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
                                 listProduct.add(productAdmin);
                                 listOriginal.add(productAdmin);
 
-                                //tempOject chứa product
-                                Map<String, Object> tempObject = document.getData();
-
-                                //Set id
                                 productAdmin.setId(document.getId());
                                 adapter.notifyDataSetChanged();
 
-                                // Lặp qua từng field của một document
-                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
-                                while (myVeryOwnIterator.hasNext()) {
-                                    String key = (String) myVeryOwnIterator.next();
 
-                                    //Set name
-                                    if (key.equals("name")) {
-                                        productAdmin.setName((String) tempObject.get(key));
-                                        adapter.notifyDataSetChanged();
-                                    }
+                                productAdmin.setName(document.getString("name"));
+                                adapter.notifyDataSetChanged();
 
-                                    //Set price
-                                    if (key.equals("price")) {
-                                        Double price = document.getDouble(key);
-                                        productAdmin.setPrice(price);
-                                        adapter.notifyDataSetChanged();
-                                    }
+                                Double price = document.getDouble("price");
+                                productAdmin.setPrice(price);
+                                adapter.notifyDataSetChanged();
 
-                                    //set mainImage
-                                    if (key.equals("main_img")) {
-                                        productAdmin.setMainImage((String) tempObject.get(key));
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }
+                                productAdmin.setMainImage((document.getString("main_img")));
+                                adapter.notifyDataSetChanged();
 
                                 if (Admin_ProductsFragment.dialog.isShowing())
                                     Admin_ProductsFragment.dialog.dismiss();
@@ -190,12 +231,13 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                     int stock = 0;
                                                     for (QueryDocumentSnapshot stock_ref : task.getResult()) {
                                                         stock += (int) Math.round(stock_ref.getDouble("quantity"));
+
                                                         if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
                                                             productAdmin.setStock(stock);
                                                             adapter.notifyDataSetChanged();
 
-                                                            if(stock > 0)
-                                                                tvNumOfStock.setText(++available/2 + "");
+                                                            if (stock > 0)
+                                                                tvNumOfStock.setText(++available + "");
                                                         }
                                                     }
                                                 }
