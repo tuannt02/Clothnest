@@ -323,67 +323,74 @@ public class Product_AdminAdapter extends BaseAdapter {
                 });
     }
 
-    public static void getCategoryProducts(ArrayList<Product_Admin> listProduct, ArrayList<Product_Admin> originalList, Product_AdminAdapter adapter, String categoryID, TextView tvNumOfProduct, TextView tvNumOfStock) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference category_Ref = db.collection(CategoryItem.COLLECTION_NAME).document(categoryID);
-        db.collection(Product_Admin.COLLECTION_NAME)
-                .whereEqualTo("category", category_Ref)
+    public static void  getProductFromCategory(ArrayList<Product_Admin> listProduct, Product_AdminAdapter adminAdapter, String key,TextView tvNumOfProduct, TextView tvNumOfStock,ArrayList<Product_Admin>listOriginal ) {
+        FirebaseFirestore db= FirebaseFirestore.getInstance();
+        db.collection("categories").whereEqualTo("name",key)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> productTask) {
-                        if (productTask.isSuccessful()) {
-                            tvNumOfProduct.setText(productTask.getResult().size() + "");
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful())
+                        {
+                            DocumentReference documentReference = task.getResult().getDocuments().get(0).getReference();
+                            db.collection("products").whereEqualTo("category",documentReference)
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            available = 0;
+                                    if(task.isSuccessful())
+                                    {
+                                        tvNumOfProduct.setText(task.getResult().size() + "");
+                                        available = 0;
 
-                            for (QueryDocumentSnapshot document : productTask.getResult()) {
-                                Product_Admin productAdmin = new Product_Admin();
-                                listProduct.add(productAdmin);
-                                originalList.add(productAdmin);
+                                        for (QueryDocumentSnapshot documentSnapshot:task.getResult())
+                                        {
+                                            Product_Admin productAdmin = new Product_Admin();
+                                            listProduct.add(productAdmin);
+                                            listOriginal.add(productAdmin);
 
-                                productAdmin.setId(document.getId());
-                                adapter.notifyDataSetChanged();
+                                            productAdmin.setId(documentSnapshot.getId());
+
+                                            productAdmin.setName(documentSnapshot.getString("name"));
+                                            adminAdapter.notifyDataSetChanged();
+
+                                            productAdmin.setPrice(documentSnapshot.getDouble("price"));
+                                            adminAdapter.notifyDataSetChanged();
 
 
-                                productAdmin.setName(document.getString("name"));
-                                adapter.notifyDataSetChanged();
+                                            productAdmin.setMainImage(documentSnapshot.getString("main_img"));
+                                            adminAdapter.notifyDataSetChanged();
 
-                                Double price = document.getDouble("price");
-                                productAdmin.setPrice(price);
-                                adapter.notifyDataSetChanged();
+                                            documentSnapshot.getReference().collection(Stock.COLLECTION_NAME)
+                                                    .get()
+                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if (task.isSuccessful()) {
+                                                                int stock = 0;
+                                                                for (QueryDocumentSnapshot stock_ref : task.getResult()) {
+                                                                    stock += (int) Math.round(stock_ref.getDouble("quantity"));
 
-                                productAdmin.setMainImage((document.getString("main_img")));
-                                adapter.notifyDataSetChanged();
+                                                                    if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
+                                                                        productAdmin.setStock(stock);
+                                                                        adminAdapter.notifyDataSetChanged();
 
-//                                if (Admin_ProductsFragment.dialog.isShowing())
-//                                    Admin_ProductsFragment.dialog.dismiss();
+                                                                        if(stock > 0)
+                                                                            tvNumOfStock.setText(++available + "");
 
-                                document.getReference().collection(Stock.COLLECTION_NAME)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    int stock = 0;
-                                                    for (QueryDocumentSnapshot stock_ref : task.getResult()) {
-                                                        stock += (int) Math.round(stock_ref.getDouble("quantity"));
-
-                                                        if (task.getResult().getDocuments().indexOf(stock_ref) == task.getResult().size() - 1) {
-                                                            productAdmin.setStock(stock);
-                                                            adapter.notifyDataSetChanged();
-
-                                                            if (stock > 0)
-                                                                tvNumOfStock.setText(++available + "");
+                                                                    }
+                                                                }
+                                                            }
                                                         }
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
+                                                    });
+                                        }
+                                    }
+                                }
+                            });
                         }
                     }
                 });
+
     }
 }
 
