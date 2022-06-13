@@ -57,7 +57,7 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
         dialog = new CustomProgressBar(Admin_Collections_ProductActivity.this);
         reference();
 
-        getData();
+
         onClickListenerClose();
         onClickListenerAdd();
 
@@ -67,6 +67,12 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
 
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 
     private void onClickListenerAdd() {

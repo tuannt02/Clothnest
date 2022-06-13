@@ -39,12 +39,17 @@ public class Admin_Category_ProductActivity extends AppCompatActivity {
 
         reference();
 
-        getData();
 
         setOnClickListennerClose();
 
         setOnClickClearSearch();
         setOnTextChange();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 
     private void setOnClickListennerClose() {
