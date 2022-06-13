@@ -77,6 +77,7 @@ public class ProductSliderAdapter extends RecyclerView.Adapter<ProductSliderAdap
     private void gotoDetail(int i) {
         Intent intent_productDetail = new Intent(mContext, ProductDetailActivity.class);
         intent_productDetail.putExtra("selected_Thumbnail", products.get(i).getId());
+        intent_productDetail.putExtra("write_review", "not_write_review");
         mContext.startActivity(intent_productDetail);
     }
 

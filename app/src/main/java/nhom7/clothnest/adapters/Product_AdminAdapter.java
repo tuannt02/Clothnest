@@ -177,7 +177,7 @@ public class Product_AdminAdapter extends BaseAdapter {
                                                             adapter.notifyDataSetChanged();
 
                                                             if (stock > 0)
-                                                                tvNumOfStock.setText(++available/2 + "");
+                                                                tvNumOfStock.setText(++available + "");
                                                         }
                                                     }
                                                 }

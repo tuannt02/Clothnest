@@ -49,8 +49,6 @@ public class Admin_ProductsFragment extends Fragment {
 
         setOnTextChange();
 
-        getProducts();
-
         getEvents();
 
         setOnClickClearSearch();

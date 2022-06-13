@@ -110,6 +110,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
     String productID;
 
     int selectedStock;
+    boolean addColorCompleted = false, addSizeCompleted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +290,13 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     try {
                         quantity = Integer.parseInt(etQuantity.getText().toString());
 
+                        if (quantity <= 0) {
+                            CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Quantity must more than 0!");
+                            if (dialog.isShowing())
+                                dialog.dismiss();
+                            return;
+                        }
+
                         uriList.remove(0);
 
                         Stock currentStoct = new Stock(sizeID, colorID, quantity, uriList);
@@ -395,8 +403,14 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             Double price_Double = 0.0;
             try {
                 price_Double = Double.valueOf(price);
+                if (price_Double <= 0) {
+                    CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price must more than 0!");
+                    if (dialog.isShowing())
+                        dialog.dismiss();
+                    return;
+                }
             } catch (NumberFormatException e) {
-                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price is an integer!");
+                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price is a double!");
                 if (dialog.isShowing())
                     dialog.dismiss();
                 return;
@@ -405,6 +419,12 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             int discount_Int = 0;
             try {
                 discount_Int = Integer.parseInt(discount);
+                if (!(0 <= discount_Int && discount_Int <= 100)) {
+                    CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Discount must between 0 and 100!");
+                    if (dialog.isShowing())
+                        dialog.dismiss();
+                    return;
+                }
             } catch (NumberFormatException e) {
                 CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Discount is an integer!");
                 if (dialog.isShowing())
@@ -434,8 +454,8 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                             addCollectionSizes();
 
                             if (dialog.isShowing()) {
-                                clearInfo();
-                                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Update successfully");
+                                //clearInfo();
+                                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Save successfully");
                                 dialog.dismiss();
                             }
                         }
@@ -478,16 +498,29 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         Double price_Double = 0.0;
         try {
             price_Double = Double.valueOf(price);
+            if (price_Double <= 0) {
+                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price must more than 0!");
+                if (dialog.isShowing())
+                    dialog.dismiss();
+                return;
+            }
         } catch (NumberFormatException e) {
             CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Price is an double!");
             if (dialog.isShowing())
                 dialog.dismiss();
             return;
         }
+
         // get int value of discount
         int discount_Int = 0;
         try {
             discount_Int = Integer.parseInt(discount);
+            if (!(0 <= discount_Int && discount_Int <= 100)) {
+                CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Discount must between 0 and 100!");
+                if (dialog.isShowing())
+                    dialog.dismiss();
+                return;
+            }
         } catch (NumberFormatException e) {
             CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 3, "Discount is an integer!");
             if (dialog.isShowing())
@@ -822,6 +855,40 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
         getStockImageList();
         stockList.clear();
         stockAdapter.notifyDataSetChanged();
+        etName.requestFocus();
+        addColorCompleted = addSizeCompleted = false;
+    }
+
+    private ArrayList<String> getColorList() {
+        ArrayList<String> colorsOfProduct = new ArrayList<>();
+
+        if (stockList != null)
+            for (Stock stock : stockList)
+                if (!colorsOfProduct.contains(stock.getColorID()))
+                    colorsOfProduct.add(stock.getColorID());
+
+        if (stockUpdateList != null)
+            for (Stock stock : stockUpdateList)
+                if (!colorsOfProduct.contains(stock.getColorID()))
+                    colorsOfProduct.add(stock.getColorID());
+
+        return colorsOfProduct;
+    }
+
+    private ArrayList<String> getSizeList() {
+        ArrayList<String> sizesOfProduct = new ArrayList<>();
+
+        if (stockList != null)
+            for (Stock stock : stockList)
+                if (!sizesOfProduct.contains(stock.getSizeID()))
+                    sizesOfProduct.add(stock.getSizeID());
+
+        if (stockUpdateList != null)
+            for (Stock stock : stockUpdateList)
+                if (!sizesOfProduct.contains(stock.getSizeID()))
+                    sizesOfProduct.add(stock.getSizeID());
+
+        return sizesOfProduct;
     }
 
     private void addCollectionColors() {
@@ -831,26 +898,27 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot color_Sn : task.getResult())
+                            for (DocumentSnapshot color_Sn : task.getResult()) {
                                 color_Sn.getReference().delete();
-
-                            ArrayList<String> colorsOfProduct = new ArrayList<>();
-                            for (Stock stock : stockList) {
-                                if (!colorsOfProduct.contains(stock.getColorID()))
-                                    colorsOfProduct.add(stock.getColorID());
                             }
-                            for (String colorID : colorsOfProduct) {
-                                Map<String, Object> colorMap = new HashMap<>();
 
+                            ArrayList<String> colorsOfProduct = getColorList();
+                            for (String colorID : colorsOfProduct) {
                                 db.collection(ColorClass.COLLECTION_NAME).document(colorID)
                                         .get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
-                                            public void onSuccess(DocumentSnapshot docS) {
-                                                colorMap.put("hex", docS.get("hex"));
-                                                colorMap.put("name", docS.get("name"));
-
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Map<String, Object> colorMap = new HashMap<>();
+                                                colorMap.put("hex", documentSnapshot.getString("hex"));
+                                                colorMap.put("name", documentSnapshot.getString("name"));
                                                 product_Ref.collection(ColorClass.COLLECTION_NAME).add(colorMap);
+
+                                                if(CURRENT_CODE == ADD_PRODUCT && colorsOfProduct.indexOf(colorID) == colorsOfProduct.size() - 1){
+                                                    addColorCompleted = true;
+                                                    if(addSizeCompleted)
+                                                        clearInfo();
+                                                }
                                             }
                                         });
                             }
@@ -866,27 +934,28 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot size_Sn : task.getResult())
+                            for (DocumentSnapshot size_Sn : task.getResult()) {
                                 size_Sn.getReference().delete();
-
-                            ArrayList<String> sizesOfProduct = new ArrayList<>();
-                            for (Stock stock : stockList) {
-                                if (!sizesOfProduct.contains(stock.getSizeID()))
-                                    sizesOfProduct.add(stock.getSizeID());
                             }
-                            for (String sizeID : sizesOfProduct) {
-                                Map<String, Object> sizeMap = new HashMap<>();
 
+                            ArrayList<String> sizesOfProduct = getSizeList();
+                            for (String sizeID : sizesOfProduct) {
                                 db.collection(SizeClass.COLLECTION_NAME).document(sizeID)
                                         .get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
-                                            public void onSuccess(DocumentSnapshot docS) {
-                                                sizeMap.put("name", docS.get("name"));
-                                                sizeMap.put("short_name", docS.get("short_name"));
-                                                sizeMap.put("type", docS.get("type"));
-
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Map<String, Object> sizeMap = new HashMap<>();
+                                                sizeMap.put("name", documentSnapshot.getString("name"));
+                                                sizeMap.put("short_name", documentSnapshot.getString("short_name"));
+                                                sizeMap.put("type", documentSnapshot.getString("type"));
                                                 product_Ref.collection(SizeClass.COLLECTION_NAME).add(sizeMap);
+
+                                                if(CURRENT_CODE == ADD_PRODUCT && sizesOfProduct.indexOf(sizeID) == sizesOfProduct.size() - 1) {
+                                                    addSizeCompleted = true;
+                                                    if(addColorCompleted)
+                                                        clearInfo();
+                                                }
                                             }
                                         });
                             }
@@ -910,7 +979,7 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
             etSize.setText(selectedStock.getSizeName());
             etColor.setText(selectedStock.getColorName());
             etQuantity.setText(selectedStock.getQuantity() + "");
-            for(Uri uri: selectedStock.getImageList())
+            for (Uri uri : selectedStock.getImageList())
                 uriList.add(uri);
             stockImageAdapter.notifyDataSetChanged();
         }

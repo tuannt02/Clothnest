@@ -23,9 +23,10 @@
             android:textColor="@color/black"
             android:textSize="20dp" />
 
-        <View android:layout_width="0dp"
+        <View
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/admin_productDetail_tvSave"
@@ -187,6 +188,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
+                        android:inputType="number"
                         android:textSize="20dp" />
 
                     <TextView
@@ -336,6 +338,7 @@
                         android:id="@+id/admin_productDetail_etQuantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:fontFamily="@font/lato"
                         android:textSize="20dp" />
                 </LinearLayout>
