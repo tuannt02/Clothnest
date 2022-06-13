@@ -14,11 +14,11 @@
         android:paddingHorizontal="20dp">
 
         <TextView
-            android:id="@+id/admin_collectionProduct_tvTitle"
-            android:layout_width="221dp"
+            android:id="@+id/admin_categoryProduct_tvTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_black"
-            android:text="UT"
+            android:text="T-Shirts"
             android:textColor="@color/black"
             android:textSize="20dp" />
         <View
@@ -27,20 +27,7 @@
             android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/admin_collectionProduct_tvAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_black"
-            android:text="Add"
-            android:textColor="@color/blue"
-            android:textSize="20dp" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/admin_collectionProduct_tvClose"
+            android:id="@+id/admin_categoryProduct_tvClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_black"
@@ -57,10 +44,10 @@
         android:layout_marginVertical="@dimen/_10sdp" />
 
     <include
-        android:id="@+id/admin_modifyProduct_Include"
+        android:id="@+id/admin_categoryProduct_Include"
         layout="@layout/fragment_admin_productlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp" />
+        android:layout_marginHorizontal="20dp"/>
 
 </LinearLayout>

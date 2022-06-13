@@ -35,18 +35,18 @@ import nhom7.clothnest.notifications.NetworkChangeReceiver;
 import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
 
 public class Admin_Collections_ProductActivity extends AppCompatActivity {
-    TextView admin_collectionProduct_tvTitle, admin_collectionProduct_tvClose, admin_collectionProduct_tvAdd;
-    String name;
-    ArrayList<Product_Admin> productList;
-    Product_AdminAdapter adminAdapter;
-    ListView lvProduct;
-    View includeView;
-    TextView tvNumOfProduct, tvNumOfStock;
+    private TextView admin_collectionProduct_tvTitle, admin_collectionProduct_tvClose, admin_collectionProduct_tvAdd;
+    private String name;
+    private ArrayList<Product_Admin> productList;
+    private Product_AdminAdapter adminAdapter;
+    private ListView lvProduct;
+    private View includeView;
+    private TextView tvNumOfProduct, tvNumOfStock;
     BroadcastReceiver broadcastReceiver;
 
-    EditText inputSearch;
-    TextView clearSearch;
-    ArrayList<Product_Admin> listOriginal;
+    private EditText inputSearch;
+    private TextView clearSearch;
+    private ArrayList<Product_Admin> listOriginal;
     public static CustomProgressBar dialog;
 
 
@@ -57,7 +57,7 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
         dialog = new CustomProgressBar(Admin_Collections_ProductActivity.this);
         reference();
 
-        getData();
+
         onClickListenerClose();
         onClickListenerAdd();
 
@@ -67,6 +67,12 @@ public class Admin_Collections_ProductActivity extends AppCompatActivity {
 
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 
     private void onClickListenerAdd() {

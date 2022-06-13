@@ -254,7 +254,12 @@ public class TransactionDetailActivity extends AppCompatActivity {
         addr = (Address) intent.getSerializableExtra("address");
         nameDetail = intent.getStringExtra("customer");
         dateDetail = intent.getStringExtra("date");
+
         stateDetail = intent.getStringExtra("state");
+        if(!stateDetail.equals("In Progress"))
+        {
+            img_optionstate.setVisibility(View.INVISIBLE);
+        }
         idDetail = intent.getStringExtra("key");
         deliveryDetail = intent.getIntExtra("delivery", 0);
         discountDetail = intent.getIntExtra("discount", 0);

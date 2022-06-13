@@ -60,13 +60,18 @@ public class Admin_Modify_ProductActivity extends AppCompatActivity {
         dialog = new CustomProgressBar(Admin_Modify_ProductActivity.this);
 
         reference();
-        handleData();
         getEvent();
         setOnTextChange();
         setOnClickClearSearch();
 
         broadcastReceiver = new NetworkChangeReceiver();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handleData();
     }
 
     @Override

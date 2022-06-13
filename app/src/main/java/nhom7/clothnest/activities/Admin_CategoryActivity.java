@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -78,6 +79,50 @@ public class Admin_CategoryActivity extends AppCompatActivity {
         lv_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i==0)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","T-Shirts");
+                    startActivity(intent);
+                }
+
+                if(i==1)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","Accessories");
+                    startActivity(intent);
+                }
+                if(i==2)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","Loungewear & Home");
+                    startActivity(intent);
+                }
+                if(i==3)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","Pants");
+                    startActivity(intent);
+                }
+                if(i==4)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","Sport Utility Wear");
+                    startActivity(intent);
+                }
+                if(i==5)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","Innerwear");
+                    startActivity(intent);
+                }
+                if(i==6)
+                {
+                    Intent intent = new Intent(Admin_CategoryActivity.this,Admin_Category_ProductActivity.class);
+                    intent.putExtra("nameCategory","Outerwear");
+                    startActivity(intent);
+                }
+
 
             }
         });
