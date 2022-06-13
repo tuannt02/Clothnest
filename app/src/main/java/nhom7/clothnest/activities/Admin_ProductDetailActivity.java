@@ -575,13 +575,22 @@ public class Admin_ProductDetailActivity extends AppCompatActivity {
                 new CustomDialog.IClickListenerOnOkBtn() {
                     @Override
                     public void onResultOk() {
-                        db.collection(Product_Admin.COLLECTION_NAME).document(productID)
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        db.collection(Product_Admin.COLLECTION_NAME).document(productID).collection(Stock.COLLECTION_NAME)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onSuccess(Void unused) {
-                                        CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Delete successfully");
-                                        finish();
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for(QueryDocumentSnapshot stock_Ref: task.getResult())
+                                                stock_Ref.getReference().update("quantity",  0)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        CustomToast.DisplayToast(Admin_ProductDetailActivity.this, 1, "Delete successfully");
+                                                        finish();
+                                                    }
+                                                });
+                                        }
                                     }
                                 });
                     }
