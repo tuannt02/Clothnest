@@ -52,7 +52,7 @@ public class Purchase implements Serializable {
     public double getSubTotal() {
         Double result = 0d;
         for (PurchaseItem item: items) {
-            result += item.getSalePrice();
+            result += item.getSalePrice() * item.getQuantity();
         }
         return result;
     }
