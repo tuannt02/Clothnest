@@ -97,9 +97,11 @@
             android:exported="false" />
         <activity
             android:name=".activities.SignUpActivity"
+
             android:exported="false" />
         <activity
             android:name=".activities.SignInActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".activities.SplashScreen"
