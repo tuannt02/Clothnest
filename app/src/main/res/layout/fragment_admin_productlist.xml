@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -101,5 +102,6 @@
     <ListView
         android:id="@+id/admin_productList_productList"
         android:layout_width="match_parent"
+        tools:listitem="@layout/item_admin_productlist"
         android:layout_height="match_parent" />
 </LinearLayout>
