@@ -44,8 +44,6 @@ import nhom7.clothnest.models.Product_Thumbnail;
 import nhom7.clothnest.models.Stock;
 import nhom7.clothnest.models.User;
 import nhom7.clothnest.models.Wishlist;
-import nhom7.clothnest.util.customizeComponent.CustomProgressBar;
-import nhom7.clothnest.util.customizeComponent.CustomToast;
 
 public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
     private Context mContext;
@@ -207,75 +205,76 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
-                                                        //get data
-                                                        Map<String, Object> map = document.getData();
-                                                        Iterator iterator = map.keySet().iterator();
-                                                        while (iterator.hasNext()) {
-                                                            String key = (String) iterator.next();
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock != 0) {
+                                                                //get data
+                                                                Map<String, Object> map = document.getData();
+                                                                Iterator iterator = map.keySet().iterator();
+                                                                while (iterator.hasNext()) {
+                                                                    String key = (String) iterator.next();
 
-                                                            if (key.equals("product_id")) {
-                                                                DocumentReference documentReference = (DocumentReference) map.get(key);
-                                                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                                                        listThumbnail.add(thumbnail);
-
-                                                                        thumbnail.setId(documentSnapshot.getId());
-
-                                                                        thumbnail.setName(documentSnapshot.getString("name"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setPrice(documentSnapshot.getDouble("price"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
-                                                                        thumbnail.setDiscount(discount);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setMainImage(documentSnapshot.getString("main_img"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-
-                                                                        DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
-                                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    if (key.equals("product_id")) {
+                                                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                                             @Override
                                                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                                                listThumbnail.add(thumbnail);
+
+                                                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                                                thumbnail.setName(documentSnapshot.getString("name"));
                                                                                 thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                                                thumbnail.setDiscount(discount);
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                });
+
+                                                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                        if (task.isSuccessful()) {
+                                                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                                                        }
+                                                                                    }
+                                                                                });
+
                                                                             }
                                                                         });
-
-                                                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                                                        DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
-
-                                                                        CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                        Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                                                        query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                                if (task.isSuccessful()) {
-                                                                                    thumbnail.setFavorite(!task.getResult().isEmpty());
-                                                                                    thumbnailAdapter.notifyDataSetChanged();
-                                                                                }
-                                                                            }
-                                                                        });
-
                                                                     }
-                                                                });
+
+
+                                                                }
                                                             }
-
-
                                                         }
                                                     }
-
                                                 }
                                             }
                                         });
-
                             }
                         }
                     }
@@ -300,71 +299,73 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
-                                                        //get data
-                                                        Map<String, Object> map = document.getData();
-                                                        Iterator iterator = map.keySet().iterator();
-                                                        while (iterator.hasNext()) {
-                                                            String key = (String) iterator.next();
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock != 0) {
+                                                                //get data
+                                                                Map<String, Object> map = document.getData();
+                                                                Iterator iterator = map.keySet().iterator();
+                                                                while (iterator.hasNext()) {
+                                                                    String key = (String) iterator.next();
 
-                                                            if (key.equals("product_id")) {
-                                                                DocumentReference documentReference = (DocumentReference) map.get(key);
-                                                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                                                        listThumbnail.add(thumbnail);
-
-                                                                        thumbnail.setId(documentSnapshot.getId());
-
-                                                                        thumbnail.setName(documentSnapshot.getString("name"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setPrice(documentSnapshot.getDouble("price"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
-                                                                        thumbnail.setDiscount(discount);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setMainImage(documentSnapshot.getString("main_img"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-
-                                                                        DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
-                                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    if (key.equals("product_id")) {
+                                                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                                             @Override
                                                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                                                listThumbnail.add(thumbnail);
+
+                                                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                                                thumbnail.setName(documentSnapshot.getString("name"));
                                                                                 thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                                                thumbnail.setDiscount(discount);
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                });
+
+                                                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                        if (task.isSuccessful()) {
+                                                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                                                        }
+                                                                                    }
+                                                                                });
+
                                                                             }
                                                                         });
-
-                                                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                                                        DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
-
-                                                                        CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                        Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                                                        query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                                if (task.isSuccessful()) {
-                                                                                    thumbnail.setFavorite(!task.getResult().isEmpty());
-                                                                                    thumbnailAdapter.notifyDataSetChanged();
-                                                                                }
-                                                                            }
-                                                                        });
-
                                                                     }
-                                                                });
+
+
+                                                                }
                                                             }
-
-
                                                         }
                                                     }
-
                                                 }
                                             }
                                         });
@@ -393,9 +394,9 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult())
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                    if (stock != 0) {
                                                         //get data
                                                         Map<String, Object> map = document.getData();
                                                         Iterator iterator = map.keySet().iterator();
@@ -485,71 +486,73 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
-                                                        //get data
-                                                        Map<String, Object> map = document.getData();
-                                                        Iterator iterator = map.keySet().iterator();
-                                                        while (iterator.hasNext()) {
-                                                            String key = (String) iterator.next();
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock != 0) {
+                                                                //get data
+                                                                Map<String, Object> map = document.getData();
+                                                                Iterator iterator = map.keySet().iterator();
+                                                                while (iterator.hasNext()) {
+                                                                    String key = (String) iterator.next();
 
-                                                            if (key.equals("product_id")) {
-                                                                DocumentReference documentReference = (DocumentReference) map.get(key);
-                                                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                                                        listThumbnail.add(thumbnail);
-
-                                                                        thumbnail.setId(documentSnapshot.getId());
-
-                                                                        thumbnail.setName(documentSnapshot.getString("name"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setPrice(documentSnapshot.getDouble("price"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
-                                                                        thumbnail.setDiscount(discount);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setMainImage(documentSnapshot.getString("main_img"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-
-                                                                        DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
-                                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    if (key.equals("product_id")) {
+                                                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                                             @Override
                                                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                                                listThumbnail.add(thumbnail);
+
+                                                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                                                thumbnail.setName(documentSnapshot.getString("name"));
                                                                                 thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                                                thumbnail.setDiscount(discount);
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                });
+
+                                                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                        if (task.isSuccessful()) {
+                                                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                                                        }
+                                                                                    }
+                                                                                });
+
                                                                             }
                                                                         });
-
-                                                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                                                        DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
-
-                                                                        CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                        Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                                                        query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                                if (task.isSuccessful()) {
-                                                                                    thumbnail.setFavorite(!task.getResult().isEmpty());
-                                                                                    thumbnailAdapter.notifyDataSetChanged();
-                                                                                }
-                                                                            }
-                                                                        });
-
                                                                     }
-                                                                });
+
+
+                                                                }
                                                             }
-
-
                                                         }
                                                     }
-
                                                 }
                                             }
                                         });
@@ -578,71 +581,73 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
-                                                        //get data
-                                                        Map<String, Object> map = document.getData();
-                                                        Iterator iterator = map.keySet().iterator();
-                                                        while (iterator.hasNext()) {
-                                                            String key = (String) iterator.next();
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock != 0) {
+                                                                //get data
+                                                                Map<String, Object> map = document.getData();
+                                                                Iterator iterator = map.keySet().iterator();
+                                                                while (iterator.hasNext()) {
+                                                                    String key = (String) iterator.next();
 
-                                                            if (key.equals("product_id")) {
-                                                                DocumentReference documentReference = (DocumentReference) map.get(key);
-                                                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                                                        listThumbnail.add(thumbnail);
-
-                                                                        thumbnail.setId(documentSnapshot.getId());
-
-                                                                        thumbnail.setName(documentSnapshot.getString("name"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setPrice(documentSnapshot.getDouble("price"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
-                                                                        thumbnail.setDiscount(discount);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-                                                                        thumbnail.setMainImage(documentSnapshot.getString("main_img"));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-
-
-                                                                        DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
-                                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    if (key.equals("product_id")) {
+                                                                        DocumentReference documentReference = (DocumentReference) map.get(key);
+                                                                        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                                             @Override
                                                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                                                listThumbnail.add(thumbnail);
+
+                                                                                thumbnail.setId(documentSnapshot.getId());
+
+                                                                                thumbnail.setName(documentSnapshot.getString("name"));
                                                                                 thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setPrice(documentSnapshot.getDouble("price"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                int discount = (int) Math.round(documentSnapshot.getDouble("discount"));
+                                                                                thumbnail.setDiscount(discount);
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+                                                                                thumbnail.setMainImage(documentSnapshot.getString("main_img"));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+
+
+                                                                                DocumentReference docRef = (DocumentReference) documentSnapshot.get("category");
+                                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                });
+
+                                                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                                                DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
+
+                                                                                CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                                Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                                                query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                        if (task.isSuccessful()) {
+                                                                                            thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                                                        }
+                                                                                    }
+                                                                                });
+
                                                                             }
                                                                         });
-
-                                                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                                                        DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + documentSnapshot.getId());
-
-                                                                        CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                        Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                                                        query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                                if (task.isSuccessful()) {
-                                                                                    thumbnail.setFavorite(!task.getResult().isEmpty());
-                                                                                    thumbnailAdapter.notifyDataSetChanged();
-                                                                                }
-                                                                            }
-                                                                        });
-
                                                                     }
-                                                                });
+
+
+                                                                }
                                                             }
-
-
                                                         }
                                                     }
-
                                                 }
                                             }
                                         });
@@ -674,82 +679,85 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
-                                                        //get data
-                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onSuccess(DocumentSnapshot document) {
-                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
-                                                                listProduct.add(thumbnail);
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock != 0) {
+                                                                //get data
+                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(DocumentSnapshot document) {
+                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                                        //Thêm thumbnail vào arraylist và notifyDataSetChanged
+                                                                        listProduct.add(thumbnail);
 
-                                                                //tempOject chứa product
-                                                                Map<String, Object> tempObject = document.getData();
+                                                                        //tempOject chứa product
+                                                                        Map<String, Object> tempObject = document.getData();
 
-                                                                // Lặp qua từng field của một document
-                                                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+                                                                        // Lặp qua từng field của một document
+                                                                        Iterator myVeryOwnIterator = tempObject.keySet().iterator();
 
-                                                                while (myVeryOwnIterator.hasNext()) {
-                                                                    String key = (String) myVeryOwnIterator.next();
+                                                                        while (myVeryOwnIterator.hasNext()) {
+                                                                            String key = (String) myVeryOwnIterator.next();
 
-                                                                    //Set id
-                                                                    thumbnail.setId(document.getId());
+                                                                            //Set id
+                                                                            thumbnail.setId(document.getId());
 
-                                                                    //set category
-                                                                    if (key.equals("category")) {
-                                                                        DocumentReference docRef = (DocumentReference) tempObject.get(key);
-                                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                            @Override
-                                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                            //set category
+                                                                            if (key.equals("category")) {
+                                                                                DocumentReference docRef = (DocumentReference) tempObject.get(key);
+                                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                });
+                                                                            }
+
+                                                                            //Set name
+                                                                            if (key.equals("name")) {
+                                                                                thumbnail.setName((String) tempObject.get(key));
                                                                                 thumbnailAdapter.notifyDataSetChanged();
                                                                             }
-                                                                        });
-                                                                    }
 
-                                                                    //Set name
-                                                                    if (key.equals("name")) {
-                                                                        thumbnail.setName((String) tempObject.get(key));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-
-                                                                    //Set price
-                                                                    if (key.equals("price")) {
-                                                                        Double price = document.getDouble(key);
-                                                                        thumbnail.setPrice(price);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    //set discount
-                                                                    if (key.equals("discount")) {
-                                                                        int discount = (int) Math.round(document.getDouble(key));
-                                                                        thumbnail.setDiscount(discount);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    //set mainImage
-                                                                    if (key.equals("main_img")) {
-                                                                        thumbnail.setMainImage((String) tempObject.get(key));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    //set isFavorite
-                                                                    FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                                                    DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
-
-                                                                    CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                    Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                                                    query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                            if (task.isSuccessful()) {
-                                                                                thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                            //Set price
+                                                                            if (key.equals("price")) {
+                                                                                Double price = document.getDouble(key);
+                                                                                thumbnail.setPrice(price);
                                                                                 thumbnailAdapter.notifyDataSetChanged();
                                                                             }
+                                                                            //set discount
+                                                                            if (key.equals("discount")) {
+                                                                                int discount = (int) Math.round(document.getDouble(key));
+                                                                                thumbnail.setDiscount(discount);
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                            //set mainImage
+                                                                            if (key.equals("main_img")) {
+                                                                                thumbnail.setMainImage((String) tempObject.get(key));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                            //set isFavorite
+                                                                            FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                                            DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
+
+                                                                            CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                            Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                                            query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                    if (task.isSuccessful()) {
+                                                                                        thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                }
+                                                                            });
                                                                         }
-                                                                    });
-                                                                }
+                                                                    }
+                                                                });
                                                             }
-                                                        });
+                                                        }
                                                     }
                                                 }
                                             }
@@ -782,81 +790,84 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock != 0){
-                                                        //get data
-                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onSuccess(DocumentSnapshot document) {
-                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
-                                                                listProduct.add(thumbnail);
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock != 0) {
+                                                                //get data
+                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(DocumentSnapshot document) {
+                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
+                                                                        //Thêm thumbnail vào arraylist và notifyDataSetChanged
+                                                                        listProduct.add(thumbnail);
 
-                                                                //tempOject chứa product
-                                                                Map<String, Object> tempObject = document.getData();
+                                                                        //tempOject chứa product
+                                                                        Map<String, Object> tempObject = document.getData();
 
-                                                                // Lặp qua từng field của một document
-                                                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
-                                                                while (myVeryOwnIterator.hasNext()) {
-                                                                    String key = (String) myVeryOwnIterator.next();
+                                                                        // Lặp qua từng field của một document
+                                                                        Iterator myVeryOwnIterator = tempObject.keySet().iterator();
+                                                                        while (myVeryOwnIterator.hasNext()) {
+                                                                            String key = (String) myVeryOwnIterator.next();
 
-                                                                    //Set id
-                                                                    thumbnail.setId(document.getId());
+                                                                            //Set id
+                                                                            thumbnail.setId(document.getId());
 
-                                                                    //set category
-                                                                    if (key.equals("category")) {
-                                                                        DocumentReference docRef = (DocumentReference) tempObject.get(key);
-                                                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                                            @Override
-                                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                            //set category
+                                                                            if (key.equals("category")) {
+                                                                                DocumentReference docRef = (DocumentReference) tempObject.get(key);
+                                                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                });
+                                                                            }
+
+                                                                            //Set name
+                                                                            if (key.equals("name")) {
+                                                                                thumbnail.setName((String) tempObject.get(key));
                                                                                 thumbnailAdapter.notifyDataSetChanged();
                                                                             }
-                                                                        });
-                                                                    }
 
-                                                                    //Set name
-                                                                    if (key.equals("name")) {
-                                                                        thumbnail.setName((String) tempObject.get(key));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-
-                                                                    //Set price
-                                                                    if (key.equals("price")) {
-                                                                        Double price = document.getDouble(key);
-                                                                        thumbnail.setPrice(price);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    //set discount
-                                                                    if (key.equals("discount")) {
-                                                                        int discount = (int) Math.round(document.getDouble(key));
-                                                                        thumbnail.setDiscount(discount);
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    //set mainImage
-                                                                    if (key.equals("main_img")) {
-                                                                        thumbnail.setMainImage((String) tempObject.get(key));
-                                                                        thumbnailAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    //set isFavorite
-                                                                    FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                                                    DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
-
-                                                                    CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                    Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                                                    query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                            if (task.isSuccessful()) {
-                                                                                thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                            //Set price
+                                                                            if (key.equals("price")) {
+                                                                                Double price = document.getDouble(key);
+                                                                                thumbnail.setPrice(price);
                                                                                 thumbnailAdapter.notifyDataSetChanged();
                                                                             }
+                                                                            //set discount
+                                                                            if (key.equals("discount")) {
+                                                                                int discount = (int) Math.round(document.getDouble(key));
+                                                                                thumbnail.setDiscount(discount);
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                            //set mainImage
+                                                                            if (key.equals("main_img")) {
+                                                                                thumbnail.setMainImage((String) tempObject.get(key));
+                                                                                thumbnailAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                            //set isFavorite
+                                                                            FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+                                                                            DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
+
+                                                                            CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                            Query query = coRef_wishList.whereEqualTo("product_id", doRef);
+                                                                            query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                    if (task.isSuccessful()) {
+                                                                                        thumbnail.setFavorite(!task.getResult().isEmpty());
+                                                                                        thumbnailAdapter.notifyDataSetChanged();
+                                                                                    }
+                                                                                }
+                                                                            });
                                                                         }
-                                                                    });
-                                                                }
+                                                                    }
+                                                                });
                                                             }
-                                                        });
+                                                        }
                                                     }
                                                 }
                                             }
@@ -876,9 +887,9 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task_product) {
+                        if (task_product.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task_product.getResult()) {
                                 //check available
                                 document.getReference().collection(Stock.COLLECTION_NAME)
                                         .get()
@@ -887,77 +898,83 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     int stock = 0;
-                                                    for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                        stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                    if(stock == 0){
-                                                        SearchProductsFragment.originProductList.addAll(listProduct);
-                                                        SearchProductsFragment.dialog.dismiss();
-                                                    }else{
-                                                        //get data
-                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
-
-                                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-
-                                                        DocumentReference category_Ref = document.getDocumentReference("category");
-                                                        DocumentReference product_Ref = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
-                                                        CollectionReference wishList_Ref = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                        CollectionReference color_Ref = product_Ref.collection("colors");
-                                                        CollectionReference size_Ref = product_Ref.collection("sizes");
-
-                                                        Task getCategory = category_Ref.get();
-                                                        Task<QuerySnapshot> getFavorite = wishList_Ref.whereEqualTo("product_id", product_Ref).limit(1).get();
-                                                        Task<QuerySnapshot> getColor = color_Ref.get();
-                                                        Task<QuerySnapshot> getSize = size_Ref.get();
-
-                                                        Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getFavorite, getColor, getSize);
-                                                        listTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
-                                                            @Override
-                                                            public void onSuccess(List<QuerySnapshot> querySnapshots) {
-                                                                ArrayList<String> colorTemps = new ArrayList<>();
-                                                                ArrayList<String> sizeTemps = new ArrayList<>();
-
-                                                                //set favorite
-                                                                thumbnail.setFavorite(!querySnapshots.get(0).getDocuments().isEmpty());
-
-                                                                //set colorList
-                                                                for (DocumentSnapshot color_Doc : querySnapshots.get(1).getDocuments()) {
-                                                                    colorTemps.add(color_Doc.getString("name"));
+                                                    for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                        stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                        if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                            if (stock == 0) {
+                                                                if (task_product.getResult().getDocuments().indexOf(document) == task_product.getResult().getDocuments().size() - 1) {
+                                                                    SearchProductsFragment.originProductList.addAll(listProduct);
+                                                                    SearchProductsFragment.dialog.dismiss();
                                                                 }
-                                                                thumbnail.setColorList(colorTemps);
+                                                            } else {
+                                                                //get data
+                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
 
-                                                                //set sizeList
-                                                                for (DocumentSnapshot size_Doc : querySnapshots.get(2).getDocuments()) {
-                                                                    sizeTemps.add(size_Doc.getString("short_name"));
-                                                                }
-                                                                thumbnail.setSizeList(sizeTemps);
+                                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
 
-                                                                //set category
-                                                                getCategory.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                DocumentReference category_Ref = document.getDocumentReference("category");
+                                                                DocumentReference product_Ref = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
+                                                                CollectionReference wishList_Ref = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                CollectionReference color_Ref = product_Ref.collection("colors");
+                                                                CollectionReference size_Ref = product_Ref.collection("sizes");
+
+                                                                Task getCategory = category_Ref.get();
+                                                                Task<QuerySnapshot> getFavorite = wishList_Ref.whereEqualTo("product_id", product_Ref).limit(1).get();
+                                                                Task<QuerySnapshot> getColor = color_Ref.get();
+                                                                Task<QuerySnapshot> getSize = size_Ref.get();
+
+                                                                Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getFavorite, getColor, getSize);
+                                                                listTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
                                                                     @Override
-                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                                        thumbnail.setCategory(documentSnapshot.getString("name"));
+                                                                    public void onSuccess(List<QuerySnapshot> querySnapshots) {
+                                                                        ArrayList<String> colorTemps = new ArrayList<>();
+                                                                        ArrayList<String> sizeTemps = new ArrayList<>();
 
-                                                                        //set other fields
-                                                                        thumbnail.setId(document.getId());
-                                                                        thumbnail.setName(document.getString("name"));
-                                                                        thumbnail.setPrice(document.getDouble("price"));
-                                                                        thumbnail.setDiscount((int) Math.round(document.getDouble("discount")));
-                                                                        thumbnail.setMainImage(document.getString("main_img"));
+                                                                        //set favorite
+                                                                        thumbnail.setFavorite(!querySnapshots.get(0).getDocuments().isEmpty());
 
-                                                                        if (FilterFragment.checkFilter(thumbnail)) {
-                                                                            listProduct.add(thumbnail);
-                                                                            thumbnailAdapter.notifyDataSetChanged();
+                                                                        //set colorList
+                                                                        for (DocumentSnapshot color_Doc : querySnapshots.get(1).getDocuments()) {
+                                                                            colorTemps.add(color_Doc.getString("name"));
                                                                         }
+                                                                        thumbnail.setColorList(colorTemps);
 
-                                                                        if (task.getResult().getDocuments().indexOf(document) == task.getResult().getDocuments().size() - 1 && SearchProductsFragment.dialog.isShowing()) {
-                                                                            SearchProductsFragment.originProductList.addAll(listProduct);
-                                                                            SearchProductsFragment.dialog.dismiss();
+                                                                        //set sizeList
+                                                                        for (DocumentSnapshot size_Doc : querySnapshots.get(2).getDocuments()) {
+                                                                            sizeTemps.add(size_Doc.getString("short_name"));
                                                                         }
+                                                                        thumbnail.setSizeList(sizeTemps);
+
+                                                                        //set category
+                                                                        getCategory.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                            @Override
+                                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                                thumbnail.setCategory(documentSnapshot.getString("name"));
+
+                                                                                //set other fields
+                                                                                thumbnail.setId(document.getId());
+                                                                                thumbnail.setName(document.getString("name"));
+                                                                                thumbnail.setPrice(document.getDouble("price"));
+                                                                                thumbnail.setDiscount((int) Math.round(document.getDouble("discount")));
+                                                                                thumbnail.setMainImage(document.getString("main_img"));
+
+                                                                                if (FilterFragment.checkFilter(thumbnail)) {
+                                                                                    listProduct.add(thumbnail);
+                                                                                    thumbnailAdapter.notifyDataSetChanged();
+                                                                                }
+
+                                                                                if (task_product.getResult().getDocuments().indexOf(document) == task_product.getResult().getDocuments().size() - 1 && SearchProductsFragment.dialog.isShowing()) {
+                                                                                    SearchProductsFragment.originProductList.addAll(listProduct);
+                                                                                    SearchProductsFragment.dialog.dismiss();
+                                                                                }
+                                                                            }
+                                                                        });
                                                                     }
                                                                 });
                                                             }
-                                                        });
+                                                        }
                                                     }
+
 
                                                 }
                                             }
@@ -968,88 +985,6 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                         }
                     }
                 });
-    }
-
-    public static ArrayList<Product_Thumbnail> getProductFromFirestore() {
-        ArrayList<Product_Thumbnail> listProduct = new ArrayList<>();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        //get data
-        db.collection(Product_Thumbnail.COLLECTION_NAME)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            //Duyệt từng product
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //product để thêm vào arrayList
-                                Product_Thumbnail thumbnail = new Product_Thumbnail();
-                                //Thêm thumbnail vào arraylist và notifyDataSetChanged
-                                listProduct.add(thumbnail);
-
-                                //tempOject chứa product
-                                Map<String, Object> tempObject = document.getData();
-
-                                // Lặp qua từng field của một document
-                                Iterator myVeryOwnIterator = tempObject.keySet().iterator();
-                                while (myVeryOwnIterator.hasNext()) {
-                                    String key = (String) myVeryOwnIterator.next();
-
-                                    //Set id
-                                    thumbnail.setId(document.getId());
-
-                                    //set category
-                                    if (key.equals("category")) {
-                                        DocumentReference docRef = (DocumentReference) tempObject.get(key);
-                                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                thumbnail.setCategory(documentSnapshot.getString("name"));
-                                            }
-                                        });
-                                    }
-
-                                    //Set name
-                                    if (key.equals("name")) {
-                                        thumbnail.setName((String) tempObject.get(key));
-                                    }
-
-                                    //Set price
-                                    if (key.equals("price")) {
-                                        Double price = document.getDouble(key);
-                                        thumbnail.setPrice(price);
-                                    }
-                                    //set discount
-                                    if (key.equals("discount")) {
-                                        int discount = (int) Math.round(document.getDouble(key));
-                                        thumbnail.setDiscount(discount);
-                                    }
-                                    //set mainImage
-                                    if (key.equals("main_img")) {
-                                        thumbnail.setMainImage((String) tempObject.get(key));
-                                    }
-                                    //set isFavorite
-                                    FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-                                    DocumentReference doRef = db.document(Product_Thumbnail.COLLECTION_NAME + '/' + document.getId());
-
-                                    CollectionReference coRef_wishList = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                    Query query = coRef_wishList.whereEqualTo("product_id", doRef);
-                                    query.limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                thumbnail.setFavorite(!task.getResult().isEmpty());
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    }
-                });
-        return listProduct;
     }
 
     public static void getProductsWithSameCategory(ArrayList<Product_Thumbnail> listProduct, Product_ThumbnailAdapter thumbnailAdapter, String category) {
@@ -1083,68 +1018,72 @@ public class Product_ThumbnailAdapter extends ArrayAdapter<Product_Thumbnail> {
                                                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                                         if (task.isSuccessful()) {
                                                                             int stock = 0;
-                                                                            for(QueryDocumentSnapshot stock_Ref : task.getResult())
-                                                                                stock += (int)Math.round(stock_Ref.getDouble("quantity"));
-                                                                            if(stock == 0){
-                                                                                SearchProductsFragment.originProductList.addAll(listProduct);
-                                                                                SearchProductsFragment.dialog.dismiss();
-                                                                            }else{
-                                                                                Product_Thumbnail thumbnail = new Product_Thumbnail();
-
-                                                                                FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
-
-                                                                                DocumentReference product_Ref = document.getReference();
-                                                                                CollectionReference wishList_Ref = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
-                                                                                CollectionReference color_Ref = product_Ref.collection("colors");
-                                                                                CollectionReference size_Ref = product_Ref.collection("sizes");
-
-                                                                                Task<QuerySnapshot> getFavorite = wishList_Ref.whereEqualTo("product_id", product_Ref).limit(1).get();
-                                                                                Task<QuerySnapshot> getColor = color_Ref.get();
-                                                                                Task<QuerySnapshot> getSize = size_Ref.get();
-
-                                                                                Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getFavorite, getColor, getSize);
-                                                                                listTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
-                                                                                    @Override
-                                                                                    public void onSuccess(List<QuerySnapshot> querySnapshots) {
-                                                                                        ArrayList<String> colorTemps = new ArrayList<>();
-                                                                                        ArrayList<String> sizeTemps = new ArrayList<>();
-
-                                                                                        //set favorite
-                                                                                        thumbnail.setFavorite(!querySnapshots.get(0).getDocuments().isEmpty());
-
-                                                                                        //set colorList
-                                                                                        for (DocumentSnapshot color_Doc : querySnapshots.get(1).getDocuments()) {
-                                                                                            colorTemps.add(color_Doc.getString("name"));
-                                                                                        }
-                                                                                        thumbnail.setColorList(colorTemps);
-
-                                                                                        //set sizeList
-                                                                                        for (DocumentSnapshot size_Doc : querySnapshots.get(2).getDocuments()) {
-                                                                                            sizeTemps.add(size_Doc.getString("short_name"));
-                                                                                        }
-                                                                                        thumbnail.setSizeList(sizeTemps);
-
-                                                                                        //set other fields
-                                                                                        thumbnail.setCategory(category_Doc.getString("name"));
-                                                                                        thumbnail.setId(document.getId());
-                                                                                        thumbnail.setName(document.getString("name"));
-                                                                                        thumbnail.setPrice(document.getDouble("price"));
-                                                                                        thumbnail.setDiscount((int) Math.round(document.getDouble("discount")));
-                                                                                        thumbnail.setMainImage(document.getString("main_img"));
-
-                                                                                        if (FilterFragment.checkFilter(thumbnail)) {
-                                                                                            listProduct.add(thumbnail);
-                                                                                            thumbnailAdapter.notifyDataSetChanged();
-                                                                                        }
-
-                                                                                        if (task_product.getResult().getDocuments().indexOf(document) == task_product.getResult().getDocuments().size() - 1 && SearchProductsFragment.dialog.isShowing()) {
+                                                                            for (QueryDocumentSnapshot stock_Ref : task.getResult()) {
+                                                                                stock += (int) Math.round(stock_Ref.getDouble("quantity"));
+                                                                                if (task.getResult().getDocuments().indexOf(stock_Ref) == task.getResult().size() - 1) {
+                                                                                    if (stock == 0) {
+                                                                                        if (task_product.getResult().getDocuments().indexOf(document) == task_product.getResult().getDocuments().size() - 1) {
                                                                                             SearchProductsFragment.originProductList.addAll(listProduct);
                                                                                             SearchProductsFragment.dialog.dismiss();
                                                                                         }
-                                                                                    }
-                                                                                });
-                                                                            }
+                                                                                    } else {
+                                                                                        Product_Thumbnail thumbnail = new Product_Thumbnail();
 
+                                                                                        FirebaseUser userInfo = FirebaseAuth.getInstance().getCurrentUser();
+
+                                                                                        DocumentReference product_Ref = document.getReference();
+                                                                                        CollectionReference wishList_Ref = db.collection(User.COLLECTION_NAME + '/' + userInfo.getUid() + '/' + Wishlist.COLLECTION_NAME);
+                                                                                        CollectionReference color_Ref = product_Ref.collection("colors");
+                                                                                        CollectionReference size_Ref = product_Ref.collection("sizes");
+
+                                                                                        Task<QuerySnapshot> getFavorite = wishList_Ref.whereEqualTo("product_id", product_Ref).limit(1).get();
+                                                                                        Task<QuerySnapshot> getColor = color_Ref.get();
+                                                                                        Task<QuerySnapshot> getSize = size_Ref.get();
+
+                                                                                        Task<List<QuerySnapshot>> listTask = Tasks.whenAllSuccess(getFavorite, getColor, getSize);
+                                                                                        listTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+                                                                                            @Override
+                                                                                            public void onSuccess(List<QuerySnapshot> querySnapshots) {
+                                                                                                ArrayList<String> colorTemps = new ArrayList<>();
+                                                                                                ArrayList<String> sizeTemps = new ArrayList<>();
+
+                                                                                                //set favorite
+                                                                                                thumbnail.setFavorite(!querySnapshots.get(0).getDocuments().isEmpty());
+
+                                                                                                //set colorList
+                                                                                                for (DocumentSnapshot color_Doc : querySnapshots.get(1).getDocuments()) {
+                                                                                                    colorTemps.add(color_Doc.getString("name"));
+                                                                                                }
+                                                                                                thumbnail.setColorList(colorTemps);
+
+                                                                                                //set sizeList
+                                                                                                for (DocumentSnapshot size_Doc : querySnapshots.get(2).getDocuments()) {
+                                                                                                    sizeTemps.add(size_Doc.getString("short_name"));
+                                                                                                }
+                                                                                                thumbnail.setSizeList(sizeTemps);
+
+                                                                                                //set other fields
+                                                                                                thumbnail.setCategory(category_Doc.getString("name"));
+                                                                                                thumbnail.setId(document.getId());
+                                                                                                thumbnail.setName(document.getString("name"));
+                                                                                                thumbnail.setPrice(document.getDouble("price"));
+                                                                                                thumbnail.setDiscount((int) Math.round(document.getDouble("discount")));
+                                                                                                thumbnail.setMainImage(document.getString("main_img"));
+
+                                                                                                if (FilterFragment.checkFilter(thumbnail)) {
+                                                                                                    listProduct.add(thumbnail);
+                                                                                                    thumbnailAdapter.notifyDataSetChanged();
+                                                                                                }
+
+                                                                                                if (task_product.getResult().getDocuments().indexOf(document) == task_product.getResult().getDocuments().size() - 1 && SearchProductsFragment.dialog.isShowing()) {
+                                                                                                    SearchProductsFragment.originProductList.addAll(listProduct);
+                                                                                                    SearchProductsFragment.dialog.dismiss();
+                                                                                                }
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 });
