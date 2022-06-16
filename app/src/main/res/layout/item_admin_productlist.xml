@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/item_admin_productList_productID"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="20dp"
                 android:fontFamily="@font/lato"
                 android:text="ID: 1"
