@@ -1,10 +1,89 @@
 <h1 align="center">Welcome to Clothnest 👋</h1>
-<h5 align="center"> Đây là dự án nhập môn ứng dụng di động </h5>
+<h5 align="center"> Đồ án nhập môn ứng dụng di động - SE114 </h5>
 
 
 
 ## 🤷‍♂️  Clothnest là gì?
 Clothnest là một ứng dụng di động quản lý shop quần áo, cho phép khách hàng có thể mua hàng trực tuyến, thanh toán chỉ cần vài thao tác đơn giản. Ngoài ra ứng dụng có phân quyền dành cho nhân viên và admin; cho mục đích có thể cập trạng thái mới nhất của sản phẩm, tạo voucher, xem chi tiết trạng thái đơn hàng, thống kê, ... Theo dõi mục chức năng để biết thêm nhé 😉
+<details open>
+<summary><strong>Preview</strong></summary> <br>
+    <dl><dd><details open>
+        <summary><strong>Client</strong></summary> <br>
+<table style="width:100%">
+<tr>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/01_homepage.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 1: Homepage</a>
+    </p> </th>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/02_chat_client.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 2: Chat client</a>
+    </p> </th>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/03_detail.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 3: Detail</a>
+    </p> </th>
+</tr>
+<tr>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/04_cart.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 4: Cart</a>
+    </p> </th>    
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/05_search.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 5: Search</a>
+    </p> </th>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/06_wishlist.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 6: Wishlist</a>
+    </p> </th>
+</tr>
+    <tr>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/07_orders.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 7: Orders</a>
+    </p> </th>    
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/client/08_address.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 8: Address</a>
+    </p> </th>
+</tr>
+</table>
+    </details></dd></dl>
+    <dl><dd><details>
+        <summary><strong>Admin</strong></summary> <br>
+<table style="width:100%">
+<tr>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/admin/01_manage_product.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 1: Manage product</a>
+    </p> </th>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/admin/02_chat_admin.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 2: Chat admin</a>
+    </p> </th>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/admin/03_transactions.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 3: Transactions</a>
+    </p> </th>
+</tr>
+<tr>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/admin/04_grant_permission.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 4: Grant permission</a>
+    </p> </th>    
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/admin/05_statistics.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 5: Statistics</a>
+    </p> </th>
+    <th> <p align="center">
+       <img src="https://github.com/tuannt02/resource/blob/main/clothnest/admin/06_manage.gif"><br>
+       <a href="https://github.com/tuannt02/Clothnest">View 6: Manage</a>
+    </p> </th>
+</table>
+    </details></dd></dl>
+</details>
+
 ## 🔥 Danh sách các chức năng của ứng dụng
 >Ứng dụng có phân quyền cho 3 vai trò là Customer, Staff, Admin. Vì thế nhóm mình sẽ liệt kê *theo phân quyền* và *chức năng chung cho cả hệ thống*
 1. Customer
@@ -52,7 +131,7 @@ Clothnest là một ứng dụng di động quản lý shop quần áo, cho phé
 >Để chạy được ứng dụng chúng ta cần IDE là `Android Studio`.
 
 <p align="center">
-  <img width="400" src="https://cdn.sforum.vn/sforum/wp-content/uploads/2021/12/android-studio.png" alt="cli output"/>
+  <img width="400" src="https://github.com/tuannt02/resource/blob/main/clothnest/utils/01.png" alt="cli output"/>
   
 </p>
 
@@ -67,13 +146,13 @@ git clone https://github.com/tuannt02/Clothnest.git
 #### 3. Chạy chương trình
 Đầu tiên, ta cần mở project sau khi tải về
 <p align="center">
-  <img width="250" src="https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/utils%2FScreenshot%202022-05-31%20224842.png?alt=media&token=397b0cdb-5288-4c0f-91c4-b4545760118d"/>
+  <img width="250" src="https://github.com/tuannt02/resource/blob/main/clothnest/utils/02.png"/>
   
 </p>
 Tiếp theo, run VM lên mà chạy thôi!
 
 <p align="center">
-  <img width="250" src="https://firebasestorage.googleapis.com/v0/b/clothnest-da508.appspot.com/o/utils%2F2.png?alt=media&token=f9d5439c-5547-43bc-89ed-cb5ba338b6e5"/>
+  <img width="250" src="https://github.com/tuannt02/resource/blob/main/clothnest/utils/03.png"/>
 </p>
 
 ## 💪 Công nghệ, công cụ sử dụng liên quan
